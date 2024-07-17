@@ -7,18 +7,18 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 import java.util.List;
 import java.util.Arrays;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class MBeansDeserializer {
 
-    public static class DateDeserializer extends JsonDeserializer<Date> {
+    public static class DateDeserializer extends JsonDeserializer<LocalDate> {
         @Override
-        public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             String dateString = p.getValueAsString(); // Get the value as a string
             try {
-                SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
-                return format.parse(dateString); // Parse to Date
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM yyyy");
+                return LocalDate.parse(dateString, format); // Parse to Date
             } catch (Exception e) {
                 throw new IOException("Error parsing date value: " + dateString, e);
             }
