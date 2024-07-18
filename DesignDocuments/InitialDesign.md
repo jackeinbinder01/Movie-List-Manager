@@ -7,11 +7,11 @@ You may have multiple design documents for this project. Place them all in this 
 classDiagram
     direction LR
 
-    JFrameView ..|> IView: implements
-    JFrameView --|> JFrame: extends
-    JFrameView --> FilterPane: uses
-    JFrameView --> ListPane: uses
-    JFrameView --> DetailsPane: uses
+    BaseView ..|> IView: implements
+    BaseView --|> JFrame: extends
+    BaseView --> FilterPane: uses
+    BaseView --> ListPane: uses
+    BaseView --> DetailsPane: uses
     FilterPane --|> JPanel: extends
     ListPane --|> JPanel: extends
     DetailsPane --|> JPanel: extends
@@ -28,10 +28,11 @@ classDiagram
     
     namespace VIEW {
         class IView
-        class JFrameView
+        class BaseView
         class FilterPane
         class ListPane
         class DetailsPane
+        class JFrame
     }
     
     namespace CONTROLLER {
@@ -68,12 +69,12 @@ classDiagram
     
     class ListPane {
         + observer: Observer
-        + makeListpane(): void
+        + makeListPane(): void
     }
     
     class DetailsPane {
         + observer: Observer
-        + makeListpane(): void
+        + makeDetailsPane(): void
         
     }
     
