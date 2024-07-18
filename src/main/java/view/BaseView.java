@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class BaseView extends JFrame implements IView {
     private final static String APP_TITLE = "App Title";
@@ -22,10 +23,21 @@ public class BaseView extends JFrame implements IView {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
-        // CREATE THE PANES HERE
-        // JPanel filterPane = new FilterPane();
-        // JPanel listPane = new ListPane();
-        // JPanel detailsPane = new DetailsPane();
+        // Creating Base Pane
+//        JPanel basePane = new JPanel();
+//        basePane.setLayout(new BorderLayout());
+//        add(basePane);
+
+         // Creating the Functional Panes
+//         JPanel filterPane = new FilterPane();
+//         JPanel listPane = new ListPane();
+//         JPanel detailsPane = new DetailsPane();
+
+
+        // Attaching the Functional Panes to the Base Pane
+//        basePane.add(filterPane, BorderLayout.WEST);
+//        basePane.add(listPane, BorderLayout.CENTER);
+//        basePane.add(detailsPane, BorderLayout.EAST);
 
     }
 
