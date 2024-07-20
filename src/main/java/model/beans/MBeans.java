@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Java beans that represents a media object with various properties such as title, year, type, etc.
@@ -558,7 +559,7 @@ public class MBeans implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy");
         String result = "";
         result += "Title: " + title + "\n";
         result += "Year: " + year + "\n";
