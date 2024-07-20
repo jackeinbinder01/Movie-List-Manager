@@ -1,34 +1,29 @@
-// package student.model.formatters;
+package model.formatters;
 
-// import java.io.ByteArrayOutputStream;
-// import java.io.IOException;
-// import java.io.OutputStream;
-// import java.io.PrintStream;
-// import java.util.ArrayList;
-// import java.util.Collection;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Collection;
 
-// import javax.annotation.Nonnull;
 
-// import com.fasterxml.jackson.databind.ObjectMapper;
-// import com.fasterxml.jackson.databind.ObjectWriter;
-// import com.fasterxml.jackson.databind.SerializationFeature;
-// import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-// import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-// import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
-// import student.model.DomainNameModel.DNRecord;
+import model.beans.MBeans;
 
-// /**
-//  * A class to format the data in different ways.
-//  */
-// public final class DataFormatter {
+/**
+ * A class to format the data in different ways.
+ */
+public final class DataFormatter {
 
-//     /**
-//      * Private constructor to prevent instantiation.
-//      */
-//     private DataFormatter() {
-//         // empty
-//     }
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private DataFormatter() {
+        // empty
+    }
 
 //     /**
 //      * Pretty print the data in a human readable format.
@@ -78,39 +73,39 @@
 //         }
 //     }
 
-//     /**
-//      * Write the data as JSON.
-//      *
-//      * @param records the records to write
-//      * @param out the output stream to write to
-//      */
-//     private static void writeJsonData(Collection<DNRecord> records, OutputStream out) {
-//         ObjectMapper mapper = new ObjectMapper();
-//         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-//         try {
-//             mapper.writeValue(out, records);
-//         } catch (IOException e) {
-//             e.printStackTrace();
-//         }
-//     }
+    /**
+     * Write the data as JSON.
+     *
+     * @param records the records to write
+     * @param out the output stream to write to
+     */
+    public static void writeJsonData(Collection<MBeans> records, OutputStream out) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            mapper.writeValue(out, records);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-//     /**
-//      * Write the data as CSV.
-//      *
-//      * @param records the records to write
-//      * @param out the output stream to write to
-//      */
-//     private static void writeCSVData(Collection<DNRecord> records, OutputStream out) {
-//         CsvMapper mapper = new CsvMapper();
-//         CsvSchema schema = mapper.schemaFor(DNRecord.class).withHeader();
-//         ObjectWriter csvWriter = mapper.writer(schema);
-//         try {
-//             csvWriter.writeValue(out, records);
-//         } catch (IOException e) {
-//             System.out.println("the error is here");
-//             e.printStackTrace();
-//         }
-//     }
+    /**
+    * Write the data as CSV.
+    *
+    * @param records the records to write
+    * @param out the output stream to write to
+    */
+    public static void writeCSVData(Collection<MBeans> records, OutputStream out) {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(MBeans.class).withHeader();
+        ObjectWriter csvWriter = mapper.writer(schema);
+        try {
+            csvWriter.writeValue(out, records);
+        } catch (IOException e) {
+            System.out.println("the error is here");
+            e.printStackTrace();
+        }
+    }
 
 //     /**
 //      * Write the data in the specified format.
@@ -223,4 +218,4 @@
 //             }
 //         }
 //     }
-// }
+}
