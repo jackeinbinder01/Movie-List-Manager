@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import model.beans.MBeans;
+import java.time.format.DateTimeFormatter; // For Date formatting
 import model.beans.MBeansLoader; // Testing
 import javax.swing.UIManager; // Testing
 
@@ -46,6 +47,8 @@ import javax.swing.UIManager; // Testing
  */
 public class DetailsPane extends JPanel {
 
+    /** Date Formatter */
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
     /** Default width. */
     private static final int DEFAULT_WIDTH = 300;
 
@@ -298,7 +301,7 @@ public class DetailsPane extends JPanel {
     public void setMedia(MBeans media) {
         this.mediaTitle.setText(media.getTitle());
         this.mediaImage.setIcon(this.scaleImage(media.getPoster()));
-        this.mediaDetails.get(0).setText(media.getReleased().toString());
+        this.mediaDetails.get(0).setText(DATE_FORMAT.format(media.getReleased()));
         this.mediaDetails.get(1).setText(media.getType());
         this.mediaDetails.get(2).setText(media.getRated());
         this.mediaDetails.get(3).setText(media.getGenre());
