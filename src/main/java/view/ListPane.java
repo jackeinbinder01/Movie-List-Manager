@@ -70,10 +70,17 @@ public class ListPane extends JPanel {
         // Define column names
         String[] columns = {"#", "Title", "Released", "MPA Rating", "Genre", "Runtime", "Director",
             "IMDB Rating", "My Rating", "Has Watched", "Add/Remove", ""}; //  last is for removing an entry
+        // these should change to buttons so that on a press it switches a bool
+        // and rearranges how the lsit is organized.
 
         // Create table model and set it to the table
         DefaultTableModel model = new DefaultTableModel(columns, 0);
         listTable.setModel(model);
+        fillInTable(listTable);
+    }
+
+    private void fillInTable(JTable listTable) {
+        // needs to fill in the 
     }
 
     /**
@@ -84,7 +91,7 @@ public class ListPane extends JPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 600);
+        frame.setSize(500, 600);
         ListPane listPane = new ListPane();
         frame.add(listPane);
         MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "");
