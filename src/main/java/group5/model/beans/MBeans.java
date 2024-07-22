@@ -91,11 +91,11 @@ public class MBeans implements java.io.Serializable {
     @JsonProperty("Poster")
     private URL poster;
 
-    /** Holds metascore rating of the media. */
+    /** Holds Metascore rating of the media. */
     @JsonProperty("Metascore")
     private int metascore;
 
-    /** Holds imdnrating of the media. */
+    /** Holds imdbRating of the media. */
     @JsonProperty("imdbRating")
     private double imdbRating;
 
