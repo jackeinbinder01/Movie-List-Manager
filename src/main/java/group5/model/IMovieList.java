@@ -1,9 +1,9 @@
-package model;
+package group5.model;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import model.beans.MBeans;
+import group5.model.beans.MBeans;
 
 /**
  * Values are unique / no duplicates (based on Boardmovie.equals/equality) It

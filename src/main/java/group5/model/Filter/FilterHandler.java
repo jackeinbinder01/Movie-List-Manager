@@ -1,48 +1,48 @@
-package model;
+package group5.model.Filter;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import javax.management.MBeanAttributeInfo;
-
-import model.beans.MBeans;
+import group5.model.MovieData;
+import group5.model.beans.MBeans;
 
 public class FilterHandler implements IFilterHandler {
 
     /**
-     * a set of games.
+     * a set of movies.
      */
     private Set<MBeans> movie;
     /**
-     * stream of games.
+     * stream of movies.
      */
     private Stream<MBeans> movieStream;
 
     /**
      * constructor for planner.
      *
-     * @param games
+     * @param movies
      */
-    public Filter(Set<MBeans> movie) {
+    public FilterHandler(Set<MBeans> movie) {
         this.movie = movie;
+        this.movieStream = movie.stream();
     }
 
     /**
-     * a filter for games sorte by name (ascending).
+     * a filter for movies sorte by name (ascending).
      *
-     * @return a sorted stream of the games.
+     * @return a sorted stream of the movies.
      */
     @Override
     public Stream<MBeans> filter(String filter) {
-        return filter(filter, MBeans.getTitle(), true);
+        return filter(filter, MovieData.TITLE, true);
 
     }
 
     /**
-     * a filter on games sorted by an input (ascending).
+     * a filter on movies sorted by an input (ascending).
      *
-     * @return a sorted stream of the games.
+     * @return a sorted stream of the movies.
      */
     @Override
     public Stream<MBeans> filter(String filter, MovieData sortOn) {
@@ -51,10 +51,10 @@ public class FilterHandler implements IFilterHandler {
     }
 
     /**
-     * a filter on games sorted by an input ascending if bool is true
+     * a filter on movies sorted by an input ascending if bool is true
      * descending. if false.
      *
-     * @return a sorted stream of the games.
+     * @return a sorted stream of the movies.
      */
     @Override
     public Stream<MBeans> filter(String filter, MovieData sortOn, boolean ascending) {
@@ -67,31 +67,31 @@ public class FilterHandler implements IFilterHandler {
             }
 
         }
-        return GameSort.sort(filteredBeans, sortOn, ascending);
+        return MovieSort.sort(filteredBeans, sortOn, ascending);
 
     }
 
     /**
      * used to filter a single instance of the filters above.
      *
-     * @param filteredGames
+     * @param filteredmovies
      * @param filter
      * @return a sorted stream
      */
-    public static Stream<BoardGame> makeAndApplySingleFilter(List<BoardGame> filteredGames, String filter) {
-        if (filteredGames == null) {
-            throw new IllegalArgumentException("make and apply - games is null");
+    public static Stream<MBeans> makeAndApplySingleFilter(List<MBeans> filteredmovies, String filter) {
+        if (filteredmovies == null) {
+            throw new IllegalArgumentException("make and apply - movies is null");
 
         } else {
             Operations op = Operations.getOperatorFromStr(filter);
 
             String[] columns = filter.split(op.getOperator());
             String valueOfFilter = columns[1].trim();
-            GameData filterOn = MovieData.fromString(columns[0].toLowerCase().trim());
+            MovieData filterOn = MovieData.fromString(columns[0].toLowerCase().trim());
 
-            Stream<MBeans> stream = filteredGames.stream().filter(
-                    BoardGame -> {
-                        return Filters.getFilter(BoardGame, filterOn, op, valueOfFilter);
+            Stream<MBeans> stream = filteredmovies.stream().filter(
+                    MBeans -> {
+                        return FilterOperation.getFilter(MBeans, filterOn, op, valueOfFilter);
                     });
 
             return stream;
@@ -99,16 +99,14 @@ public class FilterHandler implements IFilterHandler {
     }
 
     /**
-     * a way to reset the set games.
+     * a way to reset the set movies.
      */
     @Override
     public void reset() {
         // WRONG
-        if (games != null) {
-            gameStream = games.stream();
+        if (movie != null) {
+            movieStream = movie.stream();
         }
     }
-
-}
 
 }

@@ -1,4 +1,4 @@
-package model;
+package group5.model;
 
 /**
  * Enum to represent the columns in the movie data.
