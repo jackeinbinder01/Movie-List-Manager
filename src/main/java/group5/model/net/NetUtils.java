@@ -1,4 +1,4 @@
-package model.net;
+package group5.model.net;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;

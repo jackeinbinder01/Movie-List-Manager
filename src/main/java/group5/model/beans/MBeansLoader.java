@@ -1,4 +1,4 @@
-package model.beans;
+package group5.model.beans;
 
 import java.io.File;
 import java.io.InputStream;
@@ -12,8 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
-import model.net.NetUtils;
-import model.formatters.Formats;
+import group5.model.net.NetUtils;
+import group5.model.formatters.Formats;
 
 public class MBeansLoader {
 

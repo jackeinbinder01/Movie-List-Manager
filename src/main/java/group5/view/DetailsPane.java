@@ -1,4 +1,4 @@
-package view;
+package group5.view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,17 +29,15 @@ import java.net.URL;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import java.util.List;
 import java.util.ArrayList;
 
-import model.beans.MBeans;
+import group5.model.beans.MBeans;
 import java.time.format.DateTimeFormatter; // For Date formatting
-import model.beans.MBeansLoader; // Testing
+import group5.model.beans.MBeansLoader; // Testing
 import javax.swing.UIManager; // Testing
 
 /**
