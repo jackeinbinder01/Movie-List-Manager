@@ -2,6 +2,7 @@ package group5.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,8 +11,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import group5.model.MovieList;
 import group5.model.beans.MBeans;
 import group5.model.beans.MBeansLoader;
+import group5.model.formatters.Formats;
 
 public class ListPane extends JPanel {
 
@@ -80,7 +83,28 @@ public class ListPane extends JPanel {
     }
 
     private void fillInTable(JTable listTable) {
-        // needs to fill in the 
+        DefaultTableModel model = (DefaultTableModel) listTable.getModel();
+        List<MBeans> listOfMovies = MBeansLoader.loadMBeansFromFile("path/to/your/file.json", Formats.JSON);
+
+        if (listOfMovies != null) {
+            for (MBeans movieBean : listOfMovies) {
+                Object[] row = {
+                    model.getRowCount() + 1,
+                    movieBean.getTitle(),
+                    movieBean.getReleased(),
+                    movieBean.getMetascore(),
+                    movieBean.getGenre(),
+                    movieBean.getRuntime(),
+                    movieBean.getDirector(),
+                    movieBean.getImdbRating(),
+                    movieBean.getMyRating(),
+                    movieBean.getWatched(),
+                    "Add/Remove", // Placeholder for add/remove button
+                    "" // Placeholder for remove button
+                };
+                model.addRow(row);
+            }
+        }
     }
 
     /**
