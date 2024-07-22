@@ -106,18 +106,20 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds box office revenues of the media. */
     @JsonProperty("BoxOffice")
-    @JsonView(group5.model.beans.MBeansViews.CompleteView.class)
     private String boxOffice;
 
     /** Holds imdb ID */
     @JsonProperty("imdbID")
-    @JsonView(group5.model.beans.MBeansViews.CompleteView.class)
     private String id;
 
     /** Holds whether user had watched the media. */
+    @JsonProperty("Watched")
+    @JsonView(MBeansViews.CompleteView.class)
     private boolean watched = false;
 
     /** Holds personal rating of the media. */
+    @JsonProperty("My Rating")
+    @JsonView(MBeansViews.CompleteView.class)
     private double myRating = -1.0;
 
 
