@@ -103,7 +103,6 @@ public class FilterHandler implements IFilterHandler {
      */
     @Override
     public void reset() {
-        // WRONG
         if (movie != null) {
             movieStream = movie.stream();
         }
