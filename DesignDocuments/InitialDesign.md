@@ -5,7 +5,7 @@ You may have multiple design documents for this project. Place them all in this 
 
 ```mermaid
 classDiagram
-    direction LR
+    direction TB
 
     BaseView ..|> IView: implements
     BaseView --|> JFrame: extends
@@ -96,8 +96,7 @@ classDiagram
         - DEFAULT_DATA
         loadSourceData() void
         loadWatchList() void
-        getSourceLists() Stream~MBeans~
-        getWatchLists() Stream~MBeans~
+        getMovieList(FilterClass, UserListIdentifier) Stream~MBeans~
         saveWatchList(String, Stream~MBeans~) void
         getFiltered() Stream~MBeans~
 
