@@ -92,7 +92,14 @@ classDiagram
 
 
     class IModel {
-        + getInstance(): IModel
+    << Interface >>
+        - DEFAULT_DATA
+        loadSourceData() void
+        loadWatchList() void
+        getSourceLists() Stream~MBeans~
+        getWatchLists() Stream~MBeans~
+        saveWatchList(String, Stream~MBeans~) void
+        getFiltered() Stream~MBeans~
 
     }
 
@@ -203,6 +210,6 @@ classDiagram
     }
 
     class MBeansFormatter {
-    
+
     }
 ```
