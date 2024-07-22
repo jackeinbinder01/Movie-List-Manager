@@ -1,4 +1,4 @@
-package group5.model.beans;
+package group5.model.formatters;
 
 import java.io.File;
 import java.io.InputStream;
@@ -12,8 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
+import group5.model.beans.MBeans;
 import group5.model.net.NetUtils;
-import group5.model.formatters.Formats;
+import group5.model.beans.MBeansViews;
 
 public class MBeansLoader {
 
@@ -32,12 +33,15 @@ public class MBeansLoader {
         }
     }
 
-    private static List<MBeans> loadMBeansFromJSON(String filename) {
+    public static List<MBeans> loadWatchListFromJSON(String filename) {
         try {
             File inFile = new File(filename);
             ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             List<MBeans> records = new ArrayList<>();
-            records = mapper.readValue(inFile, new TypeReference<List<MBeans>>() { });
+            records = mapper.readerWithView(MBeansViews.CompleteView.class)
+                            .forType(new TypeReference<List<MBeans>>() { })
+                            .readValue(inFile);
             return records;
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,12 +49,31 @@ public class MBeansLoader {
         }
     }
 
-    private static List<MBeans> loadMBeansFromCSV(String filename) {
+    public static List<MBeans> loadSourceFromJSON(String filename) {
+        try {
+            File inFile = new File(filename);
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            List<MBeans> records = new ArrayList<>();
+            records = mapper.readerWithView(MBeansViews.PartialView.class)
+                            .forType(new TypeReference<List<MBeans>>() { })
+                            .readValue(inFile);
+            return records;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<MBeans> loadWatchListFromCSV(String filename) {
         try {
             File inFile = new File(filename);
             CsvMapper mapper = new CsvMapper();
-            CsvSchema schema = mapper.schemaFor(MBeans.class).withHeader();
-            MappingIterator<MBeans> it = mapper.readerFor(MBeans.class).with(schema).readValues(inFile);
+            CsvSchema schema = CsvSchema.emptySchema().withHeader();
+            MappingIterator<MBeans> it = mapper.readerWithView(MBeansViews.CompleteView.class)
+                                               .forType(MBeans.class)
+                                               .with(schema)
+                                               .readValues(inFile);
             List<MBeans> records = it.readAll();
             return records;
         } catch (Exception e) {
@@ -59,11 +82,11 @@ public class MBeansLoader {
         }
     }
 
-    public static List<MBeans> loadMBeansFromFile(String filename, Formats format) {
+    public static List<MBeans> loadWatchListFromFile(String filename, Formats format) {
         if (format == Formats.JSON) {
-            return loadMBeansFromJSON(filename);
+            return loadWatchListFromJSON(filename);
         } else if (format == Formats.CSV) {
-            return loadMBeansFromCSV(filename);
+            return loadWatchListFromCSV(filename);
         } else {
             return null;
         }
@@ -75,7 +98,9 @@ public class MBeansLoader {
     public static void main(String[] args) {
         MBeans media = loadMBeansFromAPI("The Matrix", "1999", "movie");
         System.out.println(media);
-        List<MBeans> records = loadMBeansFromFile("./src/test/testing_resources/sample.json", Formats.JSON);
+        List<MBeans> records = loadWatchListFromFile("./src/test/testing_resources/sample.json", Formats.JSON);
+        List<MBeans> source = loadSourceFromJSON("./src/test/testing_resources/sample.json");
         System.out.println(records);
+        System.out.println(source);
     }
 }
