@@ -2,7 +2,6 @@ package group5.model.Filter;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import group5.model.MovieData;
@@ -50,6 +49,7 @@ public final class MovieSortOp {
     }
 
     public static class TitleAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return one.getTitle().compareToIgnoreCase(two.getTitle());
@@ -57,6 +57,7 @@ public final class MovieSortOp {
     }
 
     public static class TitleDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return two.getTitle().compareToIgnoreCase(one.getTitle());
@@ -64,6 +65,7 @@ public final class MovieSortOp {
     }
 
     public static class YearAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Integer.compare(one.getYear(), two.getYear());
@@ -71,6 +73,7 @@ public final class MovieSortOp {
     }
 
     public static class YearDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Integer.compare(two.getYear(), one.getYear());
@@ -78,6 +81,7 @@ public final class MovieSortOp {
     }
 
     public static class MetascoreAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Double.compare(one.getMetascore(), two.getMetascore());
@@ -85,6 +89,7 @@ public final class MovieSortOp {
     }
 
     public static class MetascoreDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Double.compare(two.getMetascore(), one.getMetascore());
@@ -92,6 +97,7 @@ public final class MovieSortOp {
     }
 
     public static class GenreAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return one.getGenre().compareToIgnoreCase(two.getGenre());
@@ -99,6 +105,7 @@ public final class MovieSortOp {
     }
 
     public static class GenreDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return two.getGenre().compareToIgnoreCase(one.getGenre());
@@ -106,6 +113,7 @@ public final class MovieSortOp {
     }
 
     public static class RuntimeAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Integer.compare(one.getRuntime(), two.getRuntime());
@@ -113,6 +121,7 @@ public final class MovieSortOp {
     }
 
     public static class RuntimeDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Integer.compare(two.getRuntime(), one.getRuntime());
@@ -120,6 +129,7 @@ public final class MovieSortOp {
     }
 
     public static class DirectorAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return one.getDirector().get(0).compareToIgnoreCase(two.getDirector().get(0));
@@ -127,6 +137,7 @@ public final class MovieSortOp {
     }
 
     public static class DirectorDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return two.getDirector().get(0).compareToIgnoreCase(one.getDirector().get(0));
@@ -134,6 +145,7 @@ public final class MovieSortOp {
     }
 
     public static class ImdbRatingAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Double.compare(one.getImdbRating(), two.getImdbRating());
@@ -141,6 +153,7 @@ public final class MovieSortOp {
     }
 
     public static class ImdbRatingDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Double.compare(two.getImdbRating(), one.getImdbRating());
@@ -148,6 +161,7 @@ public final class MovieSortOp {
     }
 
     public static class UserRatingAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Double.compare(one.getMyRating(), two.getMyRating());
@@ -155,6 +169,7 @@ public final class MovieSortOp {
     }
 
     public static class UserRatingDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Double.compare(two.getMyRating(), one.getMyRating());
@@ -162,6 +177,7 @@ public final class MovieSortOp {
     }
 
     public static class WatchedAscending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Boolean.compare(one.getWatched(), two.getWatched());
@@ -169,6 +185,7 @@ public final class MovieSortOp {
     }
 
     public static class WatchedDescending implements Comparator<MBeans> {
+
         @Override
         public int compare(MBeans one, MBeans two) {
             return Boolean.compare(two.getWatched(), one.getWatched());
