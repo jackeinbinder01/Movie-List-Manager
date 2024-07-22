@@ -9,7 +9,7 @@ import java.util.List;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 
-import model.beans.MBeans;
+import group5.model.beans.MBeans;
 
 public class TestMBeans {
 

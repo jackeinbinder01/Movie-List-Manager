@@ -1,4 +1,4 @@
-package model.beans;
+package group5.model.beans;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;

@@ -1,4 +1,4 @@
-package view;
+package group5.view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -10,8 +10,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import model.beans.MBeans;
-import model.beans.MBeansLoader;
+import group5.model.beans.MBeans;
+import group5.model.beans.MBeansLoader;
 
 public class ListPane extends JPanel {
 

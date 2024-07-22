@@ -78,9 +78,6 @@ classDiagram
         
     }
     
-    class JFrameView {
-        
-    }
     
     class MBean {
         - Title: String

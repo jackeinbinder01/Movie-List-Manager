@@ -1,13 +1,19 @@
-package view;
+package group5.view;
+
+import group5.model.beans.MBeans;
 
 import javax.swing.*;
-import java.awt.*;
+import java.util.stream.Stream;
 
 public class BaseView extends JFrame implements IView {
     private final static String APP_TITLE = "App Title";
     private final static int DEFAULT_WIDTH = 1024;
     private final static int DEFAULT_HEIGHT = 600;
 
+
+//         JPanel filterPane;
+//         JPanel listPane;
+//         JPanel detailsPane;
 
 
     public BaseView() {
@@ -29,9 +35,9 @@ public class BaseView extends JFrame implements IView {
 //        add(basePane);
 
          // Creating the Functional Panes
-//         JPanel filterPane = new FilterPane();
-//         JPanel listPane = new ListPane();
-//         JPanel detailsPane = new DetailsPane();
+//         filterPane = new FilterPane();
+//         listPane = new ListPane();
+//         detailsPane = new DetailsPane();
 
 
         // Attaching the Functional Panes to the Base Pane
@@ -42,5 +48,23 @@ public class BaseView extends JFrame implements IView {
     }
 
 
+    @Override
+    public void setDetailsPaneEntry(MBeans mbean) {
+        System.out.println("setDetailsPaneEntry");
+    }
 
+    @Override
+    public void setListPaneEntries(Stream<MBeans> mbeans) {
+        System.out.println("setListPaneEntries");
+    }
+
+    @Override
+    public void getFilters() {
+        System.out.println("getFilterParams");
+    }
+
+    @Override
+    public void clearFilters() {
+        System.out.println("clearFilters");
+    }
 }

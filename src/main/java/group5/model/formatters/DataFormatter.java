@@ -1,4 +1,4 @@
-package model.formatters;
+package group5.model.formatters;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
-import model.beans.MBeans;
+import group5.model.beans.MBeans;
 
 /**
  * A class to format the data in different ways.

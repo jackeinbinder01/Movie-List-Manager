@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import model.net.NetUtils;
+import group5.model.net.NetUtils;
 import java.io.InputStream;
 import java.io.IOException;
 import java.nio.file.Files;

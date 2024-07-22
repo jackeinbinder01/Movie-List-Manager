@@ -1,11 +1,9 @@
-package model.beans;
+package group5.model.beans;
 
 
 import java.time.LocalDate;
 import java.util.List;
 import java.net.URL;
-
-import java.text.SimpleDateFormat;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

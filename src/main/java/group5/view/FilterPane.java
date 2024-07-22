@@ -1,4 +1,4 @@
-package view;
+package group5.view;
 
 import javax.swing.*;
 
