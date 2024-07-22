@@ -6,16 +6,21 @@ import java.util.List;
 import java.net.URL;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
+
+import group5.model.formatters.MBeansDeserializer;
+import group5.model.formatters.MBeansSerializer;
+import group5.model.beans.MBeansViews;
+
 import java.time.format.DateTimeFormatter;
 
 /**
  * Java beans that represents a media object with various properties such as title, year, type, etc.
  */
 public class MBeans implements java.io.Serializable {
-
 
     /** Holds media title. */
     @JsonProperty("Title")
@@ -101,10 +106,12 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds box office revenues of the media. */
     @JsonProperty("BoxOffice")
+    @JsonView(group5.model.beans.MBeansViews.CompleteView.class)
     private String boxOffice;
 
     /** Holds imdb ID */
     @JsonProperty("imdbID")
+    @JsonView(group5.model.beans.MBeansViews.CompleteView.class)
     private String id;
 
     /** Holds whether user had watched the media. */
