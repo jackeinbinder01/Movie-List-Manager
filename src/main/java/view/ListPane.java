@@ -4,10 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import model.beans.MBeans;
+import model.beans.MBeansLoader;
 
 public class ListPane extends JPanel {
 
@@ -17,6 +21,7 @@ public class ListPane extends JPanel {
     JButton list2;
     JButton addList;
     JButton exportList;
+    JButton removeCurrentEntry;
 
     ListPane() {
         super(new BorderLayout());
@@ -30,8 +35,9 @@ public class ListPane extends JPanel {
         addColumns(listTable);
 
         // Add horizontal and vertical scroll to table
-        JScrollPane scrollPane = new JScrollPane(listTable);
-        listPanel.add(scrollPane, BorderLayout.WEST);
+        JScrollPane scrollPane = new JScrollPane(listTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        listPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Create buttons
         list1 = new JButton("Watchlist");
@@ -63,11 +69,25 @@ public class ListPane extends JPanel {
     private void addColumns(JTable listTable) {
         // Define column names
         String[] columns = {"#", "Title", "Released", "MPA Rating", "Genre", "Runtime", "Director",
-            "IMDB Rating", "My Rating", "Has Watched", "Add/Remove"};
+            "IMDB Rating", "My Rating", "Has Watched", "Add/Remove", ""}; //  last is for removing an entry
 
         // Create table model and set it to the table
         DefaultTableModel model = new DefaultTableModel(columns, 0);
         listTable.setModel(model);
     }
 
+    /**
+     * Main method to test the DetailsPane.
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 600);
+        ListPane listPane = new ListPane();
+        frame.add(listPane);
+        MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "");
+        frame.setVisible(true);
+    }
 }
