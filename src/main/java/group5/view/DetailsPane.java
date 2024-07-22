@@ -24,11 +24,13 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+
 import java.net.URL;
 
 import javax.swing.text.StyledDocument;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -36,48 +38,77 @@ import java.util.List;
 import java.util.ArrayList;
 
 import group5.model.beans.MBeans;
+
 import java.time.format.DateTimeFormatter; // For Date formatting
+
 import group5.model.beans.MBeansLoader; // Testing
+
 import javax.swing.UIManager; // Testing
+
+import group5.model.formatters.MBeansLoader;
 
 /**
  * A JPanel class to display details of a media.
  */
 public class DetailsPane extends JPanel {
 
-    /** Date Formatter */
+    /**
+     * Date Formatter
+     */
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
-    /** Default width. */
+    /**
+     * Default width.
+     */
     private static final int DEFAULT_WIDTH = 300;
 
-    /** Default height. */
+    /**
+     * Default height.
+     */
     private static final int DEFAULT_HEIGHT = 600;
 
-    /** Default color, light gray. */
+    /**
+     * Default color, light gray.
+     */
     private static final Color DEFAULT_COLOR = new Color(230, 230, 230);
 
-    /** Holds scroll pane. */
+    /**
+     * Holds scroll pane.
+     */
     private JScrollPane scrollPane;
 
-    /** Holds details panel inside scroll pane. */
+    /**
+     * Holds details panel inside scroll pane.
+     */
     private JPanel detailsPanel;
 
-    /** Holds TextPane object for media Title. */
+    /**
+     * Holds TextPane object for media Title.
+     */
     private JTextPane mediaTitle;
 
-    /** Holds media image Label obejct. */
+    /**
+     * Holds media image Label obejct.
+     */
     private JLabel mediaImage;
 
-    /** Holds lists of JTextArea for each media details. */
+    /**
+     * Holds lists of JTextArea for each media details.
+     */
     private List<JTextArea> mediaDetails = new ArrayList<>();
 
-    /** Holds check box to display watched status. */
+    /**
+     * Holds check box to display watched status.
+     */
     private JCheckBox watchedBox;
 
-    /** Holds JTextField for user rating. */
+    /**
+     * Holds JTextField for user rating.
+     */
     private JTextField userRating;
 
-    /** Holds JButton for updating user rating. */
+    /**
+     * Holds JButton for updating user rating.
+     */
     private JButton saveRating;
 
     /**
@@ -99,7 +130,8 @@ public class DetailsPane extends JPanel {
     }
 
     /**
-     * Initialize and setup all the components template contained inside this panel.
+     * Initialize and setup all the components template contained inside this
+     * panel.
      */
     private void initContent() {
         this.addTitlePane();
@@ -261,13 +293,14 @@ public class DetailsPane extends JPanel {
     /**
      * Resize the media title and media details.
      *
-     * Allows the media title and media details to be resized dynamically when the window is resized.
+     * Allows the media title and media details to be resized dynamically when
+     * the window is resized.
      */
     private void reSize() {
         this.mediaTitle.setPreferredSize(null);
         this.mediaTitle.setSize(this.scrollPane.getSize());
         this.mediaTitle.setPreferredSize(new Dimension(this.scrollPane.getSize().width - 22,
-                                                       this.mediaTitle.getPreferredSize().height));
+                this.mediaTitle.getPreferredSize().height));
         for (JTextArea text : mediaDetails) {
             text.setSize(new Dimension(this.scrollPane.getWidth() - 114, text.getHeight()));
             this.scrollPane.revalidate();
@@ -344,6 +377,7 @@ public class DetailsPane extends JPanel {
 
     /**
      * Main method to test the DetailsPane.
+     *
      * @param args
      */
     public static void main(String[] args) {
