@@ -1,8 +1,9 @@
-package model;
+package group5.model.Filter;
 
 import java.util.stream.Stream;
 
-import model.beans.MBeans;
+import group5.model.MovieData;
+import group5.model.beans.MBeans;
 
 /**
  * methods used to perform filters on the movie list.

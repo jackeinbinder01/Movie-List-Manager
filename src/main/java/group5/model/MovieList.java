@@ -1,4 +1,4 @@
-package model;
+package group5.model;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import model.beans.MBeans;
+import group5.model.beans.MBeans;
 
 public class MovieList implements IMovieList {
 
