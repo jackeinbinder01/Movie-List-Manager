@@ -1,4 +1,4 @@
-package group5.model.beans;
+package group5.model.formatters;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

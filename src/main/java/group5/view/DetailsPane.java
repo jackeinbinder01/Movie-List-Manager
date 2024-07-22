@@ -288,7 +288,7 @@ public class DetailsPane extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ImageIcon("./resources/no-image.jpg");
+        return new ImageIcon("./data/no-image.jpg");
     }
 
     /**

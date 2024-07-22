@@ -12,16 +12,17 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import group5.model.beans.MBeans;
+import group5.model.beans.MBeansViews;
 
 /**
  * A class to format the data in different ways.
  */
-public final class DataFormatter {
+public final class MBeansFormatter {
 
     /**
      * Private constructor to prevent instantiation.
      */
-    private DataFormatter() {
+    private MBeansFormatter() {
         // empty
     }
 
@@ -73,32 +74,33 @@ public final class DataFormatter {
 //         }
 //     }
 
-    /**
-     * Write the data as JSON.
-     *
-     * @param records the records to write
-     * @param out the output stream to write to
-     */
-    public static void writeJsonData(Collection<MBeans> records, OutputStream out) {
+
+    public static void writeSourceToJSON(Collection<MBeans> records, OutputStream out) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writeValue(out, records);
+            mapper.writerWithView(MBeansViews.PartialView.class)
+                  .writeValue(out, records);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-    * Write the data as CSV.
-    *
-    * @param records the records to write
-    * @param out the output stream to write to
-    */
-    public static void writeCSVData(Collection<MBeans> records, OutputStream out) {
+    public static void writeWatchListToJSON(Collection<MBeans> records, OutputStream out) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            mapper.writerWithView(MBeansViews.CompleteView.class)
+                  .writeValue(out, records);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeWatchListToCSV(Collection<MBeans> records, OutputStream out) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(MBeans.class).withHeader();
-        ObjectWriter csvWriter = mapper.writer(schema);
+        ObjectWriter csvWriter = mapper.writerWithView(MBeansViews.CompleteView.class).with(schema);
         try {
             csvWriter.writeValue(out, records);
         } catch (IOException e) {
