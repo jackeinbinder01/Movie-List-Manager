@@ -19,13 +19,56 @@ classDiagram
     Controller --> IModel: uses
     Controller --> IView: uses
     Model ..|> IModel: implements
-    
+    MBeans --> MBeansViews: uses
+    MBeansLoad --> MBeansDeserializer: uses
+    MBeansFormatter --> MBeansSerializer: uses
+    FilterPane ..|> ActionListener : implements
+    FilterPane ..> JTextField : uses
+    FilterPane ..> JComboBox : uses
+    FilterPane ..> JXMultiThumbSlider : uses
+    FilterPane ..> JButton : uses
+    FilterPane ..> GridBagConstraints : uses
+    FilterPane ..> List : uses
+    FilterPane ..> MBeans : uses
+    FilterPane ..> JFrame : uses
+    FilterPane ..> JPanel : inherits
+
     namespace MODEL {
         class IModel
         class Model
-        class MBean
+        class IMovieList
+        class MovieData
+        class MovieList
+        class formatters
+        class filter
+        class beans
+        class net
     }
-    
+
+    namespace formatters {
+        class Formats
+        class MBeansDeserializer
+        class MBeansSerializer
+        class MBeansFormatter
+        class MBeansLoader
+    }
+
+    namespace filter {
+        class FilterHandler
+        class FilterOperation
+        class IFilterHandler
+        class Operations
+    }
+
+    namespace beans {
+        class MBeans
+        class MBeansViews
+    }
+
+    namespace net {
+        class NetUtils
+    }
+
     namespace VIEW {
         class IView
         class BaseView
@@ -34,75 +77,132 @@ classDiagram
         class DetailsPane
         class JFrame
     }
-    
+
     namespace CONTROLLER {
         class IController
+        class Controller
+        class IFeature
     }
-    
 
-    
+
+
     class Model {
-        
+
     }
-    
-    
+
+
     class IModel {
         + getInstance(): IModel
-        
+
     }
-    
+
     class IController {
         + go(): void
-        
+
     }
-    
+
     class IView {
         + display(): void
         + setDetailsPane(): void
-        
+
     }
-    
+
     class FilterPane {
-        + observer: Observer
-        + makeFilterPane(): void
+        - List~MBeans~ movies
+        - JTextField titleFilter
+        - JComboBox contentTypeFilter
+        - JComboBox genreFilter
+        - JComboBox mpaRatingFilter
+        - JXMultiThumbSlider releasedFilter
+        - JXMultiThumbSlider imdbRatingFilter
+        - JXMultiThumbSlider runtimeFilter
+        - JXMultiThumbSlider boxOfficeFilter
+        - JTextField directorFilter
+        - JTextField actorFilter
+        - JTextField writerFilter
+        - JComboBox languageFilter
+        - JComboBox countryOfOriginFilter
+        - JButton applyFilterButton
+        - JButton cleaFilterButton
+        - GridBagConstraints gbc
+        - int filterRow
+        + FilterPane()
+        - addLabel(String filterTitle): void
+        - addFilter(String filterTitle, Object filter): void
+        - addButton(String buttonTitle, JButton button): void
+        - configureThumbSlider(JXMultiThumbSlider thumbSlider): void
+        + actionPerformed(ActionEvent e): void
     }
-    
+
     class ListPane {
-        + observer: Observer
-        + makeListPane(): void
+        - JPanel listPanel
+        - JTable listTable
+        - JButton list1
+        - JButton list2
+        - JButton addList
+        - JButton exportList
+        - JButton removeCurrentEntry
+        + ListPane()
+        + addColumns(JTable listTable)
+        + fillInTable(JTable listTable)
     }
-    
+
     class DetailsPane {
-        + observer: Observer
-        + makeDetailsPane(): void
-        
+        - DateTimeFormatter DATE_FORMAT
+        - int DEFAULT_WIDTH
+        - int DEFAULT_HEIGHT
+        - Color DEFAULT_COLOR
+        - JScrollPane scrollPane
+        - JPanel detailsPanel
+        - JTextOabe mediaTitle
+        - JLabel mediaImage
+        - List~JTextArea~ mediaDetails
+        - JCheckBox watchedBox
+        - JTextField userRating
+        - JButton saveRating
+        + DetailsPane()
+        - initContent() void
+        - addVerticalPadding(int) void
+        - addTitlePane() void
+        - addImageLabel() void
+        - addWatched() void
+        - addDetailPane(String) void
+        - addUserRating() void
+        - reSize() void
+        - scaleImage(URL) ImageIcon
+        - setMedia(MBeans) void
+        + addListeners() void
     }
-    
-    
-    class MBean {
+
+
+    class MBeans {
         - Title: String
         - Year: int
         - Type: String
         - Rated: String
-        - Released: int
+        - Released: Date
         - Runtime: int
         - Genre: String
-        - Director: String[]
-        - Writer: String[]
-        - Actors: String[]
+        - Director: List~String~
+        - Writer: List~String~
+        - Actors: List~String~
         - Plot: String
-        - Language: String[]
+        - Language: List~String~
         - Country: String
-        - Awards: String[]
-        - Poster: URL or String
+        - Awards: String
+        - Poster: URL
         - HasWatched: bool
         - Metascore: int
-        - imdbRating: int
-        - MyRating: int
-        - BoxOffice: int
+        - imdbRating: double
+        - myRating: double
+        - boxOffice: int
     }
+
+    class MBeansLoader {
+
+    }
+
+    class MBeansFormatter {
     
-    class MovieSortStrategy {
-        
     }
 ```
