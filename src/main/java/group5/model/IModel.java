@@ -20,7 +20,11 @@ public interface IModel {
 
     void saveWatchList(String filename, Stream<MBeans> watchList);
 
-    Stream<MBeans> getFiltered();
+    /*public Stream<MBeans> getMovieList(FilterClass filter) {
+        return getMovieList(filter, null);
+    }*/
+
+    //Stream<MBeans> getMovieList(FilterClass filter, UserListIdentifier userListId);
 
 
 
