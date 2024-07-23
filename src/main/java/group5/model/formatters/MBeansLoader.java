@@ -15,6 +15,9 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import group5.model.beans.MBeans;
 import group5.model.net.NetUtils;
 import group5.model.beans.MBeansViews;
+import group5.model.formatters.MBeansFormatter;
+
+import java.io.FileOutputStream;
 
 public class MBeansLoader {
 
@@ -95,12 +98,26 @@ public class MBeansLoader {
     /**
      * Main to test the loader.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        List<MBeans> medias = new ArrayList<>();
         MBeans media = loadMBeansFromAPI("The Matrix", "1999", "movie");
+        medias.add(loadMBeansFromAPI("Titanic", "", "movie"));
+        medias.add(loadMBeansFromAPI("Shrek", "", "movie"));
+        medias.add(loadMBeansFromAPI("Shrek 2", "", "movie"));
+        medias.add(loadMBeansFromAPI("Shrek 3", "", "movie"));
+        medias.add(loadMBeansFromAPI("John Wick", "", "movie"));
+        medias.add(loadMBeansFromAPI("Avatar", "", "movie"));
+        medias.add(loadMBeansFromAPI("Exodus", "", "movie"));
+        medias.add(loadMBeansFromAPI("Equalizer", "", "movie"));
+        medias.add(loadMBeansFromAPI("Sharknado", "", "movie"));
+        medias.add(loadMBeansFromAPI("Inside out", "", "movie"));
+        medias.add(loadMBeansFromAPI("Monsters", "", "movie"));
+        medias.add(loadMBeansFromAPI("Spirited Away", "", "movie"));
         System.out.println(media);
-        List<MBeans> records = loadWatchListFromFile("./src/test/testing_resources/sample.json", Formats.JSON);
-        List<MBeans> source = loadSourceFromJSON("./src/test/testing_resources/sample.json");
-        System.out.println(records);
-        System.out.println(source);
+        //List<MBeans> records = loadWatchListFromFile("./src/test/testing_resources/sample.json", Formats.JSON);
+        //List<MBeans> source = loadSourceFromJSON("./src/test/testing_resources/sample.json");
+        //System.out.println(records);
+        //System.out.println(source);
+        MBeansFormatter.writeSourceToJSON(medias, new FileOutputStream("./data/samples/source.json"));
     }
 }
