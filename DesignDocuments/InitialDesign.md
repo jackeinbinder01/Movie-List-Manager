@@ -19,7 +19,6 @@ classDiagram
     Controller --> IModel: uses
     Controller --> IView: uses
     Model ..|> IModel: implements
-    MBeans --> MBeansViews: uses
     MBeansLoad --> MBeansDeserializer: uses
     MBeansFormatter --> MBeansSerializer: uses
     FilterPane ..|> ActionListener : implements
@@ -86,7 +85,6 @@ classDiagram
 
     namespace beans {
         class MBeans
-        class MBeansViews
     }
 
     namespace net {
