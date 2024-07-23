@@ -60,6 +60,19 @@ public class Controller implements IController, IFeature {
     }
 
 
+    @Override
+    public void applyFilters() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'applyFilters'");
+    }
+
+    @Override
+    public void clearFilters() {
+        view.clearFilters();
+        // TODO: set the tables in the view to unfiltered
+    }
+
+
     /**
      * Main entry point for the controller.
      */

@@ -31,4 +31,8 @@ public interface IFeature {
     public void exportListToFile(String filepath);
 
 
+    public void applyFilters();
+
+    public void clearFilters();
+
 }
