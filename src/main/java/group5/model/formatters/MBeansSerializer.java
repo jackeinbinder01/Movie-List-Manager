@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.text.NumberFormat;
 
 public class MBeansSerializer {
 
@@ -65,6 +67,19 @@ public class MBeansSerializer {
         @Override
         public void serialize(List<String> country, JsonGenerator gen, SerializerProvider serializers) throws IOException {
             gen.writeString(String.join(", ", country));
+        }
+    }
+
+    public static class BoxOfficeSerializer extends JsonSerializer<Integer> {
+        @Override
+        public void serialize(Integer boxOffice, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            if (boxOffice == -1) {
+                gen.writeString("N/A");
+                return;
+            }
+            NumberFormat usdFormatter = NumberFormat.getNumberInstance(Locale.US);
+            String boxOfficeStr = usdFormatter.format(boxOffice);
+            gen.writeString("$" + boxOfficeStr);
         }
     }
 }

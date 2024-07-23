@@ -30,7 +30,7 @@ public class MBeansDeserializer {
             String minutesString = p.getValueAsString(); // Get the value as a string
             String numericValue = minutesString.split(" ")[0]; // Extract numeric part
             int minutes = Integer.parseInt(numericValue); // Parse to integer
-            return minutes + 1; // Example: add 1 to transform 194 to 195
+            return minutes;
         }
     }
 
@@ -39,7 +39,7 @@ public class MBeansDeserializer {
         public List<String> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             String genreString = p.getValueAsString(); // Get the value as a string
             List<String> genreArray = Arrays.asList(genreString.split(", ")); // Split to Array
-            return genreArray; // Example: add 1 to transform 194 to 195
+            return genreArray;
         }
     }
 
@@ -48,7 +48,7 @@ public class MBeansDeserializer {
         public List<String> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             String directorString = p.getValueAsString(); // Get the value as a string
             List<String> directorArray = Arrays.asList(directorString.split(", ")); // Split to Array
-            return directorArray; // Example: add 1 to transform 194 to 195
+            return directorArray;
         }
     }
 
@@ -57,7 +57,7 @@ public class MBeansDeserializer {
         public List<String> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             String writerString = p.getValueAsString(); // Get the value as a string
             List<String> writerArray = Arrays.asList(writerString.split(", ")); // Split to Array
-            return writerArray; // Example: add 1 to transform 194 to 195
+            return writerArray;
         }
     }
 
@@ -66,7 +66,7 @@ public class MBeansDeserializer {
         public List<String> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             String actorString = p.getValueAsString(); // Get the value as a string
             List<String> actorArray = Arrays.asList(actorString.split(", ")); // Split to Array
-            return actorArray; // Example: add 1 to transform 194 to 195
+            return actorArray;
         }
     }
 
@@ -75,7 +75,7 @@ public class MBeansDeserializer {
         public List<String> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             String languageString = p.getValueAsString(); // Get the value as a string
             List<String> languageArray = Arrays.asList(languageString.split(", ")); // Split to Array
-            return languageArray; // Example: add 1 to transform 194 to 195
+            return languageArray;
         }
     }
 
@@ -84,7 +84,20 @@ public class MBeansDeserializer {
         public List<String> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             String countryString = p.getValueAsString(); // Get the value as a string
             List<String> countryArray = Arrays.asList(countryString.split(", ")); // Split to Array
-            return countryArray; // Example: add 1 to transform 194 to 195
+            return countryArray;
+        }
+    }
+
+    public static class BoxOfficeDeserializer extends JsonDeserializer<Integer> {
+        @Override
+        public Integer deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+            String boxOfficeString = p.getValueAsString(); // Get the value as a string
+            if (boxOfficeString.equals("N/A")) {
+                return -1;
+            }
+            String numericValue = boxOfficeString.replace("$", "").replace(",", ""); // Extract only numeric part
+            int boxOffice = Integer.parseInt(numericValue); // Parse to integer
+            return boxOffice;
         }
     }
 }
