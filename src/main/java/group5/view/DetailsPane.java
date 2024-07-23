@@ -37,6 +37,7 @@ import java.awt.event.ComponentEvent;
 import java.util.List;
 import java.util.ArrayList;
 
+import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 
 import java.time.format.DateTimeFormatter; // For Date formatting
@@ -357,7 +358,7 @@ public class DetailsPane extends JPanel {
     /**
      * Add listeners to the watched check box and save rating button.
      */
-    public void addListeners() {
+    public void bindFeatures(IFeature features) {
         // TODO: Add listeners method for watchedBox and saveRating.
         //this.watchedBox.addActionListener(new ActionListener() {
         //    @Override

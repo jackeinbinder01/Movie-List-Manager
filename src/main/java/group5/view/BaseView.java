@@ -1,8 +1,10 @@
 package group5.view;
 
+import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.stream.Stream;
 
 public class BaseView extends JFrame implements IView {
@@ -11,13 +13,16 @@ public class BaseView extends JFrame implements IView {
     private final static int DEFAULT_HEIGHT = 600;
 
 
-//         JPanel filterPane;
-//         JPanel listPane;
-//         JPanel detailsPane;
+    FilterPane filterPane;
+    ListPaneV2 listPane;
+    DetailsPane detailsPane;
 
 
     public BaseView() {
         super(APP_TITLE);
+
+        // Let the backstage crew do their thing
+        setVisible(false);
 
         // Set System Look and Feel
         try {
@@ -27,26 +32,41 @@ public class BaseView extends JFrame implements IView {
         }
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
 
         // Creating Base Pane
-//        JPanel basePane = new JPanel();
-//        basePane.setLayout(new BorderLayout());
-//        add(basePane);
+        JPanel basePane = new JPanel();
+        basePane.setLayout(new BorderLayout());
+        add(basePane);
 
          // Creating the Functional Panes
-//         filterPane = new FilterPane();
-//         listPane = new ListPane();
-//         detailsPane = new DetailsPane();
+         filterPane = new FilterPane();
+         listPane = new ListPaneV2();
+         detailsPane = new DetailsPane();
 
 
         // Attaching the Functional Panes to the Base Pane
-//        basePane.add(filterPane, BorderLayout.WEST);
-//        basePane.add(listPane, BorderLayout.CENTER);
-//        basePane.add(detailsPane, BorderLayout.EAST);
+        basePane.add(filterPane, BorderLayout.WEST);
+        basePane.add(listPane, BorderLayout.CENTER);
+        basePane.add(detailsPane, BorderLayout.EAST);
 
     }
 
+
+    @Override
+    public void display() {
+        filterPane.setVisible(true);
+        listPane.setVisible(true);
+        detailsPane.setVisible(true);
+        setVisible(true);
+    }
+
+    @Override
+    public void bindFeatures(IFeature features) {
+        System.out.println("[BaseView] BaseView is binding features...");
+        filterPane.bindFeatures(features);
+        listPane.bindFeatures(features);
+        detailsPane.bindFeatures(features);
+    }
 
     @Override
     public void setDetailsPaneEntry(MBeans mbean) {
