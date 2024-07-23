@@ -4,6 +4,7 @@ import com.sun.security.jgss.GSSUtil;
 import group5.model.IModel;
 import group5.model.beans.MBeans;
 import group5.model.formatters.MBeansLoader;
+import group5.model.formatters.Formats;
 import group5.view.IView;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class Controller implements IController, IFeature {
         view.bindFeatures(this);
 
         String sampleDataPath = "data/samples/source.json";
-        List<MBeans> records = MBeansLoader.loadSourceFromJSON(sampleDataPath);
+        List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
         view.setMainTableRecords(records.stream());
     }
 
