@@ -38,10 +38,10 @@ public class BaseView extends JFrame implements IView {
         basePane.setLayout(new BorderLayout());
         add(basePane);
 
-         // Creating the Functional Panes
-         filterPane = new FilterPane();
-         listPane = new ListPaneV2();
-         detailsPane = new DetailsPane();
+        // Creating the Functional Panes
+        filterPane = new FilterPane();
+        listPane = new ListPaneV2();
+        detailsPane = new DetailsPane();
 
 
         // Attaching the Functional Panes to the Base Pane
@@ -68,14 +68,17 @@ public class BaseView extends JFrame implements IView {
         detailsPane.bindFeatures(features);
     }
 
+
     @Override
-    public void setDetailsPaneEntry(MBeans mbean) {
-        System.out.println("setDetailsPaneEntry");
+    public void setDetailsPaneEntry(MBeans record) {
+        System.out.println("[BaseView] calling setDetailsPaneEntry, passing MBeans to detailsPane");
+        detailsPane.setMedia(record);
     }
 
     @Override
-    public void setListPaneEntries(Stream<MBeans> mbeans) {
-        System.out.println("setListPaneEntries");
+    public void setMainTableRecords(Stream<MBeans> mbeans) {
+        System.out.println("[BaseView] setMainTableRecords");
+        listPane.setMainTableRecords(mbeans);
     }
 
     @Override

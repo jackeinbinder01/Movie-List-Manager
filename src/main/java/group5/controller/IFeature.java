@@ -1,12 +1,14 @@
 package group5.controller;
 
+import group5.model.beans.MBeans;
+
 public interface IFeature {
 
     /**
      * Prompt the view to show the details of the selected entry
      * (this is meant to be triggered by an action listener in the view upon table selection)
      */
-    // public void showDetails(Entry entry);
+    public void showRecordDetails(MBeans record);
 
 
     /**

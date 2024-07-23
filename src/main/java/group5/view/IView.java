@@ -20,7 +20,7 @@ public interface IView {
      * TODO: confirm if this is the correct format for passing
      * @param mbeans the MBeans to set
      */
-    public void setListPaneEntries(Stream<MBeans> mbeans);
+    public void setMainTableRecords(Stream<MBeans> mbeans);
 
     /**
      * Get the filters parameters from the FilterPane
@@ -30,7 +30,6 @@ public interface IView {
     public void getFilters();
 
 
-//    public void setOrCreateMainMovieListTab();
 //    public void setOrCreateNewUserListTab();
 
     public void bindFeatures(IFeature features);

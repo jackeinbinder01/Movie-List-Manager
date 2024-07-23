@@ -2,7 +2,11 @@ package group5.controller;
 
 import com.sun.security.jgss.GSSUtil;
 import group5.model.IModel;
+import group5.model.beans.MBeans;
+import group5.model.formatters.MBeansLoader;
 import group5.view.IView;
+
+import java.util.List;
 
 /**
  * Controller class for the program.
@@ -31,6 +35,10 @@ public class Controller implements IController, IFeature {
 
         // bindFeatures accept an IFeature interface, which is the controller itself
         view.bindFeatures(this);
+
+        String sampleDataPath = "data/samples/source.json";
+        List<MBeans> records = MBeansLoader.loadSourceFromJSON(sampleDataPath);
+        view.setMainTableRecords(records.stream());
     }
 
     @Override
@@ -44,6 +52,13 @@ public class Controller implements IController, IFeature {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addListFromFile'");
     }
+
+    @Override
+    public void showRecordDetails(MBeans record) {
+        System.out.println("[Controller] showRecordDetails called");
+        view.setDetailsPaneEntry(record);
+    }
+
 
     /**
      * Main entry point for the controller.
