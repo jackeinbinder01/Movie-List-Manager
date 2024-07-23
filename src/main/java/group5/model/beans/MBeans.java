@@ -3,17 +3,17 @@ package group5.model.beans;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
+import java.text.NumberFormat;
 import java.net.URL;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
 
 import group5.model.formatters.MBeansDeserializer;
 import group5.model.formatters.MBeansSerializer;
-import group5.model.beans.MBeansViews;
 
 import java.time.format.DateTimeFormatter;
 
@@ -106,7 +106,9 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds box office revenues of the media. */
     @JsonProperty("BoxOffice")
-    private String boxOffice;
+    @JsonDeserialize(using = MBeansDeserializer.BoxOfficeDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.BoxOfficeSerializer.class)
+    private int boxOffice;
 
     /** Holds imdb ID */
     @JsonProperty("imdbID")
@@ -114,12 +116,10 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds whether user had watched the media. */
     @JsonProperty("Watched")
-    @JsonView(MBeansViews.CompleteView.class)
     private boolean watched = false;
 
     /** Holds personal rating of the media. */
     @JsonProperty("My Rating")
-    @JsonView(MBeansViews.CompleteView.class)
     private double myRating = -1.0;
 
 
@@ -152,7 +152,7 @@ public class MBeans implements java.io.Serializable {
      */
     public MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, String genre,
             List<String> director, List<String> writer, List<String> actors, String plot, List<String> language,
-            List<String> country, String awards, URL poster, int metascore, double imdbRating, String boxOffice,
+            List<String> country, String awards, URL poster, int metascore, double imdbRating, int boxOffice,
             String id, boolean watched, double myRating) {
         this.title = title;
         this.year = year;
@@ -337,7 +337,7 @@ public class MBeans implements java.io.Serializable {
      *
      * @return the box office revenue
      */
-    public String getBoxOffice() {
+    public int getBoxOffice() {
         return boxOffice;
     }
 
@@ -528,14 +528,14 @@ public class MBeans implements java.io.Serializable {
      *
      * @param boxOffice the box office revenue to set
      */
-    public void setBoxOffice(String boxOffice) {
+    public void setBoxOffice(int boxOffice) {
         this.boxOffice = boxOffice;
     }
 
     /**
      * Set the imdbID.
      *
-     * @param boxOffice the imdbID to set
+     * @param id the imdbID to set
      */
     public void setID(String id) {
         this.id = id;
@@ -584,8 +584,22 @@ public class MBeans implements java.io.Serializable {
         result += "Poster: " + poster + "\n";
         result += "Metascore: " + metascore + "\n";
         result += "imdbRating: " + imdbRating + "\n";
-        result += "BoxOffice: " + boxOffice + "\n";
+        result += "BoxOffice: " + this.formatBoxOfficeCurrency() + "\n";
         return result;
+    }
+
+    /**
+     * Returns a string currency representation of the BoxOffice.
+     *
+     * Append $ to the BoxOffice value and add `,`.
+     */
+    public String formatBoxOfficeCurrency() {
+        if (this.boxOffice == -1) {
+            return "N/A";
+        }
+        NumberFormat usdFormatter = NumberFormat.getNumberInstance(Locale.US);
+        String boxOfficeStr = usdFormatter.format(this.boxOffice);
+        return "$" + boxOfficeStr;
     }
 
     /**
