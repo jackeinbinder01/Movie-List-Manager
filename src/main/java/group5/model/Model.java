@@ -37,11 +37,11 @@ public class Model implements IModel {
         throw new UnsupportedOperationException("Unimplemented method 'saveWatchList'");
     }
 
-    @Override
-    public Stream<MBeans> getFiltered() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
-    }
+//    @Override
+//    public Stream<MBeans> getFiltered() {
+//        // TODO Auto-generated method stub
+//        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
+//    }
 
 
 
