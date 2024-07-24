@@ -29,35 +29,13 @@ public class FilterHandler implements IFilterHandler {
     }
 
     /**
-     * a filter for movies sorte by name (ascending).
-     *
-     * @return a sorted stream of the movies.
-     */
-    @Override
-    public Stream<MBeans> filter(String filter) {
-        return filter(filter, MovieData.TITLE, true);
-
-    }
-
-    /**
-     * a filter on movies sorted by an input (ascending).
-     *
-     * @return a sorted stream of the movies.
-     */
-    @Override
-    public Stream<MBeans> filter(String filter, MovieData sortOn) {
-        return filter(filter, sortOn, true);
-
-    }
-
-    /**
      * a filter on movies sorted by an input ascending if bool is true
      * descending. if false.
      *
      * @return a sorted stream of the movies.
      */
     @Override
-    public Stream<MBeans> filter(String filter, MovieData sortOn, boolean ascending) {
+    public Stream<MBeans> filter(String filter) {
         List<MBeans> filteredBeans = movie.stream().toList();
         if (filter != null && !filter.isEmpty()) {
             String[] filters = filter.split(",");
