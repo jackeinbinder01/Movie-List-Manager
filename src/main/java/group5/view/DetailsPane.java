@@ -139,7 +139,7 @@ public class DetailsPane extends JPanel {
         this.addWatched();
         this.addDetailPane("Released");
         this.addDetailPane("Type");
-        this.addDetailPane("Rated");
+        this.addDetailPane("MPA Rating");
         this.addDetailPane("Genre");
         this.addDetailPane("Runtime");
         this.addDetailPane("Director");
