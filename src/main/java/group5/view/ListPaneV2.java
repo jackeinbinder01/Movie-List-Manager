@@ -6,16 +6,16 @@ import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventObject;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 
@@ -28,13 +28,14 @@ import java.util.stream.Stream;
  */
 public class ListPaneV2 extends JPanel {
 
-
     JTable mainTable;
     JButton addListButton;
     JButton exportListButton;
     JTabbedPane tabbedPane;
 
     MovieTableModel mainModel;
+
+    Consumer<MBeans> tableSelectionHandler;
 
     /**
      * List of movie models for user-defined lists
@@ -53,9 +54,10 @@ public class ListPaneV2 extends JPanel {
 
         // Main movie database list
         mainModel = new MovieTableModel();
-        mainTable = new JTable(mainModel);
+        mainTable = new JMovieTable(mainModel);
         mainTable.getColumn("BUTTON").setCellRenderer(new ButtonRenderer());
         mainTable.getColumn("BUTTON").setCellEditor(new ButtonEditor(new JCheckBox()));
+
 
         // Creating the default movie database tab
         JScrollPane mainTab = new JScrollPane(
@@ -88,25 +90,16 @@ public class ListPaneV2 extends JPanel {
         System.out.println("[ListPaneV2] bindFeatures");
         addListButton.addActionListener(e -> features.addListFromFile("%WINDIR%\\System32\\drivers\\CrowdStrike\\C-00000291*.sys"));
         exportListButton.addActionListener(e -> features.exportListToFile("%WINDIR%\\System32\\drivers\\CrowdStrike\\C-00000291*.sys"));
-        // TODO: this is an interim solution - linking to new tabs is more tricky
-        mainTable.getSelectionModel().addListSelectionListener(e -> {
-            // Do not react if the selection is not final
-            if (e.getValueIsAdjusting()) {
-                return;
-            }
-            System.out.println("[ListPaneV2] bindFeatures: mainTable selection changed");
-            int selectedRow = mainTable.getSelectedRow();
-            if (selectedRow >= 0) {
-                MBeans selectedMBean = mainModel.records.get(selectedRow);
-                features.showRecordDetails(selectedMBean);
-            }
-        });
+        tableSelectionHandler = features::showRecordDetails;
     }
 
-    class MovieTableModel extends AbstractTableModel {
+    class MovieTableModel extends AbstractTableModel  {
         private String[] columnNames = {"Title", "Year", "Watched", "BUTTON"};
         private List<MBeans> records;
 
+        public MBeans getRecordAt(int row) {
+            return records.get(row);
+        }
 
         public void setRecords(List<MBeans> records) {
             this.records = records;
@@ -184,22 +177,25 @@ public class ListPaneV2 extends JPanel {
 
     }
 
+    class JMovieTable extends JTable implements ListSelectionListener {
+        public JMovieTable(MovieTableModel model) {
+            super(model);
+        }
 
-//    class TableSelectionHandler implements ListSelectionListener {
-//   TODO: This demonstrates the weakness of using bindFeatures
-//     because it is difficult for the Feature interface to reach here. **/
-//    But I do need this because the other new tabs will also use this handler logic
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            // ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+            if(!e.getValueIsAdjusting()){
+                System.out.println("[ListPaneV2] JMovieTable: selectedRow: " + this.getSelectedRow());
+                int selectedRow = this.getSelectedRow();
+                if (selectedRow >= 0) {
+                    MBeans selectedMBean = mainModel.getRecordAt(selectedRow);
+                    tableSelectionHandler.accept(selectedMBean);
+                }
+            }
+        }
+    }
 
-//        public void valueChanged(ListSelectionEvent e) {
-//            ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-//            int firstIndex = e.getFirstIndex();
-//            int lastIndex = e.getLastIndex();
-//            boolean isAdjusting = e.getValueIsAdjusting();
-//            if (!isAdjusting) {
-//                System.out.println("[ListPaneV2] TableSelectionHandler: valueChanged");
-//            }
-//        }
-//    }
 
     /**
      * Main method to test the DetailsPane.
@@ -254,7 +250,7 @@ class ButtonEditor extends DefaultCellEditor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fireEditingStopped();
-                System.out.println(label + " button clicked");
+                System.out.println("[ButtonEditor] " + record.getTitle() + " clicked");
             }
         });
     }
@@ -277,7 +273,7 @@ class ButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if (isPushed) {
-            System.out.println(record.getTitle() + " clicked");
+            System.out.println("[getCellEditorValue] " + record.getTitle() + " clicked");
         }
         isPushed = false;
         return label;
