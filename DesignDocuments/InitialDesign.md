@@ -23,7 +23,6 @@ classDiagram
     MBeansLoader --> MBeansDeserializer: uses
     MBeansFormatter --> MBeansSerializer: uses
     FilterPane ..|> ActionListener : implements
-    FilterPane ..> JPanel : inherits
 
     namespace MODEL {
         class IModel
