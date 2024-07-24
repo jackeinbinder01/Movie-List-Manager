@@ -31,7 +31,7 @@ public class TestMBeans {
                            "When a beautiful stranger leads computer hacker Neo to a forbidding underworld,"
                            + "he discovers the shocking truth--the life he knows is the elaborate deception"
                            + "of an evil cyber-intelligence.", List.of("English"), List.of("United States", "Australia"),
-                           "Won 4 Oscars. 42 wins & 52 nominations total", img, 73, 8.7, "$172,076,928", "tt0133093", false, -1.0);
+                           "Won 4 Oscars. 42 wins & 52 nominations total", img, 73, 8.7, 172076928, "tt0133093", false, -1.0);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TestMBeans {
         "When a beautiful stranger leads computer hacker Neo to a forbidding underworld,"
         + "he discovers the shocking truth--the life he knows is the elaborate deception"
         + "of an evil cyber-intelligence.", List.of("English"), List.of("United States", "Australia"),
-        "Won 4 Oscars. 42 wins & 52 nominations total", img1, 73, 8.7, "$172,076,928", "tt0133093", false, -1.0);
+        "Won 4 Oscars. 42 wins & 52 nominations total", img1, 73, 8.7, 172076928, "tt0133093", false, -1.0);
         assertEquals("The Matrix", media.getTitle());
 
         MBeans titanic = new MBeans("Titanic", 1997, "movie", "PG-13", LocalDate.parse("19 Dec 1997", dtf), 195, "Drama, Romance",
@@ -59,7 +59,7 @@ public class TestMBeans {
         List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"),
         "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, "
         + "ill-fated R.M.S. Titanic.", List.of("English", "Swedish", "Italian", "French"), List.of("United States", "Mexico"),
-        "Won 11 Oscars. 126 wins & 83 nominations total", img2, 75, 7.9, "$674,292,608", "tt0120338", false, -1.0);
+        "Won 11 Oscars. 126 wins & 83 nominations total", img2, 75, 7.9, 674292608, "tt0120338", false, -1.0);
 
         assertTrue(matrix instanceof MBeans);
         assertEquals(media, matrix);
@@ -88,7 +88,7 @@ public class TestMBeans {
         assertEquals("https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg", media.getPoster().toString());
         assertEquals(73, media.getMetascore());
         assertEquals(8.7, media.getImdbRating());
-        assertEquals("$172,076,928", media.getBoxOffice());
+        assertEquals(172076928, media.getBoxOffice());
         assertEquals("tt0133093", media.getID());
         assertEquals(false, media.getWatched());
         assertEquals(-1.0, media.getMyRating());
@@ -121,7 +121,7 @@ public class TestMBeans {
         media.setPoster(img1);
         media.setMetascore(75);
         media.setImdbRating(7.9);
-        media.setBoxOffice("$674,292,608");
+        media.setBoxOffice(674292608);
         media.setID("tt0120338");
         media.setWatched(true);
         media.setMyRating(10.0);
@@ -144,7 +144,7 @@ public class TestMBeans {
         assertEquals("https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg", media.getPoster().toString());
         assertEquals(75, media.getMetascore());
         assertEquals(7.9, media.getImdbRating());
-        assertEquals("$674,292,608", media.getBoxOffice());
+        assertEquals(674292608, media.getBoxOffice());
         assertEquals("tt0120338", media.getID());
         assertEquals(true, media.getWatched());
         assertEquals(10.0, media.getMyRating());

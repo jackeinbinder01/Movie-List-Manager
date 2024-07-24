@@ -12,7 +12,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import group5.model.beans.MBeans;
-import group5.model.beans.MBeansViews;
 
 /**
  * A class to format the data in different ways.
@@ -75,32 +74,20 @@ public final class MBeansFormatter {
 //     }
 
 
-    public static void writeSourceToJSON(Collection<MBeans> records, OutputStream out) {
+    public static void writeMediasToJSON(Collection<MBeans> records, OutputStream out) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writerWithView(MBeansViews.PartialView.class)
-                  .writeValue(out, records);
+            mapper.writeValue(out, records);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void writeWatchListToJSON(Collection<MBeans> records, OutputStream out) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        try {
-            mapper.writerWithView(MBeansViews.CompleteView.class)
-                  .writeValue(out, records);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void writeWatchListToCSV(Collection<MBeans> records, OutputStream out) throws IOException {
+    public static void writeMediasToCSV(Collection<MBeans> records, OutputStream out) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(MBeans.class).withHeader();
-        ObjectWriter csvWriter = mapper.writerWithView(MBeansViews.CompleteView.class).with(schema);
+        ObjectWriter csvWriter = mapper.writer(schema);
         try {
             csvWriter.writeValue(out, records);
         } catch (IOException e) {

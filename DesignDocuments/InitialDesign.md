@@ -19,7 +19,6 @@ classDiagram
     Controller --> IModel: uses
     Controller --> IView: uses
     Model ..|> IModel: implements
-    MBeans --> MBeansViews: uses
     MBeansLoad --> MBeansDeserializer: uses
     MBeansFormatter --> MBeansSerializer: uses
     FilterPane ..|> ActionListener : implements
@@ -45,6 +44,30 @@ classDiagram
         class net
     }
 
+    namespace VIEW {
+        class IView
+        class BaseView
+        class FilterPane
+        class ListPane
+        class DetailsPane
+        class JFrame
+
+        class List
+        class JPanel
+        class ActionListener
+        class JTextField
+        class JComboBox
+        class JXMultiThumbSlider
+        class JButton
+        class GridBagConstraints
+    }
+
+    namespace CONTROLLER {
+        class IController
+        class Controller
+        class IFeature
+    }
+
     namespace formatters {
         class Formats
         class MBeansDeserializer
@@ -62,82 +85,98 @@ classDiagram
 
     namespace beans {
         class MBeans
-        class MBeansViews
     }
 
     namespace net {
         class NetUtils
     }
 
-    namespace VIEW {
-        class IView
-        class BaseView
-        class FilterPane
-        class ListPane
-        class DetailsPane
-        class JFrame
-    }
-
-    namespace CONTROLLER {
-        class IController
-        class Controller
-        class IFeature
-    }
-
-
 
     class Model {
 
     }
 
+    class BaseView {
+        + BaseView(): void
+        + display(): void
+        + bindFeatures(IFeature features): void
+        + setDetailsPaneEntry(MBeans record): void
+        + setMainTableRecords(Stream~MBeans~ records): void
+        + getFilters(): void
+        + clearFilters(): void
+    }
+
 
     class IModel {
-    << Interface >>
+        <<interface>>
         - DEFAULT_DATA
-        loadSourceData() void
-        loadWatchList() void
-        getMovieList(FilterClass, UserListIdentifier) Stream~MBeans~
-        saveWatchList(String, Stream~MBeans~) void
-        getFiltered() Stream~MBeans~
-
+        + loadSourceData() void
+        + loadWatchList() void
+        + getMovieList(FilterClass, UserListIdentifier) Stream~MBeans~
+        + saveWatchList(String, Stream~MBeans~) void
+        + getFiltered() Stream~MBeans~
     }
 
     class IController {
+        <<interface>>
         + go(): void
+    }
 
+    class IFeature {
+        <<interface>>
+        + showRecordDetails(MBeans record): void
+        + addListFromFile(String fileName): void
+        + exportListToFile(String fileName): void
+        + applyFilters(): void
+        + clearFilters(): void
+    }
+
+    class Controller {
+        - model: IModel
+        - view: IView
+        + Controller(IModel model, IView view)
+        + go(): void
+        + showRecordDetails(MBeans record): void
+        + addListFromFile(String fileName): void
+        + exportListToFile(String fileName): void
+        + applyFilters(): void
+        + clearFilters(): void
     }
 
     class IView {
+        <<interface>>
         + display(): void
         + setDetailsPane(): void
+        + bindFeatures(IFeature features): void
 
     }
 
     class FilterPane {
-        - List~MBeans~ movies
-        - JTextField titleFilter
-        - JComboBox contentTypeFilter
-        - JComboBox genreFilter
-        - JComboBox mpaRatingFilter
-        - JXMultiThumbSlider releasedFilter
-        - JXMultiThumbSlider imdbRatingFilter
-        - JXMultiThumbSlider runtimeFilter
-        - JXMultiThumbSlider boxOfficeFilter
-        - JTextField directorFilter
-        - JTextField actorFilter
-        - JTextField writerFilter
-        - JComboBox languageFilter
-        - JComboBox countryOfOriginFilter
-        - JButton applyFilterButton
-        - JButton cleaFilterButton
-        - GridBagConstraints gbc
-        - int filterRow
+        - ListMBeans: List
+        - titleFilter: JTextField
+        - contentTypeFilter: JComboBox
+        - genreFilter: JComboBox
+        - mpaRatingFilter: JComboBox
+        - releasedFilter: JXMultiThumbSlider
+        - imdbRatingFilter: JXMultiThumbSlider
+        - runtimeFilter: JXMultiThumbSlider
+        - boxOfficeFilter: JXMultiThumbSlider
+        - directorFilter: JTextField
+        - actorFilter: JTextField
+        - writerFilter: JTextField
+        - languageFilter: JComboBox
+        - countryOfOriginFilter: JComboBox
+        - applyFilterButton: JButton
+        - cleaFilterButton: JButton
+        - gbc: GridBagConstraints
+        - filterRow: int
         + FilterPane()
         - addLabel(String filterTitle): void
         - addFilter(String filterTitle, Object filter): void
         - addButton(String buttonTitle, JButton button): void
         - configureThumbSlider(JXMultiThumbSlider thumbSlider): void
         + actionPerformed(ActionEvent e): void
+        + bindFeatures(IFeature features): void
     }
 
     class ListPane {
@@ -151,6 +190,7 @@ classDiagram
         + ListPane()
         + addColumns(JTable listTable)
         + fillInTable(JTable listTable)
+        + bindFeatures(IFeature features): void
     }
 
     class DetailsPane {
@@ -178,6 +218,7 @@ classDiagram
         - scaleImage(URL) ImageIcon
         - setMedia(MBeans) void
         + addListeners() void
+        + bindFeatures(IFeature features): void
     }
 
 

@@ -22,6 +22,8 @@ import java.awt.Image;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.imageio.ImageIO;
 
@@ -33,15 +35,17 @@ import javax.swing.text.StyleConstants;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import java.util.List;
 import java.util.ArrayList;
 
+import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 
 import java.time.format.DateTimeFormatter; // For Date formatting
 
-import group5.model.beans.MBeansLoader; // Testing
 
 import javax.swing.UIManager; // Testing
 
@@ -107,11 +111,6 @@ public class DetailsPane extends JPanel {
     private JTextField userRating;
 
     /**
-     * Holds JButton for updating user rating.
-     */
-    private JButton saveRating;
-
-    /**
      * Constructor to create a DetailsPane object.
      *
      * Setup all the components contained inside this panel.
@@ -120,6 +119,7 @@ public class DetailsPane extends JPanel {
         super();
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        this.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         this.detailsPanel = new JPanel();
         this.detailsPanel.setLayout(new BoxLayout(this.detailsPanel, BoxLayout.Y_AXIS));
         this.detailsPanel.setBackground(Color.WHITE);
@@ -270,7 +270,7 @@ public class DetailsPane extends JPanel {
         label.setVerticalAlignment(JLabel.TOP);
         label.setBorder(BorderFactory.createEmptyBorder(2, 4, 0, 0));
 
-        // JTextArea for actual media details.
+        // JTextField for actual media details.
         this.userRating = new JTextField();
         this.userRating.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 6));
         this.userRating.setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -278,14 +278,8 @@ public class DetailsPane extends JPanel {
         this.userRating.setEditable(true);
         this.userRating.setMinimumSize(new Dimension(150, 20));
 
-        // JButton to update user rating.
-        this.saveRating = new JButton("Save");
-        this.saveRating.setPreferredSize(new Dimension(75, 10));
-        this.saveRating.setFocusPainted(false);  // Remove border around text.
-
         panel.add(label, BorderLayout.WEST);
         panel.add(this.userRating, BorderLayout.CENTER);
-        panel.add(this.saveRating, BorderLayout.EAST);
         this.detailsPanel.add(panel);
         this.addVerticalPadding(5);
     }
@@ -328,6 +322,7 @@ public class DetailsPane extends JPanel {
      * Set the media details to display.
      *
      * @param media the media to display.
+     * @param userDetails whether the details are on source or watchlist tab.
      */
     public void setMedia(MBeans media) {
         this.mediaTitle.setText(media.getTitle());
@@ -346,7 +341,7 @@ public class DetailsPane extends JPanel {
         this.mediaDetails.get(11).setText(media.getAwards());
         this.mediaDetails.get(12).setText(Integer.toString(media.getMetascore()));
         this.mediaDetails.get(13).setText(Double.toString(media.getImdbRating()));
-        this.mediaDetails.get(14).setText(media.getBoxOffice().toString());
+        this.mediaDetails.get(14).setText(media.formatBoxOfficeCurrency());
         this.userRating.setText(Double.toString(media.getMyRating()));
         this.watchedBox.setSelected(media.getWatched());
         SwingUtilities.invokeLater(() -> {
@@ -358,21 +353,41 @@ public class DetailsPane extends JPanel {
     /**
      * Add listeners to the watched check box and save rating button.
      */
-    public void addListeners() {
+    public void bindFeatures(IFeature features) {
         // TODO: Add listeners method for watchedBox and saveRating.
-        //this.watchedBox.addActionListener(new ActionListener() {
-        //    @Override
-        //    public void actionPerformed(ActionEvent e) {
-        //        System.out.println("Watched: " + watchedBox.isSelected());
-        //    }
-        //});
-        //
-        //this.saveRating.addActionListener(new ActionListener() {
-        //    @Override
-        //    public void actionPerformed(ActionEvent e) {
-        //        System.out.println("User Rating: " + userRating.getText());
-        //    }
-        //});
+        /*this.watchedBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Watched: " + watchedBox.isSelected());
+            }
+        });*/
+        // User Rating Listener
+        /* ========== PICK ONE ========== */
+        // 1. Acion Listener - do something when `enter` pressed
+        /*this.userRating.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("User Rating: " + userRating.getText());
+            }
+        });*/
+
+        // 2. Document Listener - Real time update
+        /*userRating.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                System.out.println("Text inserted. Current text: " + userRating.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                System.out.println("Text removed. Current text: " + userRating.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // This method is generally not called for plain text fields.
+            }
+        });*/
     }
 
     /**
@@ -393,6 +408,7 @@ public class DetailsPane extends JPanel {
         frame.add(detailsPane);
         MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "");
         detailsPane.setMedia(media);
+        detailsPane.bindFeatures(null);
         frame.setVisible(true);
     }
 }
