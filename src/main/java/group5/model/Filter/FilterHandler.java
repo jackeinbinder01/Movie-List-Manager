@@ -67,7 +67,7 @@ public class FilterHandler implements IFilterHandler {
             }
 
         }
-        return MovieSort.sort(filteredBeans, sortOn, ascending);
+        return filteredBeans.stream();
 
     }
 

@@ -1,30 +1,37 @@
 package group5.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
-import group5.model.MovieList;
 import group5.model.beans.MBeans;
-import group5.model.beans.MBeansLoader;
-import group5.model.formatters.Formats;
+import group5.model.formatters.MBeansLoader;
 
 public class ListPane extends JPanel {
 
-    JPanel listPanel;
-    JTable listTable;
-    JButton list1;
-    JButton list2;
-    JButton addList;
-    JButton exportList;
-    JButton removeCurrentEntry;
+    /**
+     * the panel for the List.
+     */
+    private JPanel listPanel;
+    private JTable listTable;
+    private JButton list1;
+    private JButton list2;
+    private JButton addList;
+    private JButton exportList;
+    private JButton removeCurrentEntry;
 
     ListPane() {
         super(new BorderLayout());
@@ -84,7 +91,7 @@ public class ListPane extends JPanel {
 
     private void fillInTable(JTable listTable) {
         DefaultTableModel model = (DefaultTableModel) listTable.getModel();
-        List<MBeans> listOfMovies = MBeansLoader.loadMBeansFromFile("path/to/your/file.json", Formats.JSON);
+        List<MBeans> listOfMovies = MBeansLoader.loadSourceFromJSON("data/samples/source.json");
 
         if (listOfMovies != null) {
             for (MBeans movieBean : listOfMovies) {
@@ -99,12 +106,18 @@ public class ListPane extends JPanel {
                     movieBean.getImdbRating(),
                     movieBean.getMyRating(),
                     movieBean.getWatched(),
-                    "Add/Remove", // Placeholder for add/remove button
-                    "" // Placeholder for remove button
+                    new JButton("Add/Remove"), // Add/Remove button
+                    new JButton("Remove") // Remove button
                 };
                 model.addRow(row);
             }
         }
+
+        // Adding ButtonRenderer and ButtonEditor for the buttons in the last two columns
+        listTable.getColumn("Add/Remove").setCellRenderer(new ButtonRenderer());
+        listTable.getColumn("Add/Remove").setCellEditor(new ButtonEditor(new JCheckBox()));
+        listTable.getColumn("Remove").setCellRenderer(new ButtonRenderer());
+        listTable.getColumn("Remove").setCellEditor(new ButtonEditor(new JCheckBox()));
     }
 
     /**
@@ -118,7 +131,77 @@ public class ListPane extends JPanel {
         frame.setSize(500, 600);
         ListPane listPane = new ListPane();
         frame.add(listPane);
-        MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "");
         frame.setVisible(true);
+    }
+}
+
+class ButtonRenderer extends JButton implements TableCellRenderer {
+
+    public ButtonRenderer() {
+        setOpaque(true);
+        setFocusPainted(false);
+        setBorderPainted(false);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        if (value instanceof JButton) {
+            JButton button = (JButton) value;
+            setText(button.getText());
+            setIcon(button.getIcon());
+            setEnabled(button.isEnabled());
+        }
+        return this;
+    }
+}
+
+class ButtonEditor extends DefaultCellEditor {
+
+    private JButton button;
+    private String label;
+    private boolean isPushed;
+
+    public ButtonEditor(JCheckBox checkBox) {
+        super(checkBox);
+        button = new JButton();
+        button.setOpaque(true);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fireEditingStopped();
+                // Custom action can be added here
+                System.out.println(label + " button clicked");
+            }
+        });
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        if (value instanceof JButton) {
+            JButton btn = (JButton) value;
+            label = btn.getText();
+            button.setText(label);
+            button.setIcon(btn.getIcon());
+            isPushed = true;
+        }
+        return button;
+    }
+
+    @Override
+    public Object getCellEditorValue() {
+        if (isPushed) {
+            // Action when button is clicked
+            System.out.println(label + " button clicked");
+        }
+        isPushed = false;
+        return label;
+    }
+
+    @Override
+    public boolean stopCellEditing() {
+        isPushed = false;
+        return super.stopCellEditing();
     }
 }
