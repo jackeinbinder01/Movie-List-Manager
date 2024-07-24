@@ -5,7 +5,7 @@ You may have multiple design documents for this project. Place them all in this 
 
 ```mermaid
 classDiagram
-    direction TB
+    direction LR
 
     BaseView ..|> IView: implements
     BaseView --|> JFrame: extends
@@ -16,20 +16,13 @@ classDiagram
     ListPane --|> JPanel: extends
     DetailsPane --|> JPanel: extends
     Controller ..|> IController: implements
+    Controller ..|> IFeature: implements
     Controller --> IModel: uses
     Controller --> IView: uses
     Model ..|> IModel: implements
-    MBeansLoad --> MBeansDeserializer: uses
+    MBeansLoader --> MBeansDeserializer: uses
     MBeansFormatter --> MBeansSerializer: uses
     FilterPane ..|> ActionListener : implements
-    FilterPane ..> JTextField : uses
-    FilterPane ..> JComboBox : uses
-    FilterPane ..> JXMultiThumbSlider : uses
-    FilterPane ..> JButton : uses
-    FilterPane ..> GridBagConstraints : uses
-    FilterPane ..> List : uses
-    FilterPane ..> MBeans : uses
-    FilterPane ..> JFrame : uses
     FilterPane ..> JPanel : inherits
 
     namespace MODEL {
@@ -52,14 +45,8 @@ classDiagram
         class DetailsPane
         class JFrame
 
-        class List
         class JPanel
         class ActionListener
-        class JTextField
-        class JComboBox
-        class JXMultiThumbSlider
-        class JButton
-        class GridBagConstraints
     }
 
     namespace CONTROLLER {
