@@ -570,7 +570,7 @@ public class MBeans implements java.io.Serializable {
         String result = "";
         result += "Title: " + title + "\n";
         result += "Year: " + year + "\n";
-        result += "Rated: " + rated + "\n";
+        result += "MPA Rating: " + rated + "\n";
         result += "Released: " + dateFormat.format(released) + "\n";
         result += "Runtime: " + runtime + "\n";
         result += "Genre: " + genre + "\n";
@@ -584,7 +584,9 @@ public class MBeans implements java.io.Serializable {
         result += "Poster: " + poster + "\n";
         result += "Metascore: " + metascore + "\n";
         result += "imdbRating: " + imdbRating + "\n";
-        result += "BoxOffice: " + this.formatBoxOfficeCurrency() + "\n";
+        result += "BoxOffice: " + formatBoxOfficeCurrency() + "\n";
+        result += "Watched: " + watched + "\n";
+        result += "My Rating: " + myRating + "\n";
         return result;
     }
 
