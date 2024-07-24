@@ -132,9 +132,10 @@ classDiagram
     class IView {
         <<interface>>
         + display(): void
-        + setDetailsPane(): void
+        + setDetailsPaneEntry(MBeans mbean): void
+        + setMainTableRecords(Stream~MBeans~ records): void
+        + clearFilters(): void
         + bindFeatures(IFeature features): void
-
     }
 
     class FilterPane {

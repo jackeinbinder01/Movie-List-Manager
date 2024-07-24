@@ -81,10 +81,7 @@ public class BaseView extends JFrame implements IView {
         listPane.setMainTableRecords(mbeans);
     }
 
-    @Override
-    public void getFilters() {
-        System.out.println("getFilterParams");
-    }
+
 
     @Override
     public void clearFilters() {

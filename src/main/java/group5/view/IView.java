@@ -22,12 +22,6 @@ public interface IView {
      */
     public void setMainTableRecords(Stream<MBeans> mbeans);
 
-    /**
-     * Get the filters parameters from the FilterPane
-     * TODO: add an actual return type for the filters
-     * TODO: figure out a good data format to represent the filters, should I create a "Filter" helper class?
-     */
-    public void getFilters();
 
 
 //    public void setOrCreateNewUserListTab();
