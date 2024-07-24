@@ -14,24 +14,37 @@ public class Model implements IModel {
     /** List of MBeans representing the source databse list. */
     private List<MBeans> sourceList;
 
-    /** List of imdbID String to reference which media from source list is in watch list. */
     /** List of watchLists where each holds a list of reference to source list MBeans. */
     private List<List<MBeans>> watchLists;
 
+    /**
+     * Model class constructor.
+     */
     public Model() {
         loadSourceData();
         this.watchLists = new ArrayList<>();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Stores the source list in the sourceList field.
+     */
     @Override
     public void loadSourceData() {
         System.out.println("Load source database from" + DEFAULT_DATA);
         this.sourceList = MBeansLoader.loadMediasFromFile(DEFAULT_DATA, Formats.JSON);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Create a list of MBeans where each is a reference to source list.
+     */
     @Override
     public void loadWatchList(String filename) {
         List<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
+        // Create a list of sourcelist references by mapping externalList to sourceList
         this.watchLists.add(externalList.stream()
                                         .map(externalBean ->
                                              this.sourceList.stream()
@@ -65,14 +78,20 @@ public class Model implements IModel {
 
     @Override
     public void updateWatched(MBeans media, boolean watched) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateWatched'");
+        for (MBeans bean : this.sourceList) {
+            if (bean.equals(media)) {
+                bean.setWatched(watched);
+            }
+        }
     }
 
     @Override
     public void updateUserRating(MBeans media, double rating) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUserRating'");
+        for (MBeans bean : this.sourceList) {
+            if (bean.equals(media)) {
+                bean.setMyRating(rating);
+            }
+        }
     }
 
 //    @Override
@@ -86,7 +105,6 @@ public class Model implements IModel {
      */
     public static void main(String[] args) {
         Model model = new Model();
-        //System.out.println("Source list:" + model.getSourceLists().collect(Collectors.toList()));
         model.loadWatchList("data/samples/watchlist.json");
         List<MBeans> externalList = MBeansLoader.loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
         System.out.println("Source");
@@ -104,5 +122,9 @@ public class Model implements IModel {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
             System.out.println("Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
+        System.out.println("Source list:" + model.getSourceLists().collect(Collectors.toList()));
+        model.updateWatched(externalList.get(2), true);
+        model.updateUserRating(externalList.get(3), 8.8);
+        System.out.println("Source list:" + model.getSourceLists().collect(Collectors.toList()));
     }
 }
