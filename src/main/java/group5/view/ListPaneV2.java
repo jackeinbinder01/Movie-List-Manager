@@ -23,12 +23,12 @@ import java.util.stream.Stream;
  * ListPaneV2 is ....... TODO: add description
  * BorderLayout.CENTER = a JTabbedPane containing the various lists
  * BorderLayout.SOUTH = a JPanel toolbar containing with buttons
- *
+ * <p>
  * TabbedPane citation: https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
  */
 public class ListPaneV2 extends JPanel {
 
-    JPanel mainTableArea;
+
     JTable mainTable;
     JButton addListButton;
     JButton exportListButton;
@@ -63,7 +63,6 @@ public class ListPaneV2 extends JPanel {
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         tabbedPane.addTab("mainTab", null, mainTab, "Main Movie Database");
-
 
 
         this.add(tabbedPane, BorderLayout.CENTER);
@@ -105,7 +104,7 @@ public class ListPaneV2 extends JPanel {
     }
 
     class MovieTableModel extends AbstractTableModel {
-        private String[] columnNames = {"Title","Year","Watched", "BUTTON"};
+        private String[] columnNames = {"Title", "Year", "Watched", "BUTTON"};
         private List<MBeans> records;
 
 
@@ -140,7 +139,7 @@ public class ListPaneV2 extends JPanel {
                 case 2:
                     return record.getWatched();
                 case 3:
-                    return "BUTTON_LABEL";
+                    return record;
                 default:
                     return null;
             }
@@ -224,7 +223,6 @@ public class ListPaneV2 extends JPanel {
 }
 
 
-
 class ButtonRenderer extends JButton implements TableCellRenderer {
 
     public ButtonRenderer() {
@@ -236,7 +234,7 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
                                                    boolean isSelected, boolean hasFocus, int row, int column) {
-        setText((value == null) ? "" : value.toString());
+        setText("LABEL");
         return this;
     }
 }
@@ -245,6 +243,7 @@ class ButtonEditor extends DefaultCellEditor {
 
     protected JButton button;
     private String label;
+    private MBeans record;
     private boolean isPushed;
 
     public ButtonEditor(JCheckBox checkBox) {
@@ -263,7 +262,13 @@ class ButtonEditor extends DefaultCellEditor {
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value,
                                                  boolean isSelected, int row, int column) {
-        label = (value == null) ? "" : value.toString();
+        if (value instanceof MBeans) {
+            record = (MBeans) value;
+        } else {
+            record = null;
+            System.out.println("[ButtonEditor] getTableCellEditorComponent: value is not MBeans");
+        }
+        label = "LABEL";
         button.setText(label);
         isPushed = true;
         return button;
@@ -272,7 +277,7 @@ class ButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if (isPushed) {
-            System.out.println(label + " button clicked");
+            System.out.println(record.getTitle() + " clicked");
         }
         isPushed = false;
         return label;
