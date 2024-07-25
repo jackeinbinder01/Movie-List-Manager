@@ -93,14 +93,6 @@ public class ListPaneV2 extends JPanel {
     private void createSourceTableTab() {
         sourceTableModel = new MovieTableModel(TableMode.MAIN);
         sourceTable = new JMovieTable(sourceTableModel);
-//        sourceTable.getModel().addTableModelListener(e -> {
-//            int row = e.getFirstRow();
-//            int column = e.getColumn();
-//            MovieTableModel model = (MovieTableModel) e.getSource();
-//            MBeans record = model.getRecordAt(row);
-//            System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + record.getWatched());
-//
-//        });
         sourceTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(TableMode.MAIN));
         sourceTable.getColumn("ACTION").setCellEditor(new ButtonEditor(TableMode.MAIN));
         JScrollPane mainTab = new JScrollPane(
@@ -126,7 +118,7 @@ public class ListPaneV2 extends JPanel {
     public void setUserTableRecords(int userListIndex, Stream<MBeans> mbeans) {
         System.out.println("[BaseView] setUserTableRecords");
         if (tabbedPane.getTabCount() - 2 < userListIndex) {
-            throw new IllegalArgumentException("User list index out of bounds");
+            throw new IllegalArgumentException("User-defined list index out of bounds");
         }
         MovieTableModel model = userListModels.get(userListIndex);
         model.setRecords(mbeans.toList());
@@ -248,8 +240,7 @@ public class ListPaneV2 extends JPanel {
          * editable.
          */
         public boolean isCellEditable(int row, int col) {
-            //Note that the data/cell address is constant,
-            //no matter where the cell appears onscreen.
+            // The data/cell address is constant, even when are rearranged onscreen.
             COLUMN column = COLUMN.values()[col];
             switch (column) {
                 case WATCHED, ACTION:
@@ -371,11 +362,12 @@ public class ListPaneV2 extends JPanel {
                     fireEditingStopped();
                     switch (tableMode) {
                         case MAIN:
-                            JOptionPane.showMessageDialog(null, "[ButtonEditor] Pop up a dialogue for adding/removing record \"" + record.getTitle() + "\" from UserList ", "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
                             break;
                         case USER_DEFINED:
                             int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
                             JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            removeFromListHandler.accept(record, currUserTableIndex);
                             break;
                         default:
                             System.out.println("[ButtonEditor] AN_ERROR_OCCURRED");
@@ -435,10 +427,12 @@ public class ListPaneV2 extends JPanel {
         listPaneV2.setVisible(true);
         frame.setVisible(true);
     }
+
+
+    enum TableMode {
+        MAIN,
+        USER_DEFINED
+    }
 }
 
 
-enum TableMode {
-    MAIN,
-    USER_DEFINED
-}
