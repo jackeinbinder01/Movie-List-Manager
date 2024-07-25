@@ -81,8 +81,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
         // configure gbc
         gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        updateGBC(null, null, null, null, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
 
         // add panels
         add(filterPanel, BorderLayout.NORTH);
@@ -244,13 +243,20 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    private void updateGBC(Integer x, Integer y, Integer width, Integer weightx,
+                           Integer anchor, Integer fill) {
+        // change gbc only if param is not null
+        gbc.gridx = (x != null) ? x : gbc.gridx;
+        gbc.gridy = (y != null) ? y : gbc.gridy;
+        gbc.gridwidth = (width != null) ? width : gbc.gridwidth;
+        gbc.weightx = (weightx != null) ? weightx : gbc.weightx;
+        gbc.anchor = (anchor != null) ? anchor : gbc.anchor;
+        gbc.fill = (fill != null) ? fill : gbc.fill;
+    }
+
     private void addLabel(String filterTitle) {
         // update gbc
-        gbc.gridx = 0;
-        gbc.gridy = filterRow;
-        gbc.gridwidth = 4;
-        gbc.weightx = 1;
-        gbc.anchor = GridBagConstraints.WEST;
+        updateGBC(0, filterRow, 4, 1, GridBagConstraints.WEST, null);
 
         // add label
         filterPanel.add(new JLabel(filterTitle), gbc);
@@ -269,11 +275,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
 
         // update gbc
-        gbc.gridx = 0;
-        gbc.gridwidth = 4;
-        gbc.gridy = filterRow;
-        gbc.weightx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        updateGBC(0, filterRow, 4, 1, null, GridBagConstraints.HORIZONTAL);
 
         // add component
         filterPanel.add((Component) filter, gbc);
@@ -301,10 +303,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     private String[] getDoubleFilterRange(ToDoubleFunction<MBeans> fieldFunction) {
-
+        // find max/min
         OptionalDouble maxValue = movies.stream().mapToDouble(fieldFunction).max();
         OptionalDouble minValue = movies.stream().mapToDouble(fieldFunction).min();
 
+        // convert to string
         String maxValueString = maxValue.isPresent() ? Double.toString(maxValue.getAsDouble()) : "No Max";
         String minValueString = minValue.isPresent() ? Double.toString(minValue.getAsDouble()) : "No Min";
 
@@ -312,10 +315,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     private String[] getIntFilterRange(ToIntFunction<MBeans> fieldFunction) {
-
+        // find max/min
         OptionalInt maxValue = movies.stream().mapToInt(fieldFunction).max();
         OptionalInt minValue = movies.stream().mapToInt(fieldFunction).min();
 
+        // convert to string
         String maxValueString = maxValue.isPresent() ? Integer.toString(maxValue.getAsInt()) : "No Max";
         String minValueString = minValue.isPresent() ? Integer.toString(minValue.getAsInt()) : "No Min";
 
@@ -323,7 +327,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     private String[] getStringFilterRange(Function<MBeans, String> fieldFunction) {
-
+        // find max/min
         OptionalDouble maxValue = movies.stream()
                 .map(fieldFunction)
                 .mapToDouble(this::customParseDouble)
@@ -336,6 +340,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 .filter(v -> v!= Double.MIN_VALUE)
                 .min();
 
+        // convert to string
         String maxValueString = maxValue.isPresent() ? Double.toString(maxValue.getAsDouble()) : "No Max";
         String minValueString = minValue.isPresent() ? Double.toString(minValue.getAsDouble()) : "No Min";
 
@@ -343,17 +348,21 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     private double customParseDouble(String value) {
+        // remove leading dollar sign
         try {
             String processedValue = value.replaceAll("\\D", "");
             return Double.parseDouble(processedValue);
         } catch (NumberFormatException e) {
+            // return standard value if exception, which is filtered out in getStringFilterRange()
             return Double.MIN_VALUE;
         }
     }
 
     private String formatAsCurrency(String value) {
+        // set currency formatter to US locale
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
 
+        // convert to string and remove trailing .00
         String currencyStringDouble = currencyFormatter.format(Double.parseDouble(value));
         String currencyStringInt = currencyStringDouble.substring(0, currencyStringDouble.length() - 3);
 
@@ -363,42 +372,40 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     private void addRangeFilter(String filterTitle, JTextField filterFrom,
                                 JTextField filterTo, String rangeMin, String rangeMax) {
+        // add title to panel
         addLabel(filterTitle);
+
+        // create "From" and "To" labels with italic font
         JLabel fromLabel = new JLabel("From:");
         italicizeFont(fromLabel);
         JLabel toLabel = new JLabel("To:");
         italicizeFont(toLabel);
 
-        // "From" label gbc
-        gbc.gridx = 0;
-        gbc.gridy = filterRow;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.WEST;
+        // update gbc and add "From" label
+        updateGBC(0, filterRow, 1, 0, GridBagConstraints.WEST, GridBagConstraints.NONE);
         filterPanel.add(fromLabel, gbc);
 
-        // "From" text field gbc
-        gbc.gridx = 1;
-        gbc.weightx = 1; // Extra space for text field
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // update gbc and add "From" text field
+        updateGBC(1, null, null, 1, null, GridBagConstraints.HORIZONTAL);
+        // set font italic
         italicizeFont(filterFrom);
+        // add min as placeholder
         setPlaceholder(filterFrom, rangeMin);
+        // add focus listener and add filter to panel
         filterFrom.addFocusListener(this);
         filterPanel.add(filterFrom, gbc);
 
-        // "To" label gbc
-        gbc.gridx = 2;
-        gbc.weightx = 0; // No extra space for label
-        gbc.fill = GridBagConstraints.NONE; // Reset fill
+        // update gbc and add "To" label
+        updateGBC(2, null, null, 0, null, GridBagConstraints.NONE);
         filterPanel.add(toLabel, gbc);
 
-        // "To" text field gbc
-        gbc.gridx = 3;
-        gbc.weightx = 1; // Extra space for text field
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // update gbc and add "To" text field
+        updateGBC(3, null, null, 1, null, GridBagConstraints.HORIZONTAL);
+        // set font italic
         italicizeFont(filterTo);
+        // add max as placeholder
         setPlaceholder(filterTo, rangeMax);
+        // add focus listener and add filter to panel
         filterTo.addFocusListener(this);
         filterPanel.add(filterTo, gbc);
 
@@ -473,6 +480,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     private void setMovies(Stream<MBeans> movies) {
         this.movies = movies.toList();
+        // reset filter ranges and clear filter options
         setRangeFilterRanges();
         resetFilterOptions();
     }
@@ -558,6 +566,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     @Override
     public void focusGained(FocusEvent e) {
+        // clear text when focus is gained
         JTextField textField = (JTextField) e.getSource();
         textField.setText("");
     }
@@ -569,12 +578,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     @Override
     public void focusLost(FocusEvent e) {
+        // reset placeholders when focus is lost
         JTextField textField = (JTextField) e.getSource();
         resetPlaceholder(textField);
     }
 
     public void resetPlaceholder(JTextField textField) {
-
         switch (textField.getName()) {
             case "releasedFrom":
                 if (releasedFrom.getText().isEmpty()) {
