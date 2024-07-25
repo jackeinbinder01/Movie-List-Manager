@@ -12,7 +12,7 @@ import java.nio.file.FileSystems;
 import group5.model.beans.MBeans;
 import group5.model.formatters.MBeansLoader;
 import group5.model.formatters.Formats;
-import group5.model.MovieListV2;
+import group5.model.IMovieListV2;
 
 public class Model implements IModel {
 
@@ -20,7 +20,7 @@ public class Model implements IModel {
     private Set<MBeans> sourceList;
 
     /** List of watchLists where each holds a list of reference to source list MBeans. */
-    private List<MovieListV2> watchLists;
+    private List<IMovieListV2> watchLists;
 
     /**
      * Model class constructor.
@@ -64,7 +64,7 @@ public class Model implements IModel {
                                                             .findFirst()
                                                             .orElse(null))
                                         .collect(Collectors.toSet());
-        MovieListV2 watchList = new MovieListV2(name, mapped);
+        IMovieListV2 watchList = new MovieListV2(name, mapped);
         this.watchLists.add(watchList);
     }
 

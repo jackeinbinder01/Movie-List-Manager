@@ -15,7 +15,7 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 
-public class MovieListV2 /*implements IMovieList commented out for different method signature with interface*/ {
+public class MovieListV2 implements IMovieListV2 {
 
     /** set of board movie. */
     private Set<MBeans> movieList;
@@ -29,7 +29,8 @@ public class MovieListV2 /*implements IMovieList commented out for different met
      *
      * Create empty list.
      */
-    public MovieListV2() {
+    public MovieListV2(String name) {
+        this.name = name;
         this.movieList = new HashSet<>();
         // hashset so there can only be one instance of a movie
         // in list
@@ -40,48 +41,35 @@ public class MovieListV2 /*implements IMovieList commented out for different met
      *
      * Create from loading a list of movies.
      */
-    public MovieListV2(Set<MBeans> movieList) {
+    public MovieListV2(String name, Set<MBeans> movieList) {
+        this.name = name;
         this.movieList = movieList;
         // hashset so there can only be one instance of a movie
         // in list
     }
 
-    /**
-     * gets list of movies.
-     *
-     * @return the list of movieList.
-     */
-    //@Override
+    @Override
+    public String getListName() {
+        return this.name;
+    }
+
+    @Override
     public Stream<MBeans> getMovieList() {
         return this.movieList.stream();
     }
 
-    /**
-     * clears the list of movie names.
-     *
-     * Equivalent of remove all.
-     *
-     */
-    //@Override
+
+    @Override
     public void clear() {
         this.movieList.clear();
     }
 
-    /**
-     * returns the number of elements in a list.
-     *
-     * @return the number of elements in a list.
-     */
-    //@Override
+    @Override
     public int count() {
         return this.movieList.size();
     }
 
-    /**
-     * saves the movie to a file.
-     *
-     */
-    //@Override  new FileOutputStream("./data/samples/source.json")
+    @Override
     public void savemovie(String filename, Formats format) {
         try {
             FileOutputStream saves = new FileOutputStream(filename);
@@ -92,26 +80,23 @@ public class MovieListV2 /*implements IMovieList commented out for different met
         }
     }
 
-    /**
-     * adds a media to the list.
-     *
-     * @param media the media to add to watchlist.
-     */
-    //@Override
+    @Override
     public void addToList(MBeans media) {
         if (!this.movieList.add(media)) {
             System.out.println("Media is already in list");
         }
     }
 
-    /**
-     * removes a boardmovie(s) from the list.
-     */
-    //@Override
+    @Override
     public void removeFromList(MBeans media) {
         if (!this.movieList.remove(media)) {
             System.out.println("Media not found in list");
         }
+    }
+
+    @Override
+    public boolean containsMedia(MBeans media) {
+        return this.movieList.contains(media);
     }
 
     /**
@@ -159,13 +144,6 @@ public class MovieListV2 /*implements IMovieList commented out for different met
         return sampleMovies;
     }
 
-    /** Get name of this watch list.
-     *
-     * @return the name of this watch list.
-     */
-    public String getListName() {
-        return this.name;
-    }
 
     /**
      * main for testing.
