@@ -74,7 +74,7 @@ public final class MBeansFormatter {
 //     }
 
 
-    public static void writeMediasToJSON(Collection<MBeans> records, OutputStream out) {
+    private static void writeMediasToJSON(Collection<MBeans> records, OutputStream out) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
@@ -84,7 +84,7 @@ public final class MBeansFormatter {
         }
     }
 
-    public static void writeMediasToCSV(Collection<MBeans> records, OutputStream out) throws IOException {
+    private static void writeMediasToCSV(Collection<MBeans> records, OutputStream out) {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(MBeans.class).withHeader();
         ObjectWriter csvWriter = mapper.writer(schema);
@@ -93,6 +93,19 @@ public final class MBeansFormatter {
         } catch (IOException e) {
             System.out.println("the error is here");
             e.printStackTrace();
+        }
+    }
+
+    public static void writeMediasToFile(Collection<MBeans> records, OutputStream out, Formats format) {
+        switch (format) {
+            case JSON:
+                writeMediasToJSON(records, out);
+                break;
+            case CSV:
+                writeMediasToCSV(records, out);
+                break;
+            default:
+                System.out.println("Invalid format");
         }
     }
 

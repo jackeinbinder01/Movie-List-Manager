@@ -1,6 +1,7 @@
 package group5.model;
 
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -12,10 +13,10 @@ import group5.model.formatters.Formats;
 public class Model implements IModel {
 
     /** List of MBeans representing the source databse list. */
-    private List<MBeans> sourceList;
+    private Set<MBeans> sourceList;
 
     /** List of watchLists where each holds a list of reference to source list MBeans. */
-    private List<List<MBeans>> watchLists;
+    private List<Set<MBeans>> watchLists;
 
     /**
      * Model class constructor.
@@ -43,7 +44,7 @@ public class Model implements IModel {
      */
     @Override
     public void loadWatchList(String filename) {
-        List<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
+        Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
         this.watchLists.add(externalList.stream()
                                         .map(externalBean ->
@@ -51,7 +52,7 @@ public class Model implements IModel {
                                                             .filter(localBean -> localBean.equals(externalBean))
                                                             .findFirst()
                                                             .orElse(null))
-                                        .collect(Collectors.toList()));
+                                        .collect(Collectors.toSet()));
     }
 
     @Override
@@ -106,25 +107,21 @@ public class Model implements IModel {
     public static void main(String[] args) {
         Model model = new Model();
         model.loadWatchList("data/samples/watchlist.json");
-        List<MBeans> externalList = MBeansLoader.loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
+        Set<MBeans> externalList = MBeansLoader.loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
         System.out.println("Source");
         for (MBeans bean : model.getSourceLists().collect(Collectors.toList())) {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
-            System.out.println("Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
+            System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
         System.out.println("WatchList");
         for (MBeans bean : model.getWatchLists(0).collect(Collectors.toList())) {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
-            System.out.println("Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
+            System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
         System.out.println("Not reference WatchList");
         for (MBeans bean : externalList) {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
-            System.out.println("Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
+            System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
-        System.out.println("Source list:" + model.getSourceLists().collect(Collectors.toList()));
-        model.updateWatched(externalList.get(2), true);
-        model.updateUserRating(externalList.get(3), 8.8);
-        System.out.println("Source list:" + model.getSourceLists().collect(Collectors.toList()));
     }
 }
