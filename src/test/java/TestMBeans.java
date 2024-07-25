@@ -25,7 +25,7 @@ public class TestMBeans {
             e.printStackTrace();
         }
         String matrixDate = "31 Mar 1999";
-        media = new MBeans("The Matrix", 1999, "movie", "R", LocalDate.parse(matrixDate, dtf), 136, "Action, Sci-Fi",
+        media = new MBeans("The Matrix", 1999, "movie", "R", LocalDate.parse(matrixDate, dtf), 136, List.of("Action", "Sci-Fi"),
                            List.of("Lana Wachowski", "Lilly Wachowski"), List.of("Lana Wachowski", "Lilly Wachowski"),
                            List.of("Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"),
                            "When a beautiful stranger leads computer hacker Neo to a forbidding underworld,"
@@ -45,7 +45,7 @@ public class TestMBeans {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        MBeans matrix = new MBeans("The Matrix", 1999, "movie", "R", LocalDate.parse("31 Mar 1999", dtf), 136, "Action, Sci-Fi",
+        MBeans matrix = new MBeans("The Matrix", 1999, "movie", "R", LocalDate.parse("31 Mar 1999", dtf), 136, List.of("Action", "Sci-Fi"),
         List.of("Lana Wachowski", "Lilly Wachowski"), List.of("Lana Wachowski", "Lilly Wachowski"),
         List.of("Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"),
         "When a beautiful stranger leads computer hacker Neo to a forbidding underworld,"
@@ -54,7 +54,7 @@ public class TestMBeans {
         "Won 4 Oscars. 42 wins & 52 nominations total", img1, 73, 8.7, 172076928, "tt0133093", false, -1.0);
         assertEquals("The Matrix", media.getTitle());
 
-        MBeans titanic = new MBeans("Titanic", 1997, "movie", "PG-13", LocalDate.parse("19 Dec 1997", dtf), 195, "Drama, Romance",
+        MBeans titanic = new MBeans("Titanic", 1997, "movie", "PG-13", LocalDate.parse("19 Dec 1997", dtf), 195, List.of("Drama", "Romance"),
         List.of("James Cameron"), List.of("James Cameron"),
         List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"),
         "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, "
@@ -75,7 +75,7 @@ public class TestMBeans {
         assertEquals("R", media.getRated());
         assertEquals(LocalDate.parse("31 Mar 1999", DateTimeFormatter.ofPattern("dd MMM yyyy")), media.getReleased());
         assertEquals(136, media.getRuntime());
-        assertEquals("Action, Sci-Fi", media.getGenre());
+        assertEquals(List.of("Action", "Sci-Fi"), media.getGenre());
         assertEquals(List.of("Lana Wachowski", "Lilly Wachowski"), media.getDirector());
         assertEquals(List.of("Lana Wachowski", "Lilly Wachowski"), media.getWriter());
         assertEquals(List.of("Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"), media.getActors());
@@ -109,7 +109,7 @@ public class TestMBeans {
         media.setRated("PG-13");
         media.setReleased(LocalDate.parse("19 Dec 1997", dtf));
         media.setRuntime(195);
-        media.setGenre("Drama, Romance");
+        media.setGenre(List.of("Drama", "Romance"));
         media.setDirector(List.of("James Cameron"));
         media.setWriter(List.of("James Cameron"));
         media.setActors(List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"));
@@ -132,7 +132,7 @@ public class TestMBeans {
         assertEquals("PG-13", media.getRated());
         assertEquals(LocalDate.parse("19 Dec 1997", DateTimeFormatter.ofPattern("dd MMM yyyy")), media.getReleased());
         assertEquals(195, media.getRuntime());
-        assertEquals("Drama, Romance", media.getGenre());
+        assertEquals(List.of("Drama", "Romance"), media.getGenre());
         assertEquals(List.of("James Cameron"), media.getDirector());
         assertEquals(List.of("James Cameron"), media.getWriter());
         assertEquals(List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"), media.getActors());

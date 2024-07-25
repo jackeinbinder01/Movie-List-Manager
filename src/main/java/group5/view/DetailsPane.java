@@ -330,7 +330,7 @@ public class DetailsPane extends JPanel {
         this.mediaDetails.get(0).setText(DATE_FORMAT.format(media.getReleased()));
         this.mediaDetails.get(1).setText(media.getType());
         this.mediaDetails.get(2).setText(media.getRated());
-        this.mediaDetails.get(3).setText(media.getGenre());
+        this.mediaDetails.get(3).setText(String.join("\n", media.getGenre()));
         this.mediaDetails.get(4).setText(Integer.toString(media.getRuntime()) + " minutes");
         this.mediaDetails.get(5).setText(String.join("\n", media.getDirector()));
         this.mediaDetails.get(6).setText(String.join("\n", media.getActors()));

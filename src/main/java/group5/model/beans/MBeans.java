@@ -52,7 +52,9 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds genres of the media. */
     @JsonProperty("Genre")
-    private String genre;
+    @JsonDeserialize(using = MBeansDeserializer.GenreDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.GenreSerializer.class)
+    private List<String> genre;
 
     /** Holds a list of director name(s). */
     @JsonProperty("Director")
@@ -150,7 +152,7 @@ public class MBeans implements java.io.Serializable {
      * @param watched
      * @param myRating
      */
-    public MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, String genre,
+    public MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, List<String> genre,
             List<String> director, List<String> writer, List<String> actors, String plot, List<String> language,
             List<String> country, String awards, URL poster, int metascore, double imdbRating, int boxOffice,
             String id, boolean watched, double myRating) {
@@ -238,7 +240,7 @@ public class MBeans implements java.io.Serializable {
      *
      * @return the genres
      */
-    public String getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 
@@ -429,7 +431,7 @@ public class MBeans implements java.io.Serializable {
      *
      * @param genre the genre to set
      */
-    public void setGenre(String genre) {
+    public void setGenre(List<String> genre) {
         this.genre = genre;
     }
 
