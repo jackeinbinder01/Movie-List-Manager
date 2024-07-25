@@ -63,13 +63,15 @@ public class ListPaneV2 extends JPanel {
         // Set layout for the list pane
         this.setLayout(new BorderLayout());
 
+
+        // Setting up the tabbed pane, and adding listener for tab change
         tabbedPane = new JTabbedPane();
+        this.add(tabbedPane, BorderLayout.CENTER);
 
         // Create the main table
         createSourceTableTab();
         userListModels = new ArrayList<>();
 
-        this.add(tabbedPane, BorderLayout.CENTER);
 
         // Create panel for add and export buttons below the table
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -81,6 +83,11 @@ public class ListPaneV2 extends JPanel {
         // Add button panel to the bottom of the list panel
         this.add(bottomButtonPanel, BorderLayout.SOUTH);
 
+    }
+
+
+    public int getCurrentTab() {
+        return tabbedPane.getSelectedIndex();
     }
 
     private void createSourceTableTab() {
@@ -143,10 +150,14 @@ public class ListPaneV2 extends JPanel {
         removeFromListHandler = features::removeFromWatchList;
         addToListHandler = features::addToWatchList;
         changeWatchedStatusHandler = features::changeWatchedStatus;
+        tabbedPane.addChangeListener(e -> features.handleTabChange(tabbedPane.getSelectedIndex()));
     }
 
 
     class MovieTableModel extends AbstractTableModel {
+        /**
+         * Enum for the columns in the table for easy reference in switch statements
+         */
         enum COLUMN {
             TITLE,
             YEAR,
@@ -156,11 +167,13 @@ public class ListPaneV2 extends JPanel {
             COLUMN() {
                 this.index = this.ordinal();
             }
-
         }
+
+
         private String[] columnNames = {"Title", "Year", "Watched", "ACTION"};
         private List<MBeans> records;
         private TableMode tableMode;
+
 
 
         MovieTableModel(TableMode tableMode) {
@@ -168,11 +181,12 @@ public class ListPaneV2 extends JPanel {
         }
 
         /**
-         * Get the record at the specified row
-         * This method is for self-referencing from the table
-         * So we can do something like: table.getModel().getRecordAt(row) in an action listener
-         * @param row
-         * @return
+         * Get the record at the specified row.
+         * <br>
+         * This method is for self-referencing from the table,
+         * so we can do something like: table.getModel().getRecordAt(row) in an action listener
+         * @param row the row index
+         * @return MBeans the movie record
          */
         public MBeans getRecordAt(int row) {
             return records.get(row);
@@ -238,9 +252,7 @@ public class ListPaneV2 extends JPanel {
             //no matter where the cell appears onscreen.
             COLUMN column = COLUMN.values()[col];
             switch (column) {
-                case WATCHED:
-                    return true;
-                case ACTION:
+                case WATCHED, ACTION:
                     return true;
                 default:
                     return false;
