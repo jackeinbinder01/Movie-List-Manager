@@ -74,6 +74,30 @@ public interface IModel {
      */
     void updateUserRating(MBeans media, double rating);
 
+    /**
+     * Get the name of watch list.
+     *
+     * @return the name of watch list
+     */
+    String getUserListName(int userListId);
+
+    /**
+     * Get the amount of user created watch list.
+     *
+     * @return the amount of user created watch list
+     */
+    int getUserListCount();
+
+    /**
+     * Get the list of user created watch list index.
+     *
+     * @return the list of user created watch list
+     */
+    int[] getUserListIndicesForRecord(MBeans record);
+
+
+
+
     /*public Stream<MBeans> getMovieList(FilterClass filter) {
         return getMovieList(filter, null);
     }*/

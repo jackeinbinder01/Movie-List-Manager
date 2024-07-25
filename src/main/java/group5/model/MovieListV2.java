@@ -17,17 +17,31 @@ import group5.model.formatters.MBeansFormatter;
 
 public class MovieListV2 /*implements IMovieList commented out for different method signature with interface*/ {
 
-    /**
-     * set of board movie.
-     */
+    /** set of board movie. */
     private Set<MBeans> movieList;
 
-    // private List<String> returnList;
+    /** Name of this watch list */
+    private String name;
+
+
     /**
-     * Constructor for the movieList.
+     * Default Constructor for the movieList.
+     *
+     * Create empty list.
      */
     public MovieListV2() {
-        this.movieList = new HashSet<MBeans>();
+        this.movieList = new HashSet<>();
+        // hashset so there can only be one instance of a movie
+        // in list
+    }
+
+    /**
+     * Constructor for the movieList.
+     *
+     * Create from loading a list of movies.
+     */
+    public MovieListV2(Set<MBeans> movieList) {
+        this.movieList = movieList;
         // hashset so there can only be one instance of a movie
         // in list
     }
@@ -37,7 +51,7 @@ public class MovieListV2 /*implements IMovieList commented out for different met
      *
      * @return the list of movieList.
      */
-    ////@Override
+    //@Override
     public Stream<MBeans> getMovieList() {
         return this.movieList.stream();
     }
@@ -50,7 +64,7 @@ public class MovieListV2 /*implements IMovieList commented out for different met
      */
     //@Override
     public void clear() {
-        movieList.clear();
+        this.movieList.clear();
     }
 
     /**
@@ -60,7 +74,7 @@ public class MovieListV2 /*implements IMovieList commented out for different met
      */
     //@Override
     public int count() {
-        return movieList.size();
+        return this.movieList.size();
     }
 
     /**
@@ -71,7 +85,7 @@ public class MovieListV2 /*implements IMovieList commented out for different met
     public void savemovie(String filename, Formats format) {
         try {
             FileOutputStream saves = new FileOutputStream(filename);
-            //MBeansFormatter.writeMediasToFile(this.movieList, saves, format);
+            MBeansFormatter.writeMediasToFile(this.movieList, saves, format);
         } catch (IOException e) {
             System.out.println("Error writing to file");
             e.printStackTrace();
@@ -85,7 +99,9 @@ public class MovieListV2 /*implements IMovieList commented out for different met
      */
     //@Override
     public void addToList(MBeans media) {
-        this.movieList.add(media);
+        if (!this.movieList.add(media)) {
+            System.out.println("Media is already in list");
+        }
     }
 
     /**
@@ -141,6 +157,14 @@ public class MovieListV2 /*implements IMovieList commented out for different met
         }
 
         return sampleMovies;
+    }
+
+    /** Get name of this watch list.
+     *
+     * @return the name of this watch list.
+     */
+    public String getListName() {
+        return this.name;
     }
 
     /**

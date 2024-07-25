@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import group5.model.beans.MBeans;
 import group5.model.formatters.MBeansLoader;
 import group5.model.formatters.Formats;
+import group5.model.MovieListV2;
 
 public class Model implements IModel {
 
@@ -16,7 +17,7 @@ public class Model implements IModel {
     private Set<MBeans> sourceList;
 
     /** List of watchLists where each holds a list of reference to source list MBeans. */
-    private List<Set<MBeans>> watchLists;
+    private List<MovieListV2> watchLists;
 
     /**
      * Model class constructor.
@@ -40,19 +41,25 @@ public class Model implements IModel {
     /**
      * {@inheritDoc}
      *
-     * Create a list of MBeans where each is a reference to source list.
+     * Create a set of MBeans where each item is a reference to same MBeans in source list.
+     * Pass set to MovieListV2 constructor to create a new watch list.
+     * Add the new watch list to the watchLists list.
+     *
+     * @param filename The file to load the watch list from.
      */
     @Override
     public void loadWatchList(String filename) {
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
-        this.watchLists.add(externalList.stream()
+        Set<MBeans> mapped = externalList.stream()
                                         .map(externalBean ->
-                                             this.sourceList.stream()
+                                            this.sourceList.stream()
                                                             .filter(localBean -> localBean.equals(externalBean))
                                                             .findFirst()
                                                             .orElse(null))
-                                        .collect(Collectors.toSet()));
+                                        .collect(Collectors.toSet());
+        MovieListV2 watchList = new MovieListV2(mapped);
+        this.watchLists.add(watchList);
     }
 
     @Override
@@ -62,7 +69,7 @@ public class Model implements IModel {
 
     @Override
     public Stream<MBeans> getWatchLists(int userListId) {
-        return this.watchLists.get(userListId).stream();
+        return this.watchLists.get(userListId).getMovieList();
     }
 
     @Override
@@ -71,10 +78,15 @@ public class Model implements IModel {
         throw new UnsupportedOperationException("Unimplemented method 'saveWatchList'");
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Add the media to the watch list by adding a reference to the media in the source list.
+     */
     @Override
     public void addToWatchList(MBeans media, int userListId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addToWatchList'");
+        MBeans sourceMedia = this.getMatchedObjectFromSource(media);
+        this.watchLists.get(userListId).addToList(sourceMedia);
     }
 
     @Override
