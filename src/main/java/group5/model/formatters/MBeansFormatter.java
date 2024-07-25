@@ -80,6 +80,7 @@ public final class MBeansFormatter {
         try {
             mapper.writeValue(out, records);
         } catch (IOException e) {
+            System.out.println("Error writing to JSON");
             e.printStackTrace();
         }
     }
@@ -91,7 +92,7 @@ public final class MBeansFormatter {
         try {
             csvWriter.writeValue(out, records);
         } catch (IOException e) {
-            System.out.println("the error is here");
+            System.out.println("Error writing to CSV");
             e.printStackTrace();
         }
     }
