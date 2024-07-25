@@ -2,8 +2,6 @@ package group5.model.formatters;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.List;
-import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -15,7 +13,8 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import group5.model.beans.MBeans;
 import group5.model.net.NetUtils;
 
-import java.io.FileOutputStream;
+import java.util.Set;
+import java.util.HashSet;
 
 public class MBeansLoader {
 
@@ -34,13 +33,13 @@ public class MBeansLoader {
         }
     }
 
-    private static List<MBeans> loadMediasFromJSON(String filename) {
+    private static Set<MBeans> loadMediasFromJSON(String filename) {
         try {
             File inFile = new File(filename);
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            List<MBeans> records = new ArrayList<>();
-            records = mapper.readValue(inFile, new TypeReference<List<MBeans>>() { });
+            Set<MBeans> records = new HashSet<>();
+            records = mapper.readValue(inFile, new TypeReference<Set<MBeans>>() { });
             return records;
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,7 +47,7 @@ public class MBeansLoader {
         }
     }
 
-    private static List<MBeans> loadMediasFromCSV(String filename) {
+    private static Set<MBeans> loadMediasFromCSV(String filename) {
         try {
             File inFile = new File(filename);
             CsvMapper mapper = new CsvMapper();
@@ -56,7 +55,10 @@ public class MBeansLoader {
             MappingIterator<MBeans> it = mapper.readerFor(MBeans.class)
                                                .with(schema)
                                                .readValues(inFile);
-            List<MBeans> records = it.readAll();
+            Set<MBeans> records = new HashSet<>();
+            while(it.hasNext()) {
+                records.add(it.next());
+            }
             return records;
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +66,7 @@ public class MBeansLoader {
         }
     }
 
-    public static List<MBeans> loadMediasFromFile(String filename, Formats format) {
+    public static Set<MBeans> loadMediasFromFile(String filename, Formats format) {
         if (format == Formats.JSON) {
             return loadMediasFromJSON(filename);
         } else if (format == Formats.CSV) {
@@ -77,26 +79,26 @@ public class MBeansLoader {
     /**
      * Main to test the loader.
      */
-    /*public static void main(String[] args) throws Exception {
-        List<MBeans> medias = new ArrayList<>();
-        MBeans media = loadMBeansFromAPI("The Matrix", "1999", "movie");
-        medias.add(loadMBeansFromAPI("Titanic", "", "movie"));
-        medias.add(loadMBeansFromAPI("Shrek", "", "movie"));
-        medias.add(loadMBeansFromAPI("Shrek 2", "", "movie"));
-        medias.add(loadMBeansFromAPI("Shrek 3", "", "movie"));
-        medias.add(loadMBeansFromAPI("John Wick", "", "movie"));
-        medias.add(loadMBeansFromAPI("Avatar", "", "movie"));
-        medias.add(loadMBeansFromAPI("Exodus", "", "movie"));
-        medias.add(loadMBeansFromAPI("Equalizer", "", "movie"));
-        medias.add(loadMBeansFromAPI("Sharknado", "", "movie"));
-        medias.add(loadMBeansFromAPI("Inside out", "", "movie"));
-        medias.add(loadMBeansFromAPI("Monsters", "", "movie"));
-        medias.add(loadMBeansFromAPI("Spirited Away", "", "movie"));
-        System.out.println(media);
+    public static void main(String[] args) throws Exception {
+        Set<MBeans> medias = new HashSet<>();
+        Set<MBeans> media = loadMediasFromFile("./data/samples/source.json", Formats.JSON);
+        Set<MBeans> mediaSet = loadMediasFromFile("./data/samples/source2.csv", Formats.CSV);
+        //System.out.println("OLD\n" + media);
+        //System.out.println("SET\n" + mediaSet);
         //List<MBeans> records = loadWatchListFromFile("./src/test/testing_resources/sample.json", Formats.JSON);
         //List<MBeans> source = loadSourceFromJSON("./src/test/testing_resources/sample.json");
-        //System.out.println(records);
         //System.out.println(source);
-        MBeansFormatter.writeMediaToJSON(medias, new FileOutputStream("./data/samples/source.json"));
-    }*/
+        //MBeansFormatter.writeMediasToFile(media, new FileOutputStream("./data/samples/source2.csv"), Formats.CSV);
+
+        System.out.println("json");
+        for (MBeans bean : media) {
+            int hashCode = System.identityHashCode(bean); // identityHash to show matching references
+            System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
+        }
+        System.out.println("csv");
+        for (MBeans bean : mediaSet) {
+            int hashCode = System.identityHashCode(bean); // identityHash to show matching references
+            System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
+        }
+    }
 }
