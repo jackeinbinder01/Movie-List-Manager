@@ -152,7 +152,7 @@ public class MovieListV2 implements IMovieListV2 {
      */
     public static void main(String[] args) {
         // Create an instance of MovieList
-        MovieList movieList = new MovieList();
+        MovieListV2 movieList = new MovieListV2("MyList1");
 
         // Add some sample movies
         List<MBeans> sampleMovies = movieList.getSampleMovies();
@@ -161,9 +161,9 @@ public class MovieListV2 implements IMovieListV2 {
 
         // Test addToList method
         System.out.println("\nAdding movies to the list...");
-        movieList.addToList("3", sampleMovies.stream());
-        movieList.addToList("Inception", sampleMovies.stream());
-        movieList.addToList("4-5", sampleMovies.stream());
+        movieList.addToList(sampleMovies.get(0));
+        movieList.addToList(sampleMovies.get(1));
+        movieList.addToList(sampleMovies.get(2));
 
         // Print current movie names after additions
         System.out.println("\nCurrent movies in the list:");
@@ -171,17 +171,18 @@ public class MovieListV2 implements IMovieListV2 {
 
         // Test removeFromList method
         System.out.println("\nRemoving movies from the list...");
-        movieList.removeFromList("1-2");
-        movieList.removeFromList("1");
+        movieList.removeFromList(sampleMovies.get(1));
+        movieList.removeFromList(sampleMovies.get(2));
 
         // Print current movie names after removals
         System.out.println("\nMovies remaining in the list after removals:");
         movieList.getMovieList().forEach(System.out::println);
 
         movieList.clear();
+        movieList.addToList(sampleMovies.get(2));
         System.out.println("\nCleared movie list. Number of movies: " + movieList.count());
 
         // Save current movie list to a file
-        movieList.savemovie("movie_list.txt");
+        movieList.savemovie("movie_list.csv", Formats.CSV);
     }
 }
