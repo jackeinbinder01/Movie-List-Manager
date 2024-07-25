@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
+import java.util.stream.Stream;
 
 import static group5.model.formatters.MBeansLoader.loadMBeansFromAPI;
 
@@ -31,7 +32,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     private JComboBox genreFilter = new JComboBox();
     /** MPA Rating filter. */
     private JComboBox mpaRatingFilter = new JComboBox();
-
 
     private JTextField releasedFrom = new JTextField();
     private JTextField releasedTo = new JTextField();
@@ -70,48 +70,52 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
 
     /** Public constructor. */
-    public FilterPane(List<MBeans> movies) {
+    public FilterPane() {
         super(new BorderLayout());
 
-        if (movies != null) {
-            this.movies = movies;
-        }
+        // set list of movies
+        setMoviesSetup();
 
-        setMovies();
-        setRangeFilterRanges();
+        // name components
         setComponentNames();
 
+        // configure gbc
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // add panels
         add(filterPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
 
+        // add filters
         addFilter("Title:", titleFilter);
         addFilter("Content Type:", contentTypeFilter);
         addFilter("Genre(s):", genreFilter);
         addFilter("MPA Rating:", mpaRatingFilter);
 
-
+        // add range filters
         addRangeFilter("Released:", releasedFrom, releasedTo, releasedRange[0], releasedRange[1]);
         addRangeFilter("IMDB Rating:", imdbRatingFrom, imdbRatingTo, imdbRatingRange[0], imdbRatingRange[1]);
         addRangeFilter("Box Office Earnings:", boxOfficeEarningsFrom, boxOfficeEarningsTo,
                 boxOfficeRange[0], boxOfficeRange[1]);
+
+        // add remaining filters
         addFilter("Director(s):", directorFilter);
         addFilter("Actor(s)", actorFilter);
         addFilter("Writer(s)", writerFilter);
         addFilter("Language(s):", languageFilter);
         addFilter("Country of Origin:", countryOfOriginFilter);
 
+        // add buttons
+        buttonPanel.add(applyFilterButton);
+        buttonPanel.add(clearFilterButton);
+
+        // add action listeners
         titleFilter.addActionListener(this);
         directorFilter.addActionListener(this);
         actorFilter.addActionListener(this);
         writerFilter.addActionListener(this);
-
-        buttonPanel.add(applyFilterButton);
-        buttonPanel.add(clearFilterButton);
-
         applyFilterButton.addActionListener(this);
         clearFilterButton.addActionListener(this);
     }
@@ -121,15 +125,27 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     public String getFilteredContentType() {
-        return contentTypeFilter.getSelectedItem().toString();
+        try {
+            return contentTypeFilter.getSelectedItem().toString();
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
     public String getFilteredGenre() {
-        return genreFilter.getSelectedItem().toString();
+        try {
+            return genreFilter.getSelectedItem().toString();
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
     public String getFilteredMpaRating() {
-        return mpaRatingFilter.getSelectedItem().toString();
+        try {
+            return mpaRatingFilter.getSelectedItem().toString();
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
     public String getFilteredReleasedMin() {
@@ -138,22 +154,27 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     public String getFilteredReleasedMax() {
         return releasedTo.getText();
+
     }
 
     public String getFilteredImdbRatingMin() {
         return imdbRatingFrom.getText();
+
     }
 
     public String getFilteredImdbRatingMax() {
         return imdbRatingTo.getText();
+
     }
 
     public String getFilteredBoxOfficeEarningsMin() {
         return boxOfficeEarningsFrom.getText();
+
     }
 
     public String getFilteredBoxOfficeEarningsMax() {
         return boxOfficeEarningsTo.getText();
+
     }
 
     public String getFilteredDirectorFilter() {
@@ -162,6 +183,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     public String getFilteredActorFilter() {
         return actorFilter.getText();
+
     }
 
     public String getFilteredWriterFilter() {
@@ -169,22 +191,32 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     public String getFilteredLanguageFilter() {
-        return languageFilter.getSelectedItem().toString();
+        try {
+            return languageFilter.getSelectedItem().toString();
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
     public String getFilteredCountryOfOriginFilter() {
-        return countryOfOriginFilter.getSelectedItem().toString();
+        try {
+            return countryOfOriginFilter.getSelectedItem().toString();
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 
     /**
      * Enables conditions through switch statements instead of if-else blocks.
      */
     private void setComponentNames() {
+        // set filter names
         titleFilter.setName("titleFilter");
         contentTypeFilter.setName("contentTypeFilter");
         genreFilter.setName("genreFilter");
         mpaRatingFilter.setName("mpaRatingFilter");
 
+        // set range filter names
         releasedFrom.setName("releasedFrom");
         releasedTo.setName("releasedTo");
         imdbRatingFrom.setName("imdbRatingFrom");
@@ -192,32 +224,38 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         boxOfficeEarningsFrom.setName("boxOfficeEarningsFrom");
         boxOfficeEarningsTo.setName("boxOfficeEarningsTo");
 
+        // set remaining filter names
         directorFilter.setName("directorFilter");
         actorFilter.setName("actorFilter");
         writerFilter.setName("writerFilter");
         languageFilter.setName("languageFilter");
         countryOfOriginFilter.setName("countryOfOriginFilter");
-
     }
 
     private void setRangeFilterRanges() {
+        // set filter ranges
         releasedRange = getIntFilterRange(MBeans::getYear);
         imdbRatingRange = getDoubleFilterRange(MBeans::getImdbRating);
-        boxOfficeRange = getStringFilterRange(MBeans::getBoxOffice);
+        boxOfficeRange = getIntFilterRange(MBeans::getBoxOffice);
 
+        // format box office range as US currency
         for (int i = 0; i < boxOfficeRange.length; i++) {
             boxOfficeRange[i] = formatAsCurrency(boxOfficeRange[i]);
         }
     }
 
     private void addLabel(String filterTitle) {
-        // GridBagConstraints for the label (title)
+        // update gbc
         gbc.gridx = 0;
         gbc.gridy = filterRow;
-        gbc.gridwidth = 4; // Span across all columns
-        gbc.weightx = 1; // Label can grow horizontally
+        gbc.gridwidth = 4;
+        gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.WEST;
+
+        // add label
         filterPanel.add(new JLabel(filterTitle), gbc);
+
+        // increment filter row
         filterRow++;
     }
 
@@ -245,12 +283,16 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     private void italicizeFont(Object object) {
+        // italicize JLabel text
         if (object instanceof JLabel) {
             JLabel label = (JLabel) object;
             Font font = label.getFont();
             Font italicFont = font.deriveFont(Font.ITALIC);
             label.setFont(italicFont);
-        } else if (object instanceof JTextField) {
+        }
+
+        // italicize JTextField text
+        if (object instanceof JTextField) {
             JTextField textField = (JTextField) object;
             Font font = textField.getFont();
             Font italicFont = font.deriveFont(Font.ITALIC);
@@ -365,68 +407,77 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     private void configureComboBox(JComboBox<String> comboBox) {
+        // initialize empty tree sets
+        Set<String> uniqueContentType = new TreeSet<>();
+        Set<String> uniqueGenres = new TreeSet<>();
+        Set<String> uniqueMpaRatings = new TreeSet<>();
+        Set<String> uniqueLanguages = new TreeSet<>();
+        Set<String> uniqueCountries = new TreeSet<>();
 
-        if (comboBox == contentTypeFilter) {
-            // unique filter options, tree set preserves insertion order
-            Set<String> uniqueContentType = new TreeSet<>();
-
-            for (MBeans movie : movies) {
-                uniqueContentType.add(movie.getType());
-            }
-            for (String contentType : uniqueContentType) {
-                comboBox.addItem(contentType);
-            }
-        } else if (comboBox == genreFilter) {
-            // unique filter options, tree set preserves insertion order
-            Set<String> uniqueGenres = new TreeSet<>();
-
-            for (MBeans movie : movies) {
-                uniqueGenres.add(movie.getGenre());
-            }
-            for (String genre : uniqueGenres) {
-                comboBox.addItem(genre);
-            }
-        } else if (comboBox == mpaRatingFilter) {
-            // unique filter options, tree set preserves insertion order
-            Set<String> uniqueMpaRatings = new TreeSet<>();
-
-            for (MBeans movie : movies) {
-                uniqueMpaRatings.add(movie.getRated());
-            }
-            for (String mpaRating : uniqueMpaRatings) {
-                comboBox.addItem(mpaRating);
-            }
-        } else if (comboBox == languageFilter) {
-            // unique filter options, tree set preserves insertion order
-            Set<String> uniqueLanguages = new TreeSet<>();
-
-            for (MBeans movie : movies) {
-                for (String language : movie.getLanguage()) {
-                    uniqueLanguages.add(language);
+        switch (comboBox.getName()) {
+            case "contentTypeFilter":
+                // add options to set
+                for (MBeans movie : movies) {
+                    uniqueContentType.add(movie.getType());
                 }
-            }
-            for (String language : uniqueLanguages) {
-                comboBox.addItem(language);
-            }
-        } else if (comboBox == countryOfOriginFilter) {
-            // unique filter options, tree set preserves insertion order
-            Set<String> uniqueCountries = new TreeSet<>();
-
-            for (MBeans movie : movies) {
-                for (String country : movie.getCountry()) {
-                    uniqueCountries.add(country);
+                // add elements to combo box
+                for (String contentType : uniqueContentType) {
+                    comboBox.addItem(contentType);
                 }
-            }
-            for (String country : uniqueCountries) {
-                comboBox.addItem(country);
-            }
+            case "genreFilter":
+                // add options to set
+                for (MBeans movie : movies) {
+                    uniqueGenres.add(movie.getGenre());
+                }
+                // add elements to combo box
+                for (String genre : uniqueGenres) {
+                    comboBox.addItem(genre);
+                }
+            case "mpaRatingFilter":
+                // add options to set
+                for (MBeans movie : movies) {
+                    uniqueMpaRatings.add(movie.getRated());
+                }
+                // add elements to combo box
+                for (String mpaRating : uniqueMpaRatings) {
+                    comboBox.addItem(mpaRating);
+                }
+            case "languageFilter":
+                // add options to set
+                for (MBeans movie : movies) {
+                    // unpack options from string list
+                    for (String language : movie.getLanguage()) {
+                        uniqueLanguages.add(language);
+                    }
+                }
+                // add elements to combo box
+                for (String language : uniqueLanguages) {
+                    comboBox.addItem(language);
+                }
+            case "countryOfOriginFilter":
+                // add options to set
+                for (MBeans movie : movies) {
+                    // unpack options from string list
+                    for (String country : movie.getCountry()) {
+                        uniqueCountries.add(country);
+                    }
+                }
+                // add elements to combo box
+                for (String country : uniqueCountries) {
+                    comboBox.addItem(country);
+                }
         }
-
         // deselect options in combobox
         comboBox.setSelectedIndex(-1);
     }
 
-    private void setMovies() {
+    private void setMovies(Stream<MBeans> movies) {
+        this.movies = movies.toList();
+        setRangeFilterRanges();
+        resetFilterOptions();
+    }
+
+    private void setMoviesSetup() {
         MBeans theMatrix;
         MBeans titanic;
 
@@ -434,6 +485,31 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         titanic = loadMBeansFromAPI("Titanic", "1997", "movie");
         movies.add(theMatrix);
         movies.add(titanic);
+
+        setRangeFilterRanges();
+    }
+
+    public void resetFilterOptions() {
+        // clear options
+        titleFilter.setText("");
+        contentTypeFilter.setSelectedIndex(-1);
+        genreFilter.setSelectedIndex(-1);
+        mpaRatingFilter.setSelectedIndex(-1);
+
+        // reset placeholders for ranges
+        setPlaceholder(releasedFrom, releasedRange[0]);
+        setPlaceholder(releasedTo, releasedRange[1]);
+        setPlaceholder(imdbRatingFrom, imdbRatingRange[0]);
+        setPlaceholder(imdbRatingTo, imdbRatingRange[1]);
+        setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
+        setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
+
+        // clear options
+        directorFilter.setText("");
+        actorFilter.setText("");
+        writerFilter.setText("");
+        languageFilter.setSelectedIndex(-1);
+        countryOfOriginFilter.setSelectedIndex(-1);
     }
 
     /**
@@ -443,25 +519,31 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        // @Wing decide how you want apply/clear message sent to BaseView/controller and I can reconfigure
+
         if (e.getSource() == applyFilterButton) {
             System.out.println("Filters applied");
+
+            System.out.println("Title: " + getFilteredTitle());
+            System.out.println("Content Type: " + getFilteredContentType());
+            System.out.println("Genre: " + getFilteredGenre());
+            System.out.println("Rating: " + getFilteredMpaRating());
+            System.out.println("Released From: " + getFilteredReleasedMin());
+            System.out.println("Released To: " + getFilteredReleasedMax());
+            System.out.println("IMDB From: " + getFilteredImdbRatingMin());
+            System.out.println("IMDB To: " + getFilteredImdbRatingMax());
+            System.out.println("Box Office From: " + getFilteredBoxOfficeEarningsMin());
+            System.out.println("Box Office To: " + getFilteredBoxOfficeEarningsMax());
+            System.out.println("Director: " + getFilteredDirectorFilter());
+            System.out.println("Actor: " + getFilteredActorFilter());
+            System.out.println("Writer: " + getFilteredWriterFilter());
+            System.out.println("Language: " + getFilteredLanguageFilter());
+            System.out.println("Country: " + getFilteredCountryOfOriginFilter());
+
         } else if (e.getSource() == clearFilterButton) {
             System.out.println("Filters cleared");
-            titleFilter.setText("");
-            contentTypeFilter.setSelectedIndex(-1);
-            genreFilter.setSelectedIndex(-1);
-            mpaRatingFilter.setSelectedIndex(-1);
-            setPlaceholder(releasedFrom, releasedRange[0]);
-            setPlaceholder(releasedTo, releasedRange[1]);
-            setPlaceholder(imdbRatingFrom, imdbRatingRange[0]);
-            setPlaceholder(imdbRatingTo, imdbRatingRange[1]);
-            setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
-            setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
-            directorFilter.setText("");
-            actorFilter.setText("");
-            writerFilter.setText("");
-            languageFilter.setSelectedIndex(-1);
-            countryOfOriginFilter.setSelectedIndex(-1);
+
+            resetFilterOptions();
         }
     }
 
@@ -489,15 +571,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     public void focusLost(FocusEvent e) {
         JTextField textField = (JTextField) e.getSource();
         resetPlaceholder(textField);
-    }
-
-    private boolean isValidInput(JTextField textField) {
-        switch (textField.getName()) {
-            case "titleFilter":
-                String filterInput = textField.getText();
-                break;
-        }
-        return true;
     }
 
     public void resetPlaceholder(JTextField textField) {
@@ -555,7 +628,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
         frame.setMinimumSize(new Dimension(340, 120));
 
-        FilterPane filterPane = new FilterPane(null);
+        FilterPane filterPane = new FilterPane();
 
         JScrollPane scrollPane = new JScrollPane(filterPane);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -566,7 +639,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        //
 
     }
 }
