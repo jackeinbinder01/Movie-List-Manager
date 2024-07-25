@@ -64,11 +64,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     // Range filters min/max placeholders
     /** Min and max of year released data in movies. */
-    private String[] releasedRange;
+    private String[] releasedRange = new String[] {"", ""};
     /** Min and max of IMDB rating data in movies. */
-    private String[] imdbRatingRange;
+    private String[] imdbRatingRange = new String[] {"", ""};
     /** Min and max of Box office earnings data in movies. */
-    private String[] boxOfficeRange;
+    private String[] boxOfficeRange = new String[] {"", ""};
 
     // Buttons
     /** Apply filters button */
@@ -86,8 +86,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     public FilterPane() {
         super(new BorderLayout());
 
-        // set list of movies
-        setMoviesSetup();
 
         // name components to enable switch statements
         setComponentNames();
@@ -166,27 +164,30 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     public String getFilteredReleasedMax() {
         return releasedTo.getText();
-
     }
 
     public String getFilteredImdbRatingMin() {
         return imdbRatingFrom.getText();
-
     }
 
     public String getFilteredImdbRatingMax() {
         return imdbRatingTo.getText();
-
     }
 
     public String getFilteredBoxOfficeEarningsMin() {
-        return formatFromMillions(boxOfficeEarningsFrom.getText());
-
+        try {
+            return formatFromMillions(boxOfficeEarningsFrom.getText());
+        } catch (NumberFormatException e) {
+            return "";
+        }
     }
 
     public String getFilteredBoxOfficeEarningsMax() {
-        return formatFromMillions(boxOfficeEarningsTo.getText());
-
+        try {
+            return formatFromMillions(boxOfficeEarningsTo.getText());
+        } catch (NumberFormatException e) {
+            return "";
+        }
     }
 
     public String getFilteredDirectorFilter() {
