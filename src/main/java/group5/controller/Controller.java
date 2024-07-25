@@ -119,6 +119,9 @@ public class Controller implements IController, IFeature {
         // TODO: Waiting for IModel implementation
         // model.removeFromWatchList(mbean, userListIndex);
 
+        // Update the affected table in the view
+        view.setUserTableRecords(userListIndex, model.getWatchLists(userListIndex));
+
     }
 
     public void addToWatchList(MBeans mbean, int userListIndex) {

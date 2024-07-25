@@ -32,6 +32,7 @@ public class BaseView extends JFrame implements IView {
             e.printStackTrace();
         }
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Creating Base Pane
@@ -86,7 +87,7 @@ public class BaseView extends JFrame implements IView {
     }
 
     public int getCurrentTab() {
-        return listPane.getCurrentTab();
+        return listPane.getActiveTab();
     }
 
     @Override

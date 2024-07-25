@@ -8,7 +8,6 @@ import group5.model.formatters.MBeansLoader;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
@@ -49,7 +48,6 @@ public class ListPaneV2 extends JPanel {
     // BiConsumer<MBeans, Double> changeRatingHandler;
 
 
-
     /**
      * List of movie models for user-defined lists
      * Each user-defined list will have its own model
@@ -86,13 +84,27 @@ public class ListPaneV2 extends JPanel {
     }
 
 
-    public int getCurrentTab() {
+    public int getActiveTab() {
         return tabbedPane.getSelectedIndex();
+    }
+
+
+    public MovieTableModel getActiveTableModel() {
+        int currentTab = tabbedPane.getSelectedIndex();
+        if (currentTab == 0) {
+            return sourceTableModel;
+        } else {
+            return userListModels.get(currentTab - 1);
+        }
     }
 
     private void createSourceTableTab() {
         sourceTableModel = new MovieTableModel(TableMode.MAIN);
-        sourceTable = new JMovieTable(sourceTableModel);
+
+        sourceTable = new JTable(sourceTableModel);
+        sourceTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        sourceTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
+
         sourceTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(TableMode.MAIN));
         sourceTable.getColumn("ACTION").setCellEditor(new ButtonEditor(TableMode.MAIN));
         JScrollPane mainTab = new JScrollPane(
@@ -102,17 +114,20 @@ public class ListPaneV2 extends JPanel {
         tabbedPane.addTab(MAIN_TAB_NAME, null, mainTab, MAIN_TAB_NAME);
     }
 
-    public void createUserTableTab(String tabName) {
+    public void createUserTableTab(String tableName) {
         MovieTableModel newUserModel = new MovieTableModel(TableMode.USER_DEFINED);
         userListModels.add(newUserModel);
-        JTable newUserTable = new JMovieTable(newUserModel);
+        JTable newUserTable = new JTable(newUserModel);
+        newUserTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        newUserTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
+
         newUserTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(TableMode.USER_DEFINED));
         newUserTable.getColumn("ACTION").setCellEditor(new ButtonEditor(TableMode.USER_DEFINED));
         JScrollPane scrollPane = new JScrollPane(
                 newUserTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tabbedPane.addTab(tabName, null, scrollPane, tabName);
+        tabbedPane.addTab(tableName, null, scrollPane, tableName);
     }
 
     public void setUserTableRecords(int userListIndex, Stream<MBeans> mbeans) {
@@ -156,6 +171,7 @@ public class ListPaneV2 extends JPanel {
             WATCHED,
             ACTION;
             public final int index;
+
             COLUMN() {
                 this.index = this.ordinal();
             }
@@ -167,7 +183,6 @@ public class ListPaneV2 extends JPanel {
         private TableMode tableMode;
 
 
-
         MovieTableModel(TableMode tableMode) {
             this.tableMode = tableMode;
         }
@@ -177,6 +192,7 @@ public class ListPaneV2 extends JPanel {
          * <br>
          * This method is for self-referencing from the table,
          * so we can do something like: table.getModel().getRecordAt(row) in an action listener
+         *
          * @param row the row index
          * @return MBeans the movie record
          */
@@ -258,8 +274,7 @@ public class ListPaneV2 extends JPanel {
         public void setValueAt(Object value, int row, int col) {
             // System.out.println("[ListPaneV2] setValueAt: " + value + " at row: " + row + " col: " + col);
             // data[row][col] = value;
-            if (col == COLUMN.WATCHED.index)
-            {
+            if (col == COLUMN.WATCHED.index) {
                 MBeans record = records.get(row);
                 System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
                 // calling the handler to update the Model
@@ -274,31 +289,19 @@ public class ListPaneV2 extends JPanel {
 
     }
 
-    class JMovieTable extends JTable implements ListSelectionListener /**, TableModelListener **/{
-        public JMovieTable(MovieTableModel model) {
-            super(model);
-            // this.getModel().addTableModelListener(this);
-        }
 
-        @Override
+    class MovieListSelectionHandler implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
-            // ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-            if(!e.getValueIsAdjusting()){
-                System.out.println("[ListPaneV2] JMovieTable: selectedRow: " + this.getSelectedRow());
-                int selectedRow = this.getSelectedRow();
-                if (selectedRow >= 0) {
-                    MovieTableModel m = (MovieTableModel) this.getModel();
-                    MBeans selectedMBean = m.getRecordAt(selectedRow);
-                    tableSelectionHandler.accept(selectedMBean);
+            boolean isAdjusting = e.getValueIsAdjusting();
+            if (!isAdjusting) {
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                if (!lsm.isSelectionEmpty()) {
+                    // Find out which indexes are selected.
+                    int temp = lsm.getSelectedIndices()[0];
+                    tableSelectionHandler.accept(getActiveTableModel().getRecordAt(temp));
                 }
             }
         }
-
-
-//        @Override
-//        public void tableChanged(javax.swing.event.TableModelEvent e) {
-//            System.out.println("[ListPaneV2] JMovieTable: tableChanged");
-//        }
     }
 
     /**
@@ -307,6 +310,7 @@ public class ListPaneV2 extends JPanel {
      */
     class ButtonRenderer extends JButton implements TableCellRenderer {
         private TableMode tableMode;
+
         public ButtonRenderer(TableMode tableMode) {
             this.tableMode = tableMode;
             setOpaque(true);
