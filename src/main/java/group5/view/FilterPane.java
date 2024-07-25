@@ -22,8 +22,13 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /** List of movies. */
     private List<MBeans> movies = new ArrayList<>();
 
-    private List<Object> filterList = new ArrayList<>();
+    // Panels
+    /** Panel containing filters. */
+    private JPanel filterPanel = new JPanel(new GridBagLayout());
+    /** Panel containing buttons. */
+    private JPanel buttonPanel  = new JPanel(new GridLayout(0, 2));
 
+    // Filters
     /** Title filter. */
     private JTextField titleFilter = new JTextField();
     /** Content Type filter. */
@@ -32,14 +37,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     private JComboBox genreFilter = new JComboBox();
     /** MPA Rating filter. */
     private JComboBox mpaRatingFilter = new JComboBox();
-
-    private JTextField releasedFrom = new JTextField();
-    private JTextField releasedTo = new JTextField();
-    private JTextField imdbRatingFrom = new JTextField();
-    private JTextField imdbRatingTo = new JTextField();
-    private JTextField boxOfficeEarningsFrom = new JTextField();
-    private JTextField boxOfficeEarningsTo = new JTextField();
-
     /** Director filter. */
     private JTextField directorFilter = new JTextField();
     /** Actor filter. */
@@ -51,23 +48,39 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /** Country of Origin filter. */
     private JComboBox countryOfOriginFilter = new JComboBox();
 
+    // Range filters
+    /** Year released min of range. */
+    private JTextField releasedFrom = new JTextField();
+    /** Year released max of range. */
+    private JTextField releasedTo = new JTextField();
+    /** IMDB Rating min of range. */
+    private JTextField imdbRatingFrom = new JTextField();
+    /** IMDB Rating max of range. */
+    private JTextField imdbRatingTo = new JTextField();
+    /** Box Office Earnings min of range. */
+    private JTextField boxOfficeEarningsFrom = new JTextField();
+    /** Box Office Earnings max of range. */
+    private JTextField boxOfficeEarningsTo = new JTextField();
+
+    // Range filters min/max placeholders
+    /** Min and max of year released data in movies. */
+    private String[] releasedRange;
+    /** Min and max of IMDB rating data in movies. */
+    private String[] imdbRatingRange;
+    /** Min and max of Box office earnings data in movies. */
+    private String[] boxOfficeRange;
+
+    // Buttons
     /** Apply filters button */
     private JButton applyFilterButton = new JButton("Apply Filters");
     /** Clear filters button */
     private JButton clearFilterButton = new JButton("Clear Filters");
+
+    // GridBagConstraints & grid row int
     /** Class global GridBagConstraints. */
     private GridBagConstraints gbc = new GridBagConstraints();
     /** Filter row to place filters descending using gbc.gridy */
     private int filterRow = 0;
-
-    private JPanel filterPanel = new JPanel(new GridBagLayout());
-    private JPanel buttonPanel  = new JPanel(new GridLayout(0, 2));
-
-
-    private String[] releasedRange;
-    private String[] imdbRatingRange;
-    private String[] boxOfficeRange;
-
 
     /** Public constructor. */
     public FilterPane() {
@@ -76,7 +89,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // set list of movies
         setMoviesSetup();
 
-        // name components
+        // name components to enable switch statements
         setComponentNames();
 
         // configure gbc
@@ -87,7 +100,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         add(filterPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // add filters
+        // add some filters
         addFilter("Title:", titleFilter);
         addFilter("Content Type:", contentTypeFilter);
         addFilter("Genre(s):", genreFilter);
@@ -96,7 +109,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // add range filters
         addRangeFilter("Released:", releasedFrom, releasedTo, releasedRange[0], releasedRange[1]);
         addRangeFilter("IMDB Rating:", imdbRatingFrom, imdbRatingTo, imdbRatingRange[0], imdbRatingRange[1]);
-        addRangeFilter("Box Office Earnings:", boxOfficeEarningsFrom, boxOfficeEarningsTo,
+        addRangeFilter("Box Office Earnings: (millions)", boxOfficeEarningsFrom, boxOfficeEarningsTo,
                 boxOfficeRange[0], boxOfficeRange[1]);
 
         // add remaining filters
@@ -167,12 +180,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     public String getFilteredBoxOfficeEarningsMin() {
-        return boxOfficeEarningsFrom.getText();
+        return formatFromMillions(boxOfficeEarningsFrom.getText());
 
     }
 
     public String getFilteredBoxOfficeEarningsMax() {
-        return boxOfficeEarningsTo.getText();
+        return formatFromMillions(boxOfficeEarningsTo.getText());
 
     }
 
@@ -363,12 +376,21 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
 
         // convert to string and remove trailing .00
-        String currencyStringDouble = currencyFormatter.format(Double.parseDouble(value));
-        String currencyStringInt = currencyStringDouble.substring(0, currencyStringDouble.length() - 3);
+        String currencyStringDouble = currencyFormatter.format(Double.parseDouble(value) / 1_000_000);
+        String currencyInMillions = new String(currencyStringDouble + "M");
 
-        return currencyStringInt;
+        return currencyInMillions;
     }
 
+    private String formatFromMillions(String value) {
+        // strip $ and M if present
+        String processedValue = value.replaceAll("[^0-9.]", "");
+        double processedDouble  = Double.parseDouble(processedValue);
+
+        // convert to double from millions and return as String
+        Double expandedDouble = processedDouble * 1_000_000;
+        return String.format("%.0f", expandedDouble);
+    }
 
     private void addRangeFilter(String filterTitle, JTextField filterFrom,
                                 JTextField filterTo, String rangeMin, String rangeMax) {
@@ -609,14 +631,16 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 if (boxOfficeEarningsFrom.getText().isEmpty()) {
                     boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
                 } else {
-                    boxOfficeEarningsFrom.setText(formatAsCurrency(boxOfficeEarningsFrom.getText()));
+                    boxOfficeEarningsFrom.setText(
+                            formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
                 }
                 break;
             case "boxOfficeEarningsTo":
                 if (boxOfficeEarningsTo.getText().isEmpty()) {
                     boxOfficeEarningsTo.setText(boxOfficeRange[1]);
                 } else {
-                    boxOfficeEarningsTo.setText(formatAsCurrency(boxOfficeEarningsTo.getText()));
+                    boxOfficeEarningsTo.setText(
+                            formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
                 }
                 break;
             default:
