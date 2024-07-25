@@ -140,9 +140,5 @@ public class Model implements IModel {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
             System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
-        System.out.println("\nextList item:\n" + System.identityHashCode(externalList.get(0)));
-        System.out.println("\nreturn matched ID:\n" + System.identityHashCode(model.getMatchedObjectFromSource(externalList.get(0))));
-        System.out.println("\nextList item:\n" + externalList.get(0));
-        System.out.println("\nreturn matched ID Content:\n" + model.getMatchedObjectFromSource(externalList.get(0)));
     }
 }
