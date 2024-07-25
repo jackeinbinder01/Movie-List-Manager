@@ -5,6 +5,9 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import java.nio.file.FileSystems;
 
 import group5.model.beans.MBeans;
 import group5.model.formatters.MBeansLoader;
@@ -49,6 +52,9 @@ public class Model implements IModel {
      */
     @Override
     public void loadWatchList(String filename) {
+        int lastSeparator = Math.max(filename.lastIndexOf("\\"), filename.lastIndexOf("/"));
+        int lastDot = filename.lastIndexOf('.');
+        String name = filename.substring(lastSeparator + 1, lastDot);
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
         Set<MBeans> mapped = externalList.stream()
@@ -58,7 +64,7 @@ public class Model implements IModel {
                                                             .findFirst()
                                                             .orElse(null))
                                         .collect(Collectors.toSet());
-        MovieListV2 watchList = new MovieListV2(mapped);
+        MovieListV2 watchList = new MovieListV2(name, mapped);
         this.watchLists.add(watchList);
     }
 
@@ -90,22 +96,19 @@ public class Model implements IModel {
     }
 
     @Override
+    public void removeFromWatchList(MBeans media, int userListId) {
+        this.watchLists.get(userListId).removeFromList(media);
+    }
+
+    @Override
     public void updateWatched(MBeans media, boolean watched) {
-        for (MBeans bean : this.sourceList) {
-            if (bean.equals(media)) {
-                bean.setWatched(watched);
-            }
-        }
+        this.getMatchedObjectFromSource(media).setWatched(watched);
         // TODO Reflecting changes into actual file after these are updated
     }
 
     @Override
     public void updateUserRating(MBeans media, double rating) {
-        for (MBeans bean : this.sourceList) {
-            if (bean.equals(media)) {
-                bean.setMyRating(rating);
-            }
-        }
+        this.getMatchedObjectFromSource(media).setMyRating(rating);
         // TODO Reflecting changes into actual file after these are updated
     }
 
@@ -122,6 +125,30 @@ public class Model implements IModel {
                               .orElse(null);
         }
 
+	@Override
+	public String getUserListName(int userListId) {
+		return this.watchLists.get(userListId).getListName();
+	}
+
+	@Override
+	public int getUserListCount() {
+		return this.watchLists.size();
+	}
+
+	@Override
+	public int[] getUserListIndicesForRecord(MBeans record) {
+		int[] indices = IntStream.range(0, this.watchLists.size())
+                                 .filter(i -> this.watchLists.get(i).containsMedia(record))
+                                 .toArray();
+        return indices;
+	}
+
+	@Override
+	public void setUserListIndicesForRecird(MBeans record, int[] userListIndices) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
+	}
+
 //    @Override
 //    public void updateWatchList(MBeans media, int userListId) {
       // TODO Need method signature of what will be passed from Controller
@@ -136,6 +163,7 @@ public class Model implements IModel {
     public static void main(String[] args) {
         Model model = new Model();
         model.loadWatchList("data/samples/watchlist.json");
+        model.loadWatchList("data/samples/source.json");
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
         System.out.println("Source");
         for (MBeans bean : model.getSourceLists().collect(Collectors.toList())) {
@@ -153,4 +181,6 @@ public class Model implements IModel {
             System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
     }
+
+
 }

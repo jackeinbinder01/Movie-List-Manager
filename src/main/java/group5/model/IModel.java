@@ -59,6 +59,14 @@ public interface IModel {
     void addToWatchList(MBeans media, int userListId);
 
     /**
+     * Remove a media from the watch list.
+     *
+     * @param media The media to remove from the watch list.
+     * @param userListId The identifier of the watch list to add the media to.
+     */
+    void removeFromWatchList(MBeans media, int userListId);
+
+    /**
      * Update user watched status of a media.
      *
      * @param media The media to remove from the watch list.
@@ -91,9 +99,18 @@ public interface IModel {
     /**
      * Get the list of user created watch list index.
      *
+     * @param record The record to get the watch list indices for.
      * @return the list of user created watch list
      */
     int[] getUserListIndicesForRecord(MBeans record);
+
+    /**
+     * Add record to multiple watchlist based on indices.
+     *
+     * @param record The record to add to the watchlist.
+     * @param userListIndices The indices of the watchlist to add the record to.
+     */
+    void setUserListIndicesForRecird(MBeans record, int[] userListIndices);
 
 
 
