@@ -68,6 +68,22 @@ public class BaseView extends JFrame implements IView {
         detailsPane.bindFeatures(features);
     }
 
+    /**
+     * Set the user list pane entries
+     * Prompts the view to create a new tab pane if the userListId is not found
+     * @param userListIndex the index of the user list
+     * @param mbeans the MBeans to set
+     */
+    public void setUserTableRecords(int userListIndex, Stream<MBeans> mbeans) {
+        System.out.println("[BaseView] setUserTableRecords");
+        listPane.setUserTableRecords(userListIndex, mbeans);
+    }
+
+    public void createUserTable(String userListName) {
+        System.out.println("[BaseView] createUserTable");
+        listPane.createUserTableTab(userListName);
+    }
+
 
     @Override
     public void setDetailsPaneEntry(MBeans record) {
@@ -76,9 +92,9 @@ public class BaseView extends JFrame implements IView {
     }
 
     @Override
-    public void setMainTableRecords(Stream<MBeans> mbeans) {
+    public void setSourceTableRecords(Stream<MBeans> mbeans) {
         System.out.println("[BaseView] setMainTableRecords");
-        listPane.setMainTableRecords(mbeans);
+        listPane.setSourceTableRecords(mbeans);
     }
 
 

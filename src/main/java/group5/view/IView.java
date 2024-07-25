@@ -20,11 +20,19 @@ public interface IView {
      * TODO: confirm if this is the correct format for passing
      * @param mbeans the MBeans to set
      */
-    public void setMainTableRecords(Stream<MBeans> mbeans);
+    public void setSourceTableRecords(Stream<MBeans> mbeans);
 
 
+    /**
+     * Set the user list pane entries
+     * Prompts the view to create a new tab pane if the userListId is not found
+     * @param userListId the identifier of the user list
+     * @param mbeans the MBeans to set
+     */
+    public void setUserTableRecords(int userListId, Stream<MBeans> mbeans);
 
-//    public void setOrCreateNewUserListTab();
+
+    public void createUserTable(String userListName);
 
     public void bindFeatures(IFeature features);
 

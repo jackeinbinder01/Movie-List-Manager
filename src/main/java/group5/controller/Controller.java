@@ -1,6 +1,5 @@
 package group5.controller;
 
-import com.sun.security.jgss.GSSUtil;
 import group5.model.IModel;
 import group5.model.beans.MBeans;
 import group5.model.formatters.MBeansLoader;
@@ -34,12 +33,16 @@ public class Controller implements IController, IFeature {
         this.model = model;
         this.view = view;
 
+        model.loadSourceData();
         // bindFeatures accept an IFeature interface, which is the controller itself
         view.bindFeatures(this);
+        view.setSourceTableRecords(model.getSourceLists());
 
-        String sampleDataPath = "data/samples/source.json";
-        List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
-        view.setMainTableRecords(records.stream());
+        // String sampleDataPath = "data/samples/source.json";
+        // List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
+
+        view.createUserTable("Anything below this is a test");
+        view.setUserTableRecords(0, model.getSourceLists().toList().subList(0, 5).stream());
     }
 
     @Override
@@ -67,6 +70,9 @@ public class Controller implements IController, IFeature {
         throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'applyFilters'");
     }
 
+    /**
+     * Clear the filters in the FilterPane.
+     */
     @Override
     public void clearFilters() {
         view.clearFilters();
@@ -83,4 +89,30 @@ public class Controller implements IController, IFeature {
 
         view.display();
     }
+
+
+    public void removeFromWatchList(MBeans mbean, int userListIndex) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'removeMovieFromList'");
+        // model.removeFromWatchList(mbean, userListIndex);
+
+    }
+
+    public void addToWatchList(MBeans mbean, int userListIndex) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addMovieToList'");
+        // model.addToWatchList(mbean, userListIndex);
+    }
+
+    public void changeRating(MBeans mbean, double rating) {
+        model.updateUserRating(mbean, rating);
+        // TODO: Check if Views are correctly updated
+    }
+
+    public void changeWatchedStatus(MBeans mbean, boolean watched) {
+        model.updateWatched(mbean, watched);
+
+        // TODO: Check if Views are correctly updated
+    }
+
 }
