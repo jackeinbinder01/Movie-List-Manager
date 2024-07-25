@@ -502,7 +502,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         comboBox.setSelectedIndex(-1);
     }
 
-    private void setMovies(Stream<MBeans> movies) {
+    public void setMovies(Stream<MBeans> movies) {
         this.movies = movies.toList();
         // reset filter ranges and clear filter options
         setRangeFilterRanges();
