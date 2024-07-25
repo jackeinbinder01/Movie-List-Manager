@@ -103,6 +103,8 @@ public class BaseView extends JFrame implements IView {
         filterPane.setMovies(records.stream());
     }
 
+
+
     @Override
     public FilterPane getFilterPane() {
         return filterPane;
