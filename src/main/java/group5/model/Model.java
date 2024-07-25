@@ -112,19 +112,6 @@ public class Model implements IModel {
         // TODO Reflecting changes into actual file after these are updated
     }
 
-    /**
-     * Get the object reference of the MBeans that matched given media inside the source list.
-     *
-     * @param media
-     * @return MBeans object reference of the media with the same imdbID
-     */
-    public MBeans getMatchedObjectFromSource(MBeans media) {
-        return this.sourceList.stream()
-                              .filter(bean -> bean.equals(media))
-                              .findFirst()
-                              .orElse(null);
-        }
-
 	@Override
 	public String getUserListName(int userListId) {
 		return this.watchLists.get(userListId).getListName();
@@ -156,6 +143,21 @@ public class Model implements IModel {
 //        // TODO Auto-generated method stub
 //        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
 //    }
+
+
+    /**
+     * Get the object reference of the MBeans that matched given media inside the source list.
+     *
+     * @param media
+     * @return MBeans object reference of the media with the same imdbID
+     */
+    private MBeans getMatchedObjectFromSource(MBeans media) {
+        return this.sourceList.stream()
+                              .filter(bean -> bean.equals(media))
+                              .findFirst()
+                              .orElse(null);
+    }
+
 
     /**
      * Main method to test the model.
