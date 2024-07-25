@@ -456,7 +456,9 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             case "genreFilter":
                 // add options to set
                 for (MBeans movie : movies) {
-                    uniqueGenres.add(movie.getGenre());
+                    for (String genre : movie.getGenre()) {
+                        uniqueGenres.add(genre);
+                    }
                 }
                 // add elements to combo box
                 for (String genre : uniqueGenres) {
