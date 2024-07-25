@@ -144,7 +144,7 @@ public class Model implements IModel {
 	}
 
 	@Override
-	public void setUserListIndicesForRecird(MBeans record, int[] userListIndices) {
+	public void setUserListIndicesForRecord(MBeans record, int[] userListIndices) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
 	}

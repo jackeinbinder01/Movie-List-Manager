@@ -110,7 +110,7 @@ public interface IModel {
      * @param record The record to add to the watchlist.
      * @param userListIndices The indices of the watchlist to add the record to.
      */
-    void setUserListIndicesForRecird(MBeans record, int[] userListIndices);
+    void setUserListIndicesForRecord(MBeans record, int[] userListIndices);
 
 
 
