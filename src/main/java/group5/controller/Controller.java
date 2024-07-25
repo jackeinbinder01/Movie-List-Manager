@@ -90,7 +90,7 @@ public class Controller implements IController, IFeature {
      */
     @Override
     public void clearFilters() {
-        view.clearFilters();
+        view.getFilterPane().resetFilterOptions();
         // TODO: set the tables in the view to unfiltered
     }
 
@@ -128,6 +128,10 @@ public class Controller implements IController, IFeature {
         model.updateWatched(mbean, watched);
 
         // TODO: Check if Views are correctly updated
+    }
+
+    public void handleTabChange(int tabIndex) {
+        System.out.println("[Controller] Handling event: tab changed to " + tabIndex);
     }
 
 }
