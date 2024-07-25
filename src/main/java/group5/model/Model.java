@@ -83,6 +83,7 @@ public class Model implements IModel {
                 bean.setWatched(watched);
             }
         }
+        // TODO Reflecting changes into actual file after these are updated
     }
 
     @Override
@@ -92,9 +93,25 @@ public class Model implements IModel {
                 bean.setMyRating(rating);
             }
         }
+        // TODO Reflecting changes into actual file after these are updated
     }
 
+    /**
+     * Get the object reference of the MBeans that matched given media inside the source list.
+     *
+     * @param media
+     * @return MBeans object reference of the media with the same imdbID
+     */
+    public MBeans getMatchedObjectFromSource(MBeans media) {
+        return this.sourceList.stream()
+                              .filter(bean -> bean.equals(media))
+                              .findFirst()
+                              .orElse(null);
+        }
+
 //    @Override
+//    public void updateWatchList(MBeans media, int userListId) {
+      // TODO Need method signature of what will be passed from Controller
 //    public Stream<MBeans> getFiltered() {
 //        // TODO Auto-generated method stub
 //        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
@@ -122,9 +139,9 @@ public class Model implements IModel {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
             System.out.println("Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
-        System.out.println("Source list:" + model.getSourceLists().collect(Collectors.toList()));
-        model.updateWatched(externalList.get(2), true);
-        model.updateUserRating(externalList.get(3), 8.8);
-        System.out.println("Source list:" + model.getSourceLists().collect(Collectors.toList()));
+        System.out.println("\nextList item:\n" + System.identityHashCode(externalList.get(0)));
+        System.out.println("\nreturn matched ID:\n" + System.identityHashCode(model.getMatchedObjectFromSource(externalList.get(0))));
+        System.out.println("\nextList item:\n" + externalList.get(0));
+        System.out.println("\nreturn matched ID Content:\n" + model.getMatchedObjectFromSource(externalList.get(0)));
     }
 }
