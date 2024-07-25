@@ -91,7 +91,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         setComponentNames();
 
         // configure gbc
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(3, 2, 2, 2);
         updateGBC(null, null, null, null, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
 
         // add panels
