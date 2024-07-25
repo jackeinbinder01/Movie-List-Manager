@@ -41,6 +41,7 @@ public interface IView {
      */
     public void clearFilters();
 
+    public FilterPane getFilterPane();
 
     public void display();
 }

@@ -66,7 +66,22 @@ public class Controller implements IController, IFeature {
 
     @Override
     public void applyFilters() {
-        // TODO Auto-generated method stub
+        String titleFilter = view.getFilterPane().getFilteredTitle();
+        String contentTypeFilter = view.getFilterPane().getFilteredContentType();
+        String genreFilter = view.getFilterPane().getFilteredGenre();
+        String mpaRatingFilter = view.getFilterPane().getFilteredMpaRating();
+        String releasedMin = view.getFilterPane().getFilteredReleasedMin();
+        String releasedMax = view.getFilterPane().getFilteredReleasedMax();
+        String imdbRatingMin = view.getFilterPane().getFilteredImdbRatingMin();
+        String imdbRatingMax = view.getFilterPane().getFilteredImdbRatingMax();
+        String boxOfficeEarningsMin = view.getFilterPane().getFilteredBoxOfficeEarningsMin();
+        String boxOfficeEarningsMax = view.getFilterPane().getFilteredBoxOfficeEarningsMax();
+        String directorFilter = view.getFilterPane().getFilteredDirectorFilter();
+        String actorFilter = view.getFilterPane().getFilteredActorFilter();
+        String writerFilter = view.getFilterPane().getFilteredWriterFilter();
+        String languageFilter = view.getFilterPane().getFilteredLanguageFilter();
+        String countryOfOriginFilter = view.getFilterPane().getFilteredCountryOfOriginFilter();
+
         throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'applyFilters'");
     }
 
