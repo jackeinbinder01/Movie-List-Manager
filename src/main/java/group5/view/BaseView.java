@@ -97,7 +97,10 @@ public class BaseView extends JFrame implements IView {
         listPane.setSourceTableRecords(mbeans);
     }
 
-
+    @Override
+    public FilterPane getFilterPane() {
+        return filterPane;
+    }
 
     @Override
     public void clearFilters() {

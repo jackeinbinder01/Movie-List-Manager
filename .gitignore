@@ -31,3 +31,4 @@ build
 # ingore ide files
 .vscode
 idea/
+/.idea

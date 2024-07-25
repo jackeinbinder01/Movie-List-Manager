@@ -236,16 +236,15 @@ public class ListPaneV2 extends JPanel {
         public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
-//            switch (col) {
-//                // TODO: maybe use reflection or some enum for mapping
-//                case 2:
-//                    return true;
-//                case 3:
-//                    return true;
-//                default:
-//                    return false;
-//            }
-            return true;
+            COLUMN column = COLUMN.values()[col];
+            switch (column) {
+                case WATCHED:
+                    return true;
+                case ACTION:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /*
@@ -260,9 +259,12 @@ public class ListPaneV2 extends JPanel {
             {
                 MBeans record = records.get(row);
                 System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
+                // calling the handler to update the Model
                 changeWatchedStatusHandler.accept(record, !record.getWatched());
-                // record.setWatched(!record.getWatched());
             }
+            // ideally, the Model has been updated at this point
+            // and since the MBeans that this table holds is ultimately the same MBeans stored in the Model,
+            // there is no need to re-set the records for this table model
             fireTableCellUpdated(row, col);
         }
 
@@ -400,8 +402,6 @@ public class ListPaneV2 extends JPanel {
             return super.stopCellEditing();
         }
     }
-
-
 
 
     /**
