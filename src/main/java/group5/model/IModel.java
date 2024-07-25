@@ -112,12 +112,9 @@ public interface IModel {
      */
     void setUserListIndicesForRecord(MBeans record, int[] userListIndices);
 
+    Stream<MBeans> getFiltered(String filter);
 
-
-
-    /*public Stream<MBeans> getMovieList(FilterClass filter) {
-        return getMovieList(filter, null);
-    }*/
+    Stream<MBeans> getFiltered(String filters, int userListId);
 
     //Stream<MBeans> getMovieList(FilterClass filter, UserListIdentifier userListId);
 

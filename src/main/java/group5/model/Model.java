@@ -136,13 +136,17 @@ public class Model implements IModel {
 		throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
 	}
 
-//    @Override
-//    public void updateWatchList(MBeans media, int userListId) {
-      // TODO Need method signature of what will be passed from Controller
-//    public Stream<MBeans> getFiltered() {
-//        // TODO Auto-generated method stub
-//        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
-//    }
+    public Stream<MBeans> getFiltered(String filter) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
+    }
+
+    public Stream<MBeans> getFiltered(String filters, int userListId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
+    }
+
+
 
 
     /**
