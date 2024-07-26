@@ -1,5 +1,6 @@
 package group5.view;
 
+import com.github.javaparser.utils.Pair;
 import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
@@ -343,12 +344,42 @@ public class ListPaneV2 extends JPanel {
         private boolean isPushed;
         private TableMode tableMode;
 
+
+        private JPopupMenu editMenu;
+
+        private JPopupMenu initEditMenu() {
+            JPopupMenu editMenu = new JPopupMenu("Edit");
+            for (int i = 0; i < 10; i++) {
+                JMenuItem item = new JMenuItem("List " + i);
+                int finalI = i;
+                item.addActionListener(e -> {
+                    System.out.println("List " + finalI + " clicked");
+                    // addToListHandler.accept(record, finalI);
+                });
+                editMenu.add(item);
+            }
+            JMenuItem createNewListItem = new JMenuItem("Add To New List");
+            createNewListItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Create new list clicked");
+                    createNewListItem.setSelected(false);
+                }
+
+            });
+            editMenu.addSeparator();
+            editMenu.add(createNewListItem);
+            return editMenu;
+        }
+
         public ButtonEditor(TableMode tableMode) {
             // This is a workaround, since DefaultCellEditor only accepts JCheckBox, JComboBox or JTextField
             super(new JCheckBox());
 
             button = new JButton();
             this.tableMode = tableMode;
+
+
             switch (this.tableMode) {
                 case MAIN:
                     label = "Add/Remove";
@@ -360,24 +391,49 @@ public class ListPaneV2 extends JPanel {
                     label = "AN_ERROR_OCCURRED";
             }
             button.setOpaque(true);
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
+
+            if (this.tableMode == TableMode.MAIN) {
+                editMenu = initEditMenu();
+            }
+
+            button.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseReleased(java.awt.event.MouseEvent e) {
+                    // fireEditingStopped();
                     switch (tableMode) {
                         case MAIN:
-                            JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            editMenu.show(e.getComponent(), e.getX(), e.getY());
                             break;
                         case USER_DEFINED:
                             int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
-                            JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
                             removeFromListHandler.accept(record, currUserTableIndex);
                             break;
                         default:
                             System.out.println("[ButtonEditor] AN_ERROR_OCCURRED");
                     }
+                    fireEditingStopped();
                 }
             });
+//            button.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+////                    fireEditingStopped();
+//                    switch (tableMode) {
+//                        case MAIN:
+//                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+//                            editMenu.show(button, button.getX(), button.getY());
+//                            break;
+//                        case USER_DEFINED:
+//                            int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
+//                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+//                            removeFromListHandler.accept(record, currUserTableIndex);
+//                            break;
+//                        default:
+//                            System.out.println("[ButtonEditor] AN_ERROR_OCCURRED");
+//                    }
+//                }
+//            });
         }
 
         @Override
