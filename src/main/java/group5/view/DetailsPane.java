@@ -199,7 +199,7 @@ public class DetailsPane extends JPanel {
         this.mediaImage = new JLabel();
         this.mediaImage.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.mediaImage.setPreferredSize(new Dimension(200, 250));  // Scaling.
-        this.mediaImage.setIcon(new ImageIcon("./src/main/resources/no-image.jpg"));
+        this.mediaImage.setIcon(new ImageIcon(getClass().getClassLoader().getResource("no-image.jpg")));
         this.detailsPanel.add(this.mediaImage);
         this.addVerticalPadding(5);
     }
@@ -315,7 +315,7 @@ public class DetailsPane extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ImageIcon("./data/no-image.jpg");
+        return new ImageIcon(getClass().getClassLoader().getResource("no-image.jpg"));
     }
 
     /**
