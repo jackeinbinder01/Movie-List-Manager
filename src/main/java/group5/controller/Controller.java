@@ -42,11 +42,13 @@ public class Controller implements IController, IFeature {
 
         // String sampleDataPath = "data/samples/source.json";
         // List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
-
         model.loadWatchList("./data/samples/watchlist.json");
+        
+        for (int i = 0; i < model.getUserListCount(); i++) {
+            view.createUserTable(model.getUserListName(i));
+            view.setUserTableRecords(i,model.getWatchLists(i));
+        }
 
-        view.createUserTable("User List Index 0");
-        view.setUserTableRecords(0, model.getWatchLists(0));
     }
 
     @Override
@@ -124,14 +126,15 @@ public class Controller implements IController, IFeature {
 
     }
 
-    public void addToWatchList(MBeans mbean, int userListIndex) {
-        System.out.println("[Controller] addToWatchList called to add " + mbean.getTitle() + " to user list index " + userListIndex);
-        model.addToWatchList(mbean, userListIndex);
+    public void addToWatchList(MBeans record, int userListIndex) {
+        System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
+        model.addToWatchList(record, userListIndex);
+        view.setUserTableRecords(userListIndex, model.getWatchLists(userListIndex));
         //throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addMovieToList'");
     }
 
-    public void changeRating(MBeans mbean, double rating) {
-        model.updateUserRating(mbean, rating);
+    public void changeRating(MBeans record, double rating) {
+        model.updateUserRating(record, rating);
         // TODO: Check if Views are correctly updated
     }
 
