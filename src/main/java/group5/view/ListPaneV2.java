@@ -134,13 +134,17 @@ public class ListPaneV2 extends JPanel {
         tabbedPane.addTab(tableName, null, scrollPane, tableName);
     }
 
-    public void setUserTableRecords(int userListIndex, Stream<MBeans> mbeans) {
+    public void setUserTableRecords(Stream<MBeans> recordStream, int userListIndex) {
         System.out.println("[BaseView] setUserTableRecords");
         if (tabbedPane.getTabCount() - 2 < userListIndex) {
             throw new IllegalArgumentException("User-defined list index out of bounds");
         }
-        MovieTableModel model = userListModels.get(userListIndex);
-        model.setRecords(mbeans.toList());
+        MovieTableModel targetUserListModel = userListModels.get(userListIndex);
+        List<MovieTableModelRecord> recordsWithMetadata = new ArrayList<>();
+        for (MBeans record : recordStream.toList()) {
+            recordsWithMetadata.add(new MovieTableModelRecord(record, null, null));
+        }
+        targetUserListModel.setRecordsWithMetadata(recordsWithMetadata);
     }
 
     /**
@@ -156,7 +160,12 @@ public class ListPaneV2 extends JPanel {
 
     public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] userListMetadata) {
         System.out.println("[ListPaneV2] setMainTableRecords called");
-        sourceTableModel.setRecords(records.toList());
+        List<MovieTableModelRecord> recordsWithMetadata = new ArrayList<>();
+        List<MBeans> recordsList = records.toList();
+        for (int i = 0; i < recordsList.size(); i++) {
+            recordsWithMetadata.add(new MovieTableModelRecord(recordsList.get(i), userListNames, userListMetadata[i]));
+        }
+        sourceTableModel.setRecordsWithMetadata(recordsWithMetadata);
     }
 
     public void bindFeatures(IFeature features) {
@@ -195,6 +204,7 @@ public class ListPaneV2 extends JPanel {
 
         private String[] columnNames = {"Title", "Year", "Watched", "ACTION"};
         private List<MBeans> records;
+        private List<MovieTableModelRecord> movieTableModelRecords;
         private TableMode tableMode;
 
 
@@ -212,7 +222,7 @@ public class ListPaneV2 extends JPanel {
          * @return MBeans the movie record
          */
         public MBeans getRecordAt(int row) {
-            return records.get(row);
+            return movieTableModelRecords.get(row).getRecord();
         }
 
         public TableMode getTableMode() {
@@ -224,15 +234,20 @@ public class ListPaneV2 extends JPanel {
             fireTableDataChanged();
         }
 
+        public void setRecordsWithMetadata(List<MovieTableModelRecord> movieTableModelRecords) {
+            this.movieTableModelRecords = movieTableModelRecords;
+            fireTableDataChanged();
+        }
+
         public int getColumnCount() {
             return columnNames.length;
         }
 
         public int getRowCount() {
-            if (records == null) {
+            if (movieTableModelRecords == null) {
                 return 0;
             }
-            return records.size();
+            return movieTableModelRecords.size();
         }
 
         public String getColumnName(int col) {
@@ -240,7 +255,8 @@ public class ListPaneV2 extends JPanel {
         }
 
         public Object getValueAt(int row, int col) {
-            MBeans record = records.get(row);
+            MovieTableModelRecord movieTableModelRecord = movieTableModelRecords.get(row);
+            MBeans record = movieTableModelRecord.getRecord();
             COLUMN column = COLUMN.values()[col];
             switch (column) {
                 case TITLE:
@@ -250,7 +266,7 @@ public class ListPaneV2 extends JPanel {
                 case WATCHED:
                     return record.getWatched();
                 case ACTION:
-                    return record;
+                    return movieTableModelRecord;
                 default:
                     return null;
             }
@@ -282,21 +298,20 @@ public class ListPaneV2 extends JPanel {
         }
 
         /*
-         * This will be useful for reacting to changes in the DetailPane
-         * 1. update the model
-         * 2. fireTableDataChanged()
+         * This handles any changes to the table's data.
+         * Changes in watched status are handled here.
          */
         public void setValueAt(Object value, int row, int col) {
             // System.out.println("[ListPaneV2] setValueAt: " + value + " at row: " + row + " col: " + col);
             // data[row][col] = value;
             if (col == COLUMN.WATCHED.index) {
-                MBeans record = records.get(row);
+                MBeans record = this.getRecordAt(row);
                 System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
                 // calling the handler to update the Model
                 changeWatchedStatusHandler.accept(record, !record.getWatched());
             }
             // ideally, the Model has been updated at this point
-            // and since the MBeans that this table holds is ultimately the same MBeans stored in the Model,
+            // since the MBeans in this model points to the same MBeans in the Model
             // there is no need to re-set the records for this table model
             fireTableCellUpdated(row, col);
         }
@@ -354,36 +369,25 @@ public class ListPaneV2 extends JPanel {
 
         protected JButton button;
         private String label;
-        private MBeans record;
+        // private MBeans record;
         private boolean isPushed;
         private TableMode tableMode;
         private JPopupMenu editMenu;
         private List<String> userListNames;
+        private MovieTableModelRecord movieTableModelRecord;
 
+        private static Icon tickIcon;
 
-        private JPopupMenu initEditMenu() {
-            JPopupMenu editMenu = new JPopupMenu("Edit");
-//            for (String listName : userListNames) {
-//                JMenuItem item = new JMenuItem(listName);
-//                item.addActionListener(e -> {
-//                    System.out.println("List \"" + listName + "\" clicked");
-//                    // addToListHandler.accept(record, finalI);
-//                });
-//                editMenu.add(item);
-//            }
-            JMenuItem createNewListItem = new JMenuItem("Add To New List");
-            createNewListItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("Create new list clicked");
-                    createNewListItem.setSelected(false);
-                }
+        static {
+            // Create an ImageIcon from the PNG file
+            ImageIcon imageIcon = new ImageIcon(ButtonEditor.class.getClassLoader().getResource("tick.png"));
 
-            });
-            editMenu.addSeparator();
-            editMenu.add(createNewListItem);
-            return editMenu;
+            // Optionally, you can scale the image if needed
+            Image image = imageIcon.getImage(); // Transform it
+            Image scaledImage = image.getScaledInstance(10, 10,  java.awt.Image.SCALE_SMOOTH); // Scale it to 32x32 pixels
+            tickIcon = new ImageIcon(scaledImage); // Transform it back to an ImageIcon
         }
+
 
         public ButtonEditor(TableMode tableMode) {
             // This is a workaround, since DefaultCellEditor only accepts JCheckBox, JComboBox or JTextField
@@ -406,21 +410,55 @@ public class ListPaneV2 extends JPanel {
             }
             button.setOpaque(true);
 
-            if (this.tableMode == TableMode.MAIN) {
-                editMenu = initEditMenu();
-            }
 
             button.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseReleased(java.awt.event.MouseEvent e) {
                     switch (tableMode) {
                         case MAIN:
+
                             // JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            JPopupMenu editMenu = new JPopupMenu("Edit");
+
+                            String[] userListNames = movieTableModelRecord.getUserListNames();
+                            boolean[] userListIndices = movieTableModelRecord.getUserListIndices();
+
+                            for (int i = 0; i < userListNames.length; i++) {
+                                JMenuItem item;
+                                int idx = i;
+                                if (userListIndices[i]) {
+                                    item = new JMenuItem("✔ " + userListNames[i], null);
+                                    item.addActionListener(event -> {
+                                        System.out.println("List \"" + userListNames[idx] + "\" clicked");
+                                        removeFromListHandler.accept(movieTableModelRecord.getRecord(), idx);
+                                    });
+                                } else {
+                                    item = new JMenuItem(userListNames[i], null);
+                                    item.addActionListener(event -> {
+                                        System.out.println("List \"" + userListNames[idx] + "\" clicked");
+                                        addToListHandler.accept(movieTableModelRecord.getRecord(), idx);
+                                    });
+                                }
+                                editMenu.add(item);
+                            }
+
+
+                            JMenuItem createNewListItem = new JMenuItem("Add To New List");
+                            createNewListItem.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    System.out.println("Create new list clicked");
+                                    createNewListItem.setSelected(false);
+                                }
+
+                            });
+                            editMenu.addSeparator();
+                            editMenu.add(createNewListItem);
                             editMenu.show(e.getComponent(), e.getX(), e.getY());
                             break;
                         case USER_DEFINED:
                             int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
                             // JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
-                            removeFromListHandler.accept(record, currUserTableIndex);
+                            removeFromListHandler.accept(movieTableModelRecord.getRecord(), currUserTableIndex);
                             break;
                         default:
                             System.out.println("[ButtonEditor] AN_ERROR_OCCURRED");
@@ -440,11 +478,11 @@ public class ListPaneV2 extends JPanel {
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                                                      boolean isSelected, int row, int column) {
-            if (value instanceof MBeans) {
-                record = (MBeans) value;
+            if (value instanceof MovieTableModelRecord) {
+                movieTableModelRecord = (MovieTableModelRecord) value;
             } else {
-                record = null;
-                System.out.println("[ButtonEditor] getTableCellEditorComponent: value is not MBeans");
+                movieTableModelRecord = null;
+                System.out.println("[ButtonEditor] getTableCellEditorComponent: value is not MovieTableModelRecord");
                 // TODO: throw an exception
             }
             button.setText(label);
@@ -503,6 +541,8 @@ public class ListPaneV2 extends JPanel {
      * The UserList fields are required for the sourceList to construct
      * the dropdown menu for watchlist management.
      * Admittedly, this looks counter-intuitive for now.
+     * Makes use of composition pattern instead of inheritance with MBeans
+     * because we want to retain the original MBeans reference instead of copying and constructing new MBeans.
      */
     class MovieTableModelRecord {
         private MBeans record;
@@ -521,6 +561,9 @@ public class ListPaneV2 extends JPanel {
         public MBeans getRecord() {
             return record;
         }
+        public MBeans getMBeans() {
+            return record;
+        }
         public boolean[] getUserListIndices() {
             return userListIndices;
         }
@@ -528,6 +571,8 @@ public class ListPaneV2 extends JPanel {
             return userListNames;
         }
     }
+
+
 }
 
 

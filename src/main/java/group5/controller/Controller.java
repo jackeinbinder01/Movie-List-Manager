@@ -9,6 +9,11 @@ import group5.model.IModel;
 import group5.model.beans.MBeans;
 import group5.view.IView;
 
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
  * Controller class for the program.
  */
@@ -27,7 +32,7 @@ public class Controller implements IController, IFeature {
      * Constructor for the controller.
      *
      * @param model the model object representing the movie database
-     * @param view the view object representing the user interface
+     * @param view  the view object representing the user interface
      */
     public Controller(IModel model, IView view) {
 
@@ -36,18 +41,37 @@ public class Controller implements IController, IFeature {
         this.view = view;
 
         model.loadSourceData();
+        model.loadWatchList("./data/samples/watchlist.json");
+        model.loadWatchList("./data/samples/abc.json");
+        model.loadWatchList("./data/samples/avatar.json");
+        model.loadWatchList("./data/samples/lol.json");
+        model.loadWatchList("./data/samples/titanic_only.json");
         // bindFeatures accept an IFeature interface, which is the controller itself
         view.bindFeatures(this);
-        view.setSourceTableRecords(model.getSourceLists());
 
-        // String sampleDataPath = "data/samples/source.json";
-        // List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
-        model.loadWatchList("./data/samples/watchlist.json");
-        
+        // setup source table records
+        // view.setSourceTableRecords(model.getSourceLists());
+
+        view.setSourceTableRecordsV2(model.getSourceLists(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+//        System.out.println("tmpGet2DUserListForRecord()" + tmpGet2DUserListForRecord());
+//
+//
+//        List<MBeans> tmpList = model.getSourceLists().toList();
+//        boolean[][] userLists = tmpGet2DUserListForRecord();
+//        for (int i = 0; i < tmpList.size(); i++) {
+//            for (int j = 0; j < model.getUserListCount(); j++) {
+//                System.out.print(tmpList.get(i).getTitle() + " inside " + model.getUserListName(j) + " = " + userLists[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+
+        // load user watchlists into model and view
         for (int i = 0; i < model.getUserListCount(); i++) {
             view.createUserTable(model.getUserListName(i));
             view.setUserTableRecords(i,model.getWatchLists(i));
         }
+
+
 
     }
 
@@ -71,6 +95,7 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] showRecordDetails called");
         view.setDetailsPaneEntry(record);
     }
+
 
     @Override
     public void applyFilters() {
@@ -123,6 +148,7 @@ public class Controller implements IController, IFeature {
         // TODO: set the tables in the view to unfiltered
     }
 
+
     /**
      * Main entry point for the controller.
      */
@@ -133,14 +159,19 @@ public class Controller implements IController, IFeature {
         view.display();
     }
 
-    public void removeFromWatchList(MBeans mbean, int userListIndex) {
-        // TODO Auto-generated method stub
-        System.out.println("[Controller] removeFromWatchList called to remove " + mbean.getTitle() + " from user list index " + userListIndex);
-        // TODO: Waiting for IModel implementation
-        // model.removeFromWatchList(mbean, userListIndex);
-
+    /**
+     * Remove a record from the user's watch list.
+     * The affected user table in the view will be updated.
+     * @param record         the MBean to be removed.
+     * @param userListIndex the index in the user's watch list where the MBean is located.
+     */
+    public void removeFromWatchList(MBeans record, int userListIndex) {
+        System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
+        // Remove the record from the model
+        model.removeFromWatchList(record, userListIndex);
         // Update the affected table in the view
-        view.setUserTableRecords(userListIndex, model.getWatchLists(userListIndex));
+        view.setUserTableRecords(model.getWatchLists(userListIndex), userListIndex);
+        view.setSourceTableRecordsV2(model.getSourceLists(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
 
     }
 
@@ -182,5 +213,44 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] Handling event: tab changed to " + tabIndex);
         // view.getFilterPane().setMovies(getRecordsForCurrentTab());
     }
+
+
+
+    private boolean[][] tmpGet2DUserListForRecord() {
+        boolean[][] result = new boolean[(int)model.getSourceLists().count()][model.getUserListCount()];
+        for (int i = 0; i < (int)model.getSourceLists().count(); i++) {
+            result[i] = tmpGetUserListForRecord(model.getSourceLists().toList().get(i));
+        }
+        return result;
+    }
+
+    /**
+     * Temporary method to get the user list for a record.
+     * Rationale - passing down for construction for the watchlist dropbox menu
+     */
+    private boolean[] tmpGetUserListForRecord(MBeans record) {
+        int[] indices = model.getUserListIndicesForRecord(record);
+        boolean[] result = new boolean[model.getUserListCount()];
+        for (int i = 0; i < model.getUserListCount(); i++) {
+            result[i] = false;
+        }
+        for (int index : indices) {
+            result[index] = true;
+        }
+        return result;
+    }
+    /**
+     * Temporary method to get the user list names.
+     * Rationale - passing down for construction for the watchlist dropbox menu
+     */
+    private String[] tmpGetUserListNames() {
+        String[] result = new String[model.getUserListCount()];
+        for (int i = 0; i < model.getUserListCount(); i++) {
+            result[i] = model.getUserListName(i);
+        }
+        return result;
+    }
+
+
 
 }
