@@ -23,6 +23,8 @@ public interface IView {
     public void setSourceTableRecords(Stream<MBeans> mbeans);
 
 
+    public void setSourceTableRecordsV2(Stream<MBeans> mbeans, String[] userListNames, boolean[][] userListMetadata);
+
     /**
      * Set the user list pane entries
      * Prompts the view to create a new tab pane if the userListId is not found
