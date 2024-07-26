@@ -6,7 +6,9 @@ import group5.model.formatters.MBeansLoader;
 import group5.model.formatters.Formats;
 import group5.view.IView;
 
+import javax.swing.*;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Controller class for the program.
@@ -41,14 +43,19 @@ public class Controller implements IController, IFeature {
         // String sampleDataPath = "data/samples/source.json";
         // List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
 
-        view.createUserTable("Anything below this is a test");
-        view.setUserTableRecords(0, model.getSourceLists().toList().subList(0, 5).stream());
+        model.loadWatchList("./data/samples/watchlist.json");
+
+        view.createUserTable("User List Index 0");
+        view.setUserTableRecords(0, model.getWatchLists(0));
     }
 
     @Override
     public void exportListToFile(String filepath) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'exportListToFile'");
+        String currentTab = "\"SourceTable\"";
+        if (view.getCurrentTab() > 0) {
+            currentTab = "\"UserTable " + (view.getCurrentTab() - 1 + "\"");
+        }
+        JOptionPane.showMessageDialog(null, "Exporting data from " + currentTab + " to " + filepath);
     }
 
     @Override
@@ -66,7 +73,22 @@ public class Controller implements IController, IFeature {
 
     @Override
     public void applyFilters() {
-        // TODO Auto-generated method stub
+        String titleFilter = view.getFilterPane().getFilteredTitle();
+        String contentTypeFilter = view.getFilterPane().getFilteredContentType();
+        String genreFilter = view.getFilterPane().getFilteredGenre();
+        String mpaRatingFilter = view.getFilterPane().getFilteredMpaRating();
+        String releasedMin = view.getFilterPane().getFilteredReleasedMin();
+        String releasedMax = view.getFilterPane().getFilteredReleasedMax();
+        String imdbRatingMin = view.getFilterPane().getFilteredImdbRatingMin();
+        String imdbRatingMax = view.getFilterPane().getFilteredImdbRatingMax();
+        String boxOfficeEarningsMin = view.getFilterPane().getFilteredBoxOfficeEarningsMin();
+        String boxOfficeEarningsMax = view.getFilterPane().getFilteredBoxOfficeEarningsMax();
+        String directorFilter = view.getFilterPane().getFilteredDirectorFilter();
+        String actorFilter = view.getFilterPane().getFilteredActorFilter();
+        String writerFilter = view.getFilterPane().getFilteredWriterFilter();
+        String languageFilter = view.getFilterPane().getFilteredLanguageFilter();
+        String countryOfOriginFilter = view.getFilterPane().getFilteredCountryOfOriginFilter();
+
         throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'applyFilters'");
     }
 
@@ -75,7 +97,7 @@ public class Controller implements IController, IFeature {
      */
     @Override
     public void clearFilters() {
-        view.clearFilters();
+        view.getFilterPane().resetFilterOptions();
         // TODO: set the tables in the view to unfiltered
     }
 
@@ -93,15 +115,19 @@ public class Controller implements IController, IFeature {
 
     public void removeFromWatchList(MBeans mbean, int userListIndex) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'removeMovieFromList'");
+        System.out.println("[Controller] removeFromWatchList called to remove " + mbean.getTitle() + " from user list index " + userListIndex);
+        // TODO: Waiting for IModel implementation
         // model.removeFromWatchList(mbean, userListIndex);
+
+        // Update the affected table in the view
+        view.setUserTableRecords(userListIndex, model.getWatchLists(userListIndex));
 
     }
 
     public void addToWatchList(MBeans mbean, int userListIndex) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addMovieToList'");
-        // model.addToWatchList(mbean, userListIndex);
+        System.out.println("[Controller] addToWatchList called to add " + mbean.getTitle() + " to user list index " + userListIndex);
+        model.addToWatchList(mbean, userListIndex);
+        //throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addMovieToList'");
     }
 
     public void changeRating(MBeans mbean, double rating) {
@@ -113,6 +139,27 @@ public class Controller implements IController, IFeature {
         model.updateWatched(mbean, watched);
 
         // TODO: Check if Views are correctly updated
+    }
+
+    /**
+     * Get the records for the currently active tab.
+     *
+     * @return a stream of MBeans
+     */
+    private Stream<MBeans> getRecordsForCurrentTab() {
+        int currentTab = view.getCurrentTab();
+        if (currentTab == 0) {
+            return model.getSourceLists();
+        } else if (currentTab > 0) {
+            return model.getWatchLists(currentTab - 1); // decrement by 1 to get the user-defined list index
+        } else {
+            return null;
+        }
+    }
+
+    public void handleTabChange(int tabIndex) {
+        System.out.println("[Controller] Handling event: tab changed to " + tabIndex);
+        // view.getFilterPane().setMovies(getRecordsForCurrentTab());
     }
 
 }

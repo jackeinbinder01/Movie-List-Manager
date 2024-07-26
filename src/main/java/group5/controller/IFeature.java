@@ -44,6 +44,10 @@ public interface IFeature {
      */
     public void addToWatchList(MBeans mbean, int userListIndex);
 
+
+
+
+
     /**
      * Changes the rating of a specific MBean.
      *
@@ -71,4 +75,7 @@ public interface IFeature {
      */
     public void clearFilters();
 
+
+
+    public void handleTabChange(int tabIndex);
 }

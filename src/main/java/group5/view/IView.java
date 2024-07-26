@@ -36,11 +36,10 @@ public interface IView {
 
     public void bindFeatures(IFeature features);
 
-    /**
-     * Clear the filters in the FilterPane
-     */
-    public void clearFilters();
 
+    public FilterPane getFilterPane();
 
     public void display();
+
+    public int getCurrentTab();
 }

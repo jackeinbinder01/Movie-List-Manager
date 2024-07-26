@@ -5,6 +5,7 @@ import group5.model.beans.MBeans;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collection;
 import java.util.stream.Stream;
 
 public class BaseView extends JFrame implements IView {
@@ -31,6 +32,7 @@ public class BaseView extends JFrame implements IView {
             e.printStackTrace();
         }
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Creating Base Pane
@@ -84,6 +86,9 @@ public class BaseView extends JFrame implements IView {
         listPane.createUserTableTab(userListName);
     }
 
+    public int getCurrentTab() {
+        return listPane.getActiveTab();
+    }
 
     @Override
     public void setDetailsPaneEntry(MBeans record) {
@@ -93,14 +98,17 @@ public class BaseView extends JFrame implements IView {
 
     @Override
     public void setSourceTableRecords(Stream<MBeans> mbeans) {
+        Collection<MBeans> records = mbeans.toList();
         System.out.println("[BaseView] setMainTableRecords");
-        listPane.setSourceTableRecords(mbeans);
+        listPane.setSourceTableRecords(records.stream());
+        filterPane.setMovies(records.stream());
     }
-
-
 
     @Override
-    public void clearFilters() {
-        System.out.println("clearFilters");
+    public FilterPane getFilterPane() {
+        return filterPane;
     }
+
+
+
 }

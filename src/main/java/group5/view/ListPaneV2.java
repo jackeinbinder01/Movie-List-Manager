@@ -1,5 +1,6 @@
 package group5.view;
 
+import com.github.javaparser.utils.Pair;
 import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
@@ -8,7 +9,6 @@ import group5.model.formatters.MBeansLoader;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
@@ -49,7 +49,6 @@ public class ListPaneV2 extends JPanel {
     // BiConsumer<MBeans, Double> changeRatingHandler;
 
 
-
     /**
      * List of movie models for user-defined lists
      * Each user-defined list will have its own model
@@ -63,13 +62,15 @@ public class ListPaneV2 extends JPanel {
         // Set layout for the list pane
         this.setLayout(new BorderLayout());
 
+
+        // Setting up the tabbed pane, and adding listener for tab change
         tabbedPane = new JTabbedPane();
+        this.add(tabbedPane, BorderLayout.CENTER);
 
         // Create the main table
         createSourceTableTab();
         userListModels = new ArrayList<>();
 
-        this.add(tabbedPane, BorderLayout.CENTER);
 
         // Create panel for add and export buttons below the table
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -83,17 +84,28 @@ public class ListPaneV2 extends JPanel {
 
     }
 
+
+    public int getActiveTab() {
+        return tabbedPane.getSelectedIndex();
+    }
+
+
+    public MovieTableModel getActiveTableModel() {
+        int currentTab = tabbedPane.getSelectedIndex();
+        if (currentTab == 0) {
+            return sourceTableModel;
+        } else {
+            return userListModels.get(currentTab - 1);
+        }
+    }
+
     private void createSourceTableTab() {
         sourceTableModel = new MovieTableModel(TableMode.MAIN);
-        sourceTable = new JMovieTable(sourceTableModel);
-//        sourceTable.getModel().addTableModelListener(e -> {
-//            int row = e.getFirstRow();
-//            int column = e.getColumn();
-//            MovieTableModel model = (MovieTableModel) e.getSource();
-//            MBeans record = model.getRecordAt(row);
-//            System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + record.getWatched());
-//
-//        });
+
+        sourceTable = new JTable(sourceTableModel);
+        sourceTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        sourceTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
+
         sourceTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(TableMode.MAIN));
         sourceTable.getColumn("ACTION").setCellEditor(new ButtonEditor(TableMode.MAIN));
         JScrollPane mainTab = new JScrollPane(
@@ -103,23 +115,26 @@ public class ListPaneV2 extends JPanel {
         tabbedPane.addTab(MAIN_TAB_NAME, null, mainTab, MAIN_TAB_NAME);
     }
 
-    public void createUserTableTab(String tabName) {
+    public void createUserTableTab(String tableName) {
         MovieTableModel newUserModel = new MovieTableModel(TableMode.USER_DEFINED);
         userListModels.add(newUserModel);
-        JTable newUserTable = new JMovieTable(newUserModel);
+        JTable newUserTable = new JTable(newUserModel);
+        newUserTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        newUserTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
+
         newUserTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(TableMode.USER_DEFINED));
         newUserTable.getColumn("ACTION").setCellEditor(new ButtonEditor(TableMode.USER_DEFINED));
         JScrollPane scrollPane = new JScrollPane(
                 newUserTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tabbedPane.addTab(tabName, null, scrollPane, tabName);
+        tabbedPane.addTab(tableName, null, scrollPane, tableName);
     }
 
     public void setUserTableRecords(int userListIndex, Stream<MBeans> mbeans) {
         System.out.println("[BaseView] setUserTableRecords");
         if (tabbedPane.getTabCount() - 2 < userListIndex) {
-            throw new IllegalArgumentException("User list index out of bounds");
+            throw new IllegalArgumentException("User-defined list index out of bounds");
         }
         MovieTableModel model = userListModels.get(userListIndex);
         model.setRecords(mbeans.toList());
@@ -143,21 +158,27 @@ public class ListPaneV2 extends JPanel {
         removeFromListHandler = features::removeFromWatchList;
         addToListHandler = features::addToWatchList;
         changeWatchedStatusHandler = features::changeWatchedStatus;
+        tabbedPane.addChangeListener(e -> features.handleTabChange(tabbedPane.getSelectedIndex()));
     }
 
 
     class MovieTableModel extends AbstractTableModel {
+        /**
+         * Enum for the columns in the table for easy reference in switch statements
+         */
         enum COLUMN {
             TITLE,
             YEAR,
             WATCHED,
             ACTION;
             public final int index;
+
             COLUMN() {
                 this.index = this.ordinal();
             }
-
         }
+
+
         private String[] columnNames = {"Title", "Year", "Watched", "ACTION"};
         private List<MBeans> records;
         private TableMode tableMode;
@@ -168,11 +189,13 @@ public class ListPaneV2 extends JPanel {
         }
 
         /**
-         * Get the record at the specified row
-         * This method is for self-referencing from the table
-         * So we can do something like: table.getModel().getRecordAt(row) in an action listener
-         * @param row
-         * @return
+         * Get the record at the specified row.
+         * <br>
+         * This method is for self-referencing from the table,
+         * so we can do something like: table.getModel().getRecordAt(row) in an action listener
+         *
+         * @param row the row index
+         * @return MBeans the movie record
          */
         public MBeans getRecordAt(int row) {
             return records.get(row);
@@ -234,18 +257,14 @@ public class ListPaneV2 extends JPanel {
          * editable.
          */
         public boolean isCellEditable(int row, int col) {
-            //Note that the data/cell address is constant,
-            //no matter where the cell appears onscreen.
-//            switch (col) {
-//                // TODO: maybe use reflection or some enum for mapping
-//                case 2:
-//                    return true;
-//                case 3:
-//                    return true;
-//                default:
-//                    return false;
-//            }
-            return true;
+            // The data/cell address is constant, even when are rearranged onscreen.
+            COLUMN column = COLUMN.values()[col];
+            switch (column) {
+                case WATCHED, ACTION:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /*
@@ -256,44 +275,34 @@ public class ListPaneV2 extends JPanel {
         public void setValueAt(Object value, int row, int col) {
             // System.out.println("[ListPaneV2] setValueAt: " + value + " at row: " + row + " col: " + col);
             // data[row][col] = value;
-            if (col == COLUMN.WATCHED.index)
-            {
+            if (col == COLUMN.WATCHED.index) {
                 MBeans record = records.get(row);
                 System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
+                // calling the handler to update the Model
                 changeWatchedStatusHandler.accept(record, !record.getWatched());
-                // record.setWatched(!record.getWatched());
             }
+            // ideally, the Model has been updated at this point
+            // and since the MBeans that this table holds is ultimately the same MBeans stored in the Model,
+            // there is no need to re-set the records for this table model
             fireTableCellUpdated(row, col);
         }
 
 
     }
 
-    class JMovieTable extends JTable implements ListSelectionListener /**, TableModelListener **/{
-        public JMovieTable(MovieTableModel model) {
-            super(model);
-            // this.getModel().addTableModelListener(this);
-        }
 
-        @Override
+    class MovieListSelectionHandler implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
-            // ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-            if(!e.getValueIsAdjusting()){
-                System.out.println("[ListPaneV2] JMovieTable: selectedRow: " + this.getSelectedRow());
-                int selectedRow = this.getSelectedRow();
-                if (selectedRow >= 0) {
-                    MovieTableModel m = (MovieTableModel) this.getModel();
-                    MBeans selectedMBean = m.getRecordAt(selectedRow);
-                    tableSelectionHandler.accept(selectedMBean);
+            boolean isAdjusting = e.getValueIsAdjusting();
+            if (!isAdjusting) {
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                if (!lsm.isSelectionEmpty()) {
+                    // Find out which indexes are selected.
+                    int temp = lsm.getSelectedIndices()[0];
+                    tableSelectionHandler.accept(getActiveTableModel().getRecordAt(temp));
                 }
             }
         }
-
-
-//        @Override
-//        public void tableChanged(javax.swing.event.TableModelEvent e) {
-//            System.out.println("[ListPaneV2] JMovieTable: tableChanged");
-//        }
     }
 
     /**
@@ -302,6 +311,7 @@ public class ListPaneV2 extends JPanel {
      */
     class ButtonRenderer extends JButton implements TableCellRenderer {
         private TableMode tableMode;
+
         public ButtonRenderer(TableMode tableMode) {
             this.tableMode = tableMode;
             setOpaque(true);
@@ -334,12 +344,42 @@ public class ListPaneV2 extends JPanel {
         private boolean isPushed;
         private TableMode tableMode;
 
+
+        private JPopupMenu editMenu;
+
+        private JPopupMenu initEditMenu() {
+            JPopupMenu editMenu = new JPopupMenu("Edit");
+            for (int i = 0; i < 10; i++) {
+                JMenuItem item = new JMenuItem("List " + i);
+                int finalI = i;
+                item.addActionListener(e -> {
+                    System.out.println("List " + finalI + " clicked");
+                    // addToListHandler.accept(record, finalI);
+                });
+                editMenu.add(item);
+            }
+            JMenuItem createNewListItem = new JMenuItem("Add To New List");
+            createNewListItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Create new list clicked");
+                    createNewListItem.setSelected(false);
+                }
+
+            });
+            editMenu.addSeparator();
+            editMenu.add(createNewListItem);
+            return editMenu;
+        }
+
         public ButtonEditor(TableMode tableMode) {
             // This is a workaround, since DefaultCellEditor only accepts JCheckBox, JComboBox or JTextField
             super(new JCheckBox());
 
             button = new JButton();
             this.tableMode = tableMode;
+
+
             switch (this.tableMode) {
                 case MAIN:
                     label = "Add/Remove";
@@ -351,23 +391,49 @@ public class ListPaneV2 extends JPanel {
                     label = "AN_ERROR_OCCURRED";
             }
             button.setOpaque(true);
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped();
+
+            if (this.tableMode == TableMode.MAIN) {
+                editMenu = initEditMenu();
+            }
+
+            button.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseReleased(java.awt.event.MouseEvent e) {
+                    // fireEditingStopped();
                     switch (tableMode) {
                         case MAIN:
-                            JOptionPane.showMessageDialog(null, "[ButtonEditor] Pop up a dialogue for adding/removing record \"" + record.getTitle() + "\" from UserList ", "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            editMenu.show(e.getComponent(), e.getX(), e.getY());
                             break;
                         case USER_DEFINED:
                             int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
-                            JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            removeFromListHandler.accept(record, currUserTableIndex);
                             break;
                         default:
                             System.out.println("[ButtonEditor] AN_ERROR_OCCURRED");
                     }
+                    fireEditingStopped();
                 }
             });
+//            button.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+////                    fireEditingStopped();
+//                    switch (tableMode) {
+//                        case MAIN:
+//                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+//                            editMenu.show(button, button.getX(), button.getY());
+//                            break;
+//                        case USER_DEFINED:
+//                            int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
+//                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+//                            removeFromListHandler.accept(record, currUserTableIndex);
+//                            break;
+//                        default:
+//                            System.out.println("[ButtonEditor] AN_ERROR_OCCURRED");
+//                    }
+//                }
+//            });
         }
 
         @Override
@@ -402,8 +468,6 @@ public class ListPaneV2 extends JPanel {
     }
 
 
-
-
     /**
      * Main method to test the DetailsPane.
      *
@@ -423,10 +487,12 @@ public class ListPaneV2 extends JPanel {
         listPaneV2.setVisible(true);
         frame.setVisible(true);
     }
+
+
+    enum TableMode {
+        MAIN,
+        USER_DEFINED
+    }
 }
 
 
-enum TableMode {
-    MAIN,
-    USER_DEFINED
-}
