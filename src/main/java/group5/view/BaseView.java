@@ -96,8 +96,17 @@ public class BaseView extends JFrame implements IView {
         detailsPane.setMedia(record);
     }
 
+
+
     @Override
     public void setSourceTableRecords(Stream<MBeans> mbeans) {
+        Collection<MBeans> records = mbeans.toList();
+        System.out.println("[BaseView] setMainTableRecords");
+        listPane.setSourceTableRecords(records.stream());
+        filterPane.setMovies(records.stream());
+    }
+
+    public void setSourceTableRecordsV2(Stream<MBeans> mbeans, String[] userListNames, boolean[][] userListMetadata) {
         Collection<MBeans> records = mbeans.toList();
         System.out.println("[BaseView] setMainTableRecords");
         listPane.setSourceTableRecords(records.stream());

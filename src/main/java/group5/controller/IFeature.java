@@ -75,7 +75,5 @@ public interface IFeature {
      */
     public void clearFilters();
 
-
-
     public void handleTabChange(int tabIndex);
 }
