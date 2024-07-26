@@ -32,3 +32,4 @@ build
 .vscode
 idea/
 /.idea
+.DS_Store

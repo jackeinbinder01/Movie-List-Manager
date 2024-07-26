@@ -35,17 +35,34 @@ public class Controller implements IController, IFeature {
         this.view = view;
 
         model.loadSourceData();
+        model.loadWatchList("./data/samples/watchlist.json");
+        model.loadWatchList("./data/samples/abc.json");
+        model.loadWatchList("./data/samples/avatar.json");
+        model.loadWatchList("./data/samples/lol.json");
+        model.loadWatchList("./data/samples/titanic_only.json");
         // bindFeatures accept an IFeature interface, which is the controller itself
         view.bindFeatures(this);
 
         // setup source table records
-        view.setSourceTableRecords(model.getSourceLists());
+        // view.setSourceTableRecords(model.getSourceLists());
+
+        view.setSourceTableRecordsV2(model.getSourceLists(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+//        System.out.println("tmpGet2DUserListForRecord()" + tmpGet2DUserListForRecord());
+//
+//
+//        List<MBeans> tmpList = model.getSourceLists().toList();
+//        boolean[][] userLists = tmpGet2DUserListForRecord();
+//        for (int i = 0; i < tmpList.size(); i++) {
+//            for (int j = 0; j < model.getUserListCount(); j++) {
+//                System.out.print(tmpList.get(i).getTitle() + " inside " + model.getUserListName(j) + " = " + userLists[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
 
         // load user watchlists into model and view
-        model.loadWatchList("./data/samples/watchlist.json");
         for (int i = 0; i < model.getUserListCount(); i++) {
             view.createUserTable(model.getUserListName(i));
-            view.setUserTableRecords(i,model.getWatchLists(i));
+            view.setUserTableRecords(model.getWatchLists(i), i);
         }
 
 
@@ -126,13 +143,17 @@ public class Controller implements IController, IFeature {
         // Remove the record from the model
         model.removeFromWatchList(record, userListIndex);
         // Update the affected table in the view
-        view.setUserTableRecords(userListIndex, model.getWatchLists(userListIndex));
+        view.setUserTableRecords(model.getWatchLists(userListIndex), userListIndex);
+        view.setSourceTableRecordsV2(model.getSourceLists(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+
     }
 
     public void addToWatchList(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
-        view.setUserTableRecords(userListIndex, model.getWatchLists(userListIndex));
+        view.setSourceTableRecordsV2(model.getSourceLists(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+        view.setUserTableRecords(model.getWatchLists(userListIndex), userListIndex);
+
         //throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addMovieToList'");
     }
 
@@ -164,14 +185,18 @@ public class Controller implements IController, IFeature {
     }
 
     public void handleTabChange(int tabIndex) {
-        System.out.println("[Controller] Handling event: tab changed to " + tabIndex);
-        // view.getFilterPane().setMovies(getRecordsForCurrentTab());
+        System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter pane range");
+        view.getFilterPane().setMovies(getRecordsForCurrentTab());
     }
 
 
 
     private boolean[][] tmpGet2DUserListForRecord() {
-        return null;
+        boolean[][] result = new boolean[(int)model.getSourceLists().count()][model.getUserListCount()];
+        for (int i = 0; i < (int)model.getSourceLists().count(); i++) {
+            result[i] = tmpGetUserListForRecord(model.getSourceLists().toList().get(i));
+        }
+        return result;
     }
 
     /**

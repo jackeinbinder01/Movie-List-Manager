@@ -15,23 +15,18 @@ public interface IView {
      */
     public void setDetailsPaneEntry(MBeans mbean);
 
-    /**
-     * Set the list pane entries
-     * TODO: confirm if this is the correct format for passing
-     * @param mbeans the MBeans to set
-     */
-    public void setSourceTableRecords(Stream<MBeans> mbeans);
+//    /**
+//     * Set the list pane entries
+//     * @param mbeans the MBeans to set
+//     */
+//    public void setSourceTableRecords(Stream<MBeans> mbeans);
 
 
     public void setSourceTableRecordsV2(Stream<MBeans> mbeans, String[] userListNames, boolean[][] userListMetadata);
 
-    /**
-     * Set the user list pane entries
-     * Prompts the view to create a new tab pane if the userListId is not found
-     * @param userListId the identifier of the user list
-     * @param mbeans the MBeans to set
-     */
-    public void setUserTableRecords(int userListId, Stream<MBeans> mbeans);
+
+    public void setUserTableRecords(Stream<MBeans> records, int userListId);
+
 
 
     public void createUserTable(String userListName);
