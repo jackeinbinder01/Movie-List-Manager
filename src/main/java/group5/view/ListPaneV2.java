@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -481,7 +482,7 @@ public class ListPaneV2 extends JPanel {
         frame.add(listPaneV2);
 
         String sampleDataPath = "data/samples/source.json";
-        List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
+        Set<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
         listPaneV2.setSourceTableRecords(records.stream());
 
         listPaneV2.setVisible(true);
