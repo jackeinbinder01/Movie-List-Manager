@@ -62,9 +62,12 @@ public class Model implements IModel {
      */
     @Override
     public void loadWatchList(String filename) {
+
+        // Create a substring of file name to use as list name
         int lastSeparator = Math.max(filename.lastIndexOf("\\"), filename.lastIndexOf("/"));
         int lastDot = filename.lastIndexOf('.');
         String name = filename.substring(lastSeparator + 1, lastDot);
+
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
         Set<MBeans> mapped = externalList.stream()
@@ -85,13 +88,23 @@ public class Model implements IModel {
     }
 
     @Override
-    public Stream<MBeans> getSourceLists() {
+    public Stream<MBeans> getRecords() {
         return this.sourceList.stream();
     }
 
     @Override
-    public Stream<MBeans> getWatchLists(int userListId) {
+    public Stream<MBeans> getRecords(int userListId) {
         return this.watchLists.get(userListId).getMovieList();
+    }
+
+    @Override
+    public Stream<MBeans> getRecords(String filters) {
+        return filterHandler.filter(filters, this.getRecords());
+    }
+
+    @Override
+    public Stream<MBeans> getRecords(int userListId, String filters) {
+        return filterHandler.filter(filters, this.getRecords(userListId));
     }
 
     @Override
@@ -147,21 +160,11 @@ public class Model implements IModel {
         return indices;
     }
 
-    @Override
-    public void setUserListIndicesForRecord(MBeans record, int[] userListIndices) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
-    }
-
-    @Override
-    public Stream<MBeans> getFilteredSourceList(String filters) {
-        return filterHandler.filter(filters, this.getSourceLists());
-    }
-
-    @Override
-    public Stream<MBeans> getFilteredWatchList(String filters, int userListId) {
-        return filterHandler.filter(filters, this.getWatchLists(userListId));
-    }
+	@Override
+	public void setUserListIndicesForRecord(MBeans record, int[] userListIndices) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
+	}
 
     /**
      * Get the object reference of the MBeans that matched given media inside
@@ -186,12 +189,12 @@ public class Model implements IModel {
         model.loadWatchList("data/samples/source.json");
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
         System.out.println("Source");
-        for (MBeans bean : model.getSourceLists().collect(Collectors.toList())) {
+        for (MBeans bean : model.getRecords().collect(Collectors.toList())) {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
             System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
         System.out.println("WatchList");
-        for (MBeans bean : model.getWatchLists(0).collect(Collectors.toList())) {
+        for (MBeans bean : model.getRecords(0).collect(Collectors.toList())) {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
             System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }

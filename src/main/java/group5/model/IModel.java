@@ -38,15 +38,32 @@ public interface IModel {
      *
      * @return stream of MBeans representing the source list.
      */
-    Stream<MBeans> getSourceLists();
+    Stream<MBeans> getRecords();
 
     /**
-     * Get the watch list as stream.
+     * Get the watch list by id as stream.
      *
      * @param userListId The identifier of the watch list to get.
-     * @return stream of MBeans representing the source list.
+     * @return stream of MBeans representing the watch list.
      */
-    Stream<MBeans> getWatchLists(int userListId/*, UserListIdentifier userListId*/);
+    Stream<MBeans> getRecords(int userListId);
+
+    /**
+     * Get the source list, filter it and return as a stream.
+     *
+     * @param filter The filter to apply to the source list.
+     * @return stream of MBeans representing the filtered source list.
+     */
+    Stream<MBeans> getRecords(String filter);
+
+    /**
+     * Get the watch list by id, filter it and return as a stream.
+     *
+     * @param userListId The identifier of the watch list to get.
+     * @param filters The filters to apply to the watch list.
+     * @return stream of MBeans representing the filtered watch list.
+     */
+    Stream<MBeans> getRecords(int userListId, String filters);
 
     /**
      * Save the watch list to a file.
@@ -117,10 +134,6 @@ public interface IModel {
      * @param userListIndices The indices of the watchlist to add the record to.
      */
     void setUserListIndicesForRecord(MBeans record, int[] userListIndices);
-
-    Stream<MBeans> getFilteredSourceList(String filter);
-
-    Stream<MBeans> getFilteredWatchList(String filters, int userListId);
 
     //Stream<MBeans> getMovieList(FilterClass filter, UserListIdentifier userListId);
 
