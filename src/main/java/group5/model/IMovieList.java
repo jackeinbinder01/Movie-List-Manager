@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import group5.model.beans.MBeans;
+import group5.model.formatters.Formats;
 
 /**
  * Values are unique / no duplicates (based on Boardmovie.equals/equality) It
@@ -12,22 +13,24 @@ import group5.model.beans.MBeans;
  */
 public interface IMovieList {
 
-    /**
-     * Default key word to use to add or remove an entire filter from/to the
-     * list.
-     */
-    String ADD_ALL = "all";
-
-    /**
-     * Gets the contents of a list, as list of names (Strings) in ascending
-     * order ignoring case.
+    /** Get name of this watch list.
      *
-     * @return the list of movie names in ascending order ignoring case.
+     * @return the name of this watch list.
      */
-    List<String> getMovieList();
+    String getListName();
 
     /**
-     * Removes all movies in the list (clears it out completely).
+     * gets list of movies.
+     *
+     * @return the list of movieList.
+     */
+    Stream<MBeans> getMovieList();
+
+    /**
+     * clears the list of movie names.
+     *
+     * Equivalent of remove all.
+     *
      */
     void clear();
 
@@ -41,42 +44,31 @@ public interface IMovieList {
     /**
      * Saves the list of movies to a file.
      *
-     * The contents of the file will be each movie name on a new line. It will
-     * overwrite the file if it already exists.
-     *
-     * Saves them in the same order as getmovieNames.
+     * Will overwrite the file if it already exists.
      *
      * @param filename The name of the file to save the list to.
+     * @param format The format to save the list in.
      */
-    void savemovie(String filename);
+    void savemovie(String filename, Formats format);
 
     /**
-     * Adds a movie or movies to the list.
+     * adds a media to the list.
      *
-     * @param str the string to parse and add movies to the list.
-     * @param filtered the filtered list to use as a basis for adding.
-     * @throws IllegalArgumentException if the string is not valid.
+     * @param media the media to add to watchlist.
      */
-    void addToList(String str, Stream<MBeans> filtered) throws IllegalArgumentException;
+    void addToList(MBeans media);
 
     /**
-     * Removes a movie or movies from the list.
-     *
-     * If a single name is specified, that takes priority. However, it could
-     * also use a number such as 1 which would indicate movie 1 from the current
-     * movies list should be removed. A range can also be specified to remove
-     * multiple movies.
-     *
-     * If all is provided, then clear should be called.
-     *
-     * If any part of the string is not valid, an IllegalArgumentException
-     * should be thrown. Such as ranges being out of range, or none of the
-     * results doing anything.
-     *
-     * @param str The string to parse and remove movies from the list.
-     * @throws IllegalArgumentException If the string is not valid.
-     *
+     * removes a given movie from the list.
      */
-    void removeFromList(String str) throws IllegalArgumentException;
+    void removeFromList(MBeans media);
+
+    /**
+     * Check if the list contains a media.
+     *
+     * @param media the media to check for.
+     * @return true if exist, false otherwise.
+     */
+    boolean containsMedia(MBeans media);
 
 }

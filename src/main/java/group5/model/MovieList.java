@@ -1,7 +1,5 @@
 package group5.model;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,201 +8,95 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.io.FileOutputStream;
 
 import group5.model.beans.MBeans;
+import group5.model.formatters.Formats;
+import group5.model.formatters.MBeansFormatter;
 
 public class MovieList implements IMovieList {
 
-    /**
-     * set of board movie.
-     */
+    /** set of board movie. */
     private Set<MBeans> movieList;
 
-    // private List<String> returnList;
+    /** Name of this watch list */
+    private String name;
+
+
     /**
-     * Constructor for the movieList.
+     * Default Constructor for the movieList.
+     *
+     * Create empty list.
      */
-    public MovieList() {
-        this.movieList = new HashSet<MBeans>();
+    public MovieList(String name) {
+        this.name = name;
+        this.movieList = new HashSet<>();
         // hashset so there can only be one instance of a movie
         // in list
     }
 
     /**
-     * gets list of movie names return movieList - list.
+     * Constructor for the movieList.
      *
-     * @return the list of movieList.
+     * Create from loading a list of movies.
      */
-    @Override
-    public List<String> getMovieList() {
-        return movieList.stream().map(movieList -> movieList.getTitle())
-                .sorted(String.CASE_INSENSITIVE_ORDER)
-                .collect(Collectors.toList());
+    public MovieList(String name, Set<MBeans> movieList) {
+        this.name = name;
+        this.movieList = movieList;
+        // hashset so there can only be one instance of a movie
+        // in list
     }
 
-    /**
-     * clears the list of movie names.
-     *
-     */
+    @Override
+    public String getListName() {
+        return this.name;
+    }
+
+    @Override
+    public Stream<MBeans> getMovieList() {
+        return this.movieList.stream();
+    }
+
+
     @Override
     public void clear() {
-        movieList.clear();
+        this.movieList.clear();
     }
 
-    /**
-     * returns the number of elements in a list.
-     *
-     * @return the number of elements in a list.
-     */
     @Override
     public int count() {
-        return movieList.size();
+        return this.movieList.size();
     }
 
-    /**
-     * saves the movie to a file.
-     *
-     */
     @Override
-    public void savemovie(String filename) {
-        File saves = new File(filename);
+    public void savemovie(String filename, Formats format) {
         try {
-            FileWriter writer = new FileWriter(saves);
-            for (String name : getMovieList()) {
-                writer.write(name + "\n");
-            }
-            writer.close();
-        } catch (IOException error) {
-            error.printStackTrace();
+            FileOutputStream saves = new FileOutputStream(filename);
+            MBeansFormatter.writeMediasToFile(this.movieList, saves, format);
+        } catch (IOException e) {
+            System.out.println("Error writing to file");
+            e.printStackTrace();
         }
     }
 
-    /**
-     * adds a board movie (s) to the list.
-     */
     @Override
-    public void addToList(String str, Stream<MBeans> filtered) throws IllegalArgumentException {
-        List<MBeans> filteredList = filtered.collect(Collectors.toList());
-
-        // add all
-        if (str.equalsIgnoreCase(ADD_ALL)) {
-            for (MBeans movie : filteredList) {
-                movieList.add(movie);
-            }
-            return;
-        }
-        // add the range
-        if (str.contains("-")) {
-            String[] values = str.split("-");
-
-            if (values.length != 2) {
-                throw new IllegalArgumentException("Invalid range format");
-            }
-            try {
-                int low = Integer.parseInt(values[0]) - 1;
-                int high = Integer.parseInt(values[1]) - 1;
-
-                if (low < 0 || low > high) {
-                    throw new IllegalArgumentException("Invalid range values");
-                }
-
-                for (int i = high; i >= low; i--) {
-                    movieList.add(filteredList.get(i));
-                }
-
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid range values");
-            }
-            return;
-        }
-        // add value and if caught see if string
-        try {
-            int value = Integer.parseInt(str) - 1;
-            if (value < 0 || value >= filteredList.size()) {
-                throw new IllegalArgumentException("Index out of bounds");
-            }
-            movieList.add(filteredList.get(value));
-            return;
-        } catch (NumberFormatException e) {
-            // this will be the string of movie name condition
-            boolean movieFound = false;
-            for (MBeans movie : filteredList) {
-                if (movie.getTitle().equalsIgnoreCase(str)) {
-                    movieList.add(movie);
-                    movieFound = true;
-                    break;
-                }
-            }
-            if (!movieFound) {
-                // if string not name throw illegal
-                throw new IllegalArgumentException("movie name not found");
-            }
+    public void addToList(MBeans media) {
+        if (!this.movieList.add(media)) {
+            System.out.println("Media is already in list");
         }
     }
 
-    /**
-     * removes a boardmovie(s) from the list.
-     */
     @Override
-    public void removeFromList(String str) throws IllegalArgumentException {
-
-        if (str.equalsIgnoreCase(ADD_ALL)) {
-            // Clear all movies
-            movieList.clear();
-            return;
+    public void removeFromList(MBeans media) {
+        if (!this.movieList.remove(media)) {
+            System.out.println("Media not found in list");
         }
+    }
 
-        // Handle range removal
-        if (str.contains("-")) {
-            String[] values = str.split("-");
-            if (values.length != 2) {
-                throw new IllegalArgumentException("Invalid range format");
-            }
-
-            int low = Integer.parseInt(values[0]) - 1;
-            int high = Integer.parseInt(values[1]) - 1;
-            if (high >= movieList.size()) {
-                high = movieList.size() - 1;
-            }
-            if (low < 0 || low > high) {
-                String message = "low is" + low + "high is" + high + "size is" + movieList.size();
-                throw new IllegalArgumentException(message);
-            }
-
-            // Create a list of movies to remove based on the range
-            List<MBeans> moviesToRemove = new ArrayList<>(movieList);
-
-            for (int i = high; i >= low; i--) {
-                movieList.remove(moviesToRemove.get(i));
-            }
-            return;
-        }
-
-        // Handle single index removal
-        try {
-            int value = Integer.parseInt(str) - 1;
-            if (value < 0 || value >= movieList.size()) {
-                throw new IllegalArgumentException("Index out of bounds");
-            }
-            // Convert movieList set to list to access by index
-            List<MBeans> moviesToRemove = new ArrayList<>(movieList);
-            movieList.remove(moviesToRemove.get(value));
-        } catch (NumberFormatException e) {
-            // Remove by movie name
-            boolean movieFound = false;
-            for (MBeans movie : movieList) {
-                if (movie.getTitle().equals(str)) {
-                    movieList.remove(movie);
-                    movieFound = true;
-                    break;
-                }
-            }
-            if (!movieFound) {
-                throw new IllegalArgumentException("movie name not found");
-            }
-        }
+    @Override
+    public boolean containsMedia(MBeans media) {
+        return this.movieList.contains(media);
     }
 
     /**
@@ -252,6 +144,7 @@ public class MovieList implements IMovieList {
         return sampleMovies;
     }
 
+
     /**
      * main for testing.
      *
@@ -259,7 +152,7 @@ public class MovieList implements IMovieList {
      */
     public static void main(String[] args) {
         // Create an instance of MovieList
-        MovieList movieList = new MovieList();
+        MovieList movieList = new MovieList("MyList1");
 
         // Add some sample movies
         List<MBeans> sampleMovies = movieList.getSampleMovies();
@@ -268,9 +161,9 @@ public class MovieList implements IMovieList {
 
         // Test addToList method
         System.out.println("\nAdding movies to the list...");
-        movieList.addToList("3", sampleMovies.stream());
-        movieList.addToList("Inception", sampleMovies.stream());
-        movieList.addToList("4-5", sampleMovies.stream());
+        movieList.addToList(sampleMovies.get(0));
+        movieList.addToList(sampleMovies.get(1));
+        movieList.addToList(sampleMovies.get(2));
 
         // Print current movie names after additions
         System.out.println("\nCurrent movies in the list:");
@@ -278,21 +171,18 @@ public class MovieList implements IMovieList {
 
         // Test removeFromList method
         System.out.println("\nRemoving movies from the list...");
-        movieList.removeFromList("1-2");
-        movieList.removeFromList("1");
+        movieList.removeFromList(sampleMovies.get(1));
+        movieList.removeFromList(sampleMovies.get(2));
 
         // Print current movie names after removals
         System.out.println("\nMovies remaining in the list after removals:");
         movieList.getMovieList().forEach(System.out::println);
 
-        // Test clear method
-        movieList.addToList(ADD_ALL, sampleMovies.stream());
-        System.out.println("\nFull movie list. Number of movies: " + movieList.count());
-
         movieList.clear();
+        movieList.addToList(sampleMovies.get(2));
         System.out.println("\nCleared movie list. Number of movies: " + movieList.count());
 
         // Save current movie list to a file
-        movieList.savemovie("movie_list.txt");
+        movieList.savemovie("movie_list.csv", Formats.CSV);
     }
 }
