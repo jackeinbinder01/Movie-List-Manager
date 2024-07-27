@@ -15,6 +15,8 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.MBeansLoader;
 import group5.model.formatters.Formats;
 import group5.model.IMovieList;
+import group5.model.Filter.IFilterHandler;
+import group5.model.Filter.FilterHandler;
 
 public class Model implements IModel {
 
@@ -24,12 +26,16 @@ public class Model implements IModel {
     /** List of watchLists where each holds a list of reference to source list MBeans. */
     private List<IMovieList> watchLists;
 
+    /** IFilterHandler object. */
+    private IFilterHandler filterHandler;
+
     /**
      * Model class constructor.
      */
     public Model() {
         loadSourceData();
         this.watchLists = new ArrayList<>();
+        this.filterHandler = new FilterHandler(null);
     }
 
     /**
@@ -144,14 +150,14 @@ public class Model implements IModel {
 		throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
 	}
 
-    public Stream<MBeans> getFilteredSourceList(String filter) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
+    @Override
+    public Stream<MBeans> getFilteredSourceList(String filters) {
+        return filterHandler.filter(filters, this.getSourceLists());
     }
 
+    @Override
     public Stream<MBeans> getFilteredWatchList(String filters, int userListId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
+        return filterHandler.filter(filters, this.getWatchLists(userListId));
     }
 
 
