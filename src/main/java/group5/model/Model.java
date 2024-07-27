@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.stream.Stream;
+
+
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -12,7 +14,7 @@ import java.nio.file.FileSystems;
 import group5.model.beans.MBeans;
 import group5.model.formatters.MBeansLoader;
 import group5.model.formatters.Formats;
-import group5.model.IMovieListV2;
+import group5.model.IMovieList;
 
 public class Model implements IModel {
 
@@ -20,7 +22,7 @@ public class Model implements IModel {
     private Set<MBeans> sourceList;
 
     /** List of watchLists where each holds a list of reference to source list MBeans. */
-    private List<IMovieListV2> watchLists;
+    private List<IMovieList> watchLists;
 
     /**
      * Model class constructor.
@@ -45,7 +47,7 @@ public class Model implements IModel {
      * {@inheritDoc}
      *
      * Create a set of MBeans where each item is a reference to same MBeans in source list.
-     * Pass set to MovieListV2 constructor to create a new watch list.
+     * Pass set to MovieList constructor to create a new watch list.
      * Add the new watch list to the watchLists list.
      *
      * @param filename The file to load the watch list from.
@@ -64,7 +66,13 @@ public class Model implements IModel {
                                                             .findFirst()
                                                             .orElse(null))
                                         .collect(Collectors.toSet());
-        IMovieListV2 watchList = new MovieListV2(name, mapped);
+        IMovieList watchList = new MovieList(name, mapped);
+        this.watchLists.add(watchList);
+    }
+
+    @Override
+    public void createNewWatchList(String name) {
+        IMovieList watchList = new MovieList(name);
         this.watchLists.add(watchList);
     }
 
@@ -136,12 +144,12 @@ public class Model implements IModel {
 		throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
 	}
 
-    public Stream<MBeans> getFiltered(String filter) {
+    public Stream<MBeans> getFilteredSourceList(String filter) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
     }
 
-    public Stream<MBeans> getFiltered(String filters, int userListId) {
+    public Stream<MBeans> getFilteredWatchList(String filters, int userListId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getFiltered'");
     }

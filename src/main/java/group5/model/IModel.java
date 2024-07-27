@@ -28,6 +28,13 @@ public interface IModel {
     void loadWatchList(String filename);
 
     /**
+     * Create new empty watch list.
+     *
+     * @param name The name of the new watch list.
+     */
+    void createNewWatchList(String name);
+
+    /**
      * Get the source list of media as stream.
      *
      * @return stream of MBeans representing the source list.
@@ -112,9 +119,9 @@ public interface IModel {
      */
     void setUserListIndicesForRecord(MBeans record, int[] userListIndices);
 
-    Stream<MBeans> getFiltered(String filter);
+    Stream<MBeans> getFilteredSourceList(String filter);
 
-    Stream<MBeans> getFiltered(String filters, int userListId);
+    Stream<MBeans> getFilteredWatchList(String filters, int userListId);
 
     //Stream<MBeans> getMovieList(FilterClass filter, UserListIdentifier userListId);
 
