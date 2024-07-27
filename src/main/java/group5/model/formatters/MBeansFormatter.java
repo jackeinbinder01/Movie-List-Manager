@@ -75,6 +75,9 @@ public final class MBeansFormatter {
 
 
     private static void writeMediasToJSON(Collection<MBeans> records, OutputStream out) {
+        if (records == null) {
+            return;
+        }
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
@@ -86,6 +89,9 @@ public final class MBeansFormatter {
     }
 
     private static void writeMediasToCSV(Collection<MBeans> records, OutputStream out) {
+        if (records == null) {
+            return;
+        }
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(MBeans.class).withHeader();
         ObjectWriter csvWriter = mapper.writer(schema);
