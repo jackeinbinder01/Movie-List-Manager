@@ -33,26 +33,51 @@ public class TestMBeansLoader {
 
         URL titanicImg = new URL("https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg");
         titanic = new MBeans("Titanic", 1997, "movie", "PG-13", LocalDate.parse("19 Dec 1997", dtf), 195, List.of("Drama", "Romance"),
-                           List.of("James Cameron"), List.of("Cameron Docter"), List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"),
+                           List.of("James Cameron"), List.of("James Cameron"), List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"),
                            "A seventeen-year-old aristocrat falls in love with a kind but poor artist "
                            + "aboard the luxurious, ill-fated R.M.S. Titanic.", List.of("English", "Swedish", "Italian", "French"), List.of("United States", "Mexico"),
-                           "Won 11 Oscars. 126 wins & 83 nominations total", titanicImg, 75, 7.9, 356921711, "tt0120338", false, -1.0);
+                           "Won 11 Oscars. 126 wins & 83 nominations total", titanicImg, 75, 7.9, 674292608, "tt0120338", false, -1.0);
     }
 
     @Test
     public void testLoad() {
 
         Set<MBeans> expected = Set.of(insideOut, titanic);
-        Set<MBeans> loadedInsideOut = MBeansLoader.loadMediasFromFile("./data/test/test_load.json", Formats.JSON);
-        Set<MBeans> loadedTitanic = MBeansLoader.loadMediasFromFile("./data/test/test_load.csv", Formats.CSV);
+        Set<MBeans> loadedJSON = MBeansLoader.loadMediasFromFile("./data/test/test_load.json", Formats.JSON);
+        Set<MBeans> loadedCSV = MBeansLoader.loadMediasFromFile("./data/test/test_load.csv", Formats.CSV);
         Set<MBeans> loadedSample = MBeansLoader.loadMediasFromFile("./data/test/sample.json", Formats.JSON);
 
 
-        assertEquals(expected, loadedInsideOut);
-        assertEquals(expected, loadedTitanic);
-        assertEquals(loadedInsideOut, loadedTitanic);
-        assertNotEquals(loadedSample, loadedInsideOut);
-        assertNotEquals(loadedSample, loadedTitanic);
+        assertEquals(expected, loadedCSV);
+        assertEquals(expected, loadedJSON);
+        assertEquals(loadedCSV, loadedJSON);
+        assertNotEquals(loadedSample, loadedCSV);
+        assertNotEquals(loadedSample, loadedJSON);
+
+        MBeans loadedSingle = MBeansLoader.loadMediasFromFile("./data/test/titanic.json", Formats.JSON).iterator().next();
+
+        // Assert each element
+        assertEquals(titanic.getTitle(), loadedSingle.getTitle());
+        assertEquals(titanic.getYear(), loadedSingle.getYear());
+        assertEquals(titanic.getType(), loadedSingle.getType());
+        assertEquals(titanic.getRated(), loadedSingle.getRated());
+        assertEquals(titanic.getReleased(), loadedSingle.getReleased());
+        assertEquals(titanic.getRuntime(), loadedSingle.getRuntime());
+        assertEquals(titanic.getGenre(), loadedSingle.getGenre());
+        assertEquals(titanic.getDirector(), loadedSingle.getDirector());
+        assertEquals(titanic.getWriter(), loadedSingle.getWriter());
+        assertEquals(titanic.getActors(), loadedSingle.getActors());
+        assertEquals(titanic.getPlot(), loadedSingle.getPlot());
+        assertEquals(titanic.getLanguage(), loadedSingle.getLanguage());
+        assertEquals(titanic.getCountry(), loadedSingle.getCountry());
+        assertEquals(titanic.getAwards(), loadedSingle.getAwards());
+        assertEquals(titanic.getPoster(), loadedSingle.getPoster());
+        assertEquals(titanic.getMetascore(), loadedSingle.getMetascore());
+        assertEquals(titanic.getImdbRating(), loadedSingle.getImdbRating());
+        assertEquals(titanic.getBoxOffice(), loadedSingle.getBoxOffice());
+        assertEquals(titanic.getID(), loadedSingle.getID());
+        assertEquals(titanic.getWatched(), loadedSingle.getWatched());
+        assertEquals(titanic.getMyRating(), loadedSingle.getMyRating());
     }
 
     @Test
