@@ -1,6 +1,5 @@
 package group5.view;
 
-import com.github.javaparser.utils.Pair;
 import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
@@ -15,6 +14,8 @@ import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -102,37 +103,48 @@ public class ListPaneV2 extends JPanel {
         }
     }
 
-    private void createSourceTableTab() {
-        sourceTableModel = new MovieTableModel(TableMode.MAIN);
+    private void createTableTab(String name, TableMode tableMode) {
+        MovieTableModel targetModel;
+        JTable targetTable;
+        String tabName = tableMode == TableMode.MAIN ? MAIN_TAB_NAME : name;
 
-        sourceTable = new JTable(sourceTableModel);
-        sourceTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        sourceTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
+        if (tableMode == TableMode.MAIN) {
+            // Error checking: there should only be one main table
+            if (sourceTableModel != null || sourceTable != null || tabbedPane.getTabCount() > 0) {
+                throw new IllegalArgumentException("[ListPaneV2] Error: Main table is already constructed!");
+            }
+        }
+        targetModel = new MovieTableModel(tableMode);
+        targetTable = new JTable(targetModel);
 
-        sourceTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(TableMode.MAIN));
-        sourceTable.getColumn("ACTION").setCellEditor(new ButtonEditor(TableMode.MAIN));
-        JScrollPane mainTab = new JScrollPane(
-                this.sourceTable,
+        if (tableMode == TableMode.MAIN) {
+            sourceTableModel = targetModel;
+            sourceTable = targetTable;
+        } else {
+            userListModels.add(targetModel);
+        }
+
+        targetTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        targetTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
+
+        targetTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(tableMode));
+        targetTable.getColumn("ACTION").setCellEditor(new ButtonEditor(tableMode));
+        JScrollPane newScrollPane = new JScrollPane(
+                targetTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tabbedPane.addTab(MAIN_TAB_NAME, null, mainTab, MAIN_TAB_NAME);
+        tabbedPane.addTab(tabName, null, newScrollPane, tabName);
+    }
+
+
+    private void createSourceTableTab() {
+        createTableTab(MAIN_TAB_NAME, TableMode.MAIN);
     }
 
     public void createUserTableTab(String tableName) {
-        MovieTableModel newUserModel = new MovieTableModel(TableMode.USER_DEFINED);
-        userListModels.add(newUserModel);
-        JTable newUserTable = new JTable(newUserModel);
-        newUserTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        newUserTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
-
-        newUserTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(TableMode.USER_DEFINED));
-        newUserTable.getColumn("ACTION").setCellEditor(new ButtonEditor(TableMode.USER_DEFINED));
-        JScrollPane scrollPane = new JScrollPane(
-                newUserTable,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tabbedPane.addTab(tableName, null, scrollPane, tableName);
+        createTableTab(tableName, TableMode.USER_DEFINED);
     }
+
 
     public void setUserTableRecords(Stream<MBeans> recordStream, int userListIndex) {
         System.out.println("[BaseView] setUserTableRecords");
@@ -142,7 +154,7 @@ public class ListPaneV2 extends JPanel {
         MovieTableModel targetUserListModel = userListModels.get(userListIndex);
         List<MovieTableModelRecord> recordsWithMetadata = new ArrayList<>();
         for (MBeans record : recordStream.toList()) {
-            recordsWithMetadata.add(new MovieTableModelRecord(record, null, null));
+            recordsWithMetadata.add(new MovieTableModelRecord(record));
         }
         targetUserListModel.setRecordsWithMetadata(recordsWithMetadata);
     }
@@ -384,7 +396,7 @@ public class ListPaneV2 extends JPanel {
 
             // Optionally, you can scale the image if needed
             Image image = imageIcon.getImage(); // Transform it
-            Image scaledImage = image.getScaledInstance(10, 10,  java.awt.Image.SCALE_SMOOTH); // Scale it to 32x32 pixels
+            Image scaledImage = image.getScaledInstance(10, 10,  Image.SCALE_SMOOTH); // Scale it to 32x32 pixels
             tickIcon = new ImageIcon(scaledImage); // Transform it back to an ImageIcon
         }
 
@@ -411,8 +423,8 @@ public class ListPaneV2 extends JPanel {
             button.setOpaque(true);
 
 
-            button.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseReleased(java.awt.event.MouseEvent e) {
+            button.addMouseListener(new MouseAdapter() {
+                public void mouseReleased(MouseEvent e) {
                     switch (tableMode) {
                         case MAIN:
 
@@ -426,7 +438,7 @@ public class ListPaneV2 extends JPanel {
                                 JMenuItem item;
                                 int idx = i;
                                 if (userListIndices[i]) {
-                                    item = new JMenuItem("✔ " + userListNames[i], null);
+                                    item = new JMenuItem(userListNames[i], tickIcon);
                                     item.addActionListener(event -> {
                                         System.out.println("List \"" + userListNames[idx] + "\" clicked");
                                         removeFromListHandler.accept(movieTableModelRecord.getRecord(), idx);
@@ -542,7 +554,7 @@ public class ListPaneV2 extends JPanel {
      * the dropdown menu for watchlist management.
      * Admittedly, this looks counter-intuitive for now.
      * Makes use of composition pattern instead of inheritance with MBeans
-     * because we want to retain the original MBeans reference instead of copying and constructing new MBeans.
+     * because we want to retain the original MBeans reference instead of copying and constructing new objects.
      */
     class MovieTableModelRecord {
         private MBeans record;
