@@ -28,7 +28,7 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
 
-public class TestList {
+public class TestMovieList {
 
     private IMovieList emptyList;
     private IMovieList sampleList;
