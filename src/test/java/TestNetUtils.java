@@ -18,8 +18,8 @@ public class TestNetUtils {
         InputStream stream1 = NetUtils.getMediaDetails("The Matrix", "1999", "movie");
         InputStream stream2 = NetUtils.getMediaDetails("matrix", "", "series");
 
-        String expected1 = Files.readString(Paths.get("data/test/TheMatrix.json"));;
-        String expected2 = Files.readString(Paths.get("data/test/matrix.json"));
+        String expected1 = Files.readString(Paths.get("data/test/APITheMatrix.json"));;
+        String expected2 = Files.readString(Paths.get("data/test/APImatrix.json"));
 
         String actual1 = objectMapper.readTree(stream1).toPrettyString();
         String actual2 = objectMapper.readTree(stream2).toPrettyString();

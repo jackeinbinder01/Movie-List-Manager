@@ -97,9 +97,9 @@ public class TestFilter {
                     "N/A",
                     new URL("https://example.com/poster5.jpg"),
                     45, 5.3, -1,
-                    "tt0826763", false, -1.0));
+                    "tt0826763", true, -1.0));
             Set movieSet = set(movies);
-            Stream movieStream = movies.stream();
+            moviestream = movies.stream();
             filterHandler = new FilterHandler(movieSet);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -143,8 +143,8 @@ public class TestFilter {
 
     @Test
     public void testFilterByMultipleCriteria() {
-        List<MBeans> result = filterHandler.filter("genre==Action,released>2010", moviestream).collect(Collectors.toList());
+        List<MBeans> result = filterHandler.filter("genre==Action,released>2009", moviestream).collect(Collectors.toList());
         assertEquals(1, result.size());
-        assertEquals("Interstellar", result.get(0).getTitle());
+        assertEquals("Inception", result.get(0).getTitle());
     }
 }
