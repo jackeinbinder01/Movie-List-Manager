@@ -1,18 +1,17 @@
 package group5.model;
 
-import group5.model.beans.MBeans;
-import group5.model.formatters.Formats;
-
-import java.util.Collection;
 import java.util.stream.Stream;
-import java.util.List;
+
+import group5.model.beans.MBeans;
 
 /**
  * Interface for the Model component of the application.
  */
 public interface IModel {
 
-    /** String file path to default database location. */
+    /**
+     * String file path to default database location.
+     */
     public static final String DEFAULT_DATA = "./data/samples/source.json";  // Path to default movie DB here
 
     /**

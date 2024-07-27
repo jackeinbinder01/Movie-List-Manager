@@ -1,19 +1,19 @@
 package group5.controller;
 
+import java.util.stream.Stream;
+
+import javax.swing.JOptionPane;
+
+import group5.model.Filter.FilterHandler;
 import group5.model.IModel;
 import group5.model.beans.MBeans;
-import group5.model.formatters.MBeansLoader;
-import group5.model.formatters.Formats;
 import group5.view.IView;
-
-import javax.swing.*;
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Controller class for the program.
  */
 public class Controller implements IController, IFeature {
+
     /**
      * The model object representing the movie database.
      */
@@ -27,7 +27,7 @@ public class Controller implements IController, IFeature {
      * Constructor for the controller.
      *
      * @param model the model object representing the movie database
-     * @param view  the view object representing the user interface
+     * @param view the view object representing the user interface
      */
     public Controller(IModel model, IView view) {
 
@@ -42,7 +42,6 @@ public class Controller implements IController, IFeature {
 
         // String sampleDataPath = "data/samples/source.json";
         // List<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
-
         model.loadWatchList("./data/samples/watchlist.json");
 
         view.createUserTable("User List Index 0");
@@ -70,7 +69,6 @@ public class Controller implements IController, IFeature {
         view.setDetailsPaneEntry(record);
     }
 
-
     @Override
     public void applyFilters() {
         String titleFilter = view.getFilterPane().getFilteredTitle();
@@ -89,7 +87,28 @@ public class Controller implements IController, IFeature {
         String languageFilter = view.getFilterPane().getFilteredLanguageFilter();
         String countryOfOriginFilter = view.getFilterPane().getFilteredCountryOfOriginFilter();
 
-        throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'applyFilters'");
+        // Concatenate using StringBuilder with commas
+        StringBuilder filters = new StringBuilder();
+        filters.append(titleFilter).append(", ")
+                .append(contentTypeFilter).append(", ")
+                .append(genreFilter).append(", ")
+                .append(mpaRatingFilter).append(", ")
+                .append(releasedMin).append(", ")
+                .append(releasedMax).append(", ")
+                .append(imdbRatingMin).append(", ")
+                .append(imdbRatingMax).append(", ")
+                .append(boxOfficeEarningsMin).append(", ")
+                .append(boxOfficeEarningsMax).append(", ")
+                .append(directorFilter).append(", ")
+                .append(actorFilter).append(", ")
+                .append(writerFilter).append(", ")
+                .append(languageFilter).append(", ")
+                .append(countryOfOriginFilter);
+
+        // send the list of filters to the filter handler w/ the stream
+        FilterHandler handler = new FilterHandler();
+        handler.filter(filters.toString(), getRecordsForCurrentTab());
+
     }
 
     /**
@@ -101,7 +120,6 @@ public class Controller implements IController, IFeature {
         // TODO: set the tables in the view to unfiltered
     }
 
-
     /**
      * Main entry point for the controller.
      */
@@ -111,7 +129,6 @@ public class Controller implements IController, IFeature {
 
         view.display();
     }
-
 
     public void removeFromWatchList(MBeans mbean, int userListIndex) {
         // TODO Auto-generated method stub

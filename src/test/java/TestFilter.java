@@ -4,7 +4,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static com.github.javaparser.utils.Utils.set;
 
 import group5.model.Filter.FilterHandler;
 import group5.model.beans.MBeans;
@@ -98,9 +95,8 @@ public class TestFilter {
                     new URL("https://example.com/poster5.jpg"),
                     45, 5.3, -1,
                     "tt0826763", true, -1.0));
-            Set movieSet = set(movies);
             moviestream = movies.stream();
-            filterHandler = new FilterHandler(movieSet);
+            filterHandler = new FilterHandler();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

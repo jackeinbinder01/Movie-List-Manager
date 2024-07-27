@@ -16,13 +16,17 @@ import group5.model.net.NetUtils;
 import java.util.Set;
 import java.util.HashSet;
 
+import group5.model.net.GetMoviesFromAPI;
+
 public class MBeansLoader {
 
-    private MBeansLoader() {}
+    private MBeansLoader() {
+    }
 
     public static MBeans loadMBeansFromAPI(String title, String year, String type) {
         try {
-            InputStream inStream = NetUtils.getMediaDetails(title, year, type);
+
+            InputStream inStream = GetMoviesFromAPI.getMovie(title, year, type);
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             MBeans media = mapper.readValue(inStream, MBeans.class);
@@ -39,7 +43,8 @@ public class MBeansLoader {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             Set<MBeans> records = new HashSet<>();
-            records = mapper.readValue(inFile, new TypeReference<Set<MBeans>>() { });
+            records = mapper.readValue(inFile, new TypeReference<Set<MBeans>>() {
+            });
             return records;
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,10 +58,10 @@ public class MBeansLoader {
             CsvMapper mapper = new CsvMapper();
             CsvSchema schema = CsvSchema.emptySchema().withHeader();
             MappingIterator<MBeans> it = mapper.readerFor(MBeans.class)
-                                               .with(schema)
-                                               .readValues(inFile);
+                    .with(schema)
+                    .readValues(inFile);
             Set<MBeans> records = new HashSet<>();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 records.add(it.next());
             }
             return records;

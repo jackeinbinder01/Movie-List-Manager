@@ -1,7 +1,6 @@
 package group5.model.Filter;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import group5.model.MovieData;
@@ -10,22 +9,12 @@ import group5.model.beans.MBeans;
 public class FilterHandler implements IFilterHandler {
 
     /**
-     * a set of movies.
-     */
-    private Set<MBeans> movie;
-    /**
-     * stream of movies.
-     */
-    private Stream<MBeans> movieStream;
-
-    /**
      * constructor for planner.
      *
      * @param movies
      */
-    public FilterHandler(Set<MBeans> movie) {
-        this.movie = movie;
-        this.movieStream = movie.stream();
+    public FilterHandler() {
+
     }
 
     /**
@@ -72,16 +61,6 @@ public class FilterHandler implements IFilterHandler {
                     });
 
             return stream;
-        }
-    }
-
-    /**
-     * a way to reset the set movies.
-     */
-    @Override
-    public void reset() {
-        if (movie != null) {
-            movieStream = movie.stream();
         }
     }
 
