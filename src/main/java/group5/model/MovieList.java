@@ -73,7 +73,7 @@ public class MovieList implements IMovieList {
         try {
             FileWriter writer = new FileWriter(saves);
             for (String name : getMovieList()) {
-                writer.write(name);
+                writer.write(name + "\n");
             }
             writer.close();
         } catch (IOException error) {

@@ -35,13 +35,12 @@ public class FilterHandler implements IFilterHandler {
      * @return a sorted stream of the movies.
      */
     @Override
-    public Stream<MBeans> filter(String filter) {
-        List<MBeans> filteredBeans = movie.stream().toList();
+    public Stream<MBeans> filter(String filter, Stream<MBeans> beanStream) {
+        List<MBeans> filteredBeans = beanStream.toList();
         if (filter != null && !filter.isEmpty()) {
             String[] filters = filter.split(",");
             for (String filterStr : filters) {
                 filteredBeans = makeAndApplySingleFilter(filteredBeans, filterStr).toList();
-
             }
 
         }

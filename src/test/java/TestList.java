@@ -29,32 +29,57 @@ public class TestList {
 
     @Test
     public void testAddToListAndGetMovieList() throws MalformedURLException {
-        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13", LocalDate.of(2010, 7, 16), 148,
-                "Action, Sci-Fi", List.of("Christopher Nolan"), List.of("Christopher Nolan"),
-                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"), "A thief who steals corporate secrets...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster1.jpg"),
-                74, 8.8, 8300000, "tt1375666", false, -1.0);
-        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R", LocalDate.of(1999, 3, 31), 136,
-                "Action, Sci-Fi", List.of("Lana Wachowski", "Lilly Wachowski"), List.of("Lana Wachowski", "Lilly Wachowski"),
-                List.of("Keanu Reeves", "Laurence Fishburne"), "A computer hacker learns from mysterious rebels...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster2.jpg"),
-                73, 8.7, 123456789, "tt0133093", false, -1.0);
+
+        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13",
+                LocalDate.of(2010, 7, 16), 148,
+                List.of("Action", "Sci-Fi"),
+                List.of("Christopher Nolan"),
+                List.of("Christopher Nolan"),
+                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"),
+                "A thief who steals corporate secrets...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster1.jpg"),
+                74, 8.8, 836800000,
+                "tt1375666", false, -1.0);
+
+        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R",
+                LocalDate.of(1999, 3, 31), 136,
+                List.of("Action", "Sci-Fi"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Keanu Reeves", "Laurence Fishburne"),
+                "A computer hacker learns from mysterious rebels...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster2.jpg"),
+                73, 8.7, 463517383,
+                "tt0133093", false, -1.0);
 
         movieList.addToList("1", Stream.of(movie1, movie2));
 
         List<String> movies = movieList.getMovieList();
-        assertEquals(2, movies.size());
+        assertEquals(1, movies.size());
         assertTrue(movies.contains("Inception"));
-        assertTrue(movies.contains("The Matrix"));
     }
 
     @Test
     public void testClear() throws MalformedURLException {
-        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13", LocalDate.of(2010, 7, 16), 148,
-                "Action, Sci-Fi", List.of("Christopher Nolan"), List.of("Christopher Nolan"),
-                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"), "A thief who steals corporate secrets...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster1.jpg"),
-                74, 8.8, 8300000, "tt1375666", false, -1.0);
+        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13",
+                LocalDate.of(2010, 7, 16), 148,
+                List.of("Action", "Sci-Fi"),
+                List.of("Christopher Nolan"),
+                List.of("Christopher Nolan"),
+                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"),
+                "A thief who steals corporate secrets...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster1.jpg"),
+                74, 8.8, 836800000,
+                "tt1375666", false, -1.0);
 
         movieList.addToList("1", Stream.of(movie1));
         movieList.clear();
@@ -65,16 +90,33 @@ public class TestList {
 
     @Test
     public void testCount() throws MalformedURLException {
-        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13", LocalDate.of(2010, 7, 16), 148,
-                "Action, Sci-Fi", List.of("Christopher Nolan"), List.of("Christopher Nolan"),
-                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"), "A thief who steals corporate secrets...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster1.jpg"),
-                74, 8.8, 8300000, "tt1375666", false, -1.0);
-        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R", LocalDate.of(1999, 3, 31), 136,
-                "Action, Sci-Fi", List.of("Lana Wachowski", "Lilly Wachowski"), List.of("Lana Wachowski", "Lilly Wachowski"),
-                List.of("Keanu Reeves", "Laurence Fishburne"), "A computer hacker learns from mysterious rebels...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster2.jpg"),
-                73, 8.7, 123456789, "tt0133093", false, -1.0);
+        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13",
+                LocalDate.of(2010, 7, 16), 148,
+                List.of("Action", "Sci-Fi"),
+                List.of("Christopher Nolan"),
+                List.of("Christopher Nolan"),
+                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"),
+                "A thief who steals corporate secrets...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster1.jpg"),
+                74, 8.8, 836800000,
+                "tt1375666", false, -1.0);
+
+        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R",
+                LocalDate.of(1999, 3, 31), 136,
+                List.of("Action", "Sci-Fi"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Keanu Reeves", "Laurence Fishburne"),
+                "A computer hacker learns from mysterious rebels...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster2.jpg"),
+                73, 8.7, 463517383,
+                "tt0133093", false, -1.0);
 
         movieList.addToList("1", Stream.of(movie1, movie2));
 
@@ -83,18 +125,35 @@ public class TestList {
 
     @Test
     public void testSaveMovie() throws IOException, MalformedURLException {
-        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13", LocalDate.of(2010, 7, 16), 148,
-                "Action, Sci-Fi", List.of("Christopher Nolan"), List.of("Christopher Nolan"),
-                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"), "A thief who steals corporate secrets...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster1.jpg"),
-                74, 8.8, 8300000, "tt1375666", false, -1.0);
-        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R", LocalDate.of(1999, 3, 31), 136,
-                "Action, Sci-Fi", List.of("Lana Wachowski", "Lilly Wachowski"), List.of("Lana Wachowski", "Lilly Wachowski"),
-                List.of("Keanu Reeves", "Laurence Fishburne"), "A computer hacker learns from mysterious rebels...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster2.jpg"),
-                73, 8.7, 123456789, "tt0133093", false, -1.0);
+        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13",
+                LocalDate.of(2010, 7, 16), 148,
+                List.of("Action", "Sci-Fi"),
+                List.of("Christopher Nolan"),
+                List.of("Christopher Nolan"),
+                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"),
+                "A thief who steals corporate secrets...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster1.jpg"),
+                74, 8.8, 836800000,
+                "tt1375666", false, -1.0);
 
-        movieList.addToList("1", Stream.of(movie1, movie2));
+        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R",
+                LocalDate.of(1999, 3, 31), 136,
+                List.of("Action", "Sci-Fi"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Keanu Reeves", "Laurence Fishburne"),
+                "A computer hacker learns from mysterious rebels...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster2.jpg"),
+                73, 8.7, 463517383,
+                "tt0133093", false, -1.0);
+
+        movieList.addToList("1-2", Stream.of(movie1, movie2));
 
         String filename = "test_movies.txt";
         movieList.savemovie(filename);
@@ -112,16 +171,32 @@ public class TestList {
 
     @Test
     public void testRemoveFromList() throws MalformedURLException {
-        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R", LocalDate.of(1999, 3, 31), 136,
-                "Action, Sci-Fi", List.of("Lana Wachowski", "Lilly Wachowski"), List.of("Lana Wachowski", "Lilly Wachowski"),
-                List.of("Keanu Reeves", "Laurence Fishburne"), "A computer hacker learns from mysterious rebels...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster2.jpg"),
-                73, 8.7, 123456789, "tt0133093", false, -1.0);
-        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13", LocalDate.of(2010, 7, 16), 148,
-                "Action, Sci-Fi", List.of("Christopher Nolan"), List.of("Christopher Nolan"),
-                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"), "A thief who steals corporate secrets...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster1.jpg"),
-                74, 8.8, 8300000, "tt1375666", false, -1.0);
+        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R",
+                LocalDate.of(1999, 3, 31), 136,
+                List.of("Action", "Sci-Fi"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Keanu Reeves", "Laurence Fishburne"),
+                "A computer hacker learns from mysterious rebels...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster2.jpg"),
+                73, 8.7, 463517383,
+                "tt0133093", false, -1.0);
+        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13",
+                LocalDate.of(2010, 7, 16), 148,
+                List.of("Action", "Sci-Fi"),
+                List.of("Christopher Nolan"),
+                List.of("Christopher Nolan"),
+                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"),
+                "A thief who steals corporate secrets...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster1.jpg"),
+                74, 8.8, 836800000,
+                "tt1375666", false, -1.0);
 
         movieList.addToList("ALL", Stream.of(movie1, movie2));
 
@@ -135,11 +210,19 @@ public class TestList {
 
     @Test
     public void testAddToListWithInvalidRange() throws MalformedURLException {
-        MBeans movie1 = new MBeans("Inception", 2010, "Movie", "PG-13", LocalDate.of(2010, 7, 16), 148,
-                "Action, Sci-Fi", List.of("Christopher Nolan"), List.of("Christopher Nolan"),
-                List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt"), "A thief who steals corporate secrets...",
-                List.of("English"), List.of("USA"), "Won 4 Oscars.", new URL("https://example.com/poster1.jpg"),
-                74, 8.8, 8300000, "tt1375666", false, -1.0);
+        MBeans movie2 = new MBeans("The Matrix", 1999, "Movie", "R",
+                LocalDate.of(1999, 3, 31), 136,
+                List.of("Action", "Sci-Fi"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Lana Wachowski", "Lilly Wachowski"),
+                List.of("Keanu Reeves", "Laurence Fishburne"),
+                "A computer hacker learns from mysterious rebels...",
+                List.of("English"),
+                List.of("USA"),
+                "Won 4 Oscars.",
+                new URL("https://example.com/poster2.jpg"),
+                73, 8.7, 463517383,
+                "tt0133093", false, -1.0);
 
     }
 }

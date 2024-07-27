@@ -1,5 +1,7 @@
 package group5.model.Filter;
 
+import java.util.List;
+
 import group5.model.MovieData;
 import group5.model.beans.MBeans;
 
@@ -14,7 +16,7 @@ public class FilterOperation {
             case MPA:
                 return filterDouble(movie.getMetascore(), op, val);
             case GENRE:
-                return filterString(movie.getGenre(), op, val);
+                return filterGenre(movie.getGenre(), op, val);
             case RUNTIME:
                 return filterInt(movie.getRuntime(), op, val);
             case DIRECTOR:
@@ -28,6 +30,23 @@ public class FilterOperation {
             default:
                 return false;
         }
+    }
+
+    private static boolean filterGenre(List<String> genre, Operations op, String val) {
+        boolean returnBool = false;
+        for (int index = 0; index < genre.size(); index++) {
+            switch (op) {
+                case CONTAINS:
+                    if (genre.get(index).contains(val)) {
+                        returnBool = true;
+                    }
+                case EQUALS:
+                    if (genre.get(index).contains(val)) {
+                        returnBool = true;
+                    }
+            }
+        }
+        return returnBool;
     }
 
     private static boolean filterString(String field, Operations op, String val) {
