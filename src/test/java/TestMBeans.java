@@ -18,9 +18,9 @@ public class TestMBeans {
     @BeforeEach
     public void setUp() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        URL img = null;
+        String img = null;
         try {
-            img = new URL("https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg");
+            img = "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,11 +37,11 @@ public class TestMBeans {
     @Test
     public void testConstructor() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        URL img1 = null;
-        URL img2 = null;
+        String img1 = null;
+        String img2 = null;
         try {
-            img1 = new URL("https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg");
-            img2 = new URL("https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg");
+            img1 = "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg";
+            img2 = "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,9 +97,9 @@ public class TestMBeans {
     @Test
     public void TestSetters() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        URL img1 = null;
+        String img1 = null;
         try {
-            img1 = new URL("https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg");
+            img1 = "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg";
         } catch (Exception e) {
             e.printStackTrace();
         }

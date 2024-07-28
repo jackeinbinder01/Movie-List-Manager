@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.text.NumberFormat;
-import java.net.URL;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
@@ -20,6 +22,10 @@ import java.time.format.DateTimeFormatter;
 /**
  * Java beans that represents a media object with various properties such as title, year, type, etc.
  */
+@JsonPropertyOrder({"Title", "Year", "Type", "Rated", "Released", "Runtime", "Genre", "Director", "Writer",
+                    "Actors", "Plot", "Language", "Country", "Awards", "Poster", "Metascore", "imdbRating",
+                    "BoxOffice", "imdbID", "Watched", "My Rating"})
+@JsonInclude(Include.ALWAYS)
 public class MBeans implements java.io.Serializable {
 
     /** Holds media title. */
@@ -28,6 +34,8 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds year released of the media. */
     @JsonProperty("Year")
+    @JsonDeserialize(using = MBeansDeserializer.IntDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.IntSerializer.class)
     private int year;
 
     /** Holds type of media(movies, series). */
@@ -52,26 +60,26 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds genres of the media. */
     @JsonProperty("Genre")
-    @JsonDeserialize(using = MBeansDeserializer.GenreDeserializer.class)
-    @JsonSerialize(using = MBeansSerializer.GenreSerializer.class)
+    @JsonDeserialize(using = MBeansDeserializer.StringListDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.StringListSerializer.class)
     private List<String> genre;
 
     /** Holds a list of director name(s). */
     @JsonProperty("Director")
-    @JsonDeserialize(using = MBeansDeserializer.DirectorDeserializer.class)
-    @JsonSerialize(using = MBeansSerializer.DirectorSerializer.class)
+    @JsonDeserialize(using = MBeansDeserializer.StringListDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.StringListSerializer.class)
     private List<String> director;
 
     /** Holds a list of writer name(s). */
     @JsonProperty("Writer")
-    @JsonDeserialize(using = MBeansDeserializer.WriterDeserializer.class)
-    @JsonSerialize(using = MBeansSerializer.WriterSerializer.class)
+    @JsonDeserialize(using = MBeansDeserializer.StringListDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.StringListSerializer.class)
     private List<String> writer;
 
     /** Holds a list of actor name(s). */
     @JsonProperty("Actors")
-    @JsonDeserialize(using = MBeansDeserializer.ActorDeserializer.class)
-    @JsonSerialize(using = MBeansSerializer.ActorSerializer.class)
+    @JsonDeserialize(using = MBeansDeserializer.StringListDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.StringListSerializer.class)
     private List<String> actors;
 
     /** Holds plot of the media. */
@@ -80,14 +88,14 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds a list of language(s) spoken in this media. */
     @JsonProperty("Language")
-    @JsonDeserialize(using = MBeansDeserializer.LanguageDeserializer.class)
-    @JsonSerialize(using = MBeansSerializer.LanguageSerializer.class)
+    @JsonDeserialize(using = MBeansDeserializer.StringListDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.StringListSerializer.class)
     private List<String> language;
 
     /** Holds a list of the country or countries where this media production took place. */
     @JsonProperty("Country")
-    @JsonDeserialize(using = MBeansDeserializer.CountryDeserializer.class)
-    @JsonSerialize(using = MBeansSerializer.CountrySerializer.class)
+    @JsonDeserialize(using = MBeansDeserializer.StringListDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.StringListSerializer.class)
     private List<String> country;
 
     /** Holds the awards and nominatinos of the media. */
@@ -96,14 +104,18 @@ public class MBeans implements java.io.Serializable {
 
     /** Holds URL to the media poster. */
     @JsonProperty("Poster")
-    private URL poster;
+    private String poster;
 
     /** Holds Metascore rating of the media. */
     @JsonProperty("Metascore")
+    @JsonDeserialize(using = MBeansDeserializer.IntDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.IntSerializer.class)
     private int metascore;
 
     /** Holds imdbRating of the media. */
     @JsonProperty("imdbRating")
+    @JsonDeserialize(using = MBeansDeserializer.DoubleDeserializer.class)
+    @JsonSerialize(using = MBeansSerializer.DoubleSerializer.class)
     private double imdbRating;
 
     /** Holds box office revenues of the media. */
@@ -154,7 +166,7 @@ public class MBeans implements java.io.Serializable {
      */
     public MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, List<String> genre,
             List<String> director, List<String> writer, List<String> actors, String plot, List<String> language,
-            List<String> country, String awards, URL poster, int metascore, double imdbRating, int boxOffice,
+            List<String> country, String awards, String poster, int metascore, double imdbRating, int boxOffice,
             String id, boolean watched, double myRating) {
         this.title = title;
         this.year = year;
@@ -223,7 +235,7 @@ public class MBeans implements java.io.Serializable {
      * @return the date released
      */
     public LocalDate getReleased() {
-        return released;
+        return (released == null) ? LocalDate.of(1800, 1, 1) : released;
     }
 
     /**
@@ -312,7 +324,7 @@ public class MBeans implements java.io.Serializable {
      *
      * @return the poster URL
      */
-    public URL getPoster() {
+    public String getPoster() {
         return poster;
     }
 
@@ -503,7 +515,7 @@ public class MBeans implements java.io.Serializable {
      *
      * @param poster the poster URL to set
      */
-    public void setPoster(URL poster) {
+    public void setPoster(String poster) {
         this.poster = poster;
     }
 
@@ -568,12 +580,11 @@ public class MBeans implements java.io.Serializable {
      */
     @Override
     public String toString() {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy");
         String result = "";
         result += "Title: " + title + "\n";
         result += "Year: " + year + "\n";
         result += "MPA Rating: " + rated + "\n";
-        result += "Released: " + dateFormat.format(released) + "\n";
+        result += "Released: " + this.formattedDate() + "\n";
         result += "Runtime: " + runtime + "\n";
         result += "Genre: " + genre + "\n";
         result += "Director: " + director + "\n";
@@ -632,5 +643,19 @@ public class MBeans implements java.io.Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(this.getID());
+    }
+
+    /**
+     * Return date in formatted string.
+     *
+     * @return formatted date string
+     */
+    public String formattedDate() {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        if (released == null) {
+            return "N/A";
+        } else {
+            return dateFormat.format(released);
+        }
     }
 }

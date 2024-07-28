@@ -13,60 +13,58 @@ import java.text.NumberFormat;
 
 public class MBeansSerializer {
 
+    public static class IntSerializer extends JsonSerializer<Integer> {
+        @Override
+        public void serialize(Integer value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            if ( value == -1 ) {
+                gen.writeString("N/A");
+            } else {
+                gen.writeNumber(value);
+            }
+        }
+    }
+
+    public static class DoubleSerializer extends JsonSerializer<Double> {
+        @Override
+        public void serialize(Double value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            if ( value == -1.0 ) {
+                gen.writeString("N/A");
+            } else {
+                gen.writeNumber(value);
+            }
+        }
+    }
+
     public static class DateSerializer extends JsonSerializer<LocalDate> {
         @Override
         public void serialize(LocalDate date, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM yyyy");
-            String formattedDate = date.format(format);
-            gen.writeString(formattedDate);
+            if (date.equals(LocalDate.of(1800, 1, 1))) {
+                gen.writeString("N/A");
+                return;
+            } else {
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM yyyy");
+                String formattedDate = date.format(format);
+                gen.writeString(formattedDate);
+            }
         }
     }
+
     public static class RuntimeSerializer extends JsonSerializer<Integer> {
         @Override
         public void serialize(Integer runtime, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            gen.writeString(runtime + " min");
+            if (runtime == -1) {
+                gen.writeString("N/A");
+                return;
+            } else {
+                gen.writeString(runtime + " min");
+            }
         }
     }
 
-    public static class GenreSerializer extends JsonSerializer<List<String>> {
+    public static class StringListSerializer extends JsonSerializer<List<String>> {
         @Override
         public void serialize(List<String> genre, JsonGenerator gen, SerializerProvider serializers) throws IOException {
             gen.writeString(String.join(", ", genre));
-        }
-    }
-
-    public static class DirectorSerializer extends JsonSerializer<List<String>> {
-        @Override
-        public void serialize(List<String> director, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            gen.writeString(String.join(", ", director));
-        }
-    }
-
-    public static class WriterSerializer extends JsonSerializer<List<String>> {
-        @Override
-        public void serialize(List<String> writer, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            gen.writeString(String.join(", ", writer));
-        }
-    }
-
-    public static class ActorSerializer extends JsonSerializer<List<String>> {
-        @Override
-        public void serialize(List<String> actor, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            gen.writeString(String.join(", ", actor));
-        }
-    }
-
-    public static class LanguageSerializer extends JsonSerializer<List<String>> {
-        @Override
-        public void serialize(List<String> language, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            gen.writeString(String.join(", ", language));
-        }
-    }
-
-    public static class CountrySerializer extends JsonSerializer<List<String>> {
-        @Override
-        public void serialize(List<String> country, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            gen.writeString(String.join(", ", country));
         }
     }
 

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import java.net.URL;
 import java.time.format.DateTimeFormatter;
 
 import group5.model.beans.MBeans;
@@ -22,7 +21,7 @@ public class TestMBeansLoader {
     @BeforeEach
     public void setUp() throws Exception {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        URL insideOutImg = new URL("https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_SX300.jpg");
+        String insideOutImg = "https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_SX300.jpg";
         insideOut = new MBeans("Inside Out", 2015, "movie", "PG", LocalDate.parse("19 Jun 2015", dtf), 96, List.of("Animation", "Adventure", "Comedy"),
                            List.of("Pete Docter", "Ronnie Del Carmen"), List.of("Pete Docter", "Ronnie Del Carmen", "Meg LeFauve"),
                            List.of("Amy Poehler", "Bill Hader", "Lewis Black"),
@@ -31,7 +30,7 @@ public class TestMBeansLoader {
                            + "best to navigate a new city, house, and school.", List.of("English", "Portugese", "Latvian"), List.of("United States"),
                            "Won 1 Oscar. 99 wins & 118 nominations total", insideOutImg, 94, 8.1, 356921711, "tt2096673", false, -1.0);
 
-        URL titanicImg = new URL("https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg");
+        String titanicImg = "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg";
         titanic = new MBeans("Titanic", 1997, "movie", "PG-13", LocalDate.parse("19 Dec 1997", dtf), 195, List.of("Drama", "Romance"),
                            List.of("James Cameron"), List.of("James Cameron"), List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"),
                            "A seventeen-year-old aristocrat falls in love with a kind but poor artist "

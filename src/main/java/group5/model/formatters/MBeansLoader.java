@@ -2,6 +2,7 @@ package group5.model.formatters;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.FileOutputStream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -11,7 +12,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import group5.model.beans.MBeans;
-import group5.model.net.NetUtils;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -85,25 +85,16 @@ public class MBeansLoader {
      * Main to test the loader.
      */
     public static void main(String[] args) throws Exception {
-        Set<MBeans> medias = new HashSet<>();
-        Set<MBeans> media = loadMediasFromFile("./data/samples/source.json", Formats.JSON);
-        Set<MBeans> mediaSet = loadMediasFromFile("./data/samples/source2.csv", Formats.CSV);
-        //System.out.println("OLD\n" + media);
-        //System.out.println("SET\n" + mediaSet);
-        //List<MBeans> records = loadWatchListFromFile("./src/test/testing_resources/sample.json", Formats.JSON);
-        //List<MBeans> source = loadSourceFromJSON("./src/test/testing_resources/sample.json");
-        //System.out.println(source);
-        //MBeansFormatter.writeMediasToFile(media, new FileOutputStream("./data/samples/source2.csv"), Formats.CSV);
-
-        System.out.println("json");
-        for (MBeans bean : media) {
-            int hashCode = System.identityHashCode(bean); // identityHash to show matching references
-            System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
-        }
-        System.out.println("csv");
-        for (MBeans bean : mediaSet) {
-            int hashCode = System.identityHashCode(bean); // identityHash to show matching references
-            System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
-        }
+        System.out.println("START");
+        Set<MBeans> bean = loadMediasFromFile("./data/test/empty.json", Formats.JSON);
+        System.out.println(bean);
+        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("empty.json"), Formats.JSON);
+        //System.out.println(loadMBeansFromAPI("level+2","2008",""));
+        //Set<MBeans> records = loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
+        //MBeans empty = loadMediasFromFile("data/test/empty.json", Formats.JSON).iterator().next();
+        //System.out.println(empty);
+        //records.add(empty);
+        //MBeansFormatter.writeMediasToFile(records, new FileOutputStream("new_csv.csv"), Formats.CSV);
+        //MBeansFormatter.writeMediasToFile(records, new FileOutputStream("new_json.json"), Formats.JSON);
     }
 }
