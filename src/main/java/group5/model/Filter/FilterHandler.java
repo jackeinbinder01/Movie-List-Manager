@@ -1,6 +1,8 @@
 package group5.model.Filter;
 
+import java.rmi.server.Operation;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import group5.model.MovieData;
@@ -24,44 +26,38 @@ public class FilterHandler implements IFilterHandler {
      * @return a sorted stream of the movies.
      */
     @Override
-    public Stream<MBeans> filter(String filter, Stream<MBeans> beanStream) {
-        List<MBeans> filteredBeans = beanStream.toList();
-        if (filter != null && !filter.isEmpty()) {
-            String[] filters = filter.split(",");
-            for (String filterStr : filters) {
-                filteredBeans = makeAndApplySingleFilter(filteredBeans, filterStr).toList();
-            }
-
+    public Stream<MBeans> filter(List<List<String>> filters, Stream<MBeans> beanStream) {
+        if (filters == null || filters.isEmpty()) {
+            return beanStream;
         }
-        return filteredBeans.stream();
 
+        List<MBeans> filteredBeans = beanStream.collect(Collectors.toList());
+        for (List<String> oneFilter : filters) {
+            filteredBeans = makeAndApplySingleFilter(filteredBeans, oneFilter).collect(Collectors.toList());
+        }
+
+        return filteredBeans.stream();
     }
 
     /**
      * used to filter a single instance of the filters above.
      *
-     * @param filteredmovies
-     * @param filter
+     * @param beans list of moviebeans
+     * @param filter the list of filter
      * @return a sorted stream
      */
-    public static Stream<MBeans> makeAndApplySingleFilter(List<MBeans> filteredmovies, String filter) {
-        if (filteredmovies == null) {
-            throw new IllegalArgumentException("make and apply - movies is null");
-
-        } else {
-            Operations op = Operations.getOperatorFromStr(filter);
-
-            String[] columns = filter.split(op.getOperator());
-            String valueOfFilter = columns[1].trim();
-            MovieData filterOn = MovieData.fromString(columns[0].toLowerCase().trim());
-
-            Stream<MBeans> stream = filteredmovies.stream().filter(
-                    MBeans -> {
-                        return FilterOperation.getFilter(MBeans, filterOn, op, valueOfFilter);
-                    });
-
-            return stream;
+    public static Stream<MBeans> makeAndApplySingleFilter(List<MBeans> beans, List<String> filter) {
+        if (beans == null) {
+            throw new IllegalArgumentException("makeAndApplySingleFilter - beans is null");
         }
-    }
+        if (filter == null || filter.size() < 4) {
+            throw new IllegalArgumentException("makeAndApplySingleFilter - filter is null or incomplete");
+        }
 
+        Operations op = Operations.getOperatorFromStr(filter.get(2));
+        String valueOfFilter = filter.get(1);
+        MovieData filterOn = MovieData.fromColumnName(filter.get(3));
+
+        return beans.stream().filter(bean -> FilterOperation.getFilter(bean, filterOn, op, valueOfFilter));
+    }
 }
