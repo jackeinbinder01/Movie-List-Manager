@@ -7,10 +7,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+
+import java.io.FileOutputStream;
+
 import group5.model.Filter.FilterHandler;
 import group5.model.Filter.IFilterHandler;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
+import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
 
 public class Model implements IModel {
@@ -109,8 +113,15 @@ public class Model implements IModel {
 
     @Override
     public void saveWatchList(String filename, int userListId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveWatchList'");
+        // Get file extension
+        String formatStr = filename.substring(filename.lastIndexOf("."), filename.length());
+        Formats format = Formats.containsValues(formatStr.toUpperCase());
+        try {
+            MBeansFormatter.writeMediasToFile(this.getRecords(userListId).collect(Collectors.toList()),
+            new FileOutputStream(filename), format);
+        } catch (Exception e) {
+            System.out.println("Error writing to file");
+        }
     }
 
     /**
@@ -133,13 +144,23 @@ public class Model implements IModel {
     @Override
     public void updateWatched(MBeans media, boolean watched) {
         this.getMatchedObjectFromSource(media).setWatched(watched);
-        // TODO Reflecting changes into actual file after these are updated
+        this.updateSourceList();
     }
 
     @Override
     public void updateUserRating(MBeans media, double rating) {
         this.getMatchedObjectFromSource(media).setMyRating(rating);
-        // TODO Reflecting changes into actual file after these are updated
+        this.updateSourceList();
+    }
+
+    @Override
+    public void updateSourceList() {
+        try {
+            MBeansFormatter.writeMediasToFile(this.getRecords().collect(Collectors.toList()),
+                                              new FileOutputStream(DEFAULT_DATA), Formats.JSON);
+        } catch (Exception e) {
+            System.out.println("Error writing to file");
+        }
     }
 
     @Override
@@ -203,6 +224,9 @@ public class Model implements IModel {
             int hashCode = System.identityHashCode(bean); // identityHash to show matching references
             System.out.println(bean.getTitle() + "  Object hash code: " + hashCode + "  Local Hash: " + bean.hashCode());
         }
+        MBeans titanic = MBeansLoader.loadMediasFromFile("./data/test/titanic.json", Formats.JSON).iterator().next();
+        model.updateUserRating(titanic, 10);
+        model.updateWatched(titanic, true);
     }
 
 }

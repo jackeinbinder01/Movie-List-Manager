@@ -106,6 +106,11 @@ public interface IModel {
     void updateUserRating(MBeans media, double rating);
 
     /**
+     * Update local source list file to reflect the curent state in the application.
+     */
+    void updateSourceList();
+
+    /**
      * Get the name of watch list.
      *
      * @return the name of watch list
