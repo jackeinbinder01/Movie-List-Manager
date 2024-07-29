@@ -45,6 +45,7 @@ public interface IFeature {
     public void addToWatchList(MBeans mbean, int userListIndex);
 
 
+    public void createNewWatchList(String name);
 
 
 
@@ -74,8 +75,6 @@ public interface IFeature {
      * Clears all applied filters and refreshes the views.
      */
     public void clearFilters();
-
-
 
     public void handleTabChange(int tabIndex);
 }

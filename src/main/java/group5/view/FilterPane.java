@@ -789,7 +789,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * @param features actions tiggered by the FilterPane
      */
     public void bindFeatures(IFeature features) {
-
+        applyFilterButton.addActionListener(e -> features.applyFilters());
+        clearFilterButton.addActionListener(e -> features.clearFilters());
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/

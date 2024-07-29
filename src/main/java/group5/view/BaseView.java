@@ -74,14 +74,14 @@ public class BaseView extends JFrame implements IView {
      * Set the user list pane entries
      * Prompts the view to create a new tab pane if the userListId is not found
      * @param userListIndex the index of the user list
-     * @param mbeans the MBeans to set
+     * @param records the MBeans to set
      */
-    public void setUserTableRecords(int userListIndex, Stream<MBeans> mbeans) {
+    public void setUserTableRecords(Stream<MBeans> records, int userListIndex) {
         System.out.println("[BaseView] setUserTableRecords");
-        listPane.setUserTableRecords(userListIndex, mbeans);
+        listPane.setUserTableRecords(records, userListIndex);
     }
 
-    public void createUserTable(String userListName) {
+    public void addUserTable(String userListName) {
         System.out.println("[BaseView] createUserTable");
         listPane.createUserTableTab(userListName);
     }
@@ -96,12 +96,27 @@ public class BaseView extends JFrame implements IView {
         detailsPane.setMedia(record);
     }
 
+
+
+//    @Override
+//    public void setSourceTableRecords(Stream<MBeans> mbeans) {
+//        Collection<MBeans> records = mbeans.toList();
+//        System.out.println("[BaseView] setMainTableRecords");
+//        listPane.setSourceTableRecords(records.stream());
+//    }
+
+
+    /**
+     * Set the source table records
+     *
+     * @param records the records to set
+     * @param userListNames list of user-defined list names
+     * @param recordUserListInfo 2D array containing which record is in which user-defined list
+     */
     @Override
-    public void setSourceTableRecords(Stream<MBeans> mbeans) {
-        Collection<MBeans> records = mbeans.toList();
+    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListInfo) {
         System.out.println("[BaseView] setMainTableRecords");
-        listPane.setSourceTableRecords(records.stream());
-        filterPane.setMovies(records.stream());
+        listPane.setSourceTableRecordsV2(records, userListNames, recordUserListInfo);
     }
 
     @Override

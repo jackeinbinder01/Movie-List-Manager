@@ -28,7 +28,7 @@ public class FilterOperation {
             case HASWATCHED:
                 return filterBoolean(movie.getWatched(), op, val);
             default:
-                return false;
+                return true;
         }
     }
 
@@ -67,8 +67,12 @@ public class FilterOperation {
                 return field == intVal;
             case GREATERTHAN:
                 return field > intVal;
+            case GREATEROREQUAL:
+                return field >= intVal;
             case LESSTHAN:
                 return field < intVal;
+            case LESSOREQUAL:
+                return field <= intVal;
             default:
                 return false;
         }
@@ -81,8 +85,12 @@ public class FilterOperation {
                 return field == doubleVal;
             case GREATERTHAN:
                 return field > doubleVal;
+            case GREATEROREQUAL:
+                return field >= doubleVal;
             case LESSTHAN:
                 return field < doubleVal;
+            case LESSOREQUAL:
+                return field <= doubleVal;
             default:
                 return false;
         }
