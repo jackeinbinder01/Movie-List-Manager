@@ -1,6 +1,8 @@
 package group5.controller;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.swing.JOptionPane;
@@ -52,7 +54,7 @@ public class Controller implements IController, IFeature {
         view.bindFeatures(this);
 
         // setup source table records
-        view.setSourceTableRecordsV2(model.getRecords(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+        view.setSourceTableRecordsV2(model.getRecords(), getUserListNames(), getRecordUserListMatrix());
 
         view.getFilterPane().setMovies(model.getRecords());
 
@@ -67,16 +69,15 @@ public class Controller implements IController, IFeature {
 
     @Override
     public void createNewWatchList(String name) {
-        String existingLists[] = this.tmpGetUserListNames();
-        for (String list : existingLists) {
-                if (list.equals(name)) {
-                    System.out.println("[Controller] Error creating new watchlist: watchlist with name " + name + " already exists");
-                    return;
-                }
+        String existingLists[] = this.getUserListNames();
+        if (Arrays.stream(existingLists).anyMatch(list -> list.equals(name))) {
+            System.out.println("[Controller] Error creating new watchlist: \"" + name + "\" already exists");
+            return;
         }
         model.createNewWatchList(name);
+        int newListIdx = model.getUserListCount() - 1; // the new list would be the last one
         view.addUserTable(name);
-        view.setUserTableRecords(model.getRecords(model.getUserListCount() - 1), model.getUserListCount() - 1);
+        view.setUserTableRecords(model.getRecords(newListIdx), newListIdx);
     }
 
     @Override
@@ -108,13 +109,11 @@ public class Controller implements IController, IFeature {
         List<MBeans> recordList;
         if (currTabIdx == 0) {
             recordList = model.getRecords(filters).collect(Collectors.toList());
-            view.setSourceTableRecordsV2(recordList.stream(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrix());
         } else {
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
         }
-        view.getFilterPane().setMovies(recordList.stream());
-        // System.out.println("[Controller] applyFilters results: " + recordList.stream().map(MBeans::getTitle).toList());
     }
 
     /**
@@ -127,7 +126,7 @@ public class Controller implements IController, IFeature {
         List<MBeans> recordList;
         if (currTabIdx == 0) {
             recordList = model.getRecords().collect(Collectors.toList());
-            view.setSourceTableRecordsV2(recordList.stream(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrix());
         } else {
             recordList = model.getRecords(currTabIdx - 1).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
@@ -143,34 +142,29 @@ public class Controller implements IController, IFeature {
     @Override
     public void go() {
         System.out.println("[Controller] Controller.go() called");
-
         view.display();
     }
 
     /**
      * Remove a record from the user's watch list.
-     * The affected user table in the view will be updated.
      *
      * @param record        the MBean to be removed.
      * @param userListIndex the index in the user's watch list where the MBean is located.
      */
     public void removeFromWatchList(MBeans record, int userListIndex) {
         System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
-        // Remove the record from the model
         model.removeFromWatchList(record, userListIndex);
-        // Update the affected table in the view
         view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
-        view.setSourceTableRecordsV2(model.getRecords(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
-
+        view.setSourceTableRecordsV2(model.getRecords(), getUserListNames(), getRecordUserListMatrix());
+        // TODO: Not updating the filter range for now
     }
 
     public void addToWatchList(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
-        view.setSourceTableRecordsV2(model.getRecords(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+        view.setSourceTableRecordsV2(model.getRecords(), getUserListNames(), getRecordUserListMatrix());
         view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
-
-        //throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addMovieToList'");
+        // TODO: Not updating the filter range for now
     }
 
     public void changeRating(MBeans record, double rating) {
@@ -180,7 +174,6 @@ public class Controller implements IController, IFeature {
 
     public void changeWatchedStatus(MBeans mbean, boolean watched) {
         model.updateWatched(mbean, watched);
-
         // TODO: Check if Views are correctly updated
     }
 
@@ -206,61 +199,39 @@ public class Controller implements IController, IFeature {
     }
 
 
-    private boolean[][] tmpGet2DUserListForRecord() {
-        boolean[][] result = new boolean[(int) model.getRecords().count()][model.getUserListCount()];
-        for (int i = 0; i < (int) model.getRecords().count(); i++) {
-            result[i] = tmpGetUserListForRecord(model.getRecords().toList().get(i));
-        }
-        return result;
+    /**
+     * Private helper method to get a boolean matrix representing the user lists for each record.
+     * @return a 2D boolean array where each row represents a record and each column represents a user list
+     */
+    private boolean[][] getRecordUserListMatrix() {
+        return model.getRecords()
+                .map(record -> {
+                    int[] indices = model.getUserListIndicesForRecord(record);
+                    boolean[] result = new boolean[model.getUserListCount()];
+                    for (int i = 0; i < model.getUserListCount(); i++) {
+                        result[i] = Arrays.binarySearch(indices, i) >= 0;
+                    }
+                    return result;
+                })
+                .toArray(boolean[][]::new);
     }
 
-    /**
-     * Temporary method to get the user list for a record.
-     * Rationale - passing down for construction for the watchlist dropbox menu
-     */
-    private boolean[] tmpGetUserListForRecord(MBeans record) {
-        int[] indices = model.getUserListIndicesForRecord(record);
-        boolean[] result = new boolean[model.getUserListCount()];
-        for (int i = 0; i < model.getUserListCount(); i++) {
-            result[i] = false;
-        }
-        for (int index : indices) {
-            result[index] = true;
-        }
-        return result;
-    }
 
     /**
-     * Temporary method to get the user list names.
-     * Rationale - passing down for construction for the watchlist dropbox menu
+     * Method to get the names of the user lists.
+     * Created to assist in constructing the watchlist dropbox menu.
+     *
+     * @return an array of strings representing the names of the user lists
      */
-    private String[] tmpGetUserListNames() {
-        String[] result = new String[model.getUserListCount()];
-        for (int i = 0; i < model.getUserListCount(); i++) {
-            result[i] = model.getUserListName(i);
-        }
-        return result;
+    private String[] getUserListNames() {
+        return IntStream.range(0, model.getUserListCount())
+                .mapToObj(model::getUserListName)
+                .toArray(String[]::new);
     }
 
 
     private List<List<String>> constructFilters() {
         FilterPane filterPane = view.getFilterPane();
-
-//        String titleValue = view.getFilterPane().getFilteredTitle();
-//        String contentTypeValue = view.getFilterPane().getFilteredContentType();
-//        String genreValue = view.getFilterPane().getFilteredGenre();
-//        String mpaRatingValue = view.getFilterPane().getFilteredMpaRating();
-//        String releasedMin = view.getFilterPane().getFilteredReleasedMin();
-//        String releasedMax = view.getFilterPane().getFilteredReleasedMax();
-//        String imdbRatingMin = view.getFilterPane().getFilteredImdbRatingMin();
-//        String imdbRatingMax = view.getFilterPane().getFilteredImdbRatingMax();
-//        String boxOfficeEarningsMin = view.getFilterPane().getFilteredBoxOfficeEarningsMin();
-//        String boxOfficeEarningsMax = view.getFilterPane().getFilteredBoxOfficeEarningsMax();
-//        String directorValue = view.getFilterPane().getFilteredDirectorFilter();
-//        String actorValue = view.getFilterPane().getFilteredActorFilter();
-//        String writerValue = view.getFilterPane().getFilteredWriterFilter();
-//        String languageValue = view.getFilterPane().getFilteredLanguageFilter();
-
 
         List<List<String>> filters = new ArrayList<>();
         List<Triple<String, Operations, MovieData>> triples = new ArrayList<>();
