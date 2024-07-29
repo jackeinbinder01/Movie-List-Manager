@@ -285,10 +285,15 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * @param movies a Stream of movies to replace the current movies list
      */
     public void setMovies(Stream<MBeans> movies) {
-        this.movies = movies.toList();
-        // reset filter ranges and clear filter options
-        setRangeFilterRanges();
-        resetFilterOptions();
+        List<MBeans> moviesList = movies.toList();
+        if(!moviesList.isEmpty()) {
+            this.movies = moviesList;
+            // reset filter ranges and clear filter options
+            setRangeFilterRanges();
+            resetFilterOptions();
+        } else {
+            System.out.println("Movies stream is empty");
+        }
     }
 
     /**
@@ -809,6 +814,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         JScrollPane scrollPane = new JScrollPane(filterPane);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        filterPane.setMovies(Stream.empty());
 
         frame.getContentPane().add(scrollPane);
 
