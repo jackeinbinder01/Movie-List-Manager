@@ -57,8 +57,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /** Box Office Earnings max of range. */
     private JTextField boxOfficeEarningsTo = new JTextField();
 
-    /** Set containing all dropdown Filters. */
+    /** Set containing all text filters. */
+    private Set<JTextField> textFilters = new HashSet<JTextField>();
+    /** Set containing all dropdown filters. */
     private Set<JComboBox<String>> dropdownFilters = new HashSet<JComboBox<String>>();
+    /** Set containing all range filters. */
+    private Set<JTextField> rangeFilters = new HashSet<JTextField>();
 
     // Range filters min/max placeholders
     /** Min and max of year released data in movies. */
@@ -296,7 +300,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             // reset filter ranges and clear filter options
             setRangeFilterRanges();
             resetFilterOptions();
-            resetComboBoxOptions();
         } else {
             System.out.println("Movies stream is empty");
         }
@@ -393,6 +396,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // configure combo boxes
         if (filter instanceof JComboBox) {
             configureComboBox((JComboBox<String>) filter);
+        } else if (filter instanceof JTextField){
+            textFilters.add((JTextField) filter);
         }
 
         // update gbc
@@ -403,6 +408,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
         // increment filter row
         filterRow++;
+
+
     }
 
     /**
@@ -438,6 +445,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // add focus listener and add filter to panel
         filterFrom.addFocusListener(this);
         filterPanel.add(filterFrom, gbc);
+        // add filter to set of range filters
+        rangeFilters.add(filterFrom);
 
         // update gbc and add "To" label
         updateGBC(2, null, null, 0, null, GridBagConstraints.NONE);
@@ -452,6 +461,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // add focus listener and add filter to panel
         filterTo.addFocusListener(this);
         filterPanel.add(filterTo, gbc);
+        // add filter to set of range filters
+        rangeFilters.add(filterTo);
 
         // increment filter row
         filterRow++;
@@ -563,13 +574,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         return String.format("%.0f", expandedDouble);
     }
 
-    public void resetComboBoxOptions() {
-        for (JComboBox filter : dropdownFilters) {
-            filter.removeAllItems();
-            configureComboBox(filter);
-        }
-    }
-
     /**
      * Sets the options inside a JComboBox (dropdown) filter based on unique MBean attributes.
      *
@@ -640,14 +644,35 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /**
+     * Resets all JComboBox options in the FilterPane based on the FilterPane's movies list.
+     */
+    public void resetComboBoxOptions() {
+        for (JComboBox filter : dropdownFilters) {
+            filter.removeAllItems();
+            configureComboBox(filter);
+            filter.setSelectedIndex(-1);
+        }
+    }
+
+    public void resetTextFilters() {
+        for (JTextField filter : textFilters) {
+            filter.setText("");
+        }
+    }
+
+    public void resetRangeFilters() {
+        for (JTextField filter : rangeFilters) {
+            resetPlaceholder(filter);
+        }
+    }
+
+    /**
      * Clears all filters in the FilterPane of user selections.
      */
     public void resetFilterOptions() {
-        // clear options
-        titleFilter.setText("");
-        contentTypeFilter.setSelectedIndex(-1);
-        genreFilter.setSelectedIndex(-1);
-        mpaRatingFilter.setSelectedIndex(-1);
+        // reset options in dropdown filters
+        resetComboBoxOptions();
+        resetTextFilters();
 
         // reset placeholders for ranges
         setPlaceholder(releasedFrom, releasedRange[0]);
@@ -656,12 +681,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         setPlaceholder(imdbRatingTo, imdbRatingRange[1]);
         setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
         setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
-
-        // clear options
-        directorFilter.setText("");
-        actorFilter.setText("");
-        writerFilter.setText("");
-        languageFilter.setSelectedIndex(-1);
     }
 
     /**
