@@ -9,12 +9,9 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.stream.Stream;
-
-import static group5.model.formatters.MBeansLoader.loadMBeansFromAPI;
 
 /** Contains and passes filters to controller for selected movie list */
 public class FilterPane extends JPanel implements ActionListener, FocusListener {
@@ -32,11 +29,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /** Title filter. */
     private JTextField titleFilter = new JTextField();
     /** Content Type filter. */
-    private JComboBox contentTypeFilter = new JComboBox();
+    private JComboBox<String> contentTypeFilter = new JComboBox();
     /** Genre filter. */
-    private JComboBox genreFilter = new JComboBox();
+    private JComboBox<String> genreFilter = new JComboBox();
     /** MPA Rating filter. */
-    private JComboBox mpaRatingFilter = new JComboBox();
+    private JComboBox<String> mpaRatingFilter = new JComboBox();
     /** Director filter. */
     private JTextField directorFilter = new JTextField();
     /** Actor filter. */
@@ -44,9 +41,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /** Writer filter. */
     private JTextField writerFilter = new JTextField();
     /** Language filter. */
-    private JComboBox languageFilter = new JComboBox();
-    /** Country of Origin filter. */
-    private JComboBox countryOfOriginFilter = new JComboBox();
+    private JComboBox<String> languageFilter = new JComboBox();
 
     // Range filters
     /** Year released min of range. */
@@ -86,36 +81,36 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     public FilterPane() {
         super(new BorderLayout());
 
-
         // name components to enable switch statements
         setComponentNames();
 
         // configure gbc
-        gbc.insets = new Insets(3, 5, 2, 5);
+        gbc.insets = new Insets(3, 4, 2, 4);
         updateGBC(null, null, null, null, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
 
         // add panels
         add(filterPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // add some filters
-        addFilter("Title:", titleFilter);
-        addFilter("Content Type:", contentTypeFilter);
-        addFilter("Genre(s):", genreFilter);
-        addFilter("MPA Rating:", mpaRatingFilter);
+        // add filters
+        addFilter(FilterLabels.TITLE.getFilterLabel(), titleFilter);
+        addFilter(FilterLabels.CONTENT_TYPE.getFilterLabel(), contentTypeFilter);
+        addFilter(FilterLabels.GENRE.getFilterLabel(), genreFilter);
+        addFilter(FilterLabels.MPA_RATING.getFilterLabel(), mpaRatingFilter);
 
         // add range filters
-        addRangeFilter("Released:", releasedFrom, releasedTo, releasedRange[0], releasedRange[1]);
-        addRangeFilter("IMDB Rating:", imdbRatingFrom, imdbRatingTo, imdbRatingRange[0], imdbRatingRange[1]);
-        addRangeFilter("Box Office Earnings: (millions)", boxOfficeEarningsFrom, boxOfficeEarningsTo,
+        addRangeFilter(FilterLabels.RELEASED.getFilterLabel(), releasedFrom, releasedTo, releasedRange[0],
+                releasedRange[1]);
+        addRangeFilter(FilterLabels.IMDB_RATING.getFilterLabel(), imdbRatingFrom, imdbRatingTo, imdbRatingRange[0],
+                imdbRatingRange[1]);
+        addRangeFilter(FilterLabels.BOX_OFFICE_EARNINGS.getFilterLabel(), boxOfficeEarningsFrom, boxOfficeEarningsTo,
                 boxOfficeRange[0], boxOfficeRange[1]);
 
         // add remaining filters
-        addFilter("Director(s):", directorFilter);
-        addFilter("Actor(s)", actorFilter);
-        addFilter("Writer(s)", writerFilter);
-        addFilter("Language(s):", languageFilter);
-        addFilter("Country of Origin:", countryOfOriginFilter);
+        addFilter(FilterLabels.DIRECTOR.getFilterLabel(), directorFilter);
+        addFilter(FilterLabels.ACTOR.getFilterLabel(), actorFilter);
+        addFilter(FilterLabels.WRITER.getFilterLabel(), writerFilter);
+        addFilter(FilterLabels.LANGUAGE.getFilterLabel(), languageFilter);
 
         // add buttons
         buttonPanel.add(applyFilterButton);
@@ -130,10 +125,21 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         clearFilterButton.addActionListener(this);
     }
 
+    /* Getters -------------------------------------------------------------------------------------------------------*/
+    /**
+     * Returns user entry in title filter.
+     *
+     * @return movie title entered by user
+     */
     public String getFilteredTitle() {
         return titleFilter.getText();
     }
 
+    /**
+     * Returns user entry in content type filter.
+     *
+     * @return content type selected by user
+     */
     public String getFilteredContentType() {
         try {
             return contentTypeFilter.getSelectedItem().toString();
@@ -142,6 +148,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Returns user selection in genre filter.
+     *
+     * @return genre selected by user
+     */
     public String getFilteredGenre() {
         try {
             return genreFilter.getSelectedItem().toString();
@@ -150,6 +161,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Returns user selection in MPA rating filter.
+     *
+     * @return MPA rating selected by user
+     */
     public String getFilteredMpaRating() {
         try {
             return mpaRatingFilter.getSelectedItem().toString();
@@ -158,22 +174,47 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Returns the lower bound user entry in date released filter.
+     *
+     * @return lower bound release of date range entered by user
+     */
     public String getFilteredReleasedMin() {
         return releasedFrom.getText();
     }
 
+    /**
+     * Returns the upper bound user entry in date released filter.
+     *
+     * @return upper bound release of date range entered by user
+     */
     public String getFilteredReleasedMax() {
         return releasedTo.getText();
     }
 
+    /**
+     * Returns the lower bound user entry in the IMDB Rating filter.
+     *
+     * @return lower bound of the IMDB Rating range entered by user
+     */
     public String getFilteredImdbRatingMin() {
         return imdbRatingFrom.getText();
     }
 
+    /**
+     * Returns the upper bound user entry in the IMDB Rating filter.
+     *
+     * @return upper bound of the IMDB Rating range entered by user
+     */
     public String getFilteredImdbRatingMax() {
         return imdbRatingTo.getText();
     }
 
+    /**
+     * Returns the lower bound user entry in the Box Office Earnings filter.
+     *
+     * @return lower bound of the Box Office Earnings range entered by user
+     */
     public String getFilteredBoxOfficeEarningsMin() {
         try {
             return formatFromMillions(boxOfficeEarningsFrom.getText());
@@ -182,6 +223,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Returns the upper bound user entry in the Box Office Earnings filter.
+     *
+     * @return upper bound of the Box Office Earnings range entered by user
+     */
     public String getFilteredBoxOfficeEarningsMax() {
         try {
             return formatFromMillions(boxOfficeEarningsTo.getText());
@@ -190,19 +236,39 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Returns user entry in the director filter.
+     *
+     * @return director name entered by user
+     */
     public String getFilteredDirectorFilter() {
         return directorFilter.getText();
     }
 
+    /**
+     * Returns user entry in the actor filter.
+     *
+     * @return actor name entered by user
+     */
     public String getFilteredActorFilter() {
         return actorFilter.getText();
 
     }
 
+    /**
+     * Returns user entry in the writer filter.
+     *
+     * @return writer name entered by user
+     */
     public String getFilteredWriterFilter() {
         return writerFilter.getText();
     }
 
+    /**
+     * Returns user selection in the language filter.
+     *
+     * @return language selected by user
+     */
     public String getFilteredLanguageFilter() {
         try {
             return languageFilter.getSelectedItem().toString();
@@ -211,40 +277,49 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
-    public String getFilteredCountryOfOriginFilter() {
-        try {
-            return countryOfOriginFilter.getSelectedItem().toString();
-        } catch (NullPointerException e) {
-            return "";
-        }
+    /* FilterPane Setup Methods --------------------------------------------------------------------------------------*/
+    /**
+     * Sets the movies list of this FilterPane instance based on the MBeans in an input Stream.
+     * Resets filter ranges and options based on MBeans in the new movies list.
+     *
+     * @param movies a Stream of movies to replace the current movies list
+     */
+    public void setMovies(Stream<MBeans> movies) {
+        this.movies = movies.toList();
+        // reset filter ranges and clear filter options
+        setRangeFilterRanges();
+        resetFilterOptions();
     }
 
     /**
-     * Enables conditions through switch statements instead of if-else blocks.
+     * Sets component names to enable conditions through switch statements.
      */
     private void setComponentNames() {
         // set filter names
-        titleFilter.setName("titleFilter");
-        contentTypeFilter.setName("contentTypeFilter");
-        genreFilter.setName("genreFilter");
-        mpaRatingFilter.setName("mpaRatingFilter");
+        titleFilter.setName(Filters.TITLE.getFilterName());
+        contentTypeFilter.setName(Filters.CONTENT_TYPE.getFilterName());
+        genreFilter.setName(Filters.GENRE.getFilterName());
+        mpaRatingFilter.setName(Filters.MPA_RATING.getFilterName());
 
         // set range filter names
-        releasedFrom.setName("releasedFrom");
-        releasedTo.setName("releasedTo");
-        imdbRatingFrom.setName("imdbRatingFrom");
-        imdbRatingTo.setName("imdbRatingTo");
-        boxOfficeEarningsFrom.setName("boxOfficeEarningsFrom");
-        boxOfficeEarningsTo.setName("boxOfficeEarningsTo");
+        releasedFrom.setName(Filters.RELEASED_FROM.getFilterName());
+        releasedTo.setName(Filters.RELEASED_TO.getFilterName());
+        imdbRatingFrom.setName(Filters.IMDB_RATING_FROM.getFilterName());
+        imdbRatingTo.setName(Filters.IMDB_RATING_TO.getFilterName());
+        boxOfficeEarningsFrom.setName(Filters.BOX_OFFICE_EARNINGS_FROM.getFilterName());
+        boxOfficeEarningsTo.setName(Filters.BOX_OFFICE_EARNINGS_TO.getFilterName());
 
         // set remaining filter names
-        directorFilter.setName("directorFilter");
-        actorFilter.setName("actorFilter");
-        writerFilter.setName("writerFilter");
-        languageFilter.setName("languageFilter");
-        countryOfOriginFilter.setName("countryOfOriginFilter");
+        directorFilter.setName(Filters.DIRECTOR.getFilterName());
+        actorFilter.setName(Filters.ACTOR.getFilterName());
+        writerFilter.setName(Filters.WRITER.getFilterName());
+        languageFilter.setName(Filters.LANGUAGE.getFilterName());
     }
 
+    /**
+     * Sets the min and max of each filter range based on MBeans in the
+     * movies list.
+     */
     private void setRangeFilterRanges() {
         // set filter ranges
         releasedRange = getIntFilterRange(MBeans::getYear);
@@ -257,6 +332,16 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Updates FilterPane's GridBagContraints to account for the placement of filters and labels.
+     *
+     * @param x gbc.gridx
+     * @param y gbc.gridy
+     * @param width gbc.gridwidth
+     * @param weightx gbc.weightx
+     * @param anchor gbc.anchor
+     * @param fill gbc.fill
+     */
     private void updateGBC(Integer x, Integer y, Integer width, Integer weightx,
                            Integer anchor, Integer fill) {
         // change gbc only if param is not null
@@ -268,6 +353,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         gbc.fill = (fill != null) ? fill : gbc.fill;
     }
 
+    /**
+     * Adds a JLabel to the FilterPane.
+     *
+     * @param filterTitle the test displayed by the label
+     */
     private void addLabel(String filterTitle) {
         // update gbc
         updateGBC(0, filterRow, 4, 1, GridBagConstraints.WEST, null);
@@ -279,6 +369,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         filterRow++;
     }
 
+    /**
+     * Adds filters (JTextFields and JComboBoxes) to the FilterPane.
+     *
+     * @param filterTitle the text displayed above the filter
+     * @param filter the filter object
+     */
     private void addFilter(String filterTitle, Object filter) {
         // add filter label
         addLabel(filterTitle);
@@ -298,110 +394,24 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         filterRow++;
     }
 
-    private void italicizeFont(Object object) {
-        // italicize JLabel text
-        if (object instanceof JLabel) {
-            JLabel label = (JLabel) object;
-            Font font = label.getFont();
-            Font italicFont = font.deriveFont(Font.ITALIC);
-            label.setFont(italicFont);
-        }
-
-        // italicize JTextField text
-        if (object instanceof JTextField) {
-            JTextField textField = (JTextField) object;
-            Font font = textField.getFont();
-            Font italicFont = font.deriveFont(Font.ITALIC);
-            textField.setFont(italicFont);
-        }
-    }
-
-    private String[] getDoubleFilterRange(ToDoubleFunction<MBeans> fieldFunction) {
-        // find max/min
-        OptionalDouble maxValue = movies.stream().mapToDouble(fieldFunction).max();
-        OptionalDouble minValue = movies.stream().mapToDouble(fieldFunction).min();
-
-        // convert to string
-        String maxValueString = maxValue.isPresent() ? Double.toString(maxValue.getAsDouble()) : "No Max";
-        String minValueString = minValue.isPresent() ? Double.toString(minValue.getAsDouble()) : "No Min";
-
-        return new String[] {minValueString, maxValueString};
-    }
-
-    private String[] getIntFilterRange(ToIntFunction<MBeans> fieldFunction) {
-        // find max/min
-        OptionalInt maxValue = movies.stream().mapToInt(fieldFunction).max();
-        OptionalInt minValue = movies.stream().mapToInt(fieldFunction).min();
-
-        // convert to string
-        String maxValueString = maxValue.isPresent() ? Integer.toString(maxValue.getAsInt()) : "No Max";
-        String minValueString = minValue.isPresent() ? Integer.toString(minValue.getAsInt()) : "No Min";
-
-        return new String[] {minValueString, maxValueString};
-    }
-
-    private String[] getStringFilterRange(Function<MBeans, String> fieldFunction) {
-        // find max/min
-        OptionalDouble maxValue = movies.stream()
-                .map(fieldFunction)
-                .mapToDouble(this::customParseDouble)
-                .filter(v -> v!= Double.MIN_VALUE)
-                .max();
-
-        OptionalDouble minValue = movies.stream()
-                .map(fieldFunction)
-                .mapToDouble(this::customParseDouble)
-                .filter(v -> v!= Double.MIN_VALUE)
-                .min();
-
-        // convert to string
-        String maxValueString = maxValue.isPresent() ? Double.toString(maxValue.getAsDouble()) : "No Max";
-        String minValueString = minValue.isPresent() ? Double.toString(minValue.getAsDouble()) : "No Min";
-
-        return new String[] {minValueString, maxValueString};
-    }
-
-    private double customParseDouble(String value) {
-        // remove leading dollar sign
-        try {
-            String processedValue = value.replaceAll("\\D", "");
-            return Double.parseDouble(processedValue);
-        } catch (NumberFormatException e) {
-            // return standard value if exception, which is filtered out in getStringFilterRange()
-            return Double.MIN_VALUE;
-        }
-    }
-
-    private String formatAsCurrency(String value) {
-        // set currency formatter to US locale
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
-
-        // convert to string and remove trailing .00
-        String currencyStringDouble = currencyFormatter.format(Double.parseDouble(value) / 1_000_000);
-        String currencyInMillions = new String(currencyStringDouble + "M");
-
-        return currencyInMillions;
-    }
-
-    private String formatFromMillions(String value) {
-        // strip $ and M if present
-        String processedValue = value.replaceAll("[^0-9.]", "");
-        double processedDouble  = Double.parseDouble(processedValue);
-
-        // convert to double from millions and return as String
-        Double expandedDouble = processedDouble * 1_000_000;
-        return String.format("%.0f", expandedDouble);
-    }
-
+    /**
+     * Adds a filter to the FilterPane where users enter the min and max of a range of values.
+     *
+     * @param filterTitle the String of text displayed above the filter
+     * @param filterFrom a JTextField where users enter the minimum of the range
+     * @param filterTo a JTextField where users enter the maximum of the range
+     * @param rangeMin a String representing the minimum value of the filter range
+     * @param rangeMax a String representing the maximum value of the filter range
+     */
     private void addRangeFilter(String filterTitle, JTextField filterFrom,
                                 JTextField filterTo, String rangeMin, String rangeMax) {
         // add title to panel
         addLabel(filterTitle);
 
         // create "From" and "To" labels with italic font
-        JLabel fromLabel = new JLabel("From:");
+        JLabel fromLabel = new JLabel(FilterLabels.FROM.getFilterLabel());
         italicizeFont(fromLabel);
-        JLabel toLabel = new JLabel("To:");
+        JLabel toLabel = new JLabel(FilterLabels.TO.getFilterLabel());
         italicizeFont(toLabel);
 
         // update gbc and add "From" label
@@ -436,16 +446,128 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         filterRow++;
     }
 
+    /**
+     * Sets placeholder text in a JTextField to the String value passed as a param.
+     *
+     * @param textField the JTextField receiving the placeholder text
+     * @param value a String containing the placeholder text
+     */
+    private void setPlaceholder(JTextField textField, String value) {
+        textField.setText(value);
+    }
+
+    /* Helper Methods ------------------------------------------------------------------------------------------------*/
+    /**
+     * Italicizes the font in the object passed.
+     *
+     * @param object the object with text to italicize
+     */
+    private void italicizeFont(Object object) {
+        // italicize JLabel text
+        if (object instanceof JLabel) {
+            JLabel label = (JLabel) object;
+            Font font = label.getFont();
+            Font italicFont = font.deriveFont(Font.ITALIC);
+            label.setFont(italicFont);
+        }
+
+        // italicize JTextField text
+        if (object instanceof JTextField) {
+            JTextField textField = (JTextField) object;
+            Font font = textField.getFont();
+            Font italicFont = font.deriveFont(Font.ITALIC);
+            textField.setFont(italicFont);
+        }
+    }
+
+    /**
+     * Find and returns the minimum and maximum values in a double returning getter from a
+     * stream of the movies list.
+     *
+     * @param fieldFunction the double returning getter method
+     * @return a list of Strings containing the min value at the first idx and the max value at the second
+     */
+    private String[] getDoubleFilterRange(ToDoubleFunction<MBeans> fieldFunction) {
+        // find max/min
+        OptionalDouble maxValue = movies.stream().mapToDouble(fieldFunction).max();
+        OptionalDouble minValue = movies.stream().mapToDouble(fieldFunction).min();
+
+        // convert to string
+        String maxValueString = maxValue.isPresent() ? Double.toString(maxValue.getAsDouble()) : "No Max";
+        String minValueString = minValue.isPresent() ? Double.toString(minValue.getAsDouble()) : "No Min";
+
+        return new String[] {minValueString, maxValueString};
+    }
+
+    /**
+     * Find and returns the minimum and maximum values in an int returning getter from a
+     * stream of the movies list.
+     *
+     * @param fieldFunction the int returning getter method
+     * @return a list of Strings containing the min value at the first idx and the max value at the second
+     */
+    private String[] getIntFilterRange(ToIntFunction<MBeans> fieldFunction) {
+        // find max/min
+        OptionalInt maxValue = movies.stream().mapToInt(fieldFunction).max();
+        OptionalInt minValue = movies.stream().mapToInt(fieldFunction).min();
+
+        // convert to string
+        String maxValueString = maxValue.isPresent() ? Integer.toString(maxValue.getAsInt()) : "No Max";
+        String minValueString = minValue.isPresent() ? Integer.toString(minValue.getAsInt()) : "No Min";
+
+        return new String[] {minValueString, maxValueString};
+    }
+
+    /**
+     * Returns a string formatted as US currency (in millions of dollars) from a double parsable String.
+     *
+     * @param value a String representing a dollar value
+     * @return a String containing the dollar value of the input param formatted as US currency in millions of dollars
+     */
+    private String formatAsCurrency(String value) {
+        // set currency formatter to US locale
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
+
+        // convert to string and remove trailing .00
+        String currencyStringDouble = currencyFormatter.format(Double.parseDouble(value) / 1_000_000);
+        String currencyInMillions = new String(currencyStringDouble + "M");
+
+        return currencyInMillions;
+    }
+
+    /**
+     * Converts and returns a String containing a dollar value in millions of dollars to a String representing that
+     * same value as an unformatted number.
+     *
+     * @param value a String representing a dollar value in millions of dollars
+     * @return a String representing the input param dollar value as an unformatted number
+     */
+    private String formatFromMillions(String value) {
+        // strip $ and M if present
+        String processedValue = value.replaceAll("[^0-9.]", "");
+        double processedDouble  = Double.parseDouble(processedValue);
+
+        // convert to double from millions and return as String
+        Double expandedDouble = processedDouble * 1_000_000;
+        return String.format("%.0f", expandedDouble);
+    }
+
+    /**
+     * Sets the options inside a JComboBox (dropdown) filter based on unique MBean attributes.
+     *
+     * @param comboBox the dropdown filter in which to add options
+     */
     private void configureComboBox(JComboBox<String> comboBox) {
         // initialize empty tree sets
         Set<String> uniqueContentType = new TreeSet<>();
         Set<String> uniqueGenres = new TreeSet<>();
         Set<String> uniqueMpaRatings = new TreeSet<>();
         Set<String> uniqueLanguages = new TreeSet<>();
-        Set<String> uniqueCountries = new TreeSet<>();
 
-        switch (comboBox.getName()) {
-            case "contentTypeFilter":
+        Filters filter = getFilterByEnum(comboBox.getName());
+
+        switch (filter) {
+            case CONTENT_TYPE:
                 // add options to set
                 for (MBeans movie : movies) {
                     uniqueContentType.add(movie.getType());
@@ -454,7 +576,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 for (String contentType : uniqueContentType) {
                     comboBox.addItem(contentType);
                 }
-            case "genreFilter":
+                break;
+            case GENRE:
                 // add options to set
                 for (MBeans movie : movies) {
                     for (String genre : movie.getGenre()) {
@@ -465,7 +588,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 for (String genre : uniqueGenres) {
                     comboBox.addItem(genre);
                 }
-            case "mpaRatingFilter":
+                break;
+            case MPA_RATING:
                 // add options to set
                 for (MBeans movie : movies) {
                     uniqueMpaRatings.add(movie.getRated());
@@ -474,7 +598,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 for (String mpaRating : uniqueMpaRatings) {
                     comboBox.addItem(mpaRating);
                 }
-            case "languageFilter":
+                break;
+            case LANGUAGE:
                 // add options to set
                 for (MBeans movie : movies) {
                     // unpack options from string list
@@ -486,42 +611,17 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 for (String language : uniqueLanguages) {
                     comboBox.addItem(language);
                 }
-            case "countryOfOriginFilter":
-                // add options to set
-                for (MBeans movie : movies) {
-                    // unpack options from string list
-                    for (String country : movie.getCountry()) {
-                        uniqueCountries.add(country);
-                    }
-                }
-                // add elements to combo box
-                for (String country : uniqueCountries) {
-                    comboBox.addItem(country);
-                }
+                break;
+            default:
+                System.out.println("Invalid text field passed");
         }
         // deselect options in combobox
         comboBox.setSelectedIndex(-1);
     }
 
-    public void setMovies(Stream<MBeans> movies) {
-        this.movies = movies.toList();
-        // reset filter ranges and clear filter options
-        setRangeFilterRanges();
-        resetFilterOptions();
-    }
-
-    private void setMoviesSetup() {
-        MBeans theMatrix;
-        MBeans titanic;
-
-        theMatrix = loadMBeansFromAPI("The Matrix", "1999", "movie");
-        titanic = loadMBeansFromAPI("Titanic", "1997", "movie");
-        movies.add(theMatrix);
-        movies.add(titanic);
-
-        setRangeFilterRanges();
-    }
-
+    /**
+     * Clears all filters in the FilterPane of user selections.
+     */
     public void resetFilterOptions() {
         // clear options
         titleFilter.setText("");
@@ -542,9 +642,89 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         actorFilter.setText("");
         writerFilter.setText("");
         languageFilter.setSelectedIndex(-1);
-        countryOfOriginFilter.setSelectedIndex(-1);
     }
 
+    /**
+     * Resets the placeholder text in a JTextField to the min and max of the initial range.
+     *
+     * @param textField the JTextField to reset its placeholder
+     */
+    public void resetPlaceholder(JTextField textField) {
+        Filters filter = getFilterByEnum(textField.getName());
+        switch (filter) {
+            case RELEASED_FROM:
+                if (releasedFrom.getText().isEmpty()) {
+                    releasedFrom.setText(releasedRange[0]);
+                }
+                break;
+            case RELEASED_TO:
+                if (releasedTo.getText().isEmpty()) {
+                    releasedTo.setText(releasedRange[1]);
+                }
+                break;
+            case IMDB_RATING_FROM:
+                if (imdbRatingFrom.getText().isEmpty()) {
+                    imdbRatingFrom.setText(imdbRatingRange[0]);
+                }
+                break;
+            case IMDB_RATING_TO:
+                if (imdbRatingTo.getText().isEmpty()) {
+                    imdbRatingTo.setText(imdbRatingRange[1]);
+                }
+                break;
+            case BOX_OFFICE_EARNINGS_FROM:
+                if (boxOfficeEarningsFrom.getText().isEmpty()) {
+                    boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
+                } else {
+                    String processedBoxOfficeEarningsMin = boxOfficeEarningsFrom.getText()
+                            .replaceAll("[^0-9.]", "");
+                    try {
+                        double BoxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
+                        boxOfficeEarningsFrom.setText(
+                                formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
+                    } catch (NumberFormatException e) {
+                        setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
+                    }
+                }
+                break;
+            case BOX_OFFICE_EARNINGS_TO:
+                if (boxOfficeEarningsTo.getText().isEmpty()) {
+                    boxOfficeEarningsTo.setText(boxOfficeRange[1]);
+                } else {
+                    String processedBoxOfficeEarningsMax = boxOfficeEarningsTo.getText()
+                            .replaceAll("[^0-9.]", "");
+                    try {
+                        double BoxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
+                        boxOfficeEarningsTo.setText(
+                                formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
+                    } catch (NumberFormatException e) {
+                        setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid text field passed");
+        }
+    }
+
+    /**
+     * Returns the Filters enum associated with a filter name passed as a String.
+     *
+     * @param filter the String name of a filter in the FilterPane
+     * @return the Filters enum associated with the String filter
+     */
+    private Filters getFilterByEnum(String filter) {
+        for (Filters filters : Filters.values()) {
+            if (filters.getFilterName().equalsIgnoreCase(filter)) {
+                return filters;
+            }
+        }
+        String error = String.format("Unsupported filter: '%s'", filter);
+        System.out.println(error);
+        return null;
+    }
+
+    /* Actions -------------------------------------------------------------------------------------------------------*/
     /**
      * Invoked when an action occurs.
      *
@@ -571,17 +751,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             System.out.println("Actor: " + getFilteredActorFilter());
             System.out.println("Writer: " + getFilteredWriterFilter());
             System.out.println("Language: " + getFilteredLanguageFilter());
-            System.out.println("Country: " + getFilteredCountryOfOriginFilter());
 
         } else if (e.getSource() == clearFilterButton) {
             System.out.println("Filters cleared");
 
             resetFilterOptions();
         }
-    }
-
-    private void setPlaceholder(JTextField textField, String value) {
-        textField.setText(value);
     }
 
     /**
@@ -608,53 +783,17 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         resetPlaceholder(textField);
     }
 
-    public void resetPlaceholder(JTextField textField) {
-        switch (textField.getName()) {
-            case "releasedFrom":
-                if (releasedFrom.getText().isEmpty()) {
-                    releasedFrom.setText(releasedRange[0]);
-                }
-                break;
-            case "releasedTo":
-                if (releasedTo.getText().isEmpty()) {
-                    releasedTo.setText(releasedRange[1]);
-                }
-                break;
-            case "imdbRatingFrom":
-                if (imdbRatingFrom.getText().isEmpty()) {
-                    imdbRatingFrom.setText(imdbRatingRange[0]);
-                }
-                break;
-            case "imdbRatingTo":
-                if (imdbRatingTo.getText().isEmpty()) {
-                    imdbRatingTo.setText(imdbRatingRange[1]);
-                }
-                break;
-            case "boxOfficeEarningsFrom":
-                if (boxOfficeEarningsFrom.getText().isEmpty()) {
-                    boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
-                } else {
-                    boxOfficeEarningsFrom.setText(
-                            formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
-                }
-                break;
-            case "boxOfficeEarningsTo":
-                if (boxOfficeEarningsTo.getText().isEmpty()) {
-                    boxOfficeEarningsTo.setText(boxOfficeRange[1]);
-                } else {
-                    boxOfficeEarningsTo.setText(
-                            formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
-                }
-                break;
-            default:
-                System.out.println("Invalid text field passed");
-        }
-    }
-
+    /**
+     * Triggers actions outside of the FilterPane from event actions performed by FilterPane components.
+     *
+     * @param features actions tiggered by the FilterPane
+     */
     public void bindFeatures(IFeature features) {
 
     }
 
+    /*----------------------------------------------------------------------------------------------------------------*/
+    // Delete before finalizing
     public static void main(String[] args) {
 
         /* Keeping this here so you can see how I was viewing the filter pane while building. */
@@ -676,5 +815,66 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+    }
+    /*----------------------------------------------------------------------------------------------------------------*/
+}
+
+/* enums -------------------------------------------------------------------------------------------------------------*/
+/** Encapsulates the name of a FilterPane filter in an enum. */
+enum Filters {
+
+    /** Filters Enums. */
+    TITLE("titleFilter"), CONTENT_TYPE("contentTypeFilter"),
+    GENRE("genreFilter"), MPA_RATING("mparatingFilter"),
+    RELEASED_FROM("releasedFromFilter"), RELEASED_TO("releasedToFilter"),
+    IMDB_RATING_FROM("imdbRatingFromFilter"), IMDB_RATING_TO("imdbRatingToFilter"),
+    BOX_OFFICE_EARNINGS_FROM("boxOfficeEarningsFromFilter"),
+    BOX_OFFICE_EARNINGS_TO("boxOfficeEarningsToFilter"),
+    DIRECTOR("directorFilter"), ACTOR("actorFilter"),
+    WRITER("writerFilter"), LANGUAGE("languageFilter"),
+    COUNTRY_OF_ORIGIN("countryOfOriginFilter");
+
+    /** String representing the name of a FilterPane filter. */
+    private final String filterName;
+
+    /** Public constructor */
+    Filters(String filterName) {
+        this.filterName = filterName;
+    }
+
+    /**
+     * Returns the String, representing a filter name, associated with a Filters enum.
+     *
+     * @return String, representing a filter name, associated with a Filters enum
+     */
+    public String getFilterName() {
+        return filterName;
+    }
+}
+
+/** Encapsulates the text in a JLabel, representing a FilterPane filter title, in an enum. */
+enum FilterLabels {
+
+    /** FilterLabels Enums. */
+    TITLE("Title:"), CONTENT_TYPE("Content Type:"), GENRE("Genre(s):"), MPA_RATING("MPA Rating:"),
+    RELEASED("Released:"), IMDB_RATING("IMDB Rating:"), BOX_OFFICE_EARNINGS("Box Office Earnings: ($ millions)"),
+    DIRECTOR("Director(s):"), ACTOR("Actor(s):"), WRITER("Writer(s):"), LANGUAGE("Language(s):"),
+    COUNTRY_OF_ORIGIN("Country Of Origin:"), FROM("From:"), TO("To:");
+
+    /** String representing the text in a JLabel above a FilterPane filter. */
+    private final String filterLabel;
+
+    /** Public constructor */
+    FilterLabels(String filterLabel) {
+        this.filterLabel = filterLabel;
+    }
+
+    /**
+     * Returns the String, representing a filter title, associated with a FilterLabels enum.
+     *
+     * @return String, representing a filter title, associated with a FilterLabels enum
+     */
+    public String getFilterLabel() {
+        return filterLabel;
     }
 }
