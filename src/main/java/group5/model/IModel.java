@@ -1,5 +1,6 @@
 package group5.model;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import group5.model.beans.MBeans;
@@ -54,7 +55,7 @@ public interface IModel {
      * @param filter The filter to apply to the source list.
      * @return stream of MBeans representing the filtered source list.
      */
-    Stream<MBeans> getRecords(String filter);
+    Stream<MBeans> getRecords(List<List<String>> filters);
 
     /**
      * Get the watch list by id, filter it and return as a stream.
@@ -63,7 +64,7 @@ public interface IModel {
      * @param filters The filters to apply to the watch list.
      * @return stream of MBeans representing the filtered watch list.
      */
-    Stream<MBeans> getRecords(int userListId, String filters);
+    Stream<MBeans> getRecords(int userListId, List<List<String>> filters);
 
     /**
      * Save the watch list to a file.
