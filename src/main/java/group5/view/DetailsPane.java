@@ -326,12 +326,12 @@ public class DetailsPane extends JPanel {
         this.mediaTitle.setText(media.getTitle());
         // TEMP FIX to handle the change in return type from getPoster()
         try {
-            this.mediaImage.setIcon(this.scaleImage(new URL(media.getPoster())));
+            this.mediaImage.setIcon(this.scaleImage(media.getPoster()));
         } catch (Exception e) {
             this.mediaImage.setIcon(new ImageIcon(getClass().getClassLoader().getResource("no-image.jpg")));
             e.printStackTrace();
         }
-        this.mediaDetails.get(0).setText(DATE_FORMAT.format(media.getReleased()));
+        this.mediaDetails.get(0).setText(media.formattedDate());
         this.mediaDetails.get(1).setText(media.getType());
         this.mediaDetails.get(2).setText(media.getRated());
         this.mediaDetails.get(3).setText(String.join("\n", media.getGenre()));
