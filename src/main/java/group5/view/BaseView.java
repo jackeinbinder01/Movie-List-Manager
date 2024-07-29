@@ -59,6 +59,7 @@ public class BaseView extends JFrame implements IView {
         filterPane.setVisible(true);
         listPane.setVisible(true);
         detailsPane.setVisible(true);
+        this.pack();
         setVisible(true);
     }
 
