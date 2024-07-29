@@ -112,12 +112,12 @@ public class BaseView extends JFrame implements IView {
      *
      * @param records the records to set
      * @param userListNames list of user-defined list names
-     * @param recordUserListInfo 2D array containing which record is in which user-defined list
+     * @param recordUserListMatrix 2D array containing which record is in which user-defined list
      */
     @Override
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListInfo) {
+    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
         System.out.println("[BaseView] setMainTableRecords");
-        listPane.setSourceTableRecordsV2(records, userListNames, recordUserListInfo);
+        listPane.setSourceTableRecordsV2(records, userListNames, recordUserListMatrix);
     }
 
     @Override

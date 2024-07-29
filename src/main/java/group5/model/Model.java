@@ -103,13 +103,11 @@ public class Model implements IModel {
 
     @Override
     public Stream<MBeans> getRecords(List<List<String>> filters) {
-        // return getRecords(); // TEMP FIX TO BYPASS THE FILTERS
         return filterHandler.filter(filters, this.getRecords());
     }
 
     @Override
     public Stream<MBeans> getRecords(int userListId, List<List<String>> filters) {
-        // return getRecords(userListId); // TEMP FIX TO BYPASS THE FILTERS
         return filterHandler.filter(filters, this.getRecords(userListId));
     }
 
