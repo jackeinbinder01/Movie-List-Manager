@@ -68,7 +68,7 @@ public class Controller implements IController, IFeature {
         // load user watchlists into model and view
         for (int i = 0; i < model.getUserListCount(); i++) {
             view.createUserTable(model.getUserListName(i));
-            view.setUserTableRecords(i,model.getWatchLists(i));
+            view.setUserTableRecords(model.getWatchLists(i), i);
         }
 
 
@@ -178,7 +178,9 @@ public class Controller implements IController, IFeature {
     public void addToWatchList(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
-        view.setUserTableRecords(userListIndex, model.getWatchLists(userListIndex));
+        view.setSourceTableRecordsV2(model.getSourceLists(), tmpGetUserListNames(), tmpGet2DUserListForRecord());
+        view.setUserTableRecords(model.getWatchLists(userListIndex), userListIndex);
+
         //throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addMovieToList'");
     }
 
@@ -210,8 +212,8 @@ public class Controller implements IController, IFeature {
     }
 
     public void handleTabChange(int tabIndex) {
-        System.out.println("[Controller] Handling event: tab changed to " + tabIndex);
-        // view.getFilterPane().setMovies(getRecordsForCurrentTab());
+        System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter pane range");
+        view.getFilterPane().setMovies(getRecordsForCurrentTab());
     }
 
 
