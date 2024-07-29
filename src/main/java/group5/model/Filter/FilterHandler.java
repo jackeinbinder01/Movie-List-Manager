@@ -50,13 +50,13 @@ public class FilterHandler implements IFilterHandler {
         if (beans == null) {
             throw new IllegalArgumentException("makeAndApplySingleFilter - beans is null");
         }
-        if (filter == null || filter.size() < 4) {
+        if (filter == null || filter.size() < 3) {
             throw new IllegalArgumentException("makeAndApplySingleFilter - filter is null or incomplete");
         }
 
-        Operations op = Operations.getOperatorFromStr(filter.get(2));
-        String valueOfFilter = filter.get(1);
-        MovieData filterOn = MovieData.fromColumnName(filter.get(3));
+        MovieData filterOn = MovieData.fromString(filter.get(0));
+        Operations op = Operations.getOperatorFromStr(filter.get(1));
+        String valueOfFilter = filter.get(2);
 
         return beans.stream().filter(bean -> FilterOperation.getFilter(bean, filterOn, op, valueOfFilter));
     }
