@@ -22,14 +22,14 @@ public interface IView {
 //    public void setSourceTableRecords(Stream<MBeans> mbeans);
 
 
-    public void setSourceTableRecordsV2(Stream<MBeans> mbeans, String[] userListNames, boolean[][] userListMetadata);
+    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] userListMetadata);
 
 
     public void setUserTableRecords(Stream<MBeans> records, int userListId);
 
 
 
-    public void createUserTable(String userListName);
+    public void addUserTable(String userListName);
 
     public void bindFeatures(IFeature features);
 

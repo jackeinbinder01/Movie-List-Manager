@@ -45,6 +45,7 @@ public interface IFeature {
     public void addToWatchList(MBeans mbean, int userListIndex);
 
 
+    public void createNewWatchList(String name);
 
 
 

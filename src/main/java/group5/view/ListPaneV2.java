@@ -49,6 +49,7 @@ public class ListPaneV2 extends JPanel {
     BiConsumer<MBeans, Integer> removeFromListHandler;
     BiConsumer<MBeans, Integer> addToListHandler;
     BiConsumer<MBeans, Boolean> changeWatchedStatusHandler;
+    Consumer<String> createNewListHandler;
     // BiConsumer<MBeans, Double> changeRatingHandler;
 
 
@@ -189,6 +190,7 @@ public class ListPaneV2 extends JPanel {
         addToListHandler = features::addToWatchList;
         changeWatchedStatusHandler = features::changeWatchedStatus;
         tabbedPane.addChangeListener(e -> features.handleTabChange(tabbedPane.getSelectedIndex()));
+        createNewListHandler = features::createNewWatchList;
     }
 
 
@@ -381,7 +383,7 @@ public class ListPaneV2 extends JPanel {
 
         protected JButton button;
         private String label;
-        // private MBeans record;
+        private MBeans record;
         private boolean isPushed;
         private TableMode tableMode;
         private JPopupMenu editMenu;
@@ -427,8 +429,7 @@ public class ListPaneV2 extends JPanel {
                 public void mouseReleased(MouseEvent e) {
                     switch (tableMode) {
                         case MAIN:
-
-                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Adding/removing record \"" + record.getTitle(), "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
+                            System.out.println("[ButtonEditor] Adding/removing record \"" + record.getTitle() + "\"" + " to/from watchlist");
                             JPopupMenu editMenu = new JPopupMenu("Edit");
 
                             String[] userListNames = movieTableModelRecord.getUserListNames();
@@ -440,26 +441,37 @@ public class ListPaneV2 extends JPanel {
                                 if (userListIndices[i]) {
                                     item = new JMenuItem(userListNames[i], tickIcon);
                                     item.addActionListener(event -> {
-                                        System.out.println("List \"" + userListNames[idx] + "\" clicked");
-                                        removeFromListHandler.accept(movieTableModelRecord.getRecord(), idx);
+                                        removeFromListHandler.accept(record, idx);
                                     });
                                 } else {
                                     item = new JMenuItem(userListNames[i], null);
                                     item.addActionListener(event -> {
-                                        System.out.println("List \"" + userListNames[idx] + "\" clicked");
-                                        addToListHandler.accept(movieTableModelRecord.getRecord(), idx);
+                                        addToListHandler.accept(record, idx);
                                     });
                                 }
                                 editMenu.add(item);
                             }
-
-
                             JMenuItem createNewListItem = new JMenuItem("Add To New List");
                             createNewListItem.addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
                                     System.out.println("Create new list clicked");
                                     createNewListItem.setSelected(false);
+                                    // create a pop up dialog to get the name of the new list
+                                    String newListName = JOptionPane.showInputDialog(null, "Enter the name of the new list", "New List", JOptionPane.QUESTION_MESSAGE);
+                                    if (newListName != null) {
+                                        System.out.println("New list name: " + newListName);
+                                        if (newListName.length() > 0) {
+                                            for (String list : userListNames) {
+                                                if (list.equals(newListName)) {
+                                                    JOptionPane.showMessageDialog(null, "List name already exists. Please choose another name.", "Error", JOptionPane.ERROR_MESSAGE);
+                                                    return;
+                                                }
+                                            }
+                                            createNewListHandler.accept(newListName);
+                                            addToListHandler.accept(record, userListNames.length);
+                                        }
+                                    }
                                 }
 
                             });
@@ -469,7 +481,6 @@ public class ListPaneV2 extends JPanel {
                             break;
                         case USER_DEFINED:
                             int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
-                            // JOptionPane.showMessageDialog(null, "[ButtonEditor] Remove record \"" + record.getTitle() + "\" from UserList " + currUserTableIndex, "Message Dialog", JOptionPane.INFORMATION_MESSAGE);
                             removeFromListHandler.accept(movieTableModelRecord.getRecord(), currUserTableIndex);
                             break;
                         default:
@@ -492,6 +503,7 @@ public class ListPaneV2 extends JPanel {
                                                      boolean isSelected, int row, int column) {
             if (value instanceof MovieTableModelRecord) {
                 movieTableModelRecord = (MovieTableModelRecord) value;
+                record = movieTableModelRecord.getRecord();
             } else {
                 movieTableModelRecord = null;
                 System.out.println("[ButtonEditor] getTableCellEditorComponent: value is not MovieTableModelRecord");
@@ -571,9 +583,6 @@ public class ListPaneV2 extends JPanel {
         }
 
         public MBeans getRecord() {
-            return record;
-        }
-        public MBeans getMBeans() {
             return record;
         }
         public boolean[] getUserListIndices() {

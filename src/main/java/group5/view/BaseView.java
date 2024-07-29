@@ -81,7 +81,7 @@ public class BaseView extends JFrame implements IView {
         listPane.setUserTableRecords(records, userListIndex);
     }
 
-    public void createUserTable(String userListName) {
+    public void addUserTable(String userListName) {
         System.out.println("[BaseView] createUserTable");
         listPane.createUserTableTab(userListName);
     }
