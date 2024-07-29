@@ -7,7 +7,6 @@ import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
@@ -49,6 +48,7 @@ import java.time.format.DateTimeFormatter; // For Date formatting
 
 import javax.swing.UIManager; // Testing
 
+import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
 
 /**
@@ -56,10 +56,6 @@ import group5.model.formatters.MBeansLoader;
  */
 public class DetailsPane extends JPanel {
 
-    /**
-     * Date Formatter
-     */
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
     /**
      * Default width.
      */
@@ -177,7 +173,8 @@ public class DetailsPane extends JPanel {
      */
     private void addTitlePane() {
         this.mediaTitle = new JTextPane();
-        this.mediaTitle.setFont(new Font("Arial", Font.BOLD, 30));
+        this.mediaTitle.setFont(new Font("SansSerif", Font.BOLD, 30));
+        System.out.println(this.mediaTitle.getFont().getFontName());
         this.mediaTitle.setBackground(DEFAULT_COLOR);
         this.mediaTitle.setEditable(false);
 
@@ -232,7 +229,7 @@ public class DetailsPane extends JPanel {
 
         // JPanel for detail title.
         JLabel label = new JLabel(name + ": ");
-        label.setFont(new Font("Dialog", Font.PLAIN, 12));
+        label.setFont(new Font("SansSerif", Font.PLAIN, 12));
         label.setPreferredSize(new Dimension(75, 10));
         label.setVerticalAlignment(JLabel.TOP);
         label.setBorder(BorderFactory.createEmptyBorder(2, 4, 0, 0));
@@ -240,7 +237,7 @@ public class DetailsPane extends JPanel {
         // JTextArea for actual media details.
         JTextArea text = new JTextArea();
         text.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 6));
-        text.setFont(new Font("Dialog", Font.PLAIN, 12));
+        text.setFont(new Font("SansSerif", Font.PLAIN, 12));
         text.setBackground(new Color(230, 230, 230));
         text.setLineWrap(true);
         text.setWrapStyleWord(true);
@@ -265,7 +262,7 @@ public class DetailsPane extends JPanel {
 
         // JPanel for detail title.
         JLabel label = new JLabel("My Rating: ");
-        label.setFont(new Font("Dialog", Font.PLAIN, 12));
+        label.setFont(new Font("SansSerif", Font.PLAIN, 12));
         label.setPreferredSize(new Dimension(75, 10));
         label.setVerticalAlignment(JLabel.TOP);
         label.setBorder(BorderFactory.createEmptyBorder(2, 4, 0, 0));
@@ -273,7 +270,7 @@ public class DetailsPane extends JPanel {
         // JTextField for actual media details.
         this.userRating = new JTextField();
         this.userRating.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 6));
-        this.userRating.setFont(new Font("Dialog", Font.PLAIN, 12));
+        this.userRating.setFont(new Font("SansSerif", Font.PLAIN, 12));
         this.userRating.setBackground(new Color(230, 230, 230));
         this.userRating.setEditable(true);
         this.userRating.setMinimumSize(new Dimension(150, 20));
@@ -307,8 +304,9 @@ public class DetailsPane extends JPanel {
      * @param imgUrl the URL of the image to scale.
      * @return the scaled image.
      */
-    private ImageIcon scaleImage(URL imgUrl) {
+    private ImageIcon scaleImage(String imgStr) {
         try {
+            URL imgUrl = new URL(imgStr);
             BufferedImage imageBig = ImageIO.read(imgUrl);
             Image image = imageBig.getScaledInstance(200, 250, Image.SCALE_SMOOTH);
             return new ImageIcon(image);
@@ -337,7 +335,14 @@ public class DetailsPane extends JPanel {
         this.mediaDetails.get(1).setText(media.getType());
         this.mediaDetails.get(2).setText(media.getRated());
         this.mediaDetails.get(3).setText(String.join("\n", media.getGenre()));
-        this.mediaDetails.get(4).setText(Integer.toString(media.getRuntime()) + " minutes");
+
+        int runtime = media.getRuntime();
+        if (runtime == -1) {
+            this.mediaDetails.get(4).setText("N/A");
+        } else {
+            this.mediaDetails.get(4).setText(Integer.toString(runtime) + " minutes");
+        }
+
         this.mediaDetails.get(5).setText(String.join("\n", media.getDirector()));
         this.mediaDetails.get(6).setText(String.join("\n", media.getActors()));
         this.mediaDetails.get(7).setText(String.join("\n", media.getWriter()));
@@ -345,8 +350,21 @@ public class DetailsPane extends JPanel {
         this.mediaDetails.get(9).setText(String.join("\n", media.getLanguage()));
         this.mediaDetails.get(10).setText(String.join("\n", media.getCountry()));
         this.mediaDetails.get(11).setText(media.getAwards());
-        this.mediaDetails.get(12).setText(Integer.toString(media.getMetascore()));
-        this.mediaDetails.get(13).setText(Double.toString(media.getImdbRating()));
+
+        int metascore = media.getMetascore();
+        if (metascore == -1) {
+            this.mediaDetails.get(12).setText("N/A");
+        } else {
+            this.mediaDetails.get(12).setText(Integer.toString(metascore));
+        }
+
+        double imdbRating = media.getImdbRating();
+        if (imdbRating == -1) {
+            this.mediaDetails.get(13).setText("N/A");
+        } else {
+            this.mediaDetails.get(13).setText(Double.toString(imdbRating));
+        }
+
         this.mediaDetails.get(14).setText(media.formatBoxOfficeCurrency());
         this.userRating.setText(Double.toString(media.getMyRating()));
         this.watchedBox.setSelected(media.getWatched());
@@ -413,6 +431,10 @@ public class DetailsPane extends JPanel {
         DetailsPane detailsPane = new DetailsPane();
         frame.add(detailsPane);
         MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "");
+        //MBeans media = MBeansLoader.loadMediasFromFile("data/test/empty.json", Formats.JSON).iterator().next();
+        System.out.println(media);
+        System.out.println(media.getPoster());
+        System.out.println(media.getReleased());
         detailsPane.setMedia(media);
         detailsPane.bindFeatures(null);
         frame.setVisible(true);
