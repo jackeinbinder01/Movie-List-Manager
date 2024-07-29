@@ -57,6 +57,9 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /** Box Office Earnings max of range. */
     private JTextField boxOfficeEarningsTo = new JTextField();
 
+    /** Set containing all dropdown Filters. */
+    private Set<JComboBox<String>> dropdownFilters = new HashSet<JComboBox<String>>();
+
     // Range filters min/max placeholders
     /** Min and max of year released data in movies. */
     private String[] releasedRange = new String[] {"", ""};
@@ -123,6 +126,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         writerFilter.addActionListener(this);
         applyFilterButton.addActionListener(this);
         clearFilterButton.addActionListener(this);
+
+
     }
 
     /* Getters -------------------------------------------------------------------------------------------------------*/
@@ -291,6 +296,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             // reset filter ranges and clear filter options
             setRangeFilterRanges();
             resetFilterOptions();
+            resetComboBoxOptions();
         } else {
             System.out.println("Movies stream is empty");
         }
@@ -557,6 +563,13 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         return String.format("%.0f", expandedDouble);
     }
 
+    public void resetComboBoxOptions() {
+        for (JComboBox filter : dropdownFilters) {
+            filter.removeAllItems();
+            configureComboBox(filter);
+        }
+    }
+
     /**
      * Sets the options inside a JComboBox (dropdown) filter based on unique MBean attributes.
      *
@@ -622,6 +635,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
         // deselect options in combobox
         comboBox.setSelectedIndex(-1);
+        // add combobox to set of dropdown filters
+        dropdownFilters.add(comboBox);
     }
 
     /**
