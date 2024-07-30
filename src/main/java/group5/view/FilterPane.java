@@ -28,8 +28,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     // Filters
     /** Title filter. */
     private JTextField titleFilter = new JTextField();
-    /** Content Type filter. */
-    private JComboBox<String> contentTypeFilter = new JComboBox();
     /** Genre filter. */
     private JComboBox<String> genreFilter = new JComboBox();
     /** MPA Rating filter. */
@@ -101,7 +99,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
         // add filters
         addFilter(FilterLabels.TITLE.getFilterLabel(), titleFilter);
-        addFilter(FilterLabels.CONTENT_TYPE.getFilterLabel(), contentTypeFilter);
         addFilter(FilterLabels.GENRE.getFilterLabel(), genreFilter);
         addFilter(FilterLabels.MPA_RATING.getFilterLabel(), mpaRatingFilter);
 
@@ -142,19 +139,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public String getFilteredTitle() {
         return titleFilter.getText();
-    }
-
-    /**
-     * Returns user entry in content type filter.
-     *
-     * @return content type selected by user
-     */
-    public String getFilteredContentType() {
-        try {
-            return contentTypeFilter.getSelectedItem().toString();
-        } catch (NullPointerException e) {
-            return "";
-        }
     }
 
     /**
@@ -311,7 +295,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     private void setComponentNames() {
         // set filter names
         titleFilter.setName(Filters.TITLE.getFilterName());
-        contentTypeFilter.setName(Filters.CONTENT_TYPE.getFilterName());
         genreFilter.setName(Filters.GENRE.getFilterName());
         mpaRatingFilter.setName(Filters.MPA_RATING.getFilterName());
 
@@ -581,7 +564,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     private void configureComboBox(JComboBox<String> comboBox) {
         // initialize empty tree sets
-        Set<String> uniqueContentType = new TreeSet<>();
         Set<String> uniqueGenres = new TreeSet<>();
         Set<String> uniqueMpaRatings = new TreeSet<>();
         Set<String> uniqueLanguages = new TreeSet<>();
@@ -589,16 +571,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         Filters filter = getFilterByEnum(comboBox.getName());
 
         switch (filter) {
-            case CONTENT_TYPE:
-                // add options to set
-                for (MBeans movie : movies) {
-                    uniqueContentType.add(movie.getType());
-                }
-                // add elements to combo box
-                for (String contentType : uniqueContentType) {
-                    comboBox.addItem(contentType);
-                }
-                break;
             case GENRE:
                 // add options to set
                 for (MBeans movie : movies) {
@@ -777,7 +749,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             System.out.println("Filters applied");
 
             System.out.println("Title: " + getFilteredTitle());
-            System.out.println("Content Type: " + getFilteredContentType());
             System.out.println("Genre: " + getFilteredGenre());
             System.out.println("Rating: " + getFilteredMpaRating());
             System.out.println("Released From: " + getFilteredReleasedMin());
@@ -825,7 +796,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /**
      * Triggers actions outside of the FilterPane from event actions performed by FilterPane components.
      *
-     * @param features actions tiggered by the FilterPane
+     * @param features action tiggered by the FilterPane
      */
     public void bindFeatures(IFeature features) {
         applyFilterButton.addActionListener(e -> features.applyFilters());
@@ -866,15 +837,13 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 enum Filters {
 
     /** Filters Enums. */
-    TITLE("titleFilter"), CONTENT_TYPE("contentTypeFilter"),
-    GENRE("genreFilter"), MPA_RATING("mparatingFilter"),
+    TITLE("titleFilter"), GENRE("genreFilter"), MPA_RATING("mparatingFilter"),
     RELEASED_FROM("releasedFromFilter"), RELEASED_TO("releasedToFilter"),
     IMDB_RATING_FROM("imdbRatingFromFilter"), IMDB_RATING_TO("imdbRatingToFilter"),
     BOX_OFFICE_EARNINGS_FROM("boxOfficeEarningsFromFilter"),
     BOX_OFFICE_EARNINGS_TO("boxOfficeEarningsToFilter"),
     DIRECTOR("directorFilter"), ACTOR("actorFilter"),
-    WRITER("writerFilter"), LANGUAGE("languageFilter"),
-    COUNTRY_OF_ORIGIN("countryOfOriginFilter");
+    WRITER("writerFilter"), LANGUAGE("languageFilter");
 
     /** String representing the name of a FilterPane filter. */
     private final String filterName;
@@ -898,10 +867,9 @@ enum Filters {
 enum FilterLabels {
 
     /** FilterLabels Enums. */
-    TITLE("Title:"), CONTENT_TYPE("Content Type:"), GENRE("Genre(s):"), MPA_RATING("MPA Rating:"),
+    TITLE("Title:"), GENRE("Genre:"), MPA_RATING("MPA Rating:"),
     RELEASED("Released:"), IMDB_RATING("IMDB Rating:"), BOX_OFFICE_EARNINGS("Box Office Earnings: ($ millions)"),
-    DIRECTOR("Director(s):"), ACTOR("Actor(s):"), WRITER("Writer(s):"), LANGUAGE("Language(s):"),
-    COUNTRY_OF_ORIGIN("Country Of Origin:"), FROM("From:"), TO("To:");
+    DIRECTOR("Director:"), ACTOR("Actor:"), WRITER("Writer:"), LANGUAGE("Language:"), FROM("From:"), TO("To:");
 
     /** String representing the text in a JLabel above a FilterPane filter. */
     private final String filterLabel;
