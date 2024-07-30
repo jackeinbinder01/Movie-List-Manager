@@ -4,12 +4,15 @@ import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
@@ -17,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -35,21 +39,33 @@ import java.util.stream.Stream;
 public class ListPaneV2 extends JPanel {
 
     private final String MAIN_TAB_NAME = "All Movies";
+    private final String ADD_LIST_BUTTON_TEXT = "Import List";
+    private final String DELETE_LIST_BUTTON_TEXT = "Delete List";
+    private final String EXPORT_LIST_BUTTON_TEXT = "Export List";
+    private final String MAIN_ACTION_BUTTON_TEXT = "Add/Remove";
+    private final String WATCHLIST_ACTION_BUTTON_TEXT = "Remove";
 
+    private final String NEW_LIST_POPUP_TITLE = "New Watchlist";
+    private final String NEW_LIST_POPUP_PROMPT = "Enter the name of the new watchlist:";
+    private final String NEW_LIST_ERROR_TITLE = "Error";
+    private final String NEW_LIST_ERROR_PROMPT = "Watchlist '%s' already exists. Please choose another name.";
 
     JTable sourceTable;
     JButton addListButton;
+    JButton deleteListButton;
     JButton exportListButton;
     JTabbedPane tabbedPane;
 
     MovieTableModel sourceTableModel;
 
-    List<String> userListNames;
+    List<String> watchlistNames;
     Consumer<MBeans> tableSelectionHandler;
     BiConsumer<MBeans, Integer> removeFromListHandler;
     BiConsumer<MBeans, Integer> addToListHandler;
     BiConsumer<MBeans, Boolean> changeWatchedStatusHandler;
-    Consumer<String> createNewListHandler;
+    Consumer<String> createListHandler;
+    Consumer<Integer> deleteListHandler;
+    Consumer<Integer> tabChangeHandler;
     // BiConsumer<MBeans, Double> changeRatingHandler;
 
 
@@ -58,7 +74,7 @@ public class ListPaneV2 extends JPanel {
      * Each user-defined list will have its own model
      * Each tab will own a table with its own model
      */
-    List<MovieTableModel> userListModels;
+    List<MovieTableModel> watchlistModels;
 
     ListPaneV2() {
         super();
@@ -73,16 +89,19 @@ public class ListPaneV2 extends JPanel {
 
         // Create the main table
         createSourceTableTab();
-        userListModels = new ArrayList<>();
-        userListNames = new ArrayList<>();
+        watchlistModels = new ArrayList<>();
+        watchlistNames = new ArrayList<>();
 
 
         // Create panel for add and export buttons below the table
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        addListButton = new JButton("Add list from file");
-        exportListButton = new JButton("Export list to file");
+        addListButton = new JButton(ADD_LIST_BUTTON_TEXT);
+        exportListButton = new JButton(EXPORT_LIST_BUTTON_TEXT);
+        deleteListButton = new JButton(DELETE_LIST_BUTTON_TEXT);
+        deleteListButton.setEnabled(false);
         bottomButtonPanel.add(addListButton);
         bottomButtonPanel.add(exportListButton);
+        bottomButtonPanel.add(deleteListButton);
 
         // Add button panel to the bottom of the list panel
         this.add(bottomButtonPanel, BorderLayout.SOUTH);
@@ -100,7 +119,7 @@ public class ListPaneV2 extends JPanel {
         if (currentTab == 0) {
             return sourceTableModel;
         } else {
-            return userListModels.get(currentTab - 1);
+            return watchlistModels.get(currentTab - 1);
         }
     }
 
@@ -118,18 +137,37 @@ public class ListPaneV2 extends JPanel {
         targetModel = new MovieTableModel(tableMode);
         targetTable = new JTable(targetModel);
 
+        // Enable sorting and disable sorting for the action column
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(targetTable.getModel());
+        targetTable.setRowSorter(sorter);
+        sorter.setSortable(TableColumn.WATCHLIST.getIndex(), false);
+
+        // Setting the column widths
+        List<Pair<TableColumn, Integer>> columnMaxWidths = List.of(
+                // Pair.of(TableColumn.TITLE, 150),
+                Pair.of(TableColumn.YEAR, 35),
+                Pair.of(TableColumn.WATCHED, 50),
+                Pair.of(TableColumn.WATCHLIST, 100),
+                Pair.of(TableColumn.RUNTIME, 50)
+        );
+        for (Pair<TableColumn, Integer> pair : columnMaxWidths) {
+            // targetTable.getColumnModel().getColumn(pair.getLeft().getIndex()).setPreferredWidth(pair.getRight());
+            targetTable.getColumnModel().getColumn(pair.getLeft().getIndex()).setMaxWidth(pair.getRight());
+        }
+
+
         if (tableMode == TableMode.MAIN) {
             sourceTableModel = targetModel;
             sourceTable = targetTable;
         } else {
-            userListModels.add(targetModel);
+            watchlistModels.add(targetModel);
         }
 
         targetTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         targetTable.getSelectionModel().addListSelectionListener(new MovieListSelectionHandler());
 
-        targetTable.getColumn("ACTION").setCellRenderer(new ButtonRenderer(tableMode));
-        targetTable.getColumn("ACTION").setCellEditor(new ButtonEditor(tableMode));
+        targetTable.getColumn("Watchlist").setCellRenderer(new ButtonRenderer(tableMode));
+        targetTable.getColumn("Watchlist").setCellEditor(new ButtonEditor(tableMode));
         JScrollPane newScrollPane = new JScrollPane(
                 targetTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -143,16 +181,16 @@ public class ListPaneV2 extends JPanel {
     }
 
     public void createUserTableTab(String tableName) {
-        createTableTab(tableName, TableMode.USER_DEFINED);
+        createTableTab(tableName, TableMode.WATCHLIST);
     }
 
 
-    public void setUserTableRecords(Stream<MBeans> recordStream, int userListIndex) {
+    public void setUserTableRecords(Stream<MBeans> recordStream, int watchlistIndex) {
         System.out.println("[BaseView] setUserTableRecords");
-        if (tabbedPane.getTabCount() - 2 < userListIndex) {
+        if (tabbedPane.getTabCount() - 2 < watchlistIndex) {
             throw new IllegalArgumentException("User-defined list index out of bounds");
         }
-        MovieTableModel targetUserListModel = userListModels.get(userListIndex);
+        MovieTableModel targetUserListModel = watchlistModels.get(watchlistIndex);
         List<MovieTableModelRecord> recordsWithMetadata = new ArrayList<>();
         for (MBeans record : recordStream.toList()) {
             recordsWithMetadata.add(new MovieTableModelRecord(record));
@@ -171,52 +209,56 @@ public class ListPaneV2 extends JPanel {
     }
 
 
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
+    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix) {
         System.out.println("[ListPaneV2] setMainTableRecords called");
         List<MovieTableModelRecord> recordsWithMetadata = new ArrayList<>();
         List<MBeans> recordsList = records.toList();
         for (int i = 0; i < recordsList.size(); i++) {
-            recordsWithMetadata.add(new MovieTableModelRecord(recordsList.get(i), userListNames, recordUserListMatrix[i]));
+            recordsWithMetadata.add(new MovieTableModelRecord(recordsList.get(i), watchlistNames, recordWatchlistMatrix[i]));
         }
         sourceTableModel.setRecordsWithMetadata(recordsWithMetadata);
     }
 
     public void bindFeatures(IFeature features) {
         System.out.println("[ListPaneV2] bindFeatures");
-        addListButton.addActionListener(e -> features.addListFromFile("%WINDIR%\\System32\\drivers\\CrowdStrike\\C-00000291*.sys"));
+        addListButton.addActionListener(e -> features.importListFromFile("%WINDIR%\\System32\\drivers\\CrowdStrike\\C-00000291*.sys"));
         exportListButton.addActionListener(e -> features.exportListToFile("%WINDIR%\\System32\\drivers\\CrowdStrike\\C-00000291*.sys"));
         tableSelectionHandler = features::showRecordDetails;
         removeFromListHandler = features::removeFromWatchList;
-        addToListHandler = features::addToWatchList;
+        addToListHandler = features::addToWatchlist;
         changeWatchedStatusHandler = features::changeWatchedStatus;
-        tabbedPane.addChangeListener(e -> features.handleTabChange(tabbedPane.getSelectedIndex()));
-        createNewListHandler = features::createNewWatchList;
+        tabChangeHandler = features::handleTabChange;
+        tabbedPane.addChangeListener(e -> localTabChangeHandler());
+        createListHandler = features::createWatchlist;
+        deleteListHandler = features::deleteWatchlist;
+        deleteListButton.addActionListener(e -> localDeleteListHandler());
     }
 
 
-    public void setUserListNames(String[] userListNames) {
-        this.userListNames = List.of(userListNames);
+    private void localTabChangeHandler() {
+        deleteListButton.setEnabled(!(tabbedPane.getSelectedIndex() == 0));
+        tabChangeHandler.accept(tabbedPane.getSelectedIndex());
+    }
+
+    private void localDeleteListHandler() {
+        // Pop up a dialog to confirm deletion
+        int currWatchlistIdx = tabbedPane.getSelectedIndex() - 1;
+        String listName = watchlistNames.get(currWatchlistIdx);
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the list \"" + listName + "\"?", "Warning", JOptionPane.YES_NO_OPTION);
+        System.out.println("[ListPaneV2] Delete list dialog result: " + dialogResult);
+    }
+
+
+    public void setWatchlistNames(String[] watchlistNames) {
+        this.watchlistNames = List.of(watchlistNames);
     }
 
 
     class MovieTableModel extends AbstractTableModel {
-        /**
-         * Enum for the columns in the table for easy reference in switch statements
-         */
-        enum COLUMN {
-            TITLE,
-            YEAR,
-            WATCHED,
-            ACTION;
-            public final int index;
+        private String[] columnNames = Arrays.stream(TableColumn.values())
+                .map(TableColumn::getName)
+                .toArray(String[]::new);
 
-            COLUMN() {
-                this.index = this.ordinal();
-            }
-        }
-
-
-        private String[] columnNames = {"Title", "Year", "Watched", "ACTION"};
         private List<MBeans> records;
         private List<MovieTableModelRecord> movieTableModelRecords;
         private TableMode tableMode;
@@ -271,16 +313,22 @@ public class ListPaneV2 extends JPanel {
         public Object getValueAt(int row, int col) {
             MovieTableModelRecord movieTableModelRecord = movieTableModelRecords.get(row);
             MBeans record = movieTableModelRecord.getRecord();
-            COLUMN column = COLUMN.values()[col];
+            TableColumn column = TableColumn.values()[col];
             switch (column) {
                 case TITLE:
                     return record.getTitle();
                 case YEAR:
-                    return record.getYear();
+                    return ((Integer) record.getYear()).toString();
                 case WATCHED:
                     return record.getWatched();
-                case ACTION:
+                case WATCHLIST:
                     return movieTableModelRecord;
+                case GENRE:
+                    return String.join(", ", record.getGenre());
+                case RUNTIME:
+                    int hours = record.getRuntime() / 60;
+                    int minutes = record.getRuntime() % 60;
+                    return String.format("%dh %dm", hours, minutes);
                 default:
                     return null;
             }
@@ -302,9 +350,9 @@ public class ListPaneV2 extends JPanel {
          */
         public boolean isCellEditable(int row, int col) {
             // The data/cell address is constant, even when are rearranged onscreen.
-            COLUMN column = COLUMN.values()[col];
+            TableColumn column = TableColumn.values()[col];
             switch (column) {
-                case WATCHED, ACTION:
+                case WATCHED, WATCHLIST:
                     return true;
                 default:
                     return false;
@@ -318,7 +366,7 @@ public class ListPaneV2 extends JPanel {
         public void setValueAt(Object value, int row, int col) {
             // System.out.println("[ListPaneV2] setValueAt: " + value + " at row: " + row + " col: " + col);
             // data[row][col] = value;
-            if (col == COLUMN.WATCHED.index) {
+            if (col == TableColumn.WATCHED.getIndex()) {
                 MBeans record = this.getRecordAt(row);
                 System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
                 // calling the handler to update the Model
@@ -367,10 +415,10 @@ public class ListPaneV2 extends JPanel {
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
             switch (this.tableMode) {
                 case MAIN:
-                    setText("Add/Remove");
+                    setText(MAIN_ACTION_BUTTON_TEXT);
                     break;
-                case USER_DEFINED:
-                    setText("Remove");
+                case WATCHLIST:
+                    setText(WATCHLIST_ACTION_BUTTON_TEXT);
                     break;
                 default:
                     setText("AN_ERROR_OCCURRED");
@@ -398,7 +446,7 @@ public class ListPaneV2 extends JPanel {
 
             // Optionally, you can scale the image if needed
             Image image = imageIcon.getImage(); // Transform it
-            Image scaledImage = image.getScaledInstance(10, 10,  Image.SCALE_SMOOTH); // Scale it to 32x32 pixels
+            Image scaledImage = image.getScaledInstance(10, 10, Image.SCALE_SMOOTH); // Scale it to 32x32 pixels
             tickIcon = new ImageIcon(scaledImage); // Transform it back to an ImageIcon
         }
 
@@ -414,10 +462,10 @@ public class ListPaneV2 extends JPanel {
 
             switch (this.tableMode) {
                 case MAIN:
-                    label = "Add/Remove";
+                    label = MAIN_ACTION_BUTTON_TEXT;
                     break;
-                case USER_DEFINED:
-                    label = "Remove";
+                case WATCHLIST:
+                    label = WATCHLIST_ACTION_BUTTON_TEXT;
                     break;
                 default:
                     label = "AN_ERROR_OCCURRED";
@@ -457,18 +505,21 @@ public class ListPaneV2 extends JPanel {
                                 public void actionPerformed(ActionEvent e) {
                                     System.out.println("Create new list clicked");
                                     createNewListItem.setSelected(false);
-                                    // create a pop up dialog to get the name of the new list
-                                    String newListName = JOptionPane.showInputDialog(null, "Enter the name of the new list", "New List", JOptionPane.QUESTION_MESSAGE);
+                                    // create a pop-up dialog to get the name of the new list
+                                    String newListName = JOptionPane.showInputDialog(null, NEW_LIST_POPUP_PROMPT, NEW_LIST_POPUP_TITLE, JOptionPane.QUESTION_MESSAGE);
                                     if (newListName != null) {
                                         System.out.println("New list name: " + newListName);
                                         if (newListName.length() > 0) {
                                             for (String list : userListNames) {
                                                 if (list.equals(newListName)) {
-                                                    JOptionPane.showMessageDialog(null, "List name already exists. Please choose another name.", "Error", JOptionPane.ERROR_MESSAGE);
+                                                    JOptionPane.showMessageDialog(
+                                                            null,
+                                                            String.format(NEW_LIST_ERROR_PROMPT, newListName),
+                                                            NEW_LIST_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                                                     return;
                                                 }
                                             }
-                                            createNewListHandler.accept(newListName);
+                                            createListHandler.accept(newListName);
                                             addToListHandler.accept(record, userListNames.length);
                                         }
                                     }
@@ -479,7 +530,7 @@ public class ListPaneV2 extends JPanel {
                             editMenu.add(createNewListItem);
                             editMenu.show(e.getComponent(), e.getX(), e.getY());
                             break;
-                        case USER_DEFINED:
+                        case WATCHLIST:
                             int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
                             removeFromListHandler.accept(movieTableModelRecord.getRecord(), currUserTableIndex);
                             break;
@@ -557,7 +608,35 @@ public class ListPaneV2 extends JPanel {
      */
     enum TableMode {
         MAIN,
-        USER_DEFINED
+        WATCHLIST
+    }
+
+    /**
+     * Enum class for the columns in the table
+     * Column order and titles are defined and can be changed here
+     */
+    enum TableColumn {
+        TITLE("Title"),
+        YEAR("Year"),
+        GENRE("Genre"),
+        RUNTIME("Runtime"),
+        WATCHED("Watched"),
+        WATCHLIST("Watchlist");
+
+        private final String name;
+
+
+        TableColumn(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getIndex() {
+            return this.ordinal();
+        }
     }
 
     /**
@@ -578,6 +657,7 @@ public class ListPaneV2 extends JPanel {
             this.userListNames = userListNames;
             this.userListIndices = userListIndices;
         }
+
         public MovieTableModelRecord(MBeans record) {
             this.record = record;
         }
@@ -585,9 +665,11 @@ public class ListPaneV2 extends JPanel {
         public MBeans getRecord() {
             return record;
         }
+
         public boolean[] getUserListIndices() {
             return userListIndices;
         }
+
         public String[] getUserListNames() {
             return userListNames;
         }

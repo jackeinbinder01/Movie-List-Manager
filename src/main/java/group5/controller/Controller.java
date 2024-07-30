@@ -69,7 +69,12 @@ public class Controller implements IController, IFeature {
 
 
     @Override
-    public void createNewWatchList(String name) {
+    public void deleteWatchlist(int userListIndex) {
+        System.out.println("[Controller] deleteWatchlist called to delete user list index " + userListIndex);
+    }
+
+    @Override
+    public void createWatchlist(String name) {
         String existingLists[] = this.getUserListNames();
         if (Arrays.stream(existingLists).anyMatch(list -> list.equals(name))) {
             System.out.println("[Controller] Error creating new watchlist: \"" + name + "\" already exists");
@@ -91,7 +96,7 @@ public class Controller implements IController, IFeature {
     }
 
     @Override
-    public void addListFromFile(String filepath) {
+    public void importListFromFile(String filepath) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addListFromFile'");
     }
@@ -163,7 +168,7 @@ public class Controller implements IController, IFeature {
         }
     }
 
-    public void addToWatchList(MBeans record, int userListIndex) {
+    public void addToWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
         view.setSourceTableRecordsV2(model.getRecords(getFilterOptions()), getUserListNames(), getRecordUserListMatrix());
