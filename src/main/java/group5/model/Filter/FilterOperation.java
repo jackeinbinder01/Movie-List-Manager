@@ -16,11 +16,15 @@ public class FilterOperation {
             case MPA:
                 return filterDouble(movie.getMetascore(), op, val);
             case GENRE:
-                return filterGenre(movie.getGenre(), op, val);
+                return filterList(movie.getGenre(), op, val);
             case RUNTIME:
                 return filterInt(movie.getRuntime(), op, val);
             case DIRECTOR:
-                return filterString(movie.getDirector().get(0), op, val);
+                return filterList(movie.getDirector(), op, val);
+            case ACTOR:
+                return filterList(movie.getActors(), op, val);
+            case LANGUAGE:
+                return filterList(movie.getLanguage(), op, val);
             case IMDB:
                 return filterDouble(movie.getImdbRating(), op, val);
             case USER:
@@ -32,7 +36,7 @@ public class FilterOperation {
         }
     }
 
-    private static boolean filterGenre(List<String> genre, Operations op, String val) {
+    private static boolean filterList(List<String> genre, Operations op, String val) {
         boolean returnBool = false;
         for (int index = 0; index < genre.size(); index++) {
             switch (op) {
@@ -41,9 +45,11 @@ public class FilterOperation {
                         returnBool = true;
                     }
                 case EQUALS:
-                    if (genre.get(index).contains(val)) {
+                    if (genre.get(index).equalsIgnoreCase(val)) {
                         returnBool = true;
                     }
+                default:
+                    return false;
             }
         }
         return returnBool;

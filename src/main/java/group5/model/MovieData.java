@@ -11,6 +11,8 @@ public enum MovieData {
     NUMBER("listnumber"),
     GENRE("type"),
     DIRECTOR("whodirectedit"),
+    ACTOR("actorsList"),
+    LANGUAGE("languageList"),
     /**
      * Enums that are based on double values in the csv file.
      */

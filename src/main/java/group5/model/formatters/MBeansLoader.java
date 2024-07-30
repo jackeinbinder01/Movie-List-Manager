@@ -15,22 +15,19 @@ import group5.model.beans.MBeans;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
-import group5.model.net.GetMoviesFromAPI;
+import group5.model.net.apiFunctionality.MovieAPIHandler;
 
 public class MBeansLoader {
 
     private MBeansLoader() {
     }
 
-    public static MBeans loadMBeansFromAPI(String title, String year, String type) {
+    public static List<MBeans> loadMBeansFromAPI(String title, String year, String type) {
         try {
 
-            InputStream inStream = GetMoviesFromAPI.getMovie(title, year, type);
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            MBeans media = mapper.readValue(inStream, MBeans.class);
-            return media;
+            return MovieAPIHandler.getMoreSourceBeans(title, year);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -89,6 +86,7 @@ public class MBeansLoader {
         Set<MBeans> bean = loadMediasFromFile("./data/test/empty.json", Formats.JSON);
         System.out.println(bean);
         MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("empty.json"), Formats.JSON);
+        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("empty.csv"), Formats.CSV);
         //System.out.println(loadMBeansFromAPI("level+2","2008",""));
         //Set<MBeans> records = loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
         //MBeans empty = loadMediasFromFile("data/test/empty.json", Formats.JSON).iterator().next();

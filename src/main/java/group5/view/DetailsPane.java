@@ -1,54 +1,39 @@
 package group5.view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.BoxLayout;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.SwingUtilities;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.imageio.ImageIO;
-
-import java.net.URL;
-
-import javax.swing.text.StyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import java.util.List;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import group5.controller.IFeature;
 import group5.model.beans.MBeans;
-
-import java.time.format.DateTimeFormatter; // For Date formatting
-
-
-import javax.swing.UIManager; // Testing
-
 import group5.model.formatters.MBeansLoader;
 
 /**
@@ -56,10 +41,6 @@ import group5.model.formatters.MBeansLoader;
  */
 public class DetailsPane extends JPanel {
 
-    /**
-     * Date Formatter
-     */
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
     /**
      * Default width.
      */
@@ -177,7 +158,8 @@ public class DetailsPane extends JPanel {
      */
     private void addTitlePane() {
         this.mediaTitle = new JTextPane();
-        this.mediaTitle.setFont(new Font("Arial", Font.BOLD, 30));
+        this.mediaTitle.setFont(new Font("SansSerif", Font.BOLD, 30));
+        System.out.println(this.mediaTitle.getFont().getFontName());
         this.mediaTitle.setBackground(DEFAULT_COLOR);
         this.mediaTitle.setEditable(false);
 
@@ -232,7 +214,7 @@ public class DetailsPane extends JPanel {
 
         // JPanel for detail title.
         JLabel label = new JLabel(name + ": ");
-        label.setFont(new Font("Dialog", Font.PLAIN, 12));
+        label.setFont(new Font("SansSerif", Font.PLAIN, 12));
         label.setPreferredSize(new Dimension(75, 10));
         label.setVerticalAlignment(JLabel.TOP);
         label.setBorder(BorderFactory.createEmptyBorder(2, 4, 0, 0));
@@ -240,7 +222,7 @@ public class DetailsPane extends JPanel {
         // JTextArea for actual media details.
         JTextArea text = new JTextArea();
         text.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 6));
-        text.setFont(new Font("Dialog", Font.PLAIN, 12));
+        text.setFont(new Font("SansSerif", Font.PLAIN, 12));
         text.setBackground(new Color(230, 230, 230));
         text.setLineWrap(true);
         text.setWrapStyleWord(true);
@@ -265,7 +247,7 @@ public class DetailsPane extends JPanel {
 
         // JPanel for detail title.
         JLabel label = new JLabel("My Rating: ");
-        label.setFont(new Font("Dialog", Font.PLAIN, 12));
+        label.setFont(new Font("SansSerif", Font.PLAIN, 12));
         label.setPreferredSize(new Dimension(75, 10));
         label.setVerticalAlignment(JLabel.TOP);
         label.setBorder(BorderFactory.createEmptyBorder(2, 4, 0, 0));
@@ -273,7 +255,7 @@ public class DetailsPane extends JPanel {
         // JTextField for actual media details.
         this.userRating = new JTextField();
         this.userRating.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 6));
-        this.userRating.setFont(new Font("Dialog", Font.PLAIN, 12));
+        this.userRating.setFont(new Font("SansSerif", Font.PLAIN, 12));
         this.userRating.setBackground(new Color(230, 230, 230));
         this.userRating.setEditable(true);
         this.userRating.setMinimumSize(new Dimension(150, 20));
@@ -307,8 +289,9 @@ public class DetailsPane extends JPanel {
      * @param imgUrl the URL of the image to scale.
      * @return the scaled image.
      */
-    private ImageIcon scaleImage(URL imgUrl) {
+    private ImageIcon scaleImage(String imgStr) {
         try {
+            URL imgUrl = new URL(imgStr);
             BufferedImage imageBig = ImageIO.read(imgUrl);
             Image image = imageBig.getScaledInstance(200, 250, Image.SCALE_SMOOTH);
             return new ImageIcon(image);
@@ -328,16 +311,23 @@ public class DetailsPane extends JPanel {
         this.mediaTitle.setText(media.getTitle());
         // TEMP FIX to handle the change in return type from getPoster()
         try {
-            this.mediaImage.setIcon(this.scaleImage(new URL(media.getPoster())));
+            this.mediaImage.setIcon(this.scaleImage(media.getPoster()));
         } catch (Exception e) {
             this.mediaImage.setIcon(new ImageIcon(getClass().getClassLoader().getResource("no-image.jpg")));
             e.printStackTrace();
         }
-        this.mediaDetails.get(0).setText(DATE_FORMAT.format(media.getReleased()));
+        this.mediaDetails.get(0).setText(media.formattedDate());
         this.mediaDetails.get(1).setText(media.getType());
         this.mediaDetails.get(2).setText(media.getRated());
         this.mediaDetails.get(3).setText(String.join("\n", media.getGenre()));
-        this.mediaDetails.get(4).setText(Integer.toString(media.getRuntime()) + " minutes");
+
+        int runtime = media.getRuntime();
+        if (runtime == -1) {
+            this.mediaDetails.get(4).setText("N/A");
+        } else {
+            this.mediaDetails.get(4).setText(Integer.toString(runtime) + " minutes");
+        }
+
         this.mediaDetails.get(5).setText(String.join("\n", media.getDirector()));
         this.mediaDetails.get(6).setText(String.join("\n", media.getActors()));
         this.mediaDetails.get(7).setText(String.join("\n", media.getWriter()));
@@ -345,8 +335,21 @@ public class DetailsPane extends JPanel {
         this.mediaDetails.get(9).setText(String.join("\n", media.getLanguage()));
         this.mediaDetails.get(10).setText(String.join("\n", media.getCountry()));
         this.mediaDetails.get(11).setText(media.getAwards());
-        this.mediaDetails.get(12).setText(Integer.toString(media.getMetascore()));
-        this.mediaDetails.get(13).setText(Double.toString(media.getImdbRating()));
+
+        int metascore = media.getMetascore();
+        if (metascore == -1) {
+            this.mediaDetails.get(12).setText("N/A");
+        } else {
+            this.mediaDetails.get(12).setText(Integer.toString(metascore));
+        }
+
+        double imdbRating = media.getImdbRating();
+        if (imdbRating == -1) {
+            this.mediaDetails.get(13).setText("N/A");
+        } else {
+            this.mediaDetails.get(13).setText(Double.toString(imdbRating));
+        }
+
         this.mediaDetails.get(14).setText(media.formatBoxOfficeCurrency());
         this.userRating.setText(Double.toString(media.getMyRating()));
         this.watchedBox.setSelected(media.getWatched());
@@ -412,7 +415,11 @@ public class DetailsPane extends JPanel {
         frame.setSize(300, 600);
         DetailsPane detailsPane = new DetailsPane();
         frame.add(detailsPane);
-        MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "");
+        MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "").get(0);
+        //MBeans media = MBeansLoader.loadMediasFromFile("data/test/empty.json", Formats.JSON).iterator().next();
+        System.out.println(media);
+        System.out.println(media.getPoster());
+        System.out.println(media.getReleased());
         detailsPane.setMedia(media);
         detailsPane.bindFeatures(null);
         frame.setVisible(true);

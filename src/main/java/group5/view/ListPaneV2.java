@@ -171,12 +171,12 @@ public class ListPaneV2 extends JPanel {
     }
 
 
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] userListMetadata) {
+    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
         System.out.println("[ListPaneV2] setMainTableRecords called");
         List<MovieTableModelRecord> recordsWithMetadata = new ArrayList<>();
         List<MBeans> recordsList = records.toList();
         for (int i = 0; i < recordsList.size(); i++) {
-            recordsWithMetadata.add(new MovieTableModelRecord(recordsList.get(i), userListNames, userListMetadata[i]));
+            recordsWithMetadata.add(new MovieTableModelRecord(recordsList.get(i), userListNames, recordUserListMatrix[i]));
         }
         sourceTableModel.setRecordsWithMetadata(recordsWithMetadata);
     }

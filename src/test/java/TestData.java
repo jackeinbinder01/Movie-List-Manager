@@ -1,30 +1,14 @@
+import group5.model.beans.MBeans;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+public class TestData {
 
-import group5.model.Filter.FilterHandler;
-import group5.model.beans.MBeans;
-
-public class TestFilter {
-
-    private List<MBeans> movies;
-    private FilterHandler filterHandler;
-    private Stream<MBeans> moviestream;
-
-    @BeforeEach
-    public void setUp() {
-        movies = new ArrayList<>();
-
+    static Stream<MBeans> getTestDataSet1() {
+        List<MBeans> movies = new ArrayList<>();
         movies.add(new MBeans("Inception", 2010, "Movie", "PG-13",
                 LocalDate.of(2010, 7, 16), 148,
                 List.of("Action", "Sci-Fi"),
@@ -94,49 +78,7 @@ public class TestFilter {
                 "https://example.com/poster5.jpg",
                 45, 5.3, -1,
                 "tt0826763", true, -1.0));
-        moviestream = movies.stream();
-        filterHandler = new FilterHandler();
-    }
 
-    @Test
-    public void testFilterByTitle() {
-        List<MBeans> result = filterHandler.filter(List.of(List.of("title", "==", "Inception")), moviestream).collect(Collectors.toList());
-        assertEquals(1, result.size());
-        assertEquals("Inception", result.get(0).getTitle());
-    }
-
-    @Test
-    public void testFilterByYear() {
-        List<MBeans> result = filterHandler.filter(List.of(List.of("released", "==", "2014")), moviestream).collect(Collectors.toList());
-        assertEquals(1, result.size());
-        assertEquals(2014, result.get(0).getYear());
-    }
-
-    @Test
-    public void testFilterByGenre() {
-        List<MBeans> result = filterHandler.filter(List.of(List.of("genre", "==", "Action")), moviestream).collect(Collectors.toList());
-        assertEquals(2, result.size());
-        assertTrue(result.stream().allMatch(movie -> movie.getGenre().contains("Action")));
-    }
-
-    @Test
-    public void testFilterByDirector() {
-        List<MBeans> result = filterHandler.filter(List.of(List.of("director", "==", "Christopher Nolan")), moviestream).collect(Collectors.toList());
-        assertEquals(2, result.size());
-        assertTrue(result.stream().allMatch(movie -> movie.getDirector().contains("Christopher Nolan")));
-    }
-
-    @Test
-    public void testFilterByWatchedStatus() {
-        List<MBeans> result = filterHandler.filter(List.of(List.of("haswatched", "==", "true")), moviestream).collect(Collectors.toList());
-        assertEquals(1, result.size());
-        assertTrue(result.stream().allMatch(MBeans::getWatched));
-    }
-
-    @Test
-    public void testFilterByMultipleCriteria() {
-        List<MBeans> result = filterHandler.filter(List.of(List.of("genre", "==", "Action"), List.of("released", ">", "2009")), moviestream).collect(Collectors.toList());
-        assertEquals(1, result.size());
-        assertEquals("Inception", result.get(0).getTitle());
+        return movies.stream();
     }
 }

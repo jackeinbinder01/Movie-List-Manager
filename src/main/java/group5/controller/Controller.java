@@ -251,8 +251,8 @@ public class Controller implements IController, IFeature {
         // FIXME: in MovieData.java, MPA, IMDB, and USER share the same columnTitle "ratingtype"
         // FIXME: rendering it unable to retrieve the correct MovieData type for filtering
         // triples.add(Triple.of(filterPane.getFilteredMpaRating(), Operations.EQUALS, MovieData.MPA));
-        // triples.add(Triple.of(filterPane.getFilteredImdbRatingMin(), Operations.GREATEROREQUAL, MovieData.IMDB));
-        // triples.add(Triple.of(filterPane.getFilteredImdbRatingMax(), Operations.LESSOREQUAL, MovieData.IMDB));
+        triples.add(Triple.of(filterPane.getFilteredImdbRatingMin(), Operations.GREATEROREQUAL, MovieData.IMDB));
+        triples.add(Triple.of(filterPane.getFilteredImdbRatingMax(), Operations.LESSOREQUAL, MovieData.IMDB));
 
         // For FilterPane:
         // RUNTIME filter is not implemented in the view
@@ -269,10 +269,9 @@ public class Controller implements IController, IFeature {
             if (!triple.getLeft().isEmpty()) {
                 // System.out.println("[Controller] Triple: " + triple);
                 List<String> filter = new ArrayList<>();
-                filter.add(null); // not sure what this is for
-                filter.add(triple.getLeft());
+                filter.add(triple.getRight().name());
                 filter.add(triple.getMiddle().getOperator());
-                filter.add(triple.getRight().getColumnTitle());
+                filter.add(triple.getLeft());
                 System.out.println("[Controller] Adding filter: " + filter);
                 filters.add(filter);
             }

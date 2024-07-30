@@ -22,7 +22,7 @@ public interface IView {
 //    public void setSourceTableRecords(Stream<MBeans> mbeans);
 
 
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] userListMetadata);
+    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix);
 
 
     public void setUserTableRecords(Stream<MBeans> records, int userListId);
