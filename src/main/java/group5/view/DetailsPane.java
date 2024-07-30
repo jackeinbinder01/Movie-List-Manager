@@ -1,54 +1,39 @@
 package group5.view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.BoxLayout;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.SwingUtilities;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.imageio.ImageIO;
-
-import java.net.URL;
-
-import javax.swing.text.StyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import java.util.List;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import group5.controller.IFeature;
 import group5.model.beans.MBeans;
-
-import java.time.format.DateTimeFormatter; // For Date formatting
-
-
-import javax.swing.UIManager; // Testing
-
-import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
 
 /**
@@ -430,7 +415,7 @@ public class DetailsPane extends JPanel {
         frame.setSize(300, 600);
         DetailsPane detailsPane = new DetailsPane();
         frame.add(detailsPane);
-        MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "");
+        MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "").get(0);
         //MBeans media = MBeansLoader.loadMediasFromFile("data/test/empty.json", Formats.JSON).iterator().next();
         System.out.println(media);
         System.out.println(media.getPoster());

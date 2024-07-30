@@ -12,20 +12,22 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import group5.model.beans.MBeans;
-import group5.model.net.apiFunctionality.GetMovieFromAPI;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
+
+import group5.model.net.apiFunctionality.MovieAPIHandler;
 
 public class MBeansLoader {
 
     private MBeansLoader() {
     }
 
-    public static MBeans loadMBeansFromAPI(String title, String year, String type) {
+    public static List<MBeans> loadMBeansFromAPI(String title, String year, String type) {
         try {
 
-            return GetMovieFromAPI.getMovie(title, year, type);
+            return MovieAPIHandler.getMoreSourceBeans(title, year);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
