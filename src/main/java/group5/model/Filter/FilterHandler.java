@@ -1,6 +1,5 @@
 package group5.model.Filter;
 
-import java.rmi.server.Operation;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -47,9 +46,6 @@ public class FilterHandler implements IFilterHandler {
      * @return a sorted stream
      */
     public static Stream<MBeans> makeAndApplySingleFilter(List<MBeans> beans, List<String> filter) {
-        if (beans == null) {
-            throw new IllegalArgumentException("makeAndApplySingleFilter - beans is null");
-        }
         if (filter == null || filter.size() < 3) {
             throw new IllegalArgumentException("makeAndApplySingleFilter - filter is null or incomplete");
         }

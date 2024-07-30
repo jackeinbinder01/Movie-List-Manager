@@ -1,14 +1,13 @@
 package group5.model;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-
-import java.io.FileOutputStream;
 
 import group5.model.Filter.FilterHandler;
 import group5.model.Filter.IFilterHandler;
@@ -16,6 +15,7 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
+import group5.model.net.apiFunctionality.MovieAPIHandler;
 
 public class Model implements IModel {
 
@@ -103,12 +103,66 @@ public class Model implements IModel {
 
     @Override
     public Stream<MBeans> getRecords(List<List<String>> filters) {
+        // TODO the method to implement new movies is made but not integrated
         return filterHandler.filter(filters, this.getRecords());
     }
 
     @Override
     public Stream<MBeans> getRecords(int userListId, List<List<String>> filters) {
         return filterHandler.filter(filters, this.getRecords(userListId));
+    }
+
+    /**
+     * adds new movies to the list.
+     *
+     * @param filters
+     * @return the list of movies with more added.
+     */
+    public Stream<MBeans> addNewMBeans(List<List<String>> filters) {
+        Stream<MBeans> movieStream = this.getRecords();
+        String value1 = null;
+        String value2 = null;
+        String title = null;
+        Set<MBeans> beansToAdd = null;
+
+        // Iterate through filters to find title and year values
+        for (List<String> afilter : filters) {
+            if (afilter.get(0).equalsIgnoreCase("title")) {
+                title = afilter.get(2);
+            } else if (afilter.get(0).equalsIgnoreCase("year")) {
+                if (value1 == null) {
+                    value1 = afilter.get(2);
+                } else {
+                    value2 = afilter.get(2);
+                }
+            }
+        }
+
+        // Ensure that value2 is not null
+        if (value2 == null) {
+            value2 = value1;
+        }
+
+        // Fetch new MBeans if title is present
+        if (title != null) {
+            if (value1 != null && value2 != null) {
+                if (value1.equals(value2)) {
+                    beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, value1));
+                } else {
+                    String yearRange = value1 + "-" + value2;
+                    beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, yearRange));
+                }
+            }
+        }
+
+        // Add the new MBeans to the existing movie set
+        if (beansToAdd != null) {
+            Set<MBeans> movieSet = movieStream.collect(Collectors.toSet());
+            movieSet.addAll(beansToAdd);
+            return movieSet.stream();
+        }
+
+        return movieStream;
     }
 
     @Override
@@ -118,7 +172,7 @@ public class Model implements IModel {
         Formats format = Formats.containsValues(formatStr.toUpperCase());
         try {
             MBeansFormatter.writeMediasToFile(this.getRecords(userListId).collect(Collectors.toList()),
-            new FileOutputStream(filename), format);
+                    new FileOutputStream(filename), format);
         } catch (Exception e) {
             System.out.println("Error writing to file");
         }
@@ -157,7 +211,7 @@ public class Model implements IModel {
     public void updateSourceList() {
         try {
             MBeansFormatter.writeMediasToFile(this.getRecords().collect(Collectors.toList()),
-                                              new FileOutputStream(DEFAULT_DATA), Formats.JSON);
+                    new FileOutputStream(DEFAULT_DATA), Formats.JSON);
         } catch (Exception e) {
             System.out.println("Error writing to file");
         }
@@ -181,11 +235,11 @@ public class Model implements IModel {
         return indices;
     }
 
-	@Override
-	public void setUserListIndicesForRecord(MBeans record, int[] userListIndices) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
-	}
+    @Override
+    public void setUserListIndicesForRecord(MBeans record, int[] userListIndices) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setUserListIndicesForRecird'");
+    }
 
     /**
      * Get the object reference of the MBeans that matched given media inside
