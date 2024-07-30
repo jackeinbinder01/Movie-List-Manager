@@ -285,7 +285,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             setRangeFilterRanges();
             resetFilterOptions();
         } else {
-            System.out.println("Movies stream is empty");
+            clearFilterOptions();
         }
     }
 
@@ -615,6 +615,17 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         dropdownFilters.add(comboBox);
     }
 
+    public void clearFilterOptions() {
+        for (JComboBox filter : dropdownFilters) {
+            filter.removeAllItems();
+        }
+        for (JTextField filter : textFilters) {
+            filter.setText("");
+        }
+        for (JTextField filter : rangeFilters) {
+            filter.setText("");
+        }
+    }
     /**
      * Resets all JComboBox options in the FilterPane based on the FilterPane's movies list.
      */
