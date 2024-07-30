@@ -204,6 +204,7 @@ public class DetailsPane extends JPanel {
         this.watchedBox.setFocusPainted(false);  // Remove border around text.
         this.detailsPanel.add(this.watchedBox);
         this.addVerticalPadding(5);
+        this.watchedBox.setEnabled(false); // Not editable until records is shown
     }
 
     /**
@@ -264,6 +265,7 @@ public class DetailsPane extends JPanel {
         this.userRating.setBackground(new Color(230, 230, 230));
         this.userRating.setEditable(true);
         this.userRating.setMinimumSize(new Dimension(150, 20));
+        this.userRating.setEnabled(false); // Not editable until records is shown
 
         panel.add(label, BorderLayout.WEST);
         panel.add(this.userRating, BorderLayout.CENTER);
@@ -372,16 +374,22 @@ public class DetailsPane extends JPanel {
             this.reSize();
             this.scrollPane.getVerticalScrollBar().setValue(0); // Move to top
         });
+
+        // Enable watched box and user rating box
+        this.userRating.setEnabled(true);
+        this.watchedBox.setEnabled(true);
     }
 
     /**
      * Add listeners to the watched check box and save rating button.
      */
     public void bindFeatures(IFeature features) {
-        // TODO: Add listeners method for watchedBox and saveRating.
-        this.watchedBox.addActionListener(e -> features.changeWatchedStatus(this.currentMedia, this.watchedBox.isSelected()));
-        // User Rating Listener
-        /* ========== PICK ONE ========== */
+        this.watchedBox.addActionListener(e -> {
+            if (this.currentMedia != null) {
+                features.changeWatchedStatus(this.currentMedia, this.watchedBox.isSelected());
+            }
+        });
+
         // 1. Acion Listener - do something when `enter` pressed
         this.userRating.addActionListener(e -> {
             try {
@@ -392,25 +400,6 @@ public class DetailsPane extends JPanel {
                 System.out.println("Invalid rating format. Please enter a number.");
             }
         });
-
-
-        // 2. Document Listener - Real time update
-        /*userRating.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                System.out.println("Text inserted. Current text: " + userRating.getText());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                System.out.println("Text removed. Current text: " + userRating.getText());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // This method is generally not called for plain text fields.
-            }
-        });*/
     }
 
     /**
