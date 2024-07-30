@@ -92,6 +92,11 @@ public class DetailsPane extends JPanel {
     private JTextField userRating;
 
     /**
+     * Holds the current media object being displayed.
+     */
+    private MBeans currentMedia = null;
+
+    /**
      * Constructor to create a DetailsPane object.
      *
      * Setup all the components contained inside this panel.
@@ -302,12 +307,22 @@ public class DetailsPane extends JPanel {
     }
 
     /**
+     * Get the current media being displayed.
+     *
+     * @return the current media being displayed.
+     */
+    public MBeans getCurrentMedia() {
+        return this.currentMedia;
+    }
+
+    /**
      * Set the media details to display.
      *
      * @param media the media to display.
      * @param userDetails whether the details are on source or watchlist tab.
      */
     public void setMedia(MBeans media) {
+        this.currentMedia = media;
         this.mediaTitle.setText(media.getTitle());
         // TEMP FIX to handle the change in return type from getPoster()
         try {
@@ -364,21 +379,20 @@ public class DetailsPane extends JPanel {
      */
     public void bindFeatures(IFeature features) {
         // TODO: Add listeners method for watchedBox and saveRating.
-        /*this.watchedBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Watched: " + watchedBox.isSelected());
-            }
-        });*/
+        this.watchedBox.addActionListener(e -> features.changeWatchedStatus(this.currentMedia, this.watchedBox.isSelected()));
         // User Rating Listener
         /* ========== PICK ONE ========== */
         // 1. Acion Listener - do something when `enter` pressed
-        /*this.userRating.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("User Rating: " + userRating.getText());
+        this.userRating.addActionListener(e -> {
+            try {
+                double rating = Double.parseDouble(this.userRating.getText());
+                features.changeRating(this.currentMedia, rating);
+                this.userRating.setText(Double.toString(rating));
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid rating format. Please enter a number.");
             }
-        });*/
+        });
+
 
         // 2. Document Listener - Real time update
         /*userRating.getDocument().addDocumentListener(new DocumentListener() {

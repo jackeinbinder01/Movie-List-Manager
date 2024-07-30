@@ -125,6 +125,10 @@ public class BaseView extends JFrame implements IView {
         return filterPane;
     }
 
+    @Override
+    public DetailsPane getDetailsPane() {
+        return detailsPane;
+    }
 
 
 }

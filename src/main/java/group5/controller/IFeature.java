@@ -16,7 +16,7 @@ public interface IFeature {
      *
      * @param filepath the path to the file containing the list of MBeans to be added.
      */
-    public void addListFromFile(String filepath);
+    public void importListFromFile(String filepath);
 
     /**
      * Exports the current list of MBeans to a specified file.
@@ -42,12 +42,13 @@ public interface IFeature {
      * @param mbean         the MBean to be added to the watch list.
      * @param userListIndex the index in the user's watch list where the MBean should be added.
      */
-    public void addToWatchList(MBeans mbean, int userListIndex);
+    public void addToWatchlist(MBeans mbean, int userListIndex);
 
 
-    public void createNewWatchList(String name);
+    public void createWatchlist(String name);
 
 
+    public void deleteWatchlist(int userListIndex);
 
     /**
      * Changes the rating of a specific MBean.
@@ -60,10 +61,11 @@ public interface IFeature {
     /**
      * Changes the watched status of a specific MBean.
      *
-     * @param mbean   the MBean whose watched status is to be changed.
+     * @param record   the MBean whose watched status is to be changed.
      * @param watched the new watched status to be assigned to the MBean.
+*
      */
-    public void changeWatchedStatus(MBeans mbean, boolean watched);
+    public void changeWatchedStatus(MBeans record, boolean watched);
 
     /**
      * Applies filters to the list of MBeans.
@@ -77,4 +79,7 @@ public interface IFeature {
     public void clearFilters();
 
     public void handleTabChange(int tabIndex);
+
+
+
 }
