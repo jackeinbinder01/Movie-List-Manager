@@ -56,6 +56,7 @@ public class Controller implements IController, IFeature {
         // setup source table records
         view.setSourceTableRecordsV2(model.getRecords(), getUserListNames(), getRecordUserListMatrix());
 
+        // no filters applied on initialization
         view.getFilterPane().setMovies(model.getRecords());
 
         // load user-defined list into model and view
@@ -122,6 +123,7 @@ public class Controller implements IController, IFeature {
     @Override
     public void clearFilters() {
         view.getFilterPane().resetFilterOptions();
+        view.getFilterPane().clearFilterOptions();
         int currTabIdx = view.getCurrentTab();
         List<MBeans> recordList;
         if (currTabIdx == 0) {
@@ -132,7 +134,6 @@ public class Controller implements IController, IFeature {
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
         }
         view.getFilterPane().setMovies(recordList.stream());
-        // TODO: set the tables in the view to unfiltered
     }
 
 
@@ -154,13 +155,11 @@ public class Controller implements IController, IFeature {
     public void removeFromWatchList(MBeans record, int userListIndex) {
         System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
         model.removeFromWatchList(record, userListIndex);
-        view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
-        view.setSourceTableRecordsV2(model.getRecords(), getUserListNames(), getRecordUserListMatrix());
+        view.setUserTableRecords(model.getRecords(userListIndex, getFilterOptions()), userListIndex);
+        view.setSourceTableRecordsV2(model.getRecords(getFilterOptions()), getUserListNames(), getRecordUserListMatrix());
         // Update the filter pane if the current tab is the affected user list
         if (view.getCurrentTab() -1 == userListIndex) {
             view.getFilterPane().setMovies(model.getRecords(userListIndex, getFilterOptions()));
-            // Updating the filter range without resetting the fields
-            // view.getFilterPane().setMovies(model.getRecords(userListIndex, getFilters()), false);
         }
     }
 
@@ -186,19 +185,21 @@ public class Controller implements IController, IFeature {
 
     public void handleTabChange(int tabIndex) {
         System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter pane range");
-
-        List<MBeans> recordList;
-
-        view.getFilterPane().resetFilterOptions();
-        int currentTab = view.getCurrentTab();
-        if (currentTab == 0) {
-            recordList = model.getRecords().toList();
-            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrix());
-        } else {
-            recordList = model.getRecords(currentTab - 1).toList(); // decrement by 1 to get the user-defined list index
-            view.setUserTableRecords(recordList.stream(), currentTab - 1);
-        }
-        view.getFilterPane().setMovies(recordList.stream());
+        clearFilters();
+//        List<MBeans> recordList;
+//
+//        view.getFilterPane().resetFilterOptions();
+//        view.getFilterPane().clearFilterOptions();
+//        int currentTab = view.getCurrentTab();
+//        if (currentTab == 0) {
+//            recordList = model.getRecords().toList();
+//            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrix());
+//        } else {
+//            recordList = model.getRecords(currentTab - 1).toList(); // decrement by 1 to get the user-defined list index
+//            view.setUserTableRecords(recordList.stream(), currentTab - 1);
+//        }
+//        // no filters applied on tab change because the filter pane is reset
+//        view.getFilterPane().setMovies(recordList.stream());
     }
 
 
