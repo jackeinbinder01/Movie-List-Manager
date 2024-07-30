@@ -61,10 +61,11 @@ public interface IFeature {
     /**
      * Changes the watched status of a specific MBean.
      *
-     * @param mbean   the MBean whose watched status is to be changed.
+     * @param record   the MBean whose watched status is to be changed.
      * @param watched the new watched status to be assigned to the MBean.
+*
      */
-    public void changeWatchedStatus(MBeans mbean, boolean watched);
+    public void changeWatchedStatus(MBeans record, boolean watched);
 
     /**
      * Applies filters to the list of MBeans.

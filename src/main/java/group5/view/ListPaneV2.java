@@ -4,6 +4,7 @@ import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
+import org.apache.commons.lang3.function.TriConsumer;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.swing.*;

@@ -176,14 +176,50 @@ public class Controller implements IController, IFeature {
         // Since adding to a list is done from the source tab only, there is no need to update the filter pane
     }
 
+
+
+    /**
+     * A convenient method to get the records for the current view.
+     * Specify whether to apply filters currently set.
+     * @param filtered whether to apply filters
+     * @return a stream of MBeans
+     */
+    private Stream<MBeans> getRecordsForCurrentView(boolean filtered) {
+        int currentTab = view.getCurrentTab();
+        if (currentTab == 0) {
+            if (filtered) {
+                return model.getRecords(getFilterOptions());
+            } else {
+                return model.getRecords();
+            }
+        } else {
+            if (filtered) {
+                return model.getRecords(currentTab - 1, getFilterOptions());
+            } else {
+                return model.getRecords(currentTab - 1);
+            }
+        }
+    }
+
     public void changeRating(MBeans record, double rating) {
         model.updateUserRating(record, rating);
         // TODO: Check if Views are correctly updated
     }
 
-    public void changeWatchedStatus(MBeans mbean, boolean watched) {
-        model.updateWatched(mbean, watched);
-        // TODO: Check if Views are correctly updated
+    public void changeWatchedStatus(MBeans record, boolean watched) {
+        model.updateWatched(record, watched);
+        // Update the table if the record is in the current table
+        if (getRecordsForCurrentView(true).anyMatch(r -> r == record)) {
+            if (view.getCurrentTab() == 0) {
+                view.setSourceTableRecordsV2(getRecordsForCurrentView(true), getUserListNames(), getRecordUserListMatrix());
+            } else {
+                view.setUserTableRecords(getRecordsForCurrentView(true), view.getCurrentTab() - 1);
+            }
+        }
+        // Update the details pane if the record is currently displayed
+        if (view.getDetailsPane().getCurrentMedia() == record) {
+            view.setDetailsPaneEntry(record);
+        }
     }
 
 

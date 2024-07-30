@@ -32,6 +32,8 @@ public interface IView {
 
     public FilterPane getFilterPane();
 
+    public DetailsPane getDetailsPane();
+
     public void display();
 
     public int getCurrentTab();
