@@ -817,34 +817,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         applyFilterButton.addActionListener(e -> features.applyFilters());
         clearFilterButton.addActionListener(e -> features.clearFilters());
     }
-
-    /*----------------------------------------------------------------------------------------------------------------*/
-    // Delete before finalizing
-    public static void main(String[] args) {
-
-        /* Keeping this here so you can see how I was viewing the filter pane while building. */
-
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.setMinimumSize(new Dimension(340, 120));
-
-        FilterPane filterPane = new FilterPane();
-
-        JScrollPane scrollPane = new JScrollPane(filterPane);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-        filterPane.setMovies(Stream.empty());
-
-        frame.getContentPane().add(scrollPane);
-
-        frame.setSize(800, 800);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-    }
-    /*----------------------------------------------------------------------------------------------------------------*/
 }
 
 /* enums -------------------------------------------------------------------------------------------------------------*/
