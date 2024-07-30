@@ -279,8 +279,9 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public void setMovies(Stream<MBeans> movies) {
         List<MBeans> moviesList = movies.toList();
+        this.movies = moviesList;
+
         if(!moviesList.isEmpty()) {
-            this.movies = moviesList;
             // reset filter ranges and clear filter options
             setRangeFilterRanges();
             resetFilterOptions();
@@ -426,6 +427,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // add min as placeholder
         setPlaceholder(filterFrom, rangeMin);
         // add focus listener and add filter to panel
+        filterFrom.setColumns(6);
         filterFrom.addFocusListener(this);
         filterPanel.add(filterFrom, gbc);
         // add filter to set of range filters
@@ -443,6 +445,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         setPlaceholder(filterTo, rangeMax);
         // add focus listener and add filter to panel
         filterTo.addFocusListener(this);
+        filterTo.setColumns(6);
         filterPanel.add(filterTo, gbc);
         // add filter to set of range filters
         rangeFilters.add(filterTo);
@@ -775,8 +778,9 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
         } else if (e.getSource() == clearFilterButton) {
             System.out.println("Filters cleared");
-
-            resetFilterOptions();
+            if (!movies.isEmpty()) {
+                resetFilterOptions();
+            }
         }
     }
 
