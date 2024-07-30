@@ -12,11 +12,10 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import group5.model.beans.MBeans;
+import group5.model.net.apiFunctionality.GetMovieFromAPI;
 
 import java.util.Set;
 import java.util.HashSet;
-
-import group5.model.net.GetMoviesFromAPI;
 
 public class MBeansLoader {
 
@@ -26,11 +25,7 @@ public class MBeansLoader {
     public static MBeans loadMBeansFromAPI(String title, String year, String type) {
         try {
 
-            InputStream inStream = GetMoviesFromAPI.getMovie(title, year, type);
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            MBeans media = mapper.readValue(inStream, MBeans.class);
-            return media;
+            return GetMovieFromAPI.getMovie(title, year, type);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

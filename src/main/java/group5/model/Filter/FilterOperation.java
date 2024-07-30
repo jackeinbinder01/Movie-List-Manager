@@ -48,6 +48,8 @@ public class FilterOperation {
                     if (genre.get(index).equalsIgnoreCase(val)) {
                         returnBool = true;
                     }
+                default:
+                    return false;
             }
         }
         return returnBool;
