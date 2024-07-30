@@ -271,20 +271,28 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /* FilterPane Setup Methods --------------------------------------------------------------------------------------*/
+
+    public void setMovies(Stream<MBeans> movies) {
+        setMovies(movies, false);
+    }
+
     /**
      * Sets the movies list of this FilterPane instance based on the MBeans in an input Stream.
      * Resets filter ranges and options based on MBeans in the new movies list.
      *
      * @param movies a Stream of movies to replace the current movies list
      */
-    public void setMovies(Stream<MBeans> movies) {
+    public void setMovies(Stream<MBeans> movies, boolean clearFilters) {
         List<MBeans> moviesList = movies.toList();
         this.movies = moviesList;
 
         if(!moviesList.isEmpty()) {
             // reset filter ranges and clear filter options
             setRangeFilterRanges();
-            resetFilterOptions();
+            resetComboBoxOptions();
+            for (JTextField rangeFilter : rangeFilters) {
+                resetPlaceholder(rangeFilter);
+            }
         } else {
             clearFilterOptions();
         }
@@ -634,9 +642,10 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public void resetComboBoxOptions() {
         for (JComboBox filter : dropdownFilters) {
+            Object selectedItem = filter.getSelectedItem();
             filter.removeAllItems();
             configureComboBox(filter);
-            filter.setSelectedIndex(-1);
+            filter.setSelectedItem(selectedItem);
         }
     }
 
