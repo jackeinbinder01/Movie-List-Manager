@@ -279,13 +279,14 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public void setMovies(Stream<MBeans> movies) {
         List<MBeans> moviesList = movies.toList();
-        this.movies = moviesList;
+        if (!moviesList.isEmpty()) {
+            this.movies = moviesList;
 
-        // reset filter ranges and clear filter options
-        setRangeFilterRanges();
-        resetComboBoxOptions();
-        refreshPlaceholders();
-
+            // reset filter ranges and clear filter options
+            setRangeFilterRanges();
+            resetComboBoxOptions();
+            refreshPlaceholders();
+        }
     }
 
     /**
