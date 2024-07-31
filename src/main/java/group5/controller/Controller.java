@@ -179,12 +179,18 @@ public class Controller implements IController, IFeature {
 
         model.removeFromWatchList(record, userListIndex);
         view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
-
-
         view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
+
         // Update the filter pane if the current tab is the affected user list
         if (view.getCurrentTab() - 1 == userListIndex) {
             view.getFilterPane().setMovies(model.getRecords(userListIndex));
+            if (model.getRecords(userListIndex).count() == 0) {
+                model.clearFilter();
+                view.getFilterPane().resetFilterOptions();
+                view.getFilterPane().clearFilterOptions();
+                view.getFilterPane().setMovies(model.getRecords(userListIndex));
+                view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
+            }
         }
     }
 
