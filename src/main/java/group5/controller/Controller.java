@@ -54,7 +54,7 @@ public class Controller implements IController, IFeature {
         view.bindFeatures(this);
 
         // setup source table records
-        view.setSourceTableRecordsV2(model.getRecords(), getUserListNames(), getRecordUserListMatrix());
+        view.setSourceTableRecordsV2(model.getRecords(), getUserListNames(), getRecordUserListMatrixV2(model.getRecords()));
 
         // no filters applied on initialization
         view.getFilterPane().setMovies(model.getRecords());
@@ -115,7 +115,7 @@ public class Controller implements IController, IFeature {
         List<MBeans> recordList;
         if (currTabIdx == 0) {
             recordList = model.getRecords(filters).collect(Collectors.toList());
-            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrix());
+            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrixV2(recordList.stream()));
         } else {
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
@@ -133,7 +133,7 @@ public class Controller implements IController, IFeature {
         List<MBeans> recordList;
         if (currTabIdx == 0) {
             recordList = model.getRecords().collect(Collectors.toList());
-            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrix());
+            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrixV2(recordList.stream()));
         } else {
             recordList = model.getRecords(currTabIdx - 1).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
@@ -161,7 +161,7 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
         model.removeFromWatchList(record, userListIndex);
         view.setUserTableRecords(model.getRecords(userListIndex, getFilterOptions()), userListIndex);
-        view.setSourceTableRecordsV2(model.getRecords(getFilterOptions()), getUserListNames(), getRecordUserListMatrix());
+        view.setSourceTableRecordsV2(model.getRecords(getFilterOptions()), getUserListNames(), getRecordUserListMatrixV2(model.getRecords(getFilterOptions())));
         // Update the filter pane if the current tab is the affected user list
         if (view.getCurrentTab() -1 == userListIndex) {
             view.getFilterPane().setMovies(model.getRecords(userListIndex, getFilterOptions()));
@@ -171,7 +171,7 @@ public class Controller implements IController, IFeature {
     public void addToWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
-        view.setSourceTableRecordsV2(model.getRecords(getFilterOptions()), getUserListNames(), getRecordUserListMatrix());
+        view.setSourceTableRecordsV2(model.getRecords(getFilterOptions()), getUserListNames(), getRecordUserListMatrixV2(model.getRecords(getFilterOptions())));
         view.setUserTableRecords(model.getRecords(userListIndex, getFilterOptions()), userListIndex);
         // Since adding to a list is done from the source tab only, there is no need to update the filter pane
     }
@@ -211,7 +211,7 @@ public class Controller implements IController, IFeature {
         // Update the table if the record is in the current table
         if (getRecordsForCurrentView(true).anyMatch(r -> r == record)) {
             if (view.getCurrentTab() == 0) {
-                view.setSourceTableRecordsV2(getRecordsForCurrentView(true), getUserListNames(), getRecordUserListMatrix());
+                view.setSourceTableRecordsV2(getRecordsForCurrentView(true), getUserListNames(), getRecordUserListMatrixV2(getRecordsForCurrentView(true)));
             } else {
                 view.setUserTableRecords(getRecordsForCurrentView(true), view.getCurrentTab() - 1);
             }
@@ -248,8 +248,21 @@ public class Controller implements IController, IFeature {
      * Private helper method to get a boolean matrix representing the user lists for each record.
      * @return a 2D boolean array where each row represents a record and each column represents a user list
      */
-    private boolean[][] getRecordUserListMatrix() {
-        return model.getRecords()
+//    private boolean[][] getRecordUserListMatrix() {
+//        return model.getRecords()
+//                .map(record -> {
+//                    int[] indices = model.getUserListIndicesForRecord(record);
+//                    boolean[] result = new boolean[model.getUserListCount()];
+//                    for (int i = 0; i < model.getUserListCount(); i++) {
+//                        result[i] = Arrays.binarySearch(indices, i) >= 0;
+//                    }
+//                    return result;
+//                })
+//                .toArray(boolean[][]::new);
+//    }
+
+    private boolean[][] getRecordUserListMatrixV2(Stream<MBeans> records) {
+        return records
                 .map(record -> {
                     int[] indices = model.getUserListIndicesForRecord(record);
                     boolean[] result = new boolean[model.getUserListCount()];
