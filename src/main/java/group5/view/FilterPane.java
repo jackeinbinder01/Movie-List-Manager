@@ -287,6 +287,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             resetComboBoxOptions();
             refreshPlaceholders();
         }
+
     }
 
     /**
