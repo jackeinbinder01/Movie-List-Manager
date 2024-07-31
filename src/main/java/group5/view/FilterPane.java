@@ -271,29 +271,21 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /* FilterPane Setup Methods --------------------------------------------------------------------------------------*/
-
-    public void setMovies(Stream<MBeans> movies) {
-        setMovies(movies, false);
-    }
-
     /**
      * Sets the movies list of this FilterPane instance based on the MBeans in an input Stream.
      * Resets filter ranges and options based on MBeans in the new movies list.
      *
      * @param movies a Stream of movies to replace the current movies list
      */
-    public void setMovies(Stream<MBeans> movies, boolean clearFilters) {
+    public void setMovies(Stream<MBeans> movies) {
         List<MBeans> moviesList = movies.toList();
         this.movies = moviesList;
 
-        if(!moviesList.isEmpty()) {
-            // reset filter ranges and clear filter options
-            setRangeFilterRanges();
-            resetComboBoxOptions();
-            refreshPlaceholders();
-        } else {
-            clearFilterOptions();
-        }
+        // reset filter ranges and clear filter options
+        setRangeFilterRanges();
+        resetComboBoxOptions();
+        refreshPlaceholders();
+
     }
 
     /**
@@ -797,8 +789,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // @Wing decide how you want apply/clear message sent to BaseView/controller and I can reconfigure
 
         if (e.getSource() == applyFilterButton) {
-            System.out.println("Filters applied");
-
+            System.out.println("[FilterPane] - Filters applied");
             System.out.println("Title: " + getFilteredTitle());
             System.out.println("Genre: " + getFilteredGenre());
             System.out.println("Rating: " + getFilteredMpaRating());
@@ -814,10 +805,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             System.out.println("Language: " + getFilteredLanguageFilter());
 
         } else if (e.getSource() == clearFilterButton) {
-            System.out.println("Filters cleared");
-            if (!movies.isEmpty()) {
-                resetFilterOptions();
-            }
+            System.out.println("[FilterPane] - Filters cleared");
         }
     }
 
