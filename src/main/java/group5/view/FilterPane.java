@@ -210,7 +210,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public String getFilteredBoxOfficeEarningsMin() {
         try {
-            return formatFromMillions(boxOfficeEarningsFrom.getText());
+            return boxOfficeEarningsFrom.getText().equalsIgnoreCase("N/A") ?
+                    boxOfficeEarningsFrom.getText() : formatFromMillions(boxOfficeEarningsFrom.getText());
         } catch (NumberFormatException e) {
             return "";
         }
@@ -223,7 +224,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public String getFilteredBoxOfficeEarningsMax() {
         try {
-            return formatFromMillions(boxOfficeEarningsTo.getText());
+            return boxOfficeEarningsTo.getText().equalsIgnoreCase("N/A") ?
+                    boxOfficeEarningsTo.getText() : formatFromMillions(boxOfficeEarningsTo.getText());
         } catch (NumberFormatException e) {
             return "";
         }
@@ -529,7 +531,16 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         String maxValueString = maxValue.isPresent() ? Integer.toString(maxValue.getAsInt()) : "No Max";
         String minValueString = minValue.isPresent() ? Integer.toString(minValue.getAsInt()) : "No Min";
 
-        return new String[] {minValueString, maxValueString};
+       String[] range = {minValueString, maxValueString};
+
+       // replace -1 with N/A if box office earning data is missing
+       for (int i = 0; i < range.length; i++) {
+           if (Integer.parseInt(range[i]) < 0) {
+               range[i] = "N/A";
+           }
+       }
+
+       return range;
     }
 
     /**
@@ -539,6 +550,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * @return a String containing the dollar value of the input param formatted as US currency in millions of dollars
      */
     private String formatAsCurrency(String value) {
+
+        if (value.equalsIgnoreCase("N/A")) {
+            return value;
+        }
+
         // set currency formatter to US locale
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
 
@@ -682,6 +698,10 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
       releasedTo.setText(releasedRange[1]);
       imdbRatingFrom.setText(imdbRatingRange[0]);
       imdbRatingTo.setText(imdbRatingRange[1]);
+
+
+
+
       boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
       boxOfficeEarningsTo.setText(boxOfficeRange[1]);
     }
@@ -715,8 +735,10 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 }
                 break;
             case BOX_OFFICE_EARNINGS_FROM:
-                if (boxOfficeEarningsFrom.getText().isEmpty()) {
+                if (boxOfficeEarningsFrom.getText().isEmpty() || boxOfficeEarningsFrom.getText().startsWith("-")) {
                     boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
+                } else if (boxOfficeEarningsFrom.getText().equalsIgnoreCase("N/A")){
+                    boxOfficeEarningsFrom.setText("N/A");
                 } else {
                     String processedBoxOfficeEarningsMin = boxOfficeEarningsFrom.getText()
                             .replaceAll("[^0-9.]", "");
@@ -730,8 +752,10 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 }
                 break;
             case BOX_OFFICE_EARNINGS_TO:
-                if (boxOfficeEarningsTo.getText().isEmpty()) {
+                if (boxOfficeEarningsTo.getText().isEmpty() || boxOfficeEarningsTo.getText().startsWith("-")) {
                     boxOfficeEarningsTo.setText(boxOfficeRange[1]);
+                } else if (boxOfficeEarningsTo.getText().equalsIgnoreCase("N/A")){
+                    boxOfficeEarningsTo.setText("N/A");
                 } else {
                     String processedBoxOfficeEarningsMax = boxOfficeEarningsTo.getText()
                             .replaceAll("[^0-9.]", "");
