@@ -93,6 +93,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         gbc.insets = new Insets(5, 4, 5, 4);
         updateGBC(null, null, null, null, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
 
+        // add border padding to button panel
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0,0,5,0));
         // add panels
         add(filterPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -101,7 +103,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         addFilter(FilterLabels.TITLE.getFilterLabel(), titleFilter);
         addFilter(FilterLabels.GENRE.getFilterLabel(), genreFilter);
         addFilter(FilterLabels.MPA_RATING.getFilterLabel(), mpaRatingFilter);
-
         // add range filters
         addRangeFilter(FilterLabels.RELEASED.getFilterLabel(), releasedFrom, releasedTo, releasedRange[0],
                 releasedRange[1]);
@@ -109,7 +110,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 imdbRatingRange[1]);
         addRangeFilter(FilterLabels.BOX_OFFICE_EARNINGS.getFilterLabel(), boxOfficeEarningsFrom, boxOfficeEarningsTo,
                 boxOfficeRange[0], boxOfficeRange[1]);
-
         // add remaining filters
         addFilter(FilterLabels.DIRECTOR.getFilterLabel(), directorFilter);
         addFilter(FilterLabels.ACTOR.getFilterLabel(), actorFilter);
@@ -127,8 +127,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         writerFilter.addActionListener(this);
         applyFilterButton.addActionListener(this);
         clearFilterButton.addActionListener(this);
-
-
     }
 
     /* Getters -------------------------------------------------------------------------------------------------------*/
@@ -400,8 +398,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
         // increment filter row
         filterRow++;
-
-
     }
 
     /**
