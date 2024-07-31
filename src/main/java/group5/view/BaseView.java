@@ -4,6 +4,7 @@ import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -12,6 +13,7 @@ public class BaseView extends JFrame implements IView {
     private final static String APP_TITLE = "App Title";
     private final static int DEFAULT_WIDTH = 1024;
     private final static int DEFAULT_HEIGHT = 600;
+    private final static Font DEFAULT_FONT = new Font("Roboto", Font.PLAIN, 10);
 
 
     FilterPane filterPane;
@@ -21,6 +23,9 @@ public class BaseView extends JFrame implements IView {
 
     public BaseView() {
         super(APP_TITLE);
+
+        // set font for all View components
+        AppFont.setAppFont(new FontUIResource(DEFAULT_FONT));
 
         // Let the backstage crew do their thing
         setVisible(false);
