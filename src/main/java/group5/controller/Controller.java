@@ -102,8 +102,9 @@ public class Controller implements IController, IFeature {
             return;
         }
         model.createNewWatchList(name);
-        int newListIdx = model.getUserListCount() - 1; // the new list would be the last one
         view.addUserTable(name);
+        // Calls below are not necessary because table will be updated on tab change
+        int newListIdx = model.getUserListCount(); // the new list would be the last one
         view.setUserTableRecords(model.getRecords(newListIdx), newListIdx);
     }
 
@@ -270,15 +271,14 @@ public class Controller implements IController, IFeature {
         model.updateWatched(record, watched);
         if (caller.equalsIgnoreCase("detailsPane")) {   // If caller is detailsPane, update the listPane
             System.out.println("[Controller] Changed Watched Status: Updating listPane from detailsPane");
-            // Update the table if the record is in the current table
-            if (getRecordsForCurrentView().anyMatch(r -> r == record)) {
-                if (view.getCurrentTab() == 0) {
-                    view.setSourceTableRecordsV2(getRecordsForCurrentView(),
-                            getWatchlistNames(),
-                            getRecordUserListMatrixV2(getRecordsForCurrentView()));
-                } else {
-                    view.setUserTableRecords(getRecordsForCurrentView(), view.getCurrentTab() - 1);
-                }
+            if (view.getCurrentTab() == 0) {
+                // If the current tab is the source table, update the source table
+                view.setSourceTableRecordsV2(getRecordsForCurrentView(),
+                        getWatchlistNames(),
+                        getRecordUserListMatrixV2(getRecordsForCurrentView()));
+            } else if (getRecordsForCurrentView().anyMatch(r -> r == record)) {
+                // If the record is in the active user list, update the user list
+                view.setUserTableRecords(getRecordsForCurrentView(), view.getCurrentTab() - 1);
             }
         } else if (caller.equalsIgnoreCase("listPane")) {   // If the caller is listPane, update the detailsPane
             System.out.println("[Controller] Changed Watched Status: Updating detailsPane from listPane");
