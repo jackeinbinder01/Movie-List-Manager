@@ -842,7 +842,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public void bindFeatures(IFeature features) {
         applyFilterButton.addActionListener(e -> features.applyFilters());
-        clearFilterButton.addActionListener(e -> features.clearFilters());
+        clearFilterButton.addActionListener(e -> features.clearFiltersAndReloadRecords());
     }
 }
 

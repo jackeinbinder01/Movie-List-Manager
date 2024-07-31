@@ -9,18 +9,14 @@ public interface IView {
 
     /**
      * Set or update the record in the details pane
-     * <p>
-     * Provides the option for a partial refresh of the details pane that only updates the user fields
-     * to avoid flickering when the record is already displayed
      *
      * @param record the record to be displayed
-     * @param refreshUserFieldsOnly if true, only the user fields will be refreshed
      */
 
-    public void setDetailsPaneEntry(MBeans record, boolean refreshUserFieldsOnly);
+    public void setDetailsPaneEntry(MBeans record);
 
 
-    void clearListSelection();
+    void clearTableSelection();
 
     public void setSourceTableRecordsV2(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix);
 
