@@ -76,6 +76,7 @@ public class ListPaneV2 extends JPanel {
      * Each tab will own a table with its own model
      */
     List<MovieTableModel> watchlistModels;
+    List<JTable> watchlistTables;
 
     ListPaneV2() {
         super();
@@ -91,6 +92,7 @@ public class ListPaneV2 extends JPanel {
         // Create the main table
         createSourceTableTab();
         watchlistModels = new ArrayList<>();
+        watchlistTables = new ArrayList<>();
         watchlistNames = new ArrayList<>();
 
 
@@ -115,6 +117,15 @@ public class ListPaneV2 extends JPanel {
     }
 
 
+    public JTable getActiveTable() {
+        int currentTab = tabbedPane.getSelectedIndex();
+        if (currentTab == 0) {
+            return sourceTable;
+        } else {
+            return watchlistTables.get(currentTab - 1);
+        }
+    }
+
     public MovieTableModel getActiveTableModel() {
         int currentTab = tabbedPane.getSelectedIndex();
         if (currentTab == 0) {
@@ -123,6 +134,7 @@ public class ListPaneV2 extends JPanel {
             return watchlistModels.get(currentTab - 1);
         }
     }
+
 
     private void createTableTab(String name, TableMode tableMode) {
         MovieTableModel targetModel;
@@ -162,6 +174,7 @@ public class ListPaneV2 extends JPanel {
             sourceTable = targetTable;
         } else {
             watchlistModels.add(targetModel);
+            watchlistTables.add(targetTable);
         }
 
         targetTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -391,7 +404,10 @@ public class ListPaneV2 extends JPanel {
                 if (!lsm.isSelectionEmpty()) {
                     // Find out which indexes are selected.
                     int temp = lsm.getSelectedIndices()[0];
-                    tableSelectionHandler.accept(getActiveTableModel().getRecordAt(temp));
+                    // tableSelectionHandler.accept(getActiveTableModel().getRecordAt(temp));
+
+                    int modelIndex = getActiveTable().convertRowIndexToModel(temp); // Convert view index to model index
+                    tableSelectionHandler.accept(getActiveTableModel().getRecordAt(modelIndex));
                 }
             }
         }
