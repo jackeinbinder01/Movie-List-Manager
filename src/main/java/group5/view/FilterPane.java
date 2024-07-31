@@ -290,9 +290,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             // reset filter ranges and clear filter options
             setRangeFilterRanges();
             resetComboBoxOptions();
-            for (JTextField rangeFilter : rangeFilters) {
-                resetPlaceholder(rangeFilter);
-            }
+            refreshPlaceholders();
         } else {
             clearFilterOptions();
         }
@@ -676,6 +674,16 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         setPlaceholder(imdbRatingTo, imdbRatingRange[1]);
         setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
         setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
+    }
+
+
+    public void refreshPlaceholders() {
+      releasedFrom.setText(releasedRange[0]);
+      releasedTo.setText(releasedRange[1]);
+      imdbRatingFrom.setText(imdbRatingRange[0]);
+      imdbRatingTo.setText(imdbRatingRange[1]);
+      boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
+      boxOfficeEarningsTo.setText(boxOfficeRange[1]);
     }
 
     /**
