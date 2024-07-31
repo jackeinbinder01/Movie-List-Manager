@@ -78,7 +78,7 @@ public class BaseView extends JFrame implements IView {
      */
     public void setUserTableRecords(Stream<MBeans> records, int userListIndex) {
         System.out.println("[BaseView] setUserTableRecords");
-        listPane.setUserTableRecords(records, userListIndex);
+        listPane.setUserTable(records, userListIndex);
     }
 
     public void addUserTable(String userListName) {
@@ -91,16 +91,8 @@ public class BaseView extends JFrame implements IView {
     }
 
     @Override
-    public void setDetailsPaneEntry(MBeans record, boolean refreshUserFieldsOnly) {
-        if (refreshUserFieldsOnly) {
-            if (detailsPane.getCurrentMedia() == record) {
-                detailsPane.refreshUserFields(); // refresh only the user fields if the record is the same
-            } else {
-                detailsPane.setMedia(record); // refresh the entire record if it doesn't match
-            }
-        } else {
-            detailsPane.setMedia(record);
-        }
+    public void setDetailsPaneEntry(MBeans record) {
+        detailsPane.setMedia(record);
     }
 
     @Override
@@ -118,7 +110,7 @@ public class BaseView extends JFrame implements IView {
     @Override
     public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
         System.out.println("[BaseView] setMainTableRecords");
-        listPane.setSourceTableRecordsV2(records, userListNames, recordUserListMatrix);
+        listPane.setSourceTable(records, userListNames, recordUserListMatrix);
     }
 
     @Override

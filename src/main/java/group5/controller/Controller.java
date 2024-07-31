@@ -11,7 +11,6 @@ import group5.model.Filter.Operations;
 import group5.model.IModel;
 import group5.model.MovieData;
 import group5.model.beans.MBeans;
-import group5.model.formatters.Formats;
 import group5.view.FilterPane;
 import group5.view.IView;
 import org.apache.commons.lang3.tuple.Triple;
@@ -45,12 +44,7 @@ public class Controller implements IController, IFeature {
         this.model = model;
         this.view = view;
 
-        model.loadSourceData();
-        model.loadWatchList("./data/samples/watchlist.json");
-        model.loadWatchList("./data/samples/abc.json");
-        model.loadWatchList("./data/samples/avatar.json");
-        model.loadWatchList("./data/samples/lol.json");
-        model.loadWatchList("./data/samples/titanic_only.json");
+        DEV_InitModel();
         // bindFeatures accept an IFeature interface, which is the controller itself
         view.bindFeatures(this);
 
@@ -65,6 +59,20 @@ public class Controller implements IController, IFeature {
             view.addUserTable(model.getUserListName(i));
             view.setUserTableRecords(model.getRecords(i), i);
         }
+    }
+
+
+    /**
+     * Temporary method to initialize the model with sample data.
+     * For development purposes only.
+     */
+    private void DEV_InitModel() {
+        model.loadSourceData();
+        model.loadWatchList("./data/samples/watchlist.json");
+        model.loadWatchList("./data/samples/abc.json");
+        model.loadWatchList("./data/samples/avatar.json");
+        model.loadWatchList("./data/samples/lol.json");
+        model.loadWatchList("./data/samples/titanic_only.json");
     }
 
 
@@ -119,7 +127,7 @@ public class Controller implements IController, IFeature {
     @Override
     public void showRecordDetails(MBeans record) {
         System.out.println("[Controller] showRecordDetails called");
-        view.setDetailsPaneEntry(record, false);
+        view.setDetailsPaneEntry(record);
     }
 
 
@@ -219,6 +227,7 @@ public class Controller implements IController, IFeature {
     }
 
     public void changeRating(MBeans record, double rating) {
+        System.out.println("[Controller] Changing rating for " + record.getTitle() + " to " + rating);
         model.updateUserRating(record, rating);
         // TODO: Check if Views are correctly updated
     }
@@ -237,7 +246,7 @@ public class Controller implements IController, IFeature {
         }
         // Update the details pane if the record is currently displayed
         if (view.getDetailsPane().getCurrentMedia() == record) {
-            view.setDetailsPaneEntry(record, true);
+            view.setDetailsPaneEntry(record);
         }
     }
 
@@ -262,7 +271,7 @@ public class Controller implements IController, IFeature {
             System.out.println("[Controller] Updating detailsPane from listPane");
             // Update the details pane if the record is currently displayed
             if (view.getDetailsPane().getCurrentMedia() == record) {
-                view.setDetailsPaneEntry(record, true);
+                view.setDetailsPaneEntry(record);
             }
         }
     }

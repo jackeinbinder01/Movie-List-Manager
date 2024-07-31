@@ -268,7 +268,7 @@ public class ListPaneV2 extends JPanel {
         }
     }
 
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix) {
+    public void setSourceTable(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix) {
         System.out.println("[ListPaneV2] setMainTableRecords called");
         List<MovieTableModelRecord> tmRecords = new ArrayList<>();
         List<MBeans> mBeansList = records.toList();
@@ -286,7 +286,7 @@ public class ListPaneV2 extends JPanel {
     }
 
 
-    public void setUserTableRecords(Stream<MBeans> recordStream, int watchlistIndex) {
+    public void setUserTable(Stream<MBeans> recordStream, int watchlistIndex) {
         if (tabbedPane.getTabCount() - 2 < watchlistIndex) {
             throw new IllegalArgumentException("User-defined list index out of bounds");
         }
