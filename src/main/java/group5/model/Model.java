@@ -22,6 +22,7 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
+import group5.model.net.apiFunctionality.ListFonts;
 import group5.model.net.apiFunctionality.MovieAPIHandler;
 
 
@@ -89,30 +90,38 @@ public class Model implements IModel {
      * @param filename The file to load the watch list from.
      */
     @Override
-    public void loadWatchList(String filename) {
+    public int loadWatchList(String filename) {
 
         // Create a substring of file name to use as list name
         int lastSeparator = Math.max(filename.lastIndexOf("\\"), filename.lastIndexOf("/"));
         int lastDot = filename.lastIndexOf('.');
         String name = filename.substring(lastSeparator + 1, lastDot);
+        for (IMovieList watchList : this.watchLists) {
+            if (watchList.getListName().equals(name)) {
+                // Watchlist with exact name already exists.
+                return -1;
+            }
+        }
 
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
         Set<MBeans> mapped = externalList.stream()
-                .map(externalBean
-                        -> this.sourceList.stream()
-                        .filter(localBean -> localBean.equals(externalBean))
-                        .findFirst()
-                        .orElse(null))
-                .collect(Collectors.toSet());
+                                         .map(externalBean
+                                                 -> this.sourceList.stream()
+                                                 .filter(localBean -> localBean.equals(externalBean))
+                                                 .findFirst()
+                                                 .orElse(null))
+                                         .collect(Collectors.toSet());
         IMovieList watchList = new MovieList(name, mapped);
         this.watchLists.add(watchList);
+        return this.watchLists.size() - 1;
     }
 
     @Override
-    public void createNewWatchList(String name) {
+    public int createNewWatchList(String name) {
         IMovieList watchList = new MovieList(name);
         this.watchLists.add(watchList);
+        return this.watchLists.size() - 1;
     }
 
     @Override

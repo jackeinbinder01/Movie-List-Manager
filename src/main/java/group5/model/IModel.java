@@ -25,14 +25,14 @@ public interface IModel {
      *
      * @param filename The file to load the watch list from.
      */
-    void loadWatchList(String filename);
+    int loadWatchList(String filename);
 
     /**
      * Create new empty watch list.
      *
      * @param name The name of the new watch list.
      */
-    void createNewWatchList(String name);
+    int createNewWatchList(String name);
 
     /**
      * Get the source list of media as stream.
