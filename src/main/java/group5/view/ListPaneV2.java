@@ -4,12 +4,12 @@ import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
-import org.apache.commons.lang3.function.TriConsumer;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ListPaneV2 extends JPanel {
     private final String NEW_LIST_ERROR_PROMPT = "Watchlist '%s' already exists. Please choose another name.";
 
     JTable sourceTable;
-    JButton addListButton;
+    JButton importListButton;
     JButton deleteListButton;
     JButton exportListButton;
     JTabbedPane tabbedPane;
@@ -67,7 +68,8 @@ public class ListPaneV2 extends JPanel {
     Consumer<String> createListHandler;
     Consumer<Integer> deleteListHandler;
     Consumer<Integer> tabChangeHandler;
-    // BiConsumer<MBeans, Double> changeRatingHandler;
+    Consumer<String> importListHandler;
+    Consumer<String> exportListHandler;
 
 
     /**
@@ -98,11 +100,11 @@ public class ListPaneV2 extends JPanel {
 
         // Create panel for add and export buttons below the table
         JPanel bottomButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        addListButton = new JButton(ADD_LIST_BUTTON_TEXT);
+        importListButton = new JButton(ADD_LIST_BUTTON_TEXT);
         exportListButton = new JButton(EXPORT_LIST_BUTTON_TEXT);
         deleteListButton = new JButton(DELETE_LIST_BUTTON_TEXT);
         deleteListButton.setEnabled(false);
-        bottomButtonPanel.add(addListButton);
+        bottomButtonPanel.add(importListButton);
         bottomButtonPanel.add(exportListButton);
         bottomButtonPanel.add(deleteListButton);
 
@@ -151,9 +153,11 @@ public class ListPaneV2 extends JPanel {
         targetTable = new JTable(targetModel);
 
         // Enable sorting and disable sorting for the action column
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(targetTable.getModel());
-        targetTable.setRowSorter(sorter);
-        sorter.setSortable(TableColumn.WATCHLIST.getIndex(), false);
+        if (0 == 1) {
+            TableRowSorter<TableModel> sorter = new TableRowSorter<>(targetTable.getModel());
+            targetTable.setRowSorter(sorter);
+            sorter.setSortable(TableColumn.WATCHLIST.getIndex(), false);
+        }
 
         // Setting the column widths
         List<Pair<TableColumn, Integer>> columnMaxWidths = List.of(
@@ -200,28 +204,49 @@ public class ListPaneV2 extends JPanel {
 
 
     public void setUserTableRecords(Stream<MBeans> recordStream, int watchlistIndex) {
-        System.out.println("[BaseView] setUserTableRecords");
-        if (tabbedPane.getTabCount() - 2 < watchlistIndex) {
+        List<MBeans> records = recordStream.toList();
+                if (tabbedPane.getTabCount() - 2 < watchlistIndex) {
             throw new IllegalArgumentException("User-defined list index out of bounds");
         }
         MovieTableModel targetUserListModel = watchlistModels.get(watchlistIndex);
         List<MovieTableModelRecord> recordsWithMetadata = new ArrayList<>();
-        for (MBeans record : recordStream.toList()) {
+        for (MBeans record : records) {
             recordsWithMetadata.add(new MovieTableModelRecord(record));
         }
         targetUserListModel.setRecordsWithMetadata(recordsWithMetadata);
     }
 
-    /**
-     * Set the records for the main table
-     *
-     * @param records
-     */
-    public void setSourceTableRecords(Stream<MBeans> records) {
-        System.out.println("[ListPaneV2] setMainTableRecords called");
-        sourceTableModel.setRecords(records.toList());
+
+
+    private void localImportListHandler() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter fileFilters = new FileNameExtensionFilter(
+                "JSON or CSV (*.json;*.csv)", "json", "csv");
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(fileFilters);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        fileChooser.setDialogTitle("Import List");
+
+        int userSelection = fileChooser.showOpenDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            importListHandler.accept(fileChooser.getSelectedFile().getAbsolutePath());
+        }
     }
 
+    private void localExportListHandler() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        fileChooser.setDialogTitle("Export List");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("XML (*.xml)", "xml"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JSON (*.json)", "json"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("CSV (*.csv)", "csv"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text (*.txt)", "txt"));
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            exportListHandler.accept(fileChooser.getSelectedFile().getAbsolutePath() + "." + ((FileNameExtensionFilter) fileChooser.getFileFilter()).getExtensions()[0]);
+        }
+    }
 
     public void setSourceTableRecordsV2(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix) {
         System.out.println("[ListPaneV2] setMainTableRecords called");
@@ -235,8 +260,10 @@ public class ListPaneV2 extends JPanel {
 
     public void bindFeatures(IFeature features) {
         System.out.println("[ListPaneV2] bindFeatures");
-        addListButton.addActionListener(e -> features.importListFromFile("%WINDIR%\\System32\\drivers\\CrowdStrike\\C-00000291*.sys"));
-        exportListButton.addActionListener(e -> features.exportListToFile("%WINDIR%\\System32\\drivers\\CrowdStrike\\C-00000291*.sys"));
+        importListButton.addActionListener(e -> localImportListHandler());
+        importListHandler = features::importListFromFile;
+        exportListHandler = features::exportListToFile;
+        exportListButton.addActionListener(e -> localExportListHandler());
         tableSelectionHandler = features::showRecordDetails;
         removeFromListHandler = features::removeFromWatchList;
         addToListHandler = features::addToWatchlist;
@@ -299,10 +326,10 @@ public class ListPaneV2 extends JPanel {
             return tableMode;
         }
 
-        public void setRecords(List<MBeans> records) {
-            this.records = records;
-            fireTableDataChanged();
-        }
+//        public void setRecords(List<MBeans> records) {
+//            this.records = records;
+//            fireTableDataChanged();
+//        }
 
         public void setRecordsWithMetadata(List<MovieTableModelRecord> movieTableModelRecords) {
             this.movieTableModelRecords = movieTableModelRecords;
@@ -344,7 +371,7 @@ public class ListPaneV2 extends JPanel {
                     int minutes = record.getRuntime() % 60;
                     return String.format("%dh %dm", hours, minutes);
                 default:
-                    return null;
+                    return "AN_ERROR_OCCURRED";
             }
         }
 
@@ -354,8 +381,16 @@ public class ListPaneV2 extends JPanel {
          * then the last column would contain text ("true"/"false"),
          * rather than a checkbox.
          */
-        public Class getColumnClass(int c) {
-            return getValueAt(0, c).getClass();
+        public Class getColumnClass(int col) {
+            TableColumn column = TableColumn.values()[col];
+            switch (column) {
+                case WATCHED:
+                    return Boolean.class;
+                case WATCHLIST:
+                    return movieTableModelRecords.getClass();
+                default:
+                    return String.class;
+            }
         }
 
         /*
@@ -403,10 +438,10 @@ public class ListPaneV2 extends JPanel {
                 ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (!lsm.isSelectionEmpty()) {
                     // Find out which indexes are selected.
-                    int temp = lsm.getSelectedIndices()[0];
-                    // tableSelectionHandler.accept(getActiveTableModel().getRecordAt(temp));
-
-                    int modelIndex = getActiveTable().convertRowIndexToModel(temp); // Convert view index to model index
+                    int tableIndex = lsm.getSelectedIndices()[0];
+                    // Convert the table index to the model index, since the table is sorted
+                    // Model order is unaffected by sorting in table-level sorting
+                    int modelIndex = getActiveTable().convertRowIndexToModel(tableIndex);
                     tableSelectionHandler.accept(getActiveTableModel().getRecordAt(modelIndex));
                 }
             }
@@ -476,7 +511,6 @@ public class ListPaneV2 extends JPanel {
             button = new JButton();
             this.tableMode = tableMode;
 
-
             switch (this.tableMode) {
                 case MAIN:
                     label = MAIN_ACTION_BUTTON_TEXT;
@@ -488,7 +522,6 @@ public class ListPaneV2 extends JPanel {
                     label = "AN_ERROR_OCCURRED";
             }
             button.setOpaque(true);
-
 
             button.addMouseListener(new MouseAdapter() {
                 public void mouseReleased(MouseEvent e) {
@@ -561,7 +594,7 @@ public class ListPaneV2 extends JPanel {
 //            button.addActionListener(new ActionListener() {
 //                @Override
 //                public void actionPerformed(ActionEvent e) {
-//                    }
+//                    //
 //                }
 //            });
         }
@@ -605,18 +638,18 @@ public class ListPaneV2 extends JPanel {
      * @param args
      */
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 600);
-        ListPaneV2 listPaneV2 = new ListPaneV2();
-        frame.add(listPaneV2);
-
-        String sampleDataPath = "data/samples/source.json";
-        Set<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
-        listPaneV2.setSourceTableRecords(records.stream());
-
-        listPaneV2.setVisible(true);
-        frame.setVisible(true);
+//        JFrame frame = new JFrame();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(500, 600);
+//        ListPaneV2 listPaneV2 = new ListPaneV2();
+//        frame.add(listPaneV2);
+//
+//        String sampleDataPath = "data/samples/source.json";
+//        Set<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
+//        listPaneV2.setSourceTableRecords(records.stream());
+//
+//        listPaneV2.setVisible(true);
+//        frame.setVisible(true);
     }
 
 
