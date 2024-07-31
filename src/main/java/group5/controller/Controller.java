@@ -13,6 +13,7 @@ import group5.model.MovieData;
 import group5.model.beans.MBeans;
 import group5.view.FilterPane;
 import group5.view.IView;
+
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ import java.util.List;
  * Controller class for the program.
  */
 public class Controller implements IController, IFeature {
-
     /**
      * The model object representing the movie database.
      */
@@ -83,9 +83,17 @@ public class Controller implements IController, IFeature {
             System.out.println("[Controller] Error deleting watchlist: index out of bounds");
         } else {
             // model.deleteWatchList(userListIndex);
+
+            // update source table because of new RecordUserListMatrix
+            // view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
         }
     }
 
+    /**
+     * Create a new watchlist.
+     *
+     * @param name the name of the new watchlist.
+     */
     @Override
     public void createWatchlist(String name) {
         String existingLists[] = this.getWatchlistNames();
@@ -99,6 +107,11 @@ public class Controller implements IController, IFeature {
         view.setUserTableRecords(model.getRecords(newListIdx), newListIdx);
     }
 
+    /**
+     * Handles user-initiated export of a watchlist to a file.
+     *
+     * @param filepath the path to the file where the watchlist will be exported.
+     */
     @Override
     public void exportListToFile(String filepath) {
         String currentTab = "\"SourceTable\"";
@@ -113,24 +126,32 @@ public class Controller implements IController, IFeature {
         }
     }
 
+    /**
+     * Handles user-initiated import of a watchlist from a file.
+     *
+     * @param filepath the path to the file containing the watchlist.
+     */
     @Override
     public void importListFromFile(String filepath) {
-        // TODO Auto-generated method stub
-        System.out.println("[Controller] importListFromFile called");
+        System.out.println("[Controller] User requested to import watchlist from " + filepath);
+        // TODO: Add error handling for invalid file paths
         model.loadWatchList(filepath);
         view.addUserTable(model.getUserListName(model.getUserListCount() - 1));
+        // Set records for the new table
         view.setUserTableRecords(model.getRecords(model.getUserListCount() - 1), model.getUserListCount() - 1);
-
-        // throw new UnsupportedOperationException("[Controller.java] Unimplemented method 'addListFromFile'");
+        // Update the source table because of new RecordUserListMatrix
+        view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
     }
 
     @Override
-    public void showRecordDetails(MBeans record) {
+    public void handleTableSelection(MBeans record) {
         System.out.println("[Controller] showRecordDetails called");
         view.setDetailsPaneEntry(record);
     }
 
-
+    /**
+     * Handles user-initiated filtering of the records.
+     */
     @Override
     public void applyFilters() {
         List<List<String>> filters = getFilterOptions();
@@ -143,24 +164,22 @@ public class Controller implements IController, IFeature {
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
         }
-        // note that we do not update the filter range here
+        // filter ranges are not updated, because the actual is unaltered
     }
 
     /**
      * Clear the filters in the FilterPane.
      */
     @Override
-    public void clearFilters() {
+    public void clearFiltersAndReloadRecords() {
         model.clearFilter();
         view.getFilterPane().resetFilterOptions();
         view.getFilterPane().clearFilterOptions();
         int currTabIdx = view.getCurrentTab();
-        List<MBeans> recordList;
+        List<MBeans> recordList = getRecordsForCurrentView().toList();
         if (currTabIdx == 0) {
-            recordList = model.getRecords().collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
         } else {
-            recordList = model.getRecords(currTabIdx - 1).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
         }
         view.getFilterPane().setMovies(recordList.stream());
@@ -182,15 +201,18 @@ public class Controller implements IController, IFeature {
      * @param record        the MBean to be removed.
      * @param userListIndex the index in the user's watch list where the MBean is located.
      */
-    public void removeFromWatchList(MBeans record, int userListIndex) {
+    public void removeFromWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
-        view.clearListSelection();
+        if (view.getCurrentTab() > 0) {
+            // only clears selection if the current tab is the affected watchlist
+            view.clearTableSelection();
+        }
         model.removeFromWatchList(record, userListIndex);
 
         // Update the filter pane if the current tab is the affected user list
         if (view.getCurrentTab() > 0) {
-            if (model.getRecords(userListIndex).count() == 0) {
-                // Clear filters in the filter pane and model if the filtered list is empty
+            if (model.getRecords(userListIndex).count() == 0) { // if the resultant list is empty...
+                // ...then clear filters in the filter pane and model
                 model.clearFilter();
                 view.getFilterPane().resetFilterOptions();
                 view.getFilterPane().clearFilterOptions();
@@ -202,6 +224,12 @@ public class Controller implements IController, IFeature {
         view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
     }
 
+    /**
+     * Add a record to the user's watch list.
+     *
+     * @param record        the MBean to be added to the watch list.
+     * @param userListIndex the index in the user's watch list where the MBean should be added.
+     */
     public void addToWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
@@ -213,7 +241,6 @@ public class Controller implements IController, IFeature {
 
     /**
      * A convenient method to get the records for the current view.
-     * Specify whether to apply filters currently set.
      *
      * @return a stream of MBeans
      */
@@ -226,35 +253,23 @@ public class Controller implements IController, IFeature {
         }
     }
 
+    /**
+     * Changes the rating of a specific MBean.
+     * No view updates are triggered since the rating is not displayed in the table.
+     *
+     * @param record  the MBean whose rating is to be changed.
+     * @param rating the new rating to be assigned to the MBean.
+     */
     public void changeRating(MBeans record, double rating) {
         System.out.println("[Controller] Changing rating for " + record.getTitle() + " to " + rating);
         model.updateUserRating(record, rating);
-        // TODO: Check if Views are correctly updated
     }
 
-    public void changeWatchedStatus(MBeans record, boolean watched) {
-        model.updateWatched(record, watched);
-        // Update the table if the record is in the current table
-        if (getRecordsForCurrentView().anyMatch(r -> r == record)) {
-            if (view.getCurrentTab() == 0) {
-                view.setSourceTableRecordsV2(getRecordsForCurrentView(),
-                        getWatchlistNames(),
-                        getRecordUserListMatrixV2(getRecordsForCurrentView()));
-            } else {
-                view.setUserTableRecords(getRecordsForCurrentView(), view.getCurrentTab() - 1);
-            }
-        }
-        // Update the details pane if the record is currently displayed
-        if (view.getDetailsPane().getCurrentMedia() == record) {
-            view.setDetailsPaneEntry(record);
-        }
-    }
 
     public void changeWatchedStatusV2(MBeans record, boolean watched, String caller) {
         model.updateWatched(record, watched);
-        if (caller.equalsIgnoreCase("detailsPane")) // If caller is detailsPane, update the listPane
-        {
-            System.out.println("[Controller] Updating listPane from detailsPane");
+        if (caller.equalsIgnoreCase("detailsPane")) {   // If caller is detailsPane, update the listPane
+            System.out.println("[Controller] Changed Watched Status: Updating listPane from detailsPane");
             // Update the table if the record is in the current table
             if (getRecordsForCurrentView().anyMatch(r -> r == record)) {
                 if (view.getCurrentTab() == 0) {
@@ -265,10 +280,8 @@ public class Controller implements IController, IFeature {
                     view.setUserTableRecords(getRecordsForCurrentView(), view.getCurrentTab() - 1);
                 }
             }
-        }
-        else if (caller.equalsIgnoreCase("listPane")) // If the caller is listPane, update the detailsPane
-        {
-            System.out.println("[Controller] Updating detailsPane from listPane");
+        } else if (caller.equalsIgnoreCase("listPane")) {   // If the caller is listPane, update the detailsPane
+            System.out.println("[Controller] Changed Watched Status: Updating detailsPane from listPane");
             // Update the details pane if the record is currently displayed
             if (view.getDetailsPane().getCurrentMedia() == record) {
                 view.setDetailsPaneEntry(record);
@@ -279,25 +292,12 @@ public class Controller implements IController, IFeature {
 
     public void handleTabChange(int tabIndex) {
         System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter pane range");
-        clearFilters();
-//        List<MBeans> recordList;
-//
-//        view.getFilterPane().resetFilterOptions();
-//        view.getFilterPane().clearFilterOptions();
-//        int currentTab = view.getCurrentTab();
-//        if (currentTab == 0) {
-//            recordList = model.getRecords().toList();
-//            view.setSourceTableRecordsV2(recordList.stream(), getUserListNames(), getRecordUserListMatrix());
-//        } else {
-//            recordList = model.getRecords(currentTab - 1).toList(); // decrement by 1 to get the user-defined list index
-//            view.setUserTableRecords(recordList.stream(), currentTab - 1);
-//        }
-//        // no filters applied on tab change because the filter pane is reset
-//        view.getFilterPane().setMovies(recordList.stream());
+        view.clearTableSelection(); // this is to prevent inactive tabs from having selections
+        clearFiltersAndReloadRecords();
     }
 
     /**
-     * Private helper method to get a boolean matrix representing the user lists for each record.
+     * Private helper method to retrieve a boolean matrix representing the user lists for each record.
      *
      * @return a 2D boolean array where each row represents a record and each column represents a user list
      */
@@ -330,7 +330,10 @@ public class Controller implements IController, IFeature {
 
     /**
      * Get the current filter options from the FilterPane.
-     * Note that the current filter fields do not mean that the filters are committed by the user.
+     * <p>
+     * Note that the current filter fields do not mean that the filters are committed by the user,
+     * it is an indicator what is currently typed or selected in the filter fields.
+     * The last committed filter options are stored in the model.
      *
      * @return a 3-column table of strings representing the filter options
      */
@@ -338,39 +341,28 @@ public class Controller implements IController, IFeature {
         FilterPane filterPane = view.getFilterPane();
 
         List<List<String>> filters = new ArrayList<>();
-        List<Triple<String, Operations, MovieData>> triples = new ArrayList<>();
-        // Title
-        triples.add(Triple.of(filterPane.getFilteredTitle(), Operations.CONTAINS, MovieData.TITLE));
-        // Genre
-        triples.add(Triple.of(filterPane.getFilteredGenre(), Operations.CONTAINS, MovieData.GENRE));
-        // MPA Rating
-        triples.add(Triple.of(filterPane.getFilteredMpaRating(), Operations.EQUALS, MovieData.MPA));
-        // Released (Year)
-        triples.add(Triple.of(filterPane.getFilteredReleasedMin(), Operations.GREATEROREQUAL, MovieData.RELEASED));
-        triples.add(Triple.of(filterPane.getFilteredReleasedMax(), Operations.LESSOREQUAL, MovieData.RELEASED));
-        // IMDB Rating
-        triples.add(Triple.of(filterPane.getFilteredImdbRatingMin(), Operations.GREATEROREQUAL, MovieData.IMDB));
-        triples.add(Triple.of(filterPane.getFilteredImdbRatingMax(), Operations.LESSOREQUAL, MovieData.IMDB));
+        List<Triple<String, Operations, MovieData>> triples = Arrays.asList(
+                Triple.of(filterPane.getFilteredTitle(), Operations.CONTAINS, MovieData.TITLE),
+                Triple.of(filterPane.getFilteredGenre(), Operations.CONTAINS, MovieData.GENRE),
+                Triple.of(filterPane.getFilteredReleasedMin(), Operations.GREATEROREQUAL, MovieData.RELEASED),
+                Triple.of(filterPane.getFilteredReleasedMax(), Operations.LESSOREQUAL, MovieData.RELEASED),
+                Triple.of(filterPane.getFilteredImdbRatingMin(), Operations.GREATEROREQUAL, MovieData.IMDB),
+                Triple.of(filterPane.getFilteredImdbRatingMax(), Operations.LESSOREQUAL, MovieData.IMDB),
+                Triple.of(filterPane.getFilteredDirectorFilter(), Operations.CONTAINS, MovieData.DIRECTOR),
+                Triple.of(filterPane.getFilteredActorFilter(), Operations.CONTAINS, MovieData.ACTOR),
+                Triple.of(filterPane.getFilteredLanguageFilter(), Operations.CONTAINS, MovieData.LANGUAGE)
+        );
+        // FIXME: MPA Rating is Broken in FilterOperation
+        // Triple.of(filterPane.getFilteredMpaRating(), Operations.EQUALS, MovieData.MPA),
         // FIXME: Box Office Earnings is Missing from MovieData
-        // triples.add(Triple.of(filterPane.getFilteredBoxOfficeEarningsMin(), Operations.GREATEROREQUAL, MovieData.BOXOFFICE));
-        // triples.add(Triple.of(filterPane.getFilteredBoxOfficeEarningsMax(), Operations.LESSOREQUAL, MovieData.BOXOFFICE));
-        // Director
-        triples.add(Triple.of(filterPane.getFilteredDirectorFilter(), Operations.CONTAINS, MovieData.DIRECTOR));
-        // Actor
-        triples.add(Triple.of(filterPane.getFilteredActorFilter(), Operations.CONTAINS, MovieData.ACTOR));
+        // Triple.of(filterPane.getFilteredBoxOfficeEarningsMin(), Operations.GREATEROREQUAL, MovieData.BOXOFFICE),
+        // Triple.of(filterPane.getFilteredBoxOfficeEarningsMax(), Operations.LESSOREQUAL, MovieData.BOXOFFICE)
         // FIXME: Writer is Missing from MovieData
-        // triples.add(Triple.of(filterPane.getFilteredWriterFilter(), Operations.CONTAINS, MovieData.WRITER));
-        // Language
-        triples.add(Triple.of(filterPane.getFilteredLanguageFilter(), Operations.CONTAINS, MovieData.LANGUAGE));
-
+        // Triple.of(filterPane.getFilteredWriterFilter(), Operations.CONTAINS, MovieData.WRITER)
 
         for (Triple<String, Operations, MovieData> triple : triples) {
             if (!triple.getLeft().isEmpty()) {
-                List<String> filter = new ArrayList<>();
-                filter.add(triple.getRight().name());
-                filter.add(triple.getMiddle().getOperator());
-                filter.add(triple.getLeft());
-                filters.add(filter);
+                filters.add(Arrays.asList(triple.getRight().name(), triple.getMiddle().getOperator(), triple.getLeft()));
             }
         }
         return filters;

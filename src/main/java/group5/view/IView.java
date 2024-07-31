@@ -16,7 +16,7 @@ public interface IView {
     public void setDetailsPaneEntry(MBeans record);
 
 
-    void clearListSelection();
+    void clearTableSelection();
 
     public void setSourceTableRecordsV2(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix);
 

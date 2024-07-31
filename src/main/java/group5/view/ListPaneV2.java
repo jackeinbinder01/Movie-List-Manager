@@ -39,7 +39,7 @@ public class ListPaneV2 extends JPanel {
     private final String ADD_LIST_BUTTON_TEXT = "Import List";
     private final String DELETE_LIST_BUTTON_TEXT = "Delete List";
     private final String EXPORT_LIST_BUTTON_TEXT = "Export List";
-    private final String MAIN_ACTION_BUTTON_TEXT = "Add/Remove";
+    private final String MAIN_ACTION_BUTTON_TEXT = "+/-";
     private final String WATCHLIST_ACTION_BUTTON_TEXT = "Remove";
 
     private final String NEW_LIST_POPUP_TITLE = "New Watchlist";
@@ -173,10 +173,10 @@ public class ListPaneV2 extends JPanel {
         // Setting the column widths
         List<Pair<TableColumn, Integer>> columnMaxWidths = List.of(
                 // Pair.of(TableColumn.TITLE, 150),
-                Pair.of(TableColumn.YEAR, 35),
-                Pair.of(TableColumn.WATCHED, 50),
+                Pair.of(TableColumn.YEAR, 50),
+                Pair.of(TableColumn.WATCHED, 75),
                 Pair.of(TableColumn.WATCHLIST, 100),
-                Pair.of(TableColumn.RUNTIME, 50)
+                Pair.of(TableColumn.RUNTIME, 75)
         );
         for (Pair<TableColumn, Integer> pair : columnMaxWidths) {
             // targetTable.getColumnModel().getColumn(pair.getLeft().getIndex()).setPreferredWidth(pair.getRight());
@@ -232,10 +232,6 @@ public class ListPaneV2 extends JPanel {
     public void createUserTableTab(String tableName) {
         createTableTab(tableName, TableMode.WATCHLIST);
     }
-
-
-
-
 
 
     private void localImportListHandler() {
@@ -307,14 +303,19 @@ public class ListPaneV2 extends JPanel {
         }
     }
 
+    /**
+     * Binds the features from the controller to the view.
+     *
+     * @param features the features to bind
+     */
     public void bindFeatures(IFeature features) {
         System.out.println("[ListPaneV2] bindFeatures");
         importListButton.addActionListener(e -> localImportListHandler());
         importListHandler = features::importListFromFile;
         exportListHandler = features::exportListToFile;
         exportListButton.addActionListener(e -> localExportListHandler());
-        tableSelectionHandler = features::showRecordDetails;
-        removeFromListHandler = features::removeFromWatchList;
+        tableSelectionHandler = features::handleTableSelection;
+        removeFromListHandler = features::removeFromWatchlist;
         addToListHandler = features::addToWatchlist;
         // changeWatchedStatusHandler = features::changeWatchedStatus;
         changeWatchedStatusHandlerV2 = features::changeWatchedStatusV2;
@@ -325,15 +326,20 @@ public class ListPaneV2 extends JPanel {
         deleteListButton.addActionListener(e -> localDeleteListHandler());
     }
 
-
+    /**
+     * A local handler for tab change event
+     * before passing the event to the controller.
+     */
     private void localTabChangeHandler() {
-        // currentTable = table of the newly selected tab
-        getCurrentTable().clearSelection();
         deleteListButton.setEnabled(!(tabbedPane.getSelectedIndex() == 0));
         // tabChangeHandler would clear ViewFilter, ModelFilter, and refresh the records for the new tab
         tabChangeHandler.accept(tabbedPane.getSelectedIndex());
     }
 
+    /**
+     * Returns the current table in the tabbed pane
+     * @return current JTable in view
+     */
     public JTable getCurrentTable() {
         return (JTable) ((JScrollPane) tabbedPane.getSelectedComponent()).getViewport().getView();
     }
@@ -440,8 +446,7 @@ public class ListPaneV2 extends JPanel {
         }
 
         /*
-         * Don't need to implement this method unless your table's
-         * editable.
+         * Specifies which columns are editable
          */
         public boolean isCellEditable(int row, int col) {
             // The data/cell address is constant, even when are rearranged onscreen.
@@ -477,7 +482,9 @@ public class ListPaneV2 extends JPanel {
 
     }
 
-
+    /**
+     * MovieListSelectionHandler is a custom ListSelectionListener for handling table selection events
+     */
     class MovieListSelectionHandler implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
             boolean isAdjusting = e.getValueIsAdjusting();
@@ -533,8 +540,6 @@ public class ListPaneV2 extends JPanel {
         private MBeans record;
         private boolean isPushed;
         private TableMode tableMode;
-        private JPopupMenu editMenu;
-        private List<String> userListNames;
         private MovieTableModelRecord movieTableModelRecord;
 
         private static Icon tickIcon;
@@ -628,10 +633,10 @@ public class ListPaneV2 extends JPanel {
                             editMenu.addSeparator();
                             editMenu.add(createNewListItem);
                             editMenu.show(e.getComponent(), e.getX(), e.getY());
-                            fireEditingStopped();
+                            fireEditingStopped(); // called after rendering the menu
                             break;
                         case WATCHLIST:
-                            fireEditingStopped();
+                            fireEditingStopped(); // called before the entry row is deleted
                             int currUserTableIndex = tabbedPane.getSelectedIndex() - 1;
                             removeFromListHandler.accept(movieTableModelRecord.getRecord(), currUserTableIndex);
                             break;

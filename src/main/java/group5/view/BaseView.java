@@ -90,13 +90,21 @@ public class BaseView extends JFrame implements IView {
         return listPane.getActiveTab();
     }
 
+    /**
+     * Set (or update) the details pane entry
+     *
+     * @param record the record to set
+     */
     @Override
     public void setDetailsPaneEntry(MBeans record) {
         detailsPane.setMedia(record);
     }
 
+    /**
+     * Clear the table selection
+     */
     @Override
-    public void clearListSelection() {
+    public void clearTableSelection() {
         listPane.getCurrentTable().clearSelection();
     }
 
