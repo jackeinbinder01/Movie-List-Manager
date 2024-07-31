@@ -36,20 +36,23 @@ public class FilterOperation {
         }
     }
 
-    private static boolean filterList(List<String> genre, Operations op, String val) {
+    private static boolean filterList(List<String> strList, Operations op, String val) {
         boolean returnBool = false;
-        for (int index = 0; index < genre.size(); index++) {
+        for (int index = 0; index < strList.size(); index++) {
             switch (op) {
                 case CONTAINS:
-                    if (genre.get(index).contains(val)) {
+                    if (strList.get(index).contains(val)) {
                         returnBool = true;
                     }
+                    break;
                 case EQUALS:
-                    if (genre.get(index).equalsIgnoreCase(val)) {
+                    if (strList.get(index).equalsIgnoreCase(val)) {
                         returnBool = true;
                     }
+                    break;
                 default:
-                    return false;
+                    returnBool = false;
+                    break;
             }
         }
         return returnBool;

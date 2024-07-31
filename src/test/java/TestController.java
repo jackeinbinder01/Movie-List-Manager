@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import group5.controller.IFeature;
 import group5.model.IModel;
+import group5.view.DetailsPane;
 import group5.view.FilterPane;
 import group5.view.IView;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,11 @@ public class TestController {
 
         @Override
         public FilterPane getFilterPane() {
+            return null;
+        }
+
+        @Override
+        public DetailsPane getDetailsPane() {
             return null;
         }
 
@@ -143,8 +149,10 @@ public class TestController {
             return new int[0];
         }
 
+
+
         @Override
-        public void setUserListIndicesForRecord(MBeans record, int[] userListIndices) {
+        public void clearFilter() {
 
         }
     }

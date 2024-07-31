@@ -92,6 +92,11 @@ public class DetailsPane extends JPanel {
     private JTextField userRating;
 
     /**
+     * Holds the current media object being displayed.
+     */
+    private MBeans currentMedia = null;
+
+    /**
      * Constructor to create a DetailsPane object.
      *
      * Setup all the components contained inside this panel.
@@ -199,6 +204,7 @@ public class DetailsPane extends JPanel {
         this.watchedBox.setFocusPainted(false);  // Remove border around text.
         this.detailsPanel.add(this.watchedBox);
         this.addVerticalPadding(5);
+        this.watchedBox.setEnabled(false); // Not editable until records is shown
     }
 
     /**
@@ -259,6 +265,7 @@ public class DetailsPane extends JPanel {
         this.userRating.setBackground(new Color(230, 230, 230));
         this.userRating.setEditable(true);
         this.userRating.setMinimumSize(new Dimension(150, 20));
+        this.userRating.setEnabled(false); // Not editable until records is shown
 
         panel.add(label, BorderLayout.WEST);
         panel.add(this.userRating, BorderLayout.CENTER);
@@ -302,12 +309,22 @@ public class DetailsPane extends JPanel {
     }
 
     /**
+     * Get the current media being displayed.
+     *
+     * @return the current media being displayed.
+     */
+    public MBeans getCurrentMedia() {
+        return this.currentMedia;
+    }
+
+    /**
      * Set the media details to display.
      *
      * @param media the media to display.
      * @param userDetails whether the details are on source or watchlist tab.
      */
     public void setMedia(MBeans media) {
+        this.currentMedia = media;
         this.mediaTitle.setText(media.getTitle());
         // TEMP FIX to handle the change in return type from getPoster()
         try {
@@ -357,46 +374,32 @@ public class DetailsPane extends JPanel {
             this.reSize();
             this.scrollPane.getVerticalScrollBar().setValue(0); // Move to top
         });
+
+        // Enable watched box and user rating box
+        this.userRating.setEnabled(true);
+        this.watchedBox.setEnabled(true);
     }
 
     /**
      * Add listeners to the watched check box and save rating button.
      */
     public void bindFeatures(IFeature features) {
-        // TODO: Add listeners method for watchedBox and saveRating.
-        /*this.watchedBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Watched: " + watchedBox.isSelected());
+        this.watchedBox.addActionListener(e -> {
+            if (this.currentMedia != null) {
+                features.changeWatchedStatus(this.currentMedia, this.watchedBox.isSelected());
             }
-        });*/
-        // User Rating Listener
-        /* ========== PICK ONE ========== */
+        });
+
         // 1. Acion Listener - do something when `enter` pressed
-        /*this.userRating.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("User Rating: " + userRating.getText());
+        this.userRating.addActionListener(e -> {
+            try {
+                double rating = Double.parseDouble(this.userRating.getText());
+                features.changeRating(this.currentMedia, rating);
+                this.userRating.setText(Double.toString(rating));
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid rating format. Please enter a number.");
             }
-        });*/
-
-        // 2. Document Listener - Real time update
-        /*userRating.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                System.out.println("Text inserted. Current text: " + userRating.getText());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                System.out.println("Text removed. Current text: " + userRating.getText());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // This method is generally not called for plain text fields.
-            }
-        });*/
+        });
     }
 
     /**

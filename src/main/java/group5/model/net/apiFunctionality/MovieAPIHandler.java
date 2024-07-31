@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,9 +17,19 @@ import group5.model.beans.MBeans;
 
 public class MovieAPIHandler {
 
+    private static final String API_ENDPOINT = "http://www.omdbapi.com/";
+    private static final String API_KEY = "b253e842";
+
     public MovieAPIHandler() {
     }
 
+    /**
+     * gets a list of MBeans to add.
+     *
+     * @param title the title of a movie
+     * @param yearRange the year/range of years
+     * @return the list of mbeans to add
+     */
     public static List<MBeans> getMoreSourceBeans(String title, String yearRange) {
         List<MBeans> movieList = new ArrayList<>();
         List<apiBeans> apiList = getMovieListFromAPI(title);
@@ -32,23 +43,33 @@ public class MovieAPIHandler {
                 String[] years = yearRange.split("-");
                 int startYear = Integer.parseInt(years[0]);
                 int endYear = Integer.parseInt(years[1]);
+                // get the high and low year if posible
 
-                for (int i = startYear; i <= endYear; i++) {
-                    movieList.add(getMovie(apiBean.getTitle(), Integer.toString(i), null));
+                if (apiBean.getYear() >= startYear && apiBean.getYear() <= endYear) {
+                    // if range
+                    movieList.add(getMovie(apiBean.getID()));
+                    // if inbewtween add
                 }
             } else {
                 int year = Integer.parseInt(yearRange);
                 if (apiBean.getYear() == year) {
-                    movieList.add(getMovie(apiBean.getTitle(), yearRange, null));
+                    movieList.add(getMovie(apiBean.getID()));
+                    // if no range then if same add
                 }
             }
         }
         return movieList;
     }
 
+    /**
+     * gets the api beans from a title search
+     *
+     * @param title the title of a search
+     * @return the list of apibeans containing the movies
+     */
     public static List<apiBeans> getMovieListFromAPI(String title) {
         try {
-            URL url = new URL("API_ENDPOINT" + title); // Use the actual API endpoint
+            URL url = new URL(API_ENDPOINT + "?apikey=" + API_KEY + "&s=" + title);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -67,9 +88,15 @@ public class MovieAPIHandler {
         return null;
     }
 
-    public static MBeans getMovie(String title, String year, String otherParameter) {
+    /**
+     * gets the specific movie using an imdb id.
+     *
+     * @param imdbID the unique movie code
+     * @return the mBean of the movie
+     */
+    public static MBeans getMovie(String imdbID) {
         try {
-            URL url = new URL("API_ENDPOINT" + title + "&year=" + year); // Use the actual API endpoint
+            URL url = new URL(API_ENDPOINT + "?apikey=" + API_KEY + "&i=" + imdbID);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -88,6 +115,12 @@ public class MovieAPIHandler {
         return null;
     }
 
+    /**
+     * handles when the api is not reached.
+     *
+     * @param conn the connection
+     * @throws IOException
+     */
     private static void handleErrorResponse(HttpURLConnection conn) throws IOException {
         System.out.println("GET request failed. Response Code: " + conn.getResponseCode());
         BufferedReader errorReader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
@@ -101,8 +134,15 @@ public class MovieAPIHandler {
         System.out.println("Error Response: " + errorResponse.toString());
     }
 
+    /**
+     * creates a list of apiBeans from the output of the api.
+     *
+     * @param inputStream the output of the api.
+     * @return the list of apibeans
+     */
     public static List<apiBeans> parseAPITitle(InputStream inputStream) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             JsonNode root = mapper.readTree(inputStream);
             JsonNode searchResults = root.path("Search");
@@ -119,8 +159,15 @@ public class MovieAPIHandler {
         return null;
     }
 
+    /**
+     * creates an MBeans from the output of the getmovie
+     *
+     * @param inputStream the output of the get movie api call
+     * @return an MBeans
+     */
     public static MBeans parseMovieFromAPI(InputStream inputStream) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             JsonNode root = mapper.readTree(inputStream);
             return mapper.treeToValue(root, MBeans.class);
