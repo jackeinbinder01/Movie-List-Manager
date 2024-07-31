@@ -7,34 +7,28 @@ import java.util.stream.Stream;
 
 public interface IView {
 
-
     /**
-     * Set the details pane entry
-     * TODO: this should ultimately trigger the setMedia function defined in DetailsPane
-     * @param mbean the MBean to set
+     * Set or update the record in the details pane
+     *
+     * @param record the record to be displayed
      */
-    public void setDetailsPaneEntry(MBeans mbean);
 
-//    /**
-//     * Set the list pane entries
-//     * @param mbeans the MBeans to set
-//     */
-//    public void setSourceTableRecords(Stream<MBeans> mbeans);
+    public void setDetailsPaneEntry(MBeans record);
 
 
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix);
+    void clearListSelection();
 
+    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix);
 
     public void setUserTableRecords(Stream<MBeans> records, int userListId);
 
-
-
-    public void addUserTable(String userListName);
+    public void addUserTable(String watchlistName);
 
     public void bindFeatures(IFeature features);
 
-
     public FilterPane getFilterPane();
+
+    public DetailsPane getDetailsPane();
 
     public void display();
 

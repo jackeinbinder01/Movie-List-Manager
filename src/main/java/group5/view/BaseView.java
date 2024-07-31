@@ -5,7 +5,6 @@ import group5.model.beans.MBeans;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collection;
 import java.util.stream.Stream;
 
 public class BaseView extends JFrame implements IView {
@@ -79,7 +78,7 @@ public class BaseView extends JFrame implements IView {
      */
     public void setUserTableRecords(Stream<MBeans> records, int userListIndex) {
         System.out.println("[BaseView] setUserTableRecords");
-        listPane.setUserTableRecords(records, userListIndex);
+        listPane.setUserTable(records, userListIndex);
     }
 
     public void addUserTable(String userListName) {
@@ -93,19 +92,13 @@ public class BaseView extends JFrame implements IView {
 
     @Override
     public void setDetailsPaneEntry(MBeans record) {
-        System.out.println("[BaseView] calling setDetailsPaneEntry, passing MBeans to detailsPane");
         detailsPane.setMedia(record);
     }
 
-
-
-//    @Override
-//    public void setSourceTableRecords(Stream<MBeans> mbeans) {
-//        Collection<MBeans> records = mbeans.toList();
-//        System.out.println("[BaseView] setMainTableRecords");
-//        listPane.setSourceTableRecords(records.stream());
-//    }
-
+    @Override
+    public void clearListSelection() {
+        listPane.getCurrentTable().clearSelection();
+    }
 
     /**
      * Set the source table records
@@ -117,7 +110,7 @@ public class BaseView extends JFrame implements IView {
     @Override
     public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
         System.out.println("[BaseView] setMainTableRecords");
-        listPane.setSourceTableRecordsV2(records, userListNames, recordUserListMatrix);
+        listPane.setSourceTable(records, userListNames, recordUserListMatrix);
     }
 
     @Override
@@ -125,6 +118,10 @@ public class BaseView extends JFrame implements IView {
         return filterPane;
     }
 
+    @Override
+    public DetailsPane getDetailsPane() {
+        return detailsPane;
+    }
 
 
 }

@@ -41,7 +41,7 @@ public class FilterOperation {
         for (int index = 0; index < strList.size(); index++) {
             switch (op) {
                 case CONTAINS:
-                    if (strList.get(index).contains(val)) {
+                    if (strList.get(index).toLowerCase().contains(val.toLowerCase())) {
                         returnBool = true;
                     }
                     break;
