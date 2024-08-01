@@ -30,6 +30,8 @@
 - On Table Selection
   - The selected row will be highlighted
   - Details Pane will display the selected movie's details
+- On Filter Application
+  - Table selection will be cleared
 
 ---
 

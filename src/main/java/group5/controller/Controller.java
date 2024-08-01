@@ -153,6 +153,7 @@ public class Controller implements IController, IFeature {
      */
     @Override
     public void applyFilters() {
+        view.clearTableSelection();
         List<List<String>> filters = getFilterOptions();
         System.out.println("[Controller] applyFilters called with " + filters.size() + " filters");
         System.out.println("[Controller] Filters: " + filters);
