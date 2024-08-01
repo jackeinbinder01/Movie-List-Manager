@@ -1,20 +1,24 @@
 package group5.model;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.StandardCopyOption;
 
 import group5.model.Filter.FilterHandler;
 import group5.model.Filter.IFilterHandler;
@@ -23,7 +27,6 @@ import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
 import group5.model.net.apiFunctionality.MovieAPIHandler;
-
 
 public class Model implements IModel {
 
@@ -89,12 +92,18 @@ public class Model implements IModel {
      * @param filename The file to load the watch list from.
      */
     @Override
-    public void loadWatchList(String filename) {
+    public int loadWatchList(String filename) {
 
         // Create a substring of file name to use as list name
         int lastSeparator = Math.max(filename.lastIndexOf("\\"), filename.lastIndexOf("/"));
         int lastDot = filename.lastIndexOf('.');
         String name = filename.substring(lastSeparator + 1, lastDot);
+        for (IMovieList watchList : this.watchLists) {
+            if (watchList.getListName().equals(name)) {
+                // Watchlist with exact name already exists.
+                return -1;
+            }
+        }
 
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
@@ -107,12 +116,14 @@ public class Model implements IModel {
                 .collect(Collectors.toSet());
         IMovieList watchList = new MovieList(name, mapped);
         this.watchLists.add(watchList);
+        return this.watchLists.size() - 1;
     }
 
     @Override
-    public void createNewWatchList(String name) {
+    public int createNewWatchList(String name) {
         IMovieList watchList = new MovieList(name);
         this.watchLists.add(watchList);
+        return this.watchLists.size() - 1;
     }
 
     @Override
@@ -144,57 +155,75 @@ public class Model implements IModel {
         return getRecords(userListId);
     }
 
-    /**
-     * adds new movies to the list.
-     *
-     * @param filters
-     * @return the list of movies with more added.
-     */
-    public Stream<MBeans> addNewMBeans(List<List<String>> filters) {
-        Stream<MBeans> movieStream = this.getRecords();
-        String value1 = null;
-        String value2 = null;
-        String title = null;
-        Set<MBeans> beansToAdd = null;
-
-        // Iterate through filters to find title and year values
-        for (List<String> afilter : filters) {
-            if (afilter.get(0).equalsIgnoreCase("title")) {
-                title = afilter.get(2);
-            } else if (afilter.get(0).equalsIgnoreCase("year")) {
-                if (value1 == null) {
-                    value1 = afilter.get(2);
-                } else {
-                    value2 = afilter.get(2);
-                }
-            }
-        }
-
-        // Ensure that value2 is not null
-        if (value2 == null) {
-            value2 = value1;
-        }
-
-        // Fetch new MBeans if title is present
+    @Override
+    public void addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream) {
+        Map<String, String> filterValues = extractFilterValues(filters);
+        String title = filterValues.get("title");
         if (title != null) {
-            if (value1 != null && value2 != null) {
-                if (value1.equals(value2)) {
-                    beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, value1));
+            title.replace(" ", "+");
+        }
+        String year1 = filterValues.get("year1");
+        String year2 = filterValues.get("year2");
+
+        Set<MBeans> beansToAdd = fetchMBeans(title, year1, year2);
+
+        if (beansToAdd != null) {
+            updateSourceList(beansToAdd);
+        }
+
+    }
+
+    @Override
+    public Map<String, String> extractFilterValues(List<List<String>> filters) {
+        Map<String, String> filterValues = new HashMap<>();
+        String title = null;
+        String year1 = null;
+        String year2 = null;
+
+        for (List<String> filter : filters) {
+            String key = filter.get(0);
+            String value = filter.get(2);
+
+            if ("title".equalsIgnoreCase(key)) {
+                title = value;
+            } else if ("year".equalsIgnoreCase(key)) {
+                if (year1 == null) {
+                    year1 = value;
                 } else {
-                    String yearRange = value1 + "-" + value2;
-                    beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, yearRange));
+                    year2 = value;
                 }
             }
         }
 
-        // Add the new MBeans to the existing movie set
-        if (beansToAdd != null) {
-            Set<MBeans> movieSet = movieStream.collect(Collectors.toSet());
-            movieSet.addAll(beansToAdd);
-            return movieSet.stream();
+        if (year2 == null) {
+            year2 = year1;
         }
 
-        return movieStream;
+        filterValues.put("title", title);
+        filterValues.put("year1", year1);
+        filterValues.put("year2", year2);
+
+        return filterValues;
+    }
+
+    @Override
+    public Set<MBeans> fetchMBeans(String title, String year1, String year2) {
+        if (title == null) {
+            throw new IllegalArgumentException("Title must not be null");
+        }
+
+        if (year1 != null && year2 != null) {
+            if (year1.equals(year2)) {
+                return new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, year1));
+            } else {
+                String yearRange = year1 + "-" + year2;
+                return new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, yearRange));
+            }
+        } else if (year1 != null) {
+            return new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, year1));
+        } else {
+            return new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, null));
+        }
     }
 
     @Override
@@ -250,7 +279,58 @@ public class Model implements IModel {
     }
 
     @Override
-    public String getUserListName(int userListId) {
+    public void updateSourceList(Set<MBeans> moviesToAdd) {
+        try {
+            // Collect current records into a LinkedHashSet to maintain order and avoid duplicates
+            Set<MBeans> currentList = new LinkedHashSet<>(getRecords().collect(Collectors.toSet()));
+            System.out.println("Current list size before adding new movies: " + currentList.size());
+            System.out.println("New movies size: " + moviesToAdd.size());
+
+            // Determine which movies are new
+            Set<MBeans> newMovies = new LinkedHashSet<>(moviesToAdd);
+            newMovies.removeAll(currentList);
+
+            if (!newMovies.isEmpty()) {
+                // Add new movies to the source file
+                addNewMBeansToSource(newMovies);
+            }
+
+            System.out.println("New movies size after filtering: " + newMovies.size());
+
+            // Reload the source data if necessary
+            loadSourceData();
+
+        } catch (Exception e) {
+            System.out.println("Error updating source list: " + e.getMessage());
+        }
+    }
+
+    private void addNewMBeansToSource(Set<MBeans> newMBeans) {
+        try {
+            // Collect current records into a LinkedHashSet to maintain order and avoid duplicates
+            Set<MBeans> currentList = new LinkedHashSet<>(getRecords().collect(Collectors.toSet()));
+            System.out.println("Current list size before adding new MBeans: " + currentList.size());
+            System.out.println("New MBeans size: " + newMBeans.size());
+
+            // Add new MBeans to the current list
+            currentList.addAll(newMBeans);
+            System.out.println("Current list size after adding new MBeans: " + currentList.size());
+
+            // Write updated list to file
+            try (OutputStream out = new FileOutputStream(DEFAULT_DATA)) {
+                MBeansFormatter.writeMediasToFile(new ArrayList<>(currentList), out, Formats.JSON);
+            } catch (IOException e) {
+                System.out.println("Error closing file output stream: " + e.getMessage());
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error adding new MBeans to the source list: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String getUserListName(int userListId
+    ) {
         return this.watchLists.get(userListId).getListName();
     }
 
@@ -260,7 +340,8 @@ public class Model implements IModel {
     }
 
     @Override
-    public int[] getUserListIndicesForRecord(MBeans record) {
+    public int[] getUserListIndicesForRecord(MBeans record
+    ) {
         int[] indices = IntStream.range(0, this.watchLists.size())
                 .filter(i -> this.watchLists.get(i).containsMedia(record))
                 .toArray();

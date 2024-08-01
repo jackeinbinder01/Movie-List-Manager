@@ -35,3 +35,9 @@ idea/
 .DS_Store
 */.DS_Store
 
+# Ignore my files
+/tai_temp/*
+/src/main/java/group5/model/net/apiFunctionality/MovieApiHandler_c.java
+/src/main/java/group5/model/net/apiFunctionality/MyRecord.java
+/src/main/java/group5/model/net/apiFunctionality/ListFonts.java
+

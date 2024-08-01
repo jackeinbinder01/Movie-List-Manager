@@ -26,4 +26,8 @@
 ### Details Pane
 ##### Expected Behavior:
 
+- Watched checkbox and MyRating box greyed out/disabled when there's no record shown on details pane.
+- Greyed out watched checkbox and MyRating box should not be editable or interactable.
+- Activate watched checkbox and MyRating box when records starts showing and can be interact with.
+- Upon resizing the window, no item or words got out of bound
 ---

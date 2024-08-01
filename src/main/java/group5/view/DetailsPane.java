@@ -317,8 +317,11 @@ public class DetailsPane extends JPanel {
         return this.currentMedia;
     }
 
-
-    public void refreshUserFields() {
+    /**
+     * Refresh only the user-modifiable fields.
+     * Created to prevent excessive refreshing of the entire pane.
+     */
+    private void refreshUserFields() {
         if (currentMedia != null) {
             this.userRating.setText(Double.toString(currentMedia.getMyRating()));
             this.watchedBox.setSelected(currentMedia.getWatched());
@@ -329,9 +332,17 @@ public class DetailsPane extends JPanel {
      * Set the media details to display.
      *
      * @param media the media to display.
-     * @param userDetails whether the details are on source or watchlist tab.
      */
     public void setMedia(MBeans media) {
+        if (media == null) {
+            return;
+        }
+
+        // if the requested media is the same as the current media, refresh only the user fields
+        if (media == this.currentMedia) {
+            this.refreshUserFields();
+            return;
+        }
         this.currentMedia = media;
         this.mediaTitle.setText(media.getTitle());
         // TEMP FIX to handle the change in return type from getPoster()

@@ -1,6 +1,8 @@
 package group5.model;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import group5.model.beans.MBeans;
@@ -25,14 +27,14 @@ public interface IModel {
      *
      * @param filename The file to load the watch list from.
      */
-    void loadWatchList(String filename);
+    int loadWatchList(String filename);
 
     /**
      * Create new empty watch list.
      *
      * @param name The name of the new watch list.
      */
-    void createNewWatchList(String name);
+    int createNewWatchList(String name);
 
     /**
      * Get the source list of media as stream.
@@ -107,9 +109,17 @@ public interface IModel {
     void updateUserRating(MBeans media, double rating);
 
     /**
-     * Update local source list file to reflect the curent state in the application.
+     * Update local source list file to reflect the curent state in the
+     * application.
      */
     void updateSourceList();
+
+    /**
+     * Update local source list file using the new beans added from API.
+     *
+     * @param moviesToAdd the new Movies
+     */
+    void updateSourceList(Set<MBeans> moviesToAdd);
 
     /**
      * Get the name of watch list.
@@ -137,4 +147,30 @@ public interface IModel {
      * Clear the current filter
      */
     void clearFilter();
+
+    /**
+     * adds new MBeans based on the filters.
+     *
+     * @param filters
+     * @param movieStream
+     */
+    void addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream);
+
+    /**
+     * gets the filters from the list<list<String>>.
+     *
+     * @param filters
+     * @return a new mbean stream
+     */
+    Map<String, String> extractFilterValues(List<List<String>> filters);
+
+    /**
+     * gets the new MBeans from the list of apibeans.
+     *
+     * @param title
+     * @param year1
+     * @param year2
+     * @return
+     */
+    Set<MBeans> fetchMBeans(String title, String year1, String year2);
 }

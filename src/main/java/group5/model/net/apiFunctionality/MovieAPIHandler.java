@@ -39,7 +39,9 @@ public class MovieAPIHandler {
         }
 
         for (apiBeans apiBean : apiList) {
-            if (yearRange.contains("-")) {
+            if (yearRange == null) {
+                movieList.add(getMovie(apiBean.getID()));
+            } else if (yearRange.contains("-")) {
                 String[] years = yearRange.split("-");
                 int startYear = Integer.parseInt(years[0]);
                 int endYear = Integer.parseInt(years[1]);
@@ -69,7 +71,7 @@ public class MovieAPIHandler {
      */
     public static List<apiBeans> getMovieListFromAPI(String title) {
         try {
-            URL url = new URL(API_ENDPOINT + "?apikey=" + API_KEY + "&s=" + title);
+            URL url = new URL(API_ENDPOINT + "?apikey=" + API_KEY + "&s=" + title + "&type=movie" + "&r=json");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
