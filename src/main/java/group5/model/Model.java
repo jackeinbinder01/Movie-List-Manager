@@ -159,7 +159,10 @@ public class Model implements IModel {
     public void addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream) {
         Map<String, String> filterValues = extractFilterValues(filters);
         String title = filterValues.get("title");
-        if (title != null) {
+
+        if (title == null) {
+            return;
+        } else {
             title.replace(" ", "+");
         }
         String year1 = filterValues.get("year1");
@@ -181,37 +184,38 @@ public class Model implements IModel {
         String year2 = null;
 
         for (List<String> filter : filters) {
-            String key = filter.get(0);
-            String value = filter.get(2);
+            if (filter.size() >= 3) { // Ensure filter has at least 3 elements
+                String key = filter.get(0);
+                String value = filter.get(2);
 
-            if ("title".equalsIgnoreCase(key)) {
-                title = value;
-            } else if ("year".equalsIgnoreCase(key)) {
-                if (year1 == null) {
-                    year1 = value;
-                } else {
-                    year2 = value;
+                if ("title".equalsIgnoreCase(key)) {
+                    title = value;
+                } else if ("released".equalsIgnoreCase(key)) {
+                    if (year1 == null) {
+                        year1 = value;
+                    } else {
+                        year2 = value;
+                    }
                 }
             }
         }
 
-        if (year2 == null) {
-            year2 = year1;
+        // Add extracted values to the map
+        if (title != null) {
+            filterValues.put("title", title);
         }
-
-        filterValues.put("title", title);
-        filterValues.put("year1", year1);
-        filterValues.put("year2", year2);
+        if (year1 != null) {
+            filterValues.put("year1", year1);
+        }
+        if (year2 != null) {
+            filterValues.put("year2", year2);
+        }
 
         return filterValues;
     }
 
     @Override
     public Set<MBeans> fetchMBeans(String title, String year1, String year2) {
-        if (title == null) {
-            throw new IllegalArgumentException("Title must not be null");
-        }
-
         if (year1 != null && year2 != null) {
             if (year1.equals(year2)) {
                 return new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, year1));
