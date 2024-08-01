@@ -1,7 +1,9 @@
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.util.List;
+
 import group5.model.beans.MBeans;
 import group5.model.net.apiFunctionality.MovieAPIHandler;
 import group5.model.net.apiFunctionality.apiBeans;
@@ -22,7 +24,7 @@ public class TestMovieAPIHandler {
     }
 
     @Test
-    public <apiBeans> void testGetMovieListFromAPI() {
+    public void testGetMovieListFromAPI() {
         String title = "Inception";
         List<apiBeans> apiList = (List<apiBeans>) MovieAPIHandler.getMovieListFromAPI(title);
 
