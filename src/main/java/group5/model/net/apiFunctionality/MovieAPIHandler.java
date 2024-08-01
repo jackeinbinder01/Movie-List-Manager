@@ -71,7 +71,7 @@ public class MovieAPIHandler {
      */
     public static List<apiBeans> getMovieListFromAPI(String title) {
         try {
-            URL url = new URL(API_ENDPOINT + "?apikey=" + API_KEY + "&s=" + title);
+            URL url = new URL(API_ENDPOINT + "?apikey=" + API_KEY + "&s=" + title + "&type=movie" + "&r=json");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
