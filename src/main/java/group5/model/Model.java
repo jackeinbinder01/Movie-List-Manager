@@ -107,13 +107,26 @@ public class Model implements IModel {
 
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
-        Set<MBeans> mapped = externalList.stream()
-                .map(externalBean
-                        -> this.sourceList.stream()
-                        .filter(localBean -> localBean.equals(externalBean))
-                        .findFirst()
-                        .orElse(null))
-                .collect(Collectors.toSet());
+        boolean newItems = false;
+        Set<MBeans> mapped = new HashSet<>();
+        for (MBeans externalBean : externalList) {
+            // Find if each loaded movie match any record in source.
+            MBeans match = this.getMatchedObjectFromSource(externalBean);
+            if (match == null) {
+                // New item, add to source list
+                this.sourceList.add(externalBean);
+                newItems = true;  // Flag for update source file
+                mapped.add(externalBean);
+            } else {
+                mapped.add(match);
+            }
+        }
+
+        // Update source file if new items were added
+        if (newItems) {
+            updateSourceList();
+        }
+
         IMovieList watchList = new MovieList(name, mapped);
         this.watchLists.add(watchList);
         return this.watchLists.size() - 1;
@@ -144,7 +157,6 @@ public class Model implements IModel {
 
     @Override
     public Stream<MBeans> getRecords(List<List<String>> filters) {
-        // TODO the method to implement new movies is made but not integrated
         this.setFilter(filters);
         return getRecords();
     }
@@ -229,13 +241,18 @@ public class Model implements IModel {
     @Override
     public void saveWatchList(String filename, int userListId) {
         // Get file extension
-        String formatStr = filename.substring(filename.lastIndexOf("."), filename.length());
+        System.out.println(filename);
+        String formatStr = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+        System.out.println(formatStr);
         Formats format = Formats.containsValues(formatStr.toUpperCase());
         try {
-            MBeansFormatter.writeMediasToFile(this.getRecords(userListId).collect(Collectors.toList()),
-                    new FileOutputStream(filename), format);
+            OutputStream out = new FileOutputStream(filename);
+            MBeansFormatter.writeMediasToFile(this.watchLists.get(userListId).getMovieList().collect(Collectors.toSet()),
+                    out, format);
+            out.close();
         } catch (Exception e) {
             System.out.println("Error writing to file");
+            e.printStackTrace();
         }
     }
 
@@ -271,8 +288,9 @@ public class Model implements IModel {
     @Override
     public void updateSourceList() {
         try {
-            MBeansFormatter.writeMediasToFile(this.getRecords().collect(Collectors.toList()),
-                    new FileOutputStream(DEFAULT_DATA), Formats.JSON);
+            OutputStream out = new FileOutputStream(DEFAULT_DATA);
+            MBeansFormatter.writeMediasToFile(this.sourceList, out, Formats.JSON);
+            out.close();
         } catch (Exception e) {
             System.out.println("Error writing to file");
         }
@@ -282,7 +300,7 @@ public class Model implements IModel {
     public void updateSourceList(Set<MBeans> moviesToAdd) {
         try {
             // Collect current records into a LinkedHashSet to maintain order and avoid duplicates
-            Set<MBeans> currentList = new LinkedHashSet<>(getRecords().collect(Collectors.toSet()));
+            Set<MBeans> currentList = new LinkedHashSet<>(this.sourceList);
             System.out.println("Current list size before adding new movies: " + currentList.size());
             System.out.println("New movies size: " + moviesToAdd.size());
 
@@ -308,7 +326,7 @@ public class Model implements IModel {
     private void addNewMBeansToSource(Set<MBeans> newMBeans) {
         try {
             // Collect current records into a LinkedHashSet to maintain order and avoid duplicates
-            Set<MBeans> currentList = new LinkedHashSet<>(getRecords().collect(Collectors.toSet()));
+            Set<MBeans> currentList = new LinkedHashSet<>(this.sourceList);
             System.out.println("Current list size before adding new MBeans: " + currentList.size());
             System.out.println("New MBeans size: " + newMBeans.size());
 
@@ -317,8 +335,10 @@ public class Model implements IModel {
             System.out.println("Current list size after adding new MBeans: " + currentList.size());
 
             // Write updated list to file
-            try (OutputStream out = new FileOutputStream(DEFAULT_DATA)) {
+            try {
+                OutputStream out = new FileOutputStream(DEFAULT_DATA);
                 MBeansFormatter.writeMediasToFile(new ArrayList<>(currentList), out, Formats.JSON);
+                out.close();
             } catch (IOException e) {
                 System.out.println("Error closing file output stream: " + e.getMessage());
             }
@@ -382,6 +402,9 @@ public class Model implements IModel {
      */
     public static void main(String[] args) {
         Model model = new Model();
+        int x = model.loadWatchList("./data/samples/source2.json");
+        System.out.println("Source: \n" + model.getRecords().collect(Collectors.toList()));
+        System.out.println("WatchList: \n" + model.getRecords(x).collect(Collectors.toList()));
     }
 
 }
