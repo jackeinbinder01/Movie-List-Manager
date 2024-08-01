@@ -20,10 +20,24 @@
 
 ### List Pane
 ##### Expected Behavior:
+- On Tab Change
+  - Filters in the Filter Pane will be cleared
+  - Table selection will be cleared
+  - Active tab will show all records, unfiltered
+  - Export List and Delete List buttons will be...
+    - Disabled in source list
+    - Enabled in user-defined lists
+- On Table Selection
+  - The selected row will be highlighted
+  - Details Pane will display the selected movie's details
 
 ---
 
 ### Details Pane
 ##### Expected Behavior:
 
+- Watched checkbox and MyRating box greyed out/disabled when there's no record shown on details pane.
+- Greyed out watched checkbox and MyRating box should not be editable or interactable.
+- Activate watched checkbox and MyRating box when records starts showing and can be interact with.
+- Upon resizing the window, no item or words got out of bound
 ---

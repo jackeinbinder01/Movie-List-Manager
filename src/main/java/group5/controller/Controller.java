@@ -118,9 +118,9 @@ public class Controller implements IController, IFeature {
         if (view.getCurrentTab() > 0) {
             currentTab = "\"UserTable " + (view.getCurrentTab() - 1 + "\"");
         }
-        JOptionPane.showMessageDialog(null, "Exporting data from " + currentTab + " to " + filepath);
+        // JOptionPane.showMessageDialog(null, "Exporting data from " + currentTab + " to " + filepath);
         if (view.getCurrentTab() == 0) {
-            JOptionPane.showMessageDialog(null, "I currently do not have the ability to export from the main list.");
+            // JOptionPane.showMessageDialog(null, "I currently do not have the ability to export from the main list.");
         } else if (view.getCurrentTab() > 0) {
             model.saveWatchList(filepath, view.getCurrentTab() - 1);
         }
@@ -155,13 +155,18 @@ public class Controller implements IController, IFeature {
     @Override
     public void applyFilters() {
         List<List<String>> filters = getFilterOptions();
+        System.out.println("[Controller] applyFilters called with " + filters.size() + " filters");
+        System.out.println("[Controller] Filters: " + filters);
         int currTabIdx = view.getCurrentTab();
         List<MBeans> recordList;
-        model.addNewMBeans(filters, model.getRecords());
         if (currTabIdx == 0) {
+            // Source table: fetch API + apply filters
+            model.addNewMBeans(filters, null);
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
+            view.getFilterPane().setMovies(recordList.stream());
         } else {
+            // User table: apply filters only
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
         }
