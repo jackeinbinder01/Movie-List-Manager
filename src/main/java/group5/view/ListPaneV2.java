@@ -93,8 +93,6 @@ public class ListPaneV2 extends JPanel {
         createSourceTableTab();
         watchlistModels = new ArrayList<>();
         watchlistTables = new ArrayList<>();
-        // watchlistNames = new ArrayList<>();
-
 
 
         // Create panel for add and export buttons below the table
@@ -102,6 +100,7 @@ public class ListPaneV2 extends JPanel {
         importListButton = new JButton(ADD_LIST_BUTTON_TEXT);
         exportListButton = new JButton(EXPORT_LIST_BUTTON_TEXT);
         deleteListButton = new JButton(DELETE_LIST_BUTTON_TEXT);
+        exportListButton.setEnabled(false);
         deleteListButton.setEnabled(false);
         bottomButtonPanel.add(importListButton);
         bottomButtonPanel.add(importListButton);
@@ -332,6 +331,7 @@ public class ListPaneV2 extends JPanel {
      */
     private void localTabChangeHandler() {
         deleteListButton.setEnabled(!(tabbedPane.getSelectedIndex() == 0));
+        exportListButton.setEnabled(!(tabbedPane.getSelectedIndex() == 0));
         // tabChangeHandler would clear ViewFilter, ModelFilter, and refresh the records for the new tab
         tabChangeHandler.accept(tabbedPane.getSelectedIndex());
     }
