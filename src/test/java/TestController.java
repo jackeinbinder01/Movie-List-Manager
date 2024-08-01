@@ -75,6 +75,21 @@ public class TestController {
 
     }
 
+    @Test
+    public void testExportListToFile() {
+        // Current Table: Source Table
+        reset(mockView, mockModel);
+        when(mockView.getCurrentTab()).thenReturn(0);
+        controller.exportListToFile("usr/bin/test.csv");
+        verify(mockModel, never()).saveWatchList(eq("usr/bin/test.csv"), eq(0)); // TODO: because the functionality is not implemented yet
+
+        // Current Table: Watchlist Table
+        reset(mockView, mockModel);
+        when(mockView.getCurrentTab()).thenReturn(10);
+        controller.exportListToFile("usr/bin/test.csv");
+        verify(mockModel).saveWatchList(eq("usr/bin/test.csv"), eq(9));
+    }
+
 
     @Test
     public void testChangeWatchedStatus() {
@@ -131,6 +146,8 @@ public class TestController {
         verify(mockView, never()).setDetailsPaneEntry(any());
 
     }
+
+
 
 
 
