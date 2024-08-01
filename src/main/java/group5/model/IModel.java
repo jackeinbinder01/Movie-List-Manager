@@ -1,6 +1,8 @@
 package group5.model;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import group5.model.beans.MBeans;
@@ -107,7 +109,8 @@ public interface IModel {
     void updateUserRating(MBeans media, double rating);
 
     /**
-     * Update local source list file to reflect the curent state in the application.
+     * Update local source list file to reflect the curent state in the
+     * application.
      */
     void updateSourceList();
 
@@ -137,4 +140,31 @@ public interface IModel {
      * Clear the current filter
      */
     void clearFilter();
+
+    /**
+     * adds new MBeans based on the filters.
+     *
+     * @param filters
+     * @param movieStream
+     * @return
+     */
+    Stream<MBeans> addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream);
+
+    /**
+     * gets the filters from the list<list<String>>.
+     *
+     * @param filters
+     * @return a new mbean stream
+     */
+    Map<String, String> extractFilterValues(List<List<String>> filters);
+
+    /**
+     * gets the new MBeans from the list of apibeans.
+     *
+     * @param title
+     * @param year1
+     * @param year2
+     * @return
+     */
+    Set<MBeans> fetchMBeans(String title, String year1, String year2);
 }

@@ -1,20 +1,21 @@
 package group5.model;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.StandardCopyOption;
 
 import group5.model.Filter.FilterHandler;
 import group5.model.Filter.IFilterHandler;
@@ -22,9 +23,7 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
-import group5.model.net.apiFunctionality.ListFonts;
 import group5.model.net.apiFunctionality.MovieAPIHandler;
-
 
 public class Model implements IModel {
 
@@ -106,12 +105,12 @@ public class Model implements IModel {
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
         // Create a list of sourcelist references by mapping externalList to sourceList
         Set<MBeans> mapped = externalList.stream()
-                                         .map(externalBean
-                                                 -> this.sourceList.stream()
-                                                 .filter(localBean -> localBean.equals(externalBean))
-                                                 .findFirst()
-                                                 .orElse(null))
-                                         .collect(Collectors.toSet());
+                .map(externalBean
+                        -> this.sourceList.stream()
+                        .filter(localBean -> localBean.equals(externalBean))
+                        .findFirst()
+                        .orElse(null))
+                .collect(Collectors.toSet());
         IMovieList watchList = new MovieList(name, mapped);
         this.watchLists.add(watchList);
         return this.watchLists.size() - 1;
@@ -153,50 +152,15 @@ public class Model implements IModel {
         return getRecords(userListId);
     }
 
-    /**
-     * adds new movies to the list.
-     *
-     * @param filters
-     * @return the list of movies with more added.
-     */
-    public Stream<MBeans> addNewMBeans(List<List<String>> filters) {
-        Stream<MBeans> movieStream = this.getRecords();
-        String value1 = null;
-        String value2 = null;
-        String title = null;
-        Set<MBeans> beansToAdd = null;
+    @Override
+    public Stream<MBeans> addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream) {
+        Map<String, String> filterValues = extractFilterValues(filters);
+        String title = filterValues.get("title");
+        String year1 = filterValues.get("year1");
+        String year2 = filterValues.get("year2");
 
-        // Iterate through filters to find title and year values
-        for (List<String> afilter : filters) {
-            if (afilter.get(0).equalsIgnoreCase("title")) {
-                title = afilter.get(2);
-            } else if (afilter.get(0).equalsIgnoreCase("year")) {
-                if (value1 == null) {
-                    value1 = afilter.get(2);
-                } else {
-                    value2 = afilter.get(2);
-                }
-            }
-        }
+        Set<MBeans> beansToAdd = fetchMBeans(title, year1, year2);
 
-        // Ensure that value2 is not null
-        if (value2 == null) {
-            value2 = value1;
-        }
-
-        // Fetch new MBeans if title is present
-        if (title != null) {
-            if (value1 != null && value2 != null) {
-                if (value1.equals(value2)) {
-                    beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, value1));
-                } else {
-                    String yearRange = value1 + "-" + value2;
-                    beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, yearRange));
-                }
-            }
-        }
-
-        // Add the new MBeans to the existing movie set
         if (beansToAdd != null) {
             Set<MBeans> movieSet = movieStream.collect(Collectors.toSet());
             movieSet.addAll(beansToAdd);
@@ -206,6 +170,93 @@ public class Model implements IModel {
         return movieStream;
     }
 
+    @Override
+    public Map<String, String> extractFilterValues(List<List<String>> filters) {
+        Map<String, String> filterValues = new HashMap<>();
+        String title = null;
+        String year1 = null;
+        String year2 = null;
+
+        for (List<String> filter : filters) {
+            String key = filter.get(0);
+            String value = filter.get(2);
+
+            if ("title".equalsIgnoreCase(key)) {
+                title = value;
+            } else if ("year".equalsIgnoreCase(key)) {
+                if (year1 == null) {
+                    year1 = value;
+                } else {
+                    year2 = value;
+                }
+            }
+        }
+
+        if (year2 == null) {
+            year2 = year1;
+        }
+
+        filterValues.put("title", title);
+        filterValues.put("year1", year1);
+        filterValues.put("year2", year2);
+
+        return filterValues;
+    }
+
+    @Override
+    public Set<MBeans> fetchMBeans(String title, String year1, String year2) {
+        if (title != null && year1 != null && year2 != null) {
+            if (year1.equals(year2)) {
+                return new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, year1));
+            } else {
+                String yearRange = year1 + "-" + year2;
+                return new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, yearRange));
+            }
+        }
+        return null;
+    }
+
+    // public Stream<MBeans> addNewMBeans(List<List<String>> filters) {
+    //     Stream<MBeans> movieStream = this.getRecords();
+    //     String value1 = null;
+    //     String value2 = null;
+    //     String title = null;
+    //     Set<MBeans> beansToAdd = null;
+    //     // Iterate through filters to find title and year values
+    //     for (List<String> afilter : filters) {
+    //         if (afilter.get(0).equalsIgnoreCase("title")) {
+    //             title = afilter.get(2);
+    //         } else if (afilter.get(0).equalsIgnoreCase("year")) {
+    //             if (value1 == null) {
+    //                 value1 = afilter.get(2);
+    //             } else {
+    //                 value2 = afilter.get(2);
+    //             }
+    //         }
+    //     }
+    //     // Ensure that value2 is not null
+    //     if (value2 == null) {
+    //         value2 = value1;
+    //     }
+    //     // Fetch new MBeans if title is present
+    //     if (title != null) {
+    //         if (value1 != null && value2 != null) {
+    //             if (value1.equals(value2)) {
+    //                 beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, value1));
+    //             } else {
+    //                 String yearRange = value1 + "-" + value2;
+    //                 beansToAdd = new HashSet<>(MovieAPIHandler.getMoreSourceBeans(title, yearRange));
+    //             }
+    //         }
+    //     }
+    //     // Add the new MBeans to the existing movie set
+    //     if (beansToAdd != null) {
+    //         Set<MBeans> movieSet = movieStream.collect(Collectors.toSet());
+    //         movieSet.addAll(beansToAdd);
+    //         return movieSet.stream();
+    //     }
+    //     return movieStream;
+    // }
     @Override
     public void saveWatchList(String filename, int userListId) {
         // Get file extension

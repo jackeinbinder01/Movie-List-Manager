@@ -1,11 +1,15 @@
 package group5.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.swing.JOptionPane;
+
+import org.apache.commons.lang3.tuple.Triple;
 
 import group5.model.Filter.Operations;
 import group5.model.IModel;
@@ -14,15 +18,11 @@ import group5.model.beans.MBeans;
 import group5.view.FilterPane;
 import group5.view.IView;
 
-import org.apache.commons.lang3.tuple.Triple;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Controller class for the program.
  */
 public class Controller implements IController, IFeature {
+
     /**
      * The model object representing the movie database.
      */
@@ -36,7 +36,7 @@ public class Controller implements IController, IFeature {
      * Constructor for the controller.
      *
      * @param model the model object representing the movie database
-     * @param view  the view object representing the user interface
+     * @param view the view object representing the user interface
      */
     public Controller(IModel model, IView view) {
 
@@ -61,10 +61,9 @@ public class Controller implements IController, IFeature {
         }
     }
 
-
     /**
-     * Temporary method to initialize the model with sample data.
-     * For development purposes only.
+     * Temporary method to initialize the model with sample data. For
+     * development purposes only.
      */
     private void DEV_InitModel() {
         model.loadSourceData();
@@ -74,7 +73,6 @@ public class Controller implements IController, IFeature {
         model.loadWatchList("./data/samples/lol.json");
         model.loadWatchList("./data/samples/titanic_only.json");
     }
-
 
     @Override
     public void deleteWatchlist(int userListIndex) {
@@ -111,7 +109,8 @@ public class Controller implements IController, IFeature {
     /**
      * Handles user-initiated export of a watchlist to a file.
      *
-     * @param filepath the path to the file where the watchlist will be exported.
+     * @param filepath the path to the file where the watchlist will be
+     * exported.
      */
     @Override
     public void exportListToFile(String filepath) {
@@ -186,7 +185,6 @@ public class Controller implements IController, IFeature {
         view.getFilterPane().setMovies(recordList.stream());
     }
 
-
     /**
      * Main entry point for the controller.
      */
@@ -199,8 +197,9 @@ public class Controller implements IController, IFeature {
     /**
      * Remove a record from the user's watch list.
      *
-     * @param record        the MBean to be removed.
-     * @param userListIndex the index in the user's watch list where the MBean is located.
+     * @param record the MBean to be removed.
+     * @param userListIndex the index in the user's watch list where the MBean
+     * is located.
      */
     public void removeFromWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
@@ -228,8 +227,9 @@ public class Controller implements IController, IFeature {
     /**
      * Add a record to the user's watch list.
      *
-     * @param record        the MBean to be added to the watch list.
-     * @param userListIndex the index in the user's watch list where the MBean should be added.
+     * @param record the MBean to be added to the watch list.
+     * @param userListIndex the index in the user's watch list where the MBean
+     * should be added.
      */
     public void addToWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
@@ -238,7 +238,6 @@ public class Controller implements IController, IFeature {
         view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
         // Since adding to a list is done from the source tab only, there's no need to update the filter pane
     }
-
 
     /**
      * A convenient method to get the records for the current view.
@@ -255,17 +254,16 @@ public class Controller implements IController, IFeature {
     }
 
     /**
-     * Changes the rating of a specific MBean.
-     * No view updates are triggered since the rating is not displayed in the table.
+     * Changes the rating of a specific MBean. No view updates are triggered
+     * since the rating is not displayed in the table.
      *
-     * @param record  the MBean whose rating is to be changed.
+     * @param record the MBean whose rating is to be changed.
      * @param rating the new rating to be assigned to the MBean.
      */
     public void changeRating(MBeans record, double rating) {
         System.out.println("[Controller] Changing rating for " + record.getTitle() + " to " + rating);
         model.updateUserRating(record, rating);
     }
-
 
     public void changeWatchedStatusV2(MBeans record, boolean watched, String caller) {
         model.updateWatched(record, watched);
@@ -289,7 +287,6 @@ public class Controller implements IController, IFeature {
         }
     }
 
-
     public void handleTabChange(int tabIndex) {
         System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter pane range");
         view.clearTableSelection(); // this is to prevent inactive tabs from having selections
@@ -297,9 +294,11 @@ public class Controller implements IController, IFeature {
     }
 
     /**
-     * Private helper method to retrieve a boolean matrix representing the user lists for each record.
+     * Private helper method to retrieve a boolean matrix representing the user
+     * lists for each record.
      *
-     * @return a 2D boolean array where each row represents a record and each column represents a user list
+     * @return a 2D boolean array where each row represents a record and each
+     * column represents a user list
      */
     private boolean[][] getRecordUserListMatrixV2(Stream<MBeans> records) {
         return records
@@ -314,10 +313,9 @@ public class Controller implements IController, IFeature {
                 .toArray(boolean[][]::new);
     }
 
-
     /**
-     * Method to get the names of the user lists.
-     * Created to assist in constructing the watchlist dropbox menu.
+     * Method to get the names of the user lists. Created to assist in
+     * constructing the watchlist dropbox menu.
      *
      * @return an array of strings representing the names of the user lists
      */
@@ -327,13 +325,13 @@ public class Controller implements IController, IFeature {
                 .toArray(String[]::new);
     }
 
-
     /**
      * Get the current filter options from the FilterPane.
      * <p>
-     * Note that the current filter fields do not mean that the filters are committed by the user,
-     * it is an indicator what is currently typed or selected in the filter fields.
-     * The last committed filter options are stored in the model.
+     * Note that the current filter fields do not mean that the filters are
+     * committed by the user, it is an indicator what is currently typed or
+     * selected in the filter fields. The last committed filter options are
+     * stored in the model.
      *
      * @return a 3-column table of strings representing the filter options
      */
@@ -367,6 +365,5 @@ public class Controller implements IController, IFeature {
         }
         return filters;
     }
-
 
 }
