@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import javax.swing.JOptionPane;
-
 import org.apache.commons.lang3.tuple.Triple;
 
 import group5.model.Filter.Operations;
@@ -114,11 +112,11 @@ public class Controller implements IController, IFeature {
      */
     @Override
     public void exportListToFile(String filepath) {
-        if (view.getCurrentTab() == 0) {
+        if (view.getActiveTab() == 0) {
             System.out.println("[Controller] Not allowed to export source table");
-        } else if (view.getCurrentTab() > 0) {
+        } else if (view.getActiveTab() > 0) {
             System.out.println("[Controller] User requested to export watchlist to " + filepath);
-            model.saveWatchList(filepath, view.getCurrentTab() - 1);
+            model.saveWatchList(filepath, view.getActiveTab() - 1);
         }
     }
 
@@ -132,14 +130,18 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] User requested to import watchlist from " + filepath);
         // TODO: Add error handling for invalid file paths
         int newWatchlistIdx = model.loadWatchList(filepath);
+        System.out.println("[Controller] Watchlist import result: " + newWatchlistIdx);
         if (newWatchlistIdx < 0) {
-            System.out.println("[Controller] Failed to import watchlist from " + filepath);
+            view.showAlertDialog("Error", "Failed to import watchlist from " + filepath);
+            return;
         }
         view.addUserTable(model.getUserListName(newWatchlistIdx));
         // Set records for the new table (this call isn't necessary because the table will be updated on tab change)
         view.setUserTableRecords(model.getRecords(newWatchlistIdx), newWatchlistIdx);
         // Update the source table because of new RecordUserListMatrix
         view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
+        view.setActiveTab(newWatchlistIdx + 1);
+
     }
 
     @Override
@@ -157,7 +159,7 @@ public class Controller implements IController, IFeature {
         List<List<String>> filters = getFilterOptions();
         System.out.println("[Controller] applyFilters called with " + filters.size() + " filters");
         System.out.println("[Controller] Filters: " + filters);
-        int currTabIdx = view.getCurrentTab();
+        int currTabIdx = view.getActiveTab();
         List<MBeans> recordList;
         if (currTabIdx == 0) {
             // Source table: fetch API + apply filters
@@ -181,7 +183,7 @@ public class Controller implements IController, IFeature {
         model.clearFilter();
         view.getFilterPane().resetFilterOptions();
         view.getFilterPane().clearFilterOptions();
-        int currTabIdx = view.getCurrentTab();
+        int currTabIdx = view.getActiveTab();
         List<MBeans> recordList = getRecordsForCurrentView().toList();
         if (currTabIdx == 0) {
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
@@ -209,14 +211,14 @@ public class Controller implements IController, IFeature {
      */
     public void removeFromWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
-        if (view.getCurrentTab() > 0) {
+        if (view.getActiveTab() > 0) {
             // only clears selection if the current tab is the affected watchlist
             view.clearTableSelection();
         }
         model.removeFromWatchList(record, userListIndex);
 
         // Update the filter pane if the current tab is the affected user list
-        if (view.getCurrentTab() > 0) {
+        if (view.getActiveTab() > 0) {
             if (model.getRecords(userListIndex).count() == 0) { // if the resultant list is empty...
                 // ...then clear filters in the filter pane and model
                 model.clearFilter();
@@ -251,7 +253,7 @@ public class Controller implements IController, IFeature {
      * @return a stream of MBeans
      */
     private Stream<MBeans> getRecordsForCurrentView() {
-        int currentTab = view.getCurrentTab();
+        int currentTab = view.getActiveTab();
         if (currentTab == 0) {
             return model.getRecords();
         } else {
@@ -275,14 +277,14 @@ public class Controller implements IController, IFeature {
         model.updateWatched(record, watched);
         if (caller.equalsIgnoreCase("detailsPane")) {   // If caller is detailsPane, update the listPane
             System.out.println("[Controller] Changed Watched Status: Updating listPane from detailsPane");
-            if (view.getCurrentTab() == 0) {
+            if (view.getActiveTab() == 0) {
                 // If the current tab is the source table, update the source table
                 view.setSourceTableRecordsV2(getRecordsForCurrentView(),
                         getWatchlistNames(),
                         getRecordUserListMatrixV2(getRecordsForCurrentView()));
             } else if (getRecordsForCurrentView().anyMatch(r -> r == record)) {
                 // If the record is in the active user list, update the user list
-                view.setUserTableRecords(getRecordsForCurrentView(), view.getCurrentTab() - 1);
+                view.setUserTableRecords(getRecordsForCurrentView(), view.getActiveTab() - 1);
             }
         } else if (caller.equalsIgnoreCase("listPane")) {   // If the caller is listPane, update the detailsPane
             System.out.println("[Controller] Changed Watched Status: Updating detailsPane from listPane");
