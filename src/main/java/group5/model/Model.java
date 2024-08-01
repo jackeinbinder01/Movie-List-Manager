@@ -160,7 +160,7 @@ public class Model implements IModel {
         Map<String, String> filterValues = extractFilterValues(filters);
         String title = filterValues.get("title");
 
-        if (title == null) {
+        if (title == null || title.isEmpty()) {
             return;
         } else {
             title.replace(" ", "+");
