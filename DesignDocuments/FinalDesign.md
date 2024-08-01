@@ -173,5 +173,5 @@ classDiagram
         - getWatchlistNames(): String[]
         - getFilterOptions(): List~List~String~~
     }
-    
+
 ```
