@@ -39,7 +39,9 @@ public class MovieAPIHandler {
         }
 
         for (apiBeans apiBean : apiList) {
-            if (yearRange.contains("-")) {
+            if (yearRange == null) {
+                movieList.add(getMovie(apiBean.getID()));
+            } else if (yearRange.contains("-")) {
                 String[] years = yearRange.split("-");
                 int startYear = Integer.parseInt(years[0]);
                 int endYear = Integer.parseInt(years[1]);

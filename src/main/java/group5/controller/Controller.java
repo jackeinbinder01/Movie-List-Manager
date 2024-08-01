@@ -157,6 +157,7 @@ public class Controller implements IController, IFeature {
         List<List<String>> filters = getFilterOptions();
         int currTabIdx = view.getCurrentTab();
         List<MBeans> recordList;
+        model.addNewMBeans(filters, model.getRecords());
         if (currTabIdx == 0) {
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));

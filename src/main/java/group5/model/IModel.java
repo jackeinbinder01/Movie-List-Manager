@@ -115,6 +115,13 @@ public interface IModel {
     void updateSourceList();
 
     /**
+     * Update local source list file using the new beans added from API.
+     *
+     * @param moviesToAdd the new Movies
+     */
+    void updateSourceList(Set<MBeans> moviesToAdd);
+
+    /**
      * Get the name of watch list.
      *
      * @return the name of watch list
@@ -146,9 +153,8 @@ public interface IModel {
      *
      * @param filters
      * @param movieStream
-     * @return
      */
-    Stream<MBeans> addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream);
+    void addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream);
 
     /**
      * gets the filters from the list<list<String>>.
