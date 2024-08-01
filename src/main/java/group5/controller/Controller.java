@@ -114,14 +114,10 @@ public class Controller implements IController, IFeature {
      */
     @Override
     public void exportListToFile(String filepath) {
-        String currentTab = "\"SourceTable\"";
-        if (view.getCurrentTab() > 0) {
-            currentTab = "\"UserTable " + (view.getCurrentTab() - 1 + "\"");
-        }
-        JOptionPane.showMessageDialog(null, "Exporting data from " + currentTab + " to " + filepath);
         if (view.getCurrentTab() == 0) {
-            JOptionPane.showMessageDialog(null, "I currently do not have the ability to export from the main list.");
+            System.out.println("[Controller] Not allowed to export source table");
         } else if (view.getCurrentTab() > 0) {
+            System.out.println("[Controller] User requested to export watchlist to " + filepath);
             model.saveWatchList(filepath, view.getCurrentTab() - 1);
         }
     }
@@ -135,10 +131,13 @@ public class Controller implements IController, IFeature {
     public void importListFromFile(String filepath) {
         System.out.println("[Controller] User requested to import watchlist from " + filepath);
         // TODO: Add error handling for invalid file paths
-        model.loadWatchList(filepath);
-        view.addUserTable(model.getUserListName(model.getUserListCount() - 1));
-        // Set records for the new table
-        view.setUserTableRecords(model.getRecords(model.getUserListCount() - 1), model.getUserListCount() - 1);
+        int newWatchlistIdx = model.loadWatchList(filepath);
+        if (newWatchlistIdx < 0) {
+            System.out.println("[Controller] Failed to import watchlist from " + filepath);
+        }
+        view.addUserTable(model.getUserListName(newWatchlistIdx));
+        // Set records for the new table (this call isn't necessary because the table will be updated on tab change)
+        view.setUserTableRecords(model.getRecords(newWatchlistIdx), newWatchlistIdx);
         // Update the source table because of new RecordUserListMatrix
         view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
     }
@@ -155,13 +154,18 @@ public class Controller implements IController, IFeature {
     @Override
     public void applyFilters() {
         List<List<String>> filters = getFilterOptions();
+        System.out.println("[Controller] applyFilters called with " + filters.size() + " filters");
+        System.out.println("[Controller] Filters: " + filters);
         int currTabIdx = view.getCurrentTab();
         List<MBeans> recordList;
-        model.addNewMBeans(filters, model.getRecords());
         if (currTabIdx == 0) {
+            // Source table: fetch API + apply filters
+            model.addNewMBeans(filters, null);
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
+            view.getFilterPane().setMovies(recordList.stream());
         } else {
+            // User table: apply filters only
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
         }

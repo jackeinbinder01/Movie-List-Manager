@@ -20,6 +20,16 @@
 
 ### List Pane
 ##### Expected Behavior:
+- On Tab Change
+  - Filters in the Filter Pane will be cleared
+  - Table selection will be cleared
+  - Active tab will show all records, unfiltered
+  - Export List and Delete List buttons will be...
+    - Disabled in source list
+    - Enabled in user-defined lists
+- On Table Selection
+  - The selected row will be highlighted
+  - Details Pane will display the selected movie's details
 
 ---
 
