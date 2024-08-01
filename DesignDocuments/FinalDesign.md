@@ -86,7 +86,92 @@ classDiagram
     }
     
     class IModel {
-        
+        + DEFAULT_DATA: String$
+        + loadSourceData(): void
+        + loadWatchList(String filename): int
+        + createNewWatchList(String name): int
+        + getRecords(): Stream~MBeans~
+        + getRecords(int userListId): Stream~MBeans~
+        + getRecords(List~List~String~~ filters): Stream~MBeans~
+        + getRecords(int userListId, List~List~String~~ filters): Stream~MBeans~
+        + saveWatchList(String filename, int userListId/*, UserListIdentifier userListId*/): void
+        + addToWatchList(MBeans media, int userListId): void
+        + removeFromWatchList(MBeans media, int userListId): void
+        + updateWatched(MBeans media, boolean watched): void
+        + updateUserRating(MBeans media, double rating): void
+        + updateSourceList(): void
+        + updateSourceList(Set~MBeans~ moviesToAdd): void
+        + getUserListName(int userListId): String
+        + getUserListCount(): int
+        + getUserListIndicesForRecord(MBeans record): int[]
+        + clearFilter(): void
+        + addNewMBeans(List~List~String~~ filters, Stream<MBeans> movieStream): void
+        + extractFilterValues(List~List~String~~ filters): Map<String, String>
+        + fetchMBeans(String title, String year1, String year2): Set~<MBeans~
     }
     
+    class IView {
+        + setDetailsPaneEntry(MBeans record): void
+        + clearTableSelection(): void
+        + setSourceTableRecords(Stream~MBeans~ records, String[] watchlistNames, boolean[][] recordWatchlistMatrix): void
+        + setUserTableRecords(Stream~MBeans~ records, int userListId): void
+        + addUserTable(String watchlistName): void
+        + bindFeatures(IFeature features): void
+        + getFilterPane(): FilterPane
+        + getDetailsPane(): DetailsPane
+        + display(): void
+        + getCurrentTab(): int
+    }
+    
+    class IController {
+        + go(): void
+    }
+    
+    class IFeature {
+        + handleTableSelection(MBeans record): void
+        + importListFromFile(String filepath): void
+        + exportListToFile(String filepath): void
+        + removeFromWatchlist(MBeans mbean, int userListIndex): void
+        + addToWatchlist(MBeans mbean, int userListIndex): void
+        + createWatchlist(String name): void
+        + deleteWatchlist(int userListIndex): void
+        + changeRating(MBeans mbean, double rating): void
+        + changeWatchedStatus(MBeans record, boolean watched, String caller): void
+        + applyFilters(): void
+        + clearFiltersAndReloadRecords(): void
+        + handleTabChange(int tabIndex): void
+    }
+    
+    class BaseView {
+        - APP_TITLE: String$
+        - DEFAULT_WIDTH: int
+        - DEFAULT_HEIGHT: int
+        + FilterPane
+        + ListPane
+        + DetailsPane
+        + BaseView()
+    }
+
+    class Model {
+        - sourceList: Set~MBeans~
+        - watchLists: List~IMovieList~
+        - filterHandler: IFilterHandler
+        - filter: List~List~String~~
+        + Model()
+        + addNewMBeansToSource(Set~MBeans~ newMBeans): void
+        + setFilter(List~List~String~~ filter): void
+        + getMatchedObjectFromSource(MBeans media): MBeans
+    }
+    
+    class Controller {
+        + IModel
+        + IView
+        + Controller(IModel model, IView view)
+        - DEV_InitModel(): void
+        - getRecordsForCurrentView(): Stream~MBeans~
+        - getRecordUserListMatrix(Stream<MBeans> records): boolean[][]
+        - getWatchlistNames(): String[]
+        - getFilterOptions(): List~List~String~~
+    }
+
 ```
