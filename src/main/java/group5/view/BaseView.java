@@ -132,7 +132,6 @@ public class BaseView extends JFrame implements IView {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
     }
 
-
     @Override
     public void setDetailsPaneEntry(MBeans record) {
         detailsPane.setMedia(record);
