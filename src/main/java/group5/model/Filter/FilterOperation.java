@@ -75,7 +75,13 @@ public class FilterOperation {
     }
 
     private static boolean filterInt(int field, Operations op, String val) {
-        int intVal = Integer.parseInt(val);
+        int intVal;
+        try {
+            intVal = Integer.parseInt(val);
+        } catch (NumberFormatException e) {
+            return true;
+        }
+
         switch (op) {
             case EQUALS:
                 return field == intVal;
@@ -93,7 +99,13 @@ public class FilterOperation {
     }
 
     private static boolean filterDouble(double field, Operations op, String val) {
-        double doubleVal = Double.parseDouble(val);
+        double doubleVal;
+        try {
+            doubleVal = Double.parseDouble(val);
+        } catch (NumberFormatException e) {
+            return true;
+        }
+
         switch (op) {
             case EQUALS:
                 return field == doubleVal;

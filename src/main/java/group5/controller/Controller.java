@@ -166,10 +166,7 @@ public class Controller implements IController, IFeature {
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
 
             // this filter range has to be set without any filters
-            // this is a workaround to retrieve the full source list, and then restore the filters
-            model.clearFilter();
-            view.getFilterPane().setMovies(model.getRecords(), true);
-            model.getRecords(filters);
+            view.getFilterPane().setMovies(model.getAllRecords(), true);
 
         } else {
             // User table: apply filters only
@@ -230,7 +227,8 @@ public class Controller implements IController, IFeature {
                 view.getFilterPane().resetFilterOptions();
                 view.getFilterPane().clearFilterOptions();
             }
-            view.getFilterPane().setMovies(model.getRecords(userListIndex), false);
+            // this filter range has to be set without any filters
+            view.getFilterPane().setMovies(model.getAllRecords(userListIndex), false);
         }
 
         view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
