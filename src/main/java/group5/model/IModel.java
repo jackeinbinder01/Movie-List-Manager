@@ -48,6 +48,14 @@ public interface IModel {
     int createNewWatchList(String name);
 
     /**
+     * Delete watch list.
+     *
+     * @param userListId The identifier of the watch list to delete.
+     * @return the id of the watch list deleted.
+     */
+    int deleteWatchList(int userListId);
+
+    /**
      * Get the source list of media as stream.
      *
      * @return stream of MBeans representing the source list.

@@ -16,7 +16,7 @@ repositories {
 }
 
 application {
-    mainClass.set("group5.MovieInfoApp") /** Update with your main driver app location */
+    mainClass.set("group5.MovieListManager") /** Update with your main driver app location */
 }
 
 dependencies {

@@ -82,10 +82,20 @@ public class Model implements IModel {
 
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Walk through a DEFAULT_WATCHLIST directory and find every.json file to load.
+     */
     @Override
     public int loadWatchList() {
-        try (Stream<Path> paths = Files.walk(Paths.get("./data/test"))) {
+        try (Stream<Path> paths = Files.walk(Paths.get(DEFAULT_WATCHLIST))) {
             List<Path> pathList = paths.collect(Collectors.toList());
+            for (Path path : pathList) {
+                if (path.toString().endsWith(".json")) {
+                    loadWatchList(path.toString());
+                }
+            }
         } catch (Exception e) {
             System.out.println("Error loading watchlist");
         }
@@ -99,6 +109,8 @@ public class Model implements IModel {
      * source list. Pass set to MovieList constructor to create a new watch
      * list. Add the new watch list to the watchLists list.
      *
+     * Create a new watch list file into default watchlist directory.
+     *
      * @param filename The file to load the watch list from.
      */
     @Override
@@ -107,6 +119,7 @@ public class Model implements IModel {
         // Create a substring of file name to use as list name
         int lastSeparator = Math.max(filename.lastIndexOf("\\"), filename.lastIndexOf("/"));
         int lastDot = filename.lastIndexOf('.');
+        Formats format = Formats.containsValues(filename.substring(lastDot + 1));
         String name = filename.substring(lastSeparator + 1, lastDot);
         for (IMovieList watchList : this.watchLists) {
             if (watchList.getListName().equals(name)) {
@@ -115,7 +128,7 @@ public class Model implements IModel {
             }
         }
 
-        Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
+        Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, format);
 
         // Check if the file was loaded successfully, if not return -1 and do not create a new watchlist
         if (externalList == null) {
@@ -143,16 +156,33 @@ public class Model implements IModel {
             saveSourceList();
         }
 
+        // Create new watchlist
         IMovieList watchList = new MovieList(name, mapped);
         this.watchLists.add(watchList);
-        return this.watchLists.size() - 1;
+        int index = this.watchLists.size() - 1;
+        // Write to local directory.
+        this.saveWatchList(DEFAULT_WATCHLIST + "/" + this.getUserListName(index) + ".json", index);
+        return index;
     }
 
     @Override
     public int createNewWatchList(String name) {
         IMovieList watchList = new MovieList(name);
         this.watchLists.add(watchList);
-        return this.watchLists.size() - 1;
+        int index = this.watchLists.size() - 1;
+        // Write to local directory.
+        this.saveWatchList(DEFAULT_WATCHLIST + "/" + this.getUserListName(index) + ".json", index);
+        return index;
+    }
+
+    @Override
+    public int deleteWatchList(int userListId) {
+        if (userListId < 0 || userListId >= this.watchLists.size()) {
+            return -1;
+        } else {
+            this.watchLists.remove(userListId);
+            return userListId;
+        }
     }
 
     @Override
@@ -286,11 +316,13 @@ public class Model implements IModel {
     public void addToWatchList(MBeans media, int userListId) {
         MBeans sourceMedia = this.getMatchedObjectFromSource(media);
         this.watchLists.get(userListId).addToList(sourceMedia);
+        this.saveWatchList(DEFAULT_WATCHLIST + "/" + this.getUserListName(userListId) + ".json", userListId);
     }
 
     @Override
     public void removeFromWatchList(MBeans media, int userListId) {
         this.watchLists.get(userListId).removeFromList(media);
+        this.saveWatchList(DEFAULT_WATCHLIST + "/" + this.getUserListName(userListId) + ".json", userListId);
     }
 
     @Override
@@ -402,7 +434,6 @@ public class Model implements IModel {
             System.out.println("NAME: " + model.getUserListName(i));
             System.out.println(model.getRecords(i));
         }
-
     }
 
 }
