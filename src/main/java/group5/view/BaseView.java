@@ -59,7 +59,11 @@ public class BaseView extends JFrame implements IView {
 
     }
 
-
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Implemented to set the visibility of the filter, list, and details panes.
+     */
     @Override
     public void display() {
         filterPane.setVisible(true);
@@ -69,6 +73,12 @@ public class BaseView extends JFrame implements IView {
         setVisible(true);
     }
 
+
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Implemented to bind the features to the filter, list, and details panes.
+     */
     @Override
     public void bindFeatures(IFeature features) {
         System.out.println("[BaseView] BaseView is binding features...");
@@ -77,61 +87,63 @@ public class BaseView extends JFrame implements IView {
         detailsPane.bindFeatures(features);
     }
 
-    /**
-     * Set the user list pane entries
-     * Prompts the view to create a new tab pane if the userListId is not found
-     * @param userListIndex the index of the user list
-     * @param records the MBeans to set
-     */
+
     public void setUserTableRecords(Stream<MBeans> records, int userListIndex) {
         System.out.println("[BaseView] setUserTableRecords");
         listPane.setUserTable(records, userListIndex);
     }
 
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Implemented to create a new user table in the list pane.
+     */
     public void addUserTable(String userListName) {
         System.out.println("[BaseView] createUserTable");
         listPane.createUserTableTab(userListName);
     }
 
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Implemented to get the active tab in the list pane.
+     */
     public int getActiveTab() {
         return listPane.getActiveTab();
     }
 
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Implemented to set the active tab in the list pane.
+     */
     @Override
     public void setActiveTab(int tabIdx) {
         listPane.setActiveTab(tabIdx);
     }
 
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Implemented to show an JOptionPane dialog.
+     */
     @Override
     public void showAlertDialog(String title, String message) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    /**
-     * Set (or update) the details pane entry
-     *
-     * @param record the record to set
-     */
+
     @Override
     public void setDetailsPaneEntry(MBeans record) {
         detailsPane.setMedia(record);
     }
 
-    /**
-     * Clear the table selection
-     */
+
     @Override
     public void clearTableSelection() {
         listPane.getCurrentTable().clearSelection();
     }
 
-    /**
-     * Set the source table records
-     *
-     * @param records the records to set
-     * @param userListNames list of user-defined list names
-     * @param recordUserListMatrix 2D array containing which record is in which user-defined list
-     */
     @Override
     public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
         System.out.println("[BaseView] setMainTableRecords");
