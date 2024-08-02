@@ -9,23 +9,20 @@ import java.awt.*;
 import java.util.Collection;
 import java.util.stream.Stream;
 
+import static java.awt.Font.PLAIN;
+
 public class BaseView extends JFrame implements IView {
-    private final static String APP_TITLE = "App Title";
+    private final static String APP_TITLE = "Movie List Manager";
     private final static int DEFAULT_WIDTH = 1024;
     private final static int DEFAULT_HEIGHT = 600;
-    private final static Font DEFAULT_FONT = new Font("Roboto", Font.PLAIN, 10);
-
+    private final static int DEFAULT_FONT_SIZE = 10;
 
     FilterPane filterPane;
     ListPaneV2 listPane;
     DetailsPane detailsPane;
 
-
     public BaseView() {
         super(APP_TITLE);
-
-        // set font for all View components
-        AppFont.setAppFont(new FontUIResource(DEFAULT_FONT));
 
         // Let the backstage crew do their thing
         setVisible(false);
@@ -42,6 +39,11 @@ public class BaseView extends JFrame implements IView {
 
         // Creating Base Pane
         JPanel basePane = new JPanel();
+
+        // set font for all View components based on 10pt default system font from base pane
+        Font systemDefaultFont = new Font(basePane.getFont().getFontName(), PLAIN, DEFAULT_FONT_SIZE);
+        AppFont.setAppFont(new FontUIResource(systemDefaultFont));
+
         basePane.setLayout(new BorderLayout());
         add(basePane);
 
