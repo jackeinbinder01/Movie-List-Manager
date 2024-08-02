@@ -337,10 +337,9 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         imdbRatingRange = getDoubleFilterRange(MBeans::getImdbRating);
         boxOfficeRange = getIntFilterRange(MBeans::getBoxOffice);
 
-        // format box office range as US currency
-        for (int i = 0; i < boxOfficeRange.length; i++) {
-            boxOfficeRange[i] = formatAsCurrency(boxOfficeRange[i]);
-        }
+        boxOfficeRange[0] = formatAsCurrency(boxOfficeRange[0], "min");
+        boxOfficeRange[1] = formatAsCurrency(boxOfficeRange[1], "max");
+
     }
 
     /**
@@ -552,7 +551,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * @param value a String representing a dollar value
      * @return a String containing the dollar value of the input param formatted as US currency in millions of dollars
      */
-    private String formatAsCurrency(String value) {
+    private String formatAsCurrency(String value, String minOrMax) {
 
         if (value.equalsIgnoreCase("N/A")) {
             return value;
@@ -562,8 +561,19 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US);
 
         // convert to string and remove trailing .00
-        String currencyStringDouble = currencyFormatter.format(Double.parseDouble(value) / 1_000_000);
-        String currencyInMillions = new String(currencyStringDouble + "M");
+        double valueInMillions = Double.parseDouble(value) / 1_000_000;
+        String stringValue = "";
+
+        // Handle rounding down for min value and up for max value
+        if (minOrMax.equals("min")) {
+            double valueRoundedDown = Math.floor(valueInMillions * 100) / 100;
+            stringValue = currencyFormatter.format(valueRoundedDown);
+        } else if (minOrMax.equals("max")) {
+            double valueRoundedUp = Math.ceil(valueInMillions * 100) / 100;
+            stringValue = currencyFormatter.format(valueRoundedUp);
+        }
+
+        String currencyInMillions = new String(stringValue + "M");
 
         return currencyInMillions;
     }
@@ -776,7 +786,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                     try {
                         double BoxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
                         boxOfficeEarningsFrom.setText(
-                                formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
+                                formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText()), "min"));
                     } catch (NumberFormatException e) {
                         setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
                     }
@@ -789,7 +799,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                     try {
                         double BoxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
                         boxOfficeEarningsTo.setText(
-                                formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
+                                formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText()), "max"));
                     } catch (NumberFormatException e) {
                         setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
                     }
