@@ -86,8 +86,18 @@ public class BaseView extends JFrame implements IView {
         listPane.createUserTableTab(userListName);
     }
 
-    public int getCurrentTab() {
+    public int getActiveTab() {
         return listPane.getActiveTab();
+    }
+
+    @Override
+    public void setActiveTab(int tabIdx) {
+        listPane.setActiveTab(tabIdx);
+    }
+
+    @Override
+    public void showAlertDialog(String title, String message) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

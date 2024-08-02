@@ -10,13 +10,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import group5.model.IModel;
-import group5.model.MovieData;
 import group5.model.beans.MBeans;
 import group5.view.IView;
 import group5.view.FilterPane;
 import group5.view.DetailsPane;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -79,13 +77,13 @@ public class TestController {
     public void testExportListToFile() {
         // Current Table: Source Table
         reset(mockView, mockModel);
-        when(mockView.getCurrentTab()).thenReturn(0);
+        when(mockView.getActiveTab()).thenReturn(0);
         controller.exportListToFile("usr/bin/test.csv");
         verify(mockModel, never()).saveWatchList(eq("usr/bin/test.csv"), eq(0)); // TODO: because the functionality is not implemented yet
 
         // Current Table: Watchlist Table
         reset(mockView, mockModel);
-        when(mockView.getCurrentTab()).thenReturn(10);
+        when(mockView.getActiveTab()).thenReturn(10);
         controller.exportListToFile("usr/bin/test.csv");
         verify(mockModel).saveWatchList(eq("usr/bin/test.csv"), eq(9));
     }
@@ -99,7 +97,7 @@ public class TestController {
         // Active Tab: Source Table
         // Caller: DetailsPane
         // Modified Record in DetailsPane?: Yes
-        when(mockView.getCurrentTab()).thenReturn(0);
+        when(mockView.getActiveTab()).thenReturn(0);
         when(mockModel.getRecords()).thenReturn(records.stream());
         reset(mockView);
         controller.changeWatchedStatusV2(record, true, "DETAILSPANE");
@@ -111,7 +109,7 @@ public class TestController {
         // Caller: ListPane
         // Modified Record in DetailsPane?: Yes
         reset(mockView, mockModel);
-        when(mockView.getCurrentTab()).thenReturn(1); // active tab = watchlist table
+        when(mockView.getActiveTab()).thenReturn(1); // active tab = watchlist table
         when(mockModel.getRecords(0)).thenReturn(records.stream());
         when(mockView.getDetailsPane()).thenReturn(mockDetailsPane);
         when(mockDetailsPane.getCurrentMedia()).thenReturn(record);
@@ -124,7 +122,7 @@ public class TestController {
         // Caller: DetailsPane
         // Modified Record in DetailsPane?: Yes
         reset(mockView, mockModel);
-        when(mockView.getCurrentTab()).thenReturn(1); // active tab = watchlist table
+        when(mockView.getActiveTab()).thenReturn(1); // active tab = watchlist table
         when(mockModel.getRecords(0)).thenReturn(records.stream());
         when(mockView.getDetailsPane()).thenReturn(mockDetailsPane);
         when(mockDetailsPane.getCurrentMedia()).thenReturn(record);
@@ -137,7 +135,7 @@ public class TestController {
         // Caller: ListPane
         // Modified Record in DetailsPane?: No
         reset(mockView, mockModel);
-        when(mockView.getCurrentTab()).thenReturn(1); // active tab = watchlist table
+        when(mockView.getActiveTab()).thenReturn(1); // active tab = watchlist table
         when(mockModel.getRecords(0)).thenReturn(records.stream());
         when(mockView.getDetailsPane()).thenReturn(mockDetailsPane);
         when(mockDetailsPane.getCurrentMedia()).thenReturn(records.get(2));

@@ -239,7 +239,6 @@ public class ListPaneV2 extends JPanel {
                 "JSON or CSV (*.json;*.csv)", "json", "csv");
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileFilter(fileFilters);
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         fileChooser.setDialogTitle("Import List");
 
         int userSelection = fileChooser.showOpenDialog(this);
@@ -251,7 +250,6 @@ public class ListPaneV2 extends JPanel {
     private void localExportListHandler() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         fileChooser.setDialogTitle("Export List");
         fileChooser.setFileFilter(new FileNameExtensionFilter("XML (*.xml)", "xml"));
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JSON (*.json)", "json"));
@@ -259,7 +257,14 @@ public class ListPaneV2 extends JPanel {
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text (*.txt)", "txt"));
         int userSelection = fileChooser.showSaveDialog(this);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            exportListHandler.accept(fileChooser.getSelectedFile().getAbsolutePath() + "." + ((FileNameExtensionFilter) fileChooser.getFileFilter()).getExtensions()[0]);
+            File selectedFile = fileChooser.getSelectedFile();
+            String selectedExtension = ((FileNameExtensionFilter) fileChooser.getFileFilter()).getExtensions()[0];
+            String filePath = selectedFile.getAbsolutePath();
+            // Check if the file path already has the selected extension
+            if (!filePath.toLowerCase().endsWith("." + selectedExtension.toLowerCase())) {
+                filePath += "." + selectedExtension;
+            }
+            exportListHandler.accept(filePath);
         }
     }
 

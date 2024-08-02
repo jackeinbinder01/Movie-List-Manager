@@ -117,6 +117,12 @@ public class Model implements IModel {
         }
 
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, Formats.JSON);
+
+        // Check if the file was loaded successfully, if not return -1 and do not create a new watchlist
+        if (externalList == null) {
+            return -1;
+        }
+
         // Create a list of sourcelist references by mapping externalList to sourceList
         boolean newItems = false;
         Set<MBeans> mapped = new HashSet<>();

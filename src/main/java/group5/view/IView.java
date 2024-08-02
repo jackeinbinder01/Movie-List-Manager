@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 
 public interface IView {
 
+
+
     /**
      * Set or update the record in the details pane
      *
@@ -14,7 +16,6 @@ public interface IView {
      */
 
     public void setDetailsPaneEntry(MBeans record);
-
 
     void clearTableSelection();
 
@@ -32,5 +33,9 @@ public interface IView {
 
     public void display();
 
-    public int getCurrentTab();
+    public int getActiveTab();
+
+    public void setActiveTab(int tabIdx);
+
+    public void showAlertDialog(String title, String message);
 }
