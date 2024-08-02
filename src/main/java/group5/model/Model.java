@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-
 import group5.model.Filter.FilterHandler;
 import group5.model.Filter.IFilterHandler;
 import group5.model.beans.MBeans;
@@ -325,53 +324,23 @@ public class Model implements IModel {
             System.out.println("Current list size before adding new movies: " + currentList.size());
             System.out.println("New movies size: " + moviesToAdd.size());
 
-            // Determine which movies are new
-            Set<MBeans> newMovies = new LinkedHashSet<>(moviesToAdd);
-            newMovies.removeAll(currentList);
+            if (!moviesToAdd.isEmpty()) {
+                System.out.println("Current list size before adding new MBeans: " + currentList.size());
+                System.out.println("New MBeans size: " + moviesToAdd.size());
 
-            if (!newMovies.isEmpty()) {
-                // Add new movies to the source file
-                addNewMBeansToSource(newMovies);
+                // Add new MBeans to the current list
+                currentList.addAll(moviesToAdd);
+                System.out.println("Current list size after adding new MBeans: " + currentList.size());
+                this.sourceList = currentList;
+
+                try (OutputStream out = new FileOutputStream(DEFAULT_DATA)) {
+                    MBeansFormatter.writeMediasToFile(new ArrayList<>(currentList), out, Formats.JSON);
+                } catch (IOException e) {
+                    System.out.println("Error writing to file: " + e.getMessage());
+                }
             }
-
-            System.out.println("New movies size after filtering: " + newMovies.size());
-
-            // Reload the source data if necessary
-            loadSourceData();
-
         } catch (Exception e) {
             System.out.println("Error updating source list: " + e.getMessage());
-        }
-    }
-
-    private void addNewMBeansToSource(Set<MBeans> newMBeans) {
-        try {
-            // Collect current records into a LinkedHashSet to maintain order and avoid duplicates
-            Set<MBeans> currentList = new LinkedHashSet<>(this.sourceList);
-            System.out.println("Current list size before adding new MBeans: " + currentList.size());
-            System.out.println("New MBeans size: " + newMBeans.size());
-
-            // Add new MBeans to the current list
-            currentList.addAll(newMBeans);
-            System.out.println("Current list size after adding new MBeans: " + currentList.size());
-
-
-            /**
-             * 1. this.sourceList = currentList
-             * 2. this.updateSourceList()
-             */
-            // Write updated list to file
-            try {
-                OutputStream out = new FileOutputStream(DEFAULT_DATA);
-                MBeansFormatter.writeMediasToFile(new ArrayList<>(currentList), out, Formats.JSON);
-                out.close();
-            } catch (IOException e) {
-                System.out.println("Error closing file output stream: " + e.getMessage());
-            }
-
-
-        } catch (Exception e) {
-            System.out.println("Error adding new MBeans to the source list: " + e.getMessage());
         }
     }
 
@@ -421,6 +390,7 @@ public class Model implements IModel {
                 .findFirst()
                 .orElse(null);
     }
+
     /**
      * Main method to test the model.
      */
@@ -432,6 +402,7 @@ public class Model implements IModel {
             System.out.println("NAME: " + model.getUserListName(i));
             System.out.println(model.getRecords(i));
         }
+
     }
 
 }
