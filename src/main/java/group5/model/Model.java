@@ -178,11 +178,14 @@ public class Model implements IModel {
     @Override
     public int deleteWatchList(int userListId) {
         if (userListId < 0 || userListId >= this.watchLists.size()) {
+            // Invalid index
             return -1;
-        } else {
-            this.watchLists.remove(userListId);
-            return userListId;
         }
+        String name = this.getUserListName(userListId);
+        this.watchLists.remove(userListId);
+        File toDelete = new File(DEFAULT_WATCHLIST + "/" + name + ".json");
+        toDelete.renameTo(new File("./data/unused/" + name + ".json"));
+        return userListId;
     }
 
     @Override
