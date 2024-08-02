@@ -289,11 +289,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             // reset filter ranges and clear filter options
             setRangeFilterRanges();
             resetComboBoxOptions();
+            refreshPlaceholders("clear");
 
             // if new movies set is not the source list, refresh range filer placeholders
             if (!isSourceList) {
                 moviesIsSourceList = false;
-                refreshPlaceholders();
+                refreshPlaceholders("update");
             }
         }
     }
@@ -691,17 +692,23 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
 
-    public void refreshPlaceholders() {
-      releasedFrom.setText(releasedRange[0]);
-      releasedTo.setText(releasedRange[1]);
-      imdbRatingFrom.setText(imdbRatingRange[0]);
-      imdbRatingTo.setText(imdbRatingRange[1]);
+    public void refreshPlaceholders(String updateOrClearPlaceholders) {
 
-
-
-
-      boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
-      boxOfficeEarningsTo.setText(boxOfficeRange[1]);
+        if (updateOrClearPlaceholders.equalsIgnoreCase("update")) {
+            releasedFrom.setText(releasedRange[0]);
+            releasedTo.setText(releasedRange[1]);
+            imdbRatingFrom.setText(imdbRatingRange[0]);
+            imdbRatingTo.setText(imdbRatingRange[1]);
+            boxOfficeEarningsFrom.setText(boxOfficeRange[0]);
+            boxOfficeEarningsTo.setText(boxOfficeRange[1]);
+        } else {
+            releasedFrom.setText("");
+            releasedTo.setText("");
+            imdbRatingFrom.setText("");
+            imdbRatingTo.setText("");
+            boxOfficeEarningsFrom.setText("");
+            boxOfficeEarningsTo.setText("");
+        }
     }
 
     /**
