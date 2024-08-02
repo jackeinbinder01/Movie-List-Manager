@@ -13,6 +13,7 @@ public enum MovieData {
     DIRECTOR("whodirectedit"),
     ACTOR("actorsList"),
     LANGUAGE("languageList"),
+    WRITER("writer"),
     /**
      * Enums that are based on double values in the csv file.
      */
@@ -24,6 +25,7 @@ public enum MovieData {
      */
     RELEASED("yearreleased"),
     RUNTIME("howlong"),
+    BOXOFFICE("boxoffice"),
     /**
      * Enums based on bool.
      */
