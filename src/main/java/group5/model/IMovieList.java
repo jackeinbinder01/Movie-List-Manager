@@ -1,6 +1,5 @@
 package group5.model;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import group5.model.beans.MBeans;

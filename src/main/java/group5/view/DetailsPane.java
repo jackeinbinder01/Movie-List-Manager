@@ -163,8 +163,7 @@ public class DetailsPane extends JPanel {
      */
     private void addTitlePane() {
         this.mediaTitle = new JTextPane();
-        this.mediaTitle.setFont(new Font("SansSerif", Font.BOLD, 30));
-        System.out.println(this.mediaTitle.getFont().getFontName());
+        this.mediaTitle.setFont(new Font(this.getFont().getFontName(), Font.BOLD, 30));
         this.mediaTitle.setBackground(DEFAULT_COLOR);
         this.mediaTitle.setEditable(false);
 
@@ -220,7 +219,6 @@ public class DetailsPane extends JPanel {
 
         // JPanel for detail title.
         JLabel label = new JLabel(name + ": ");
-        label.setFont(new Font("SansSerif", Font.PLAIN, 12));
         label.setPreferredSize(new Dimension(75, 10));
         label.setVerticalAlignment(JLabel.TOP);
         label.setBorder(BorderFactory.createEmptyBorder(2, 4, 0, 0));
@@ -228,7 +226,6 @@ public class DetailsPane extends JPanel {
         // JTextArea for actual media details.
         JTextArea text = new JTextArea();
         text.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 6));
-        text.setFont(new Font("SansSerif", Font.PLAIN, 12));
         text.setBackground(new Color(230, 230, 230));
         text.setLineWrap(true);
         text.setWrapStyleWord(true);
@@ -253,7 +250,6 @@ public class DetailsPane extends JPanel {
 
         // JPanel for detail title.
         JLabel label = new JLabel("My Rating: ");
-        label.setFont(new Font("SansSerif", Font.PLAIN, 12));
         label.setPreferredSize(new Dimension(75, 10));
         label.setVerticalAlignment(JLabel.TOP);
         label.setBorder(BorderFactory.createEmptyBorder(2, 4, 0, 0));
@@ -261,7 +257,6 @@ public class DetailsPane extends JPanel {
         // JTextField for actual media details.
         this.userRating = new JTextField();
         this.userRating.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 6));
-        this.userRating.setFont(new Font("SansSerif", Font.PLAIN, 12));
         this.userRating.setBackground(new Color(230, 230, 230));
         this.userRating.setEditable(true);
         this.userRating.setMinimumSize(new Dimension(150, 20));
