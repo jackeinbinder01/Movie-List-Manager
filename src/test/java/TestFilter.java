@@ -1,6 +1,4 @@
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +133,9 @@ public class TestFilter {
 
     @Test
     public void testFilterByMultipleCriteria() {
-        List<MBeans> result = filterHandler.filter(List.of(List.of("genre", "==", "Action"), List.of("released", ">", "2009")), moviestream).collect(Collectors.toList());
+        List<MBeans> result = filterHandler.filter(List.of(
+                List.of("genre", "==", "Action"),
+                List.of("released", ">", "2009")), moviestream).collect(Collectors.toList());
         assertEquals(1, result.size());
         assertEquals("Inception", result.get(0).getTitle());
     }

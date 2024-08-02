@@ -56,6 +56,21 @@ public interface IModel {
     int deleteWatchList(int userListId);
 
     /**
+     * Get the unfiltered source list of media as stream.
+     *
+     * @return stream of MBeans representing the unfiltered source list.
+     */
+    Stream<MBeans> getAllRecords();
+
+    /**
+     * Get the unfiltered watch list by id as stream.
+     *
+     * @param userListId The identifier of the watch list to get.
+     * @return stream of MBeans representing the unfiltered watch list.
+     */
+    Stream<MBeans> getAllRecords(int userListId);
+
+    /**
      * Get the source list of media as stream.
      *
      * @return stream of MBeans representing the source list.
