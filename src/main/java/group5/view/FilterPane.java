@@ -745,15 +745,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 } else if (boxOfficeEarningsFrom.getText().equalsIgnoreCase("N/A")){
                     boxOfficeEarningsFrom.setText("N/A");
                 } else {
-                    String processedBoxOfficeEarningsMin = boxOfficeEarningsFrom.getText()
-                            .replaceAll("[^0-9.]", "");
-                    try {
-                        double BoxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
-                        boxOfficeEarningsFrom.setText(
-                                formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
-                    } catch (NumberFormatException e) {
-                        setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
-                    }
+                    reformatBoxOfficeEarnings(boxOfficeEarningsFrom);
                 }
                 break;
             case BOX_OFFICE_EARNINGS_TO:
@@ -762,19 +754,37 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                 } else if (boxOfficeEarningsTo.getText().equalsIgnoreCase("N/A")){
                     boxOfficeEarningsTo.setText("N/A");
                 } else {
-                    String processedBoxOfficeEarningsMax = boxOfficeEarningsTo.getText()
-                            .replaceAll("[^0-9.]", "");
-                    try {
-                        double BoxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
-                        boxOfficeEarningsTo.setText(
-                                formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
-                    } catch (NumberFormatException e) {
-                        setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
-                    }
+                    reformatBoxOfficeEarnings(boxOfficeEarningsTo);
                 }
                 break;
             default:
                 System.out.println("Invalid text field passed");
+        }
+    }
+
+    public void reformatBoxOfficeEarnings(JTextField boxOfficeEarnings) {
+        Filters filter = getFilterByEnum(boxOfficeEarnings.getName());
+        switch (filter) {
+            case BOX_OFFICE_EARNINGS_FROM:
+                String processedBoxOfficeEarningsMin = boxOfficeEarningsFrom.getText()
+                        .replaceAll("[^0-9.]", "");
+                try {
+                    double BoxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
+                    boxOfficeEarningsFrom.setText(
+                            formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
+                } catch (NumberFormatException e) {
+                    setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
+                }
+            case BOX_OFFICE_EARNINGS_TO:
+                String processedBoxOfficeEarningsMax = boxOfficeEarningsTo.getText()
+                        .replaceAll("[^0-9.]", "");
+                try {
+                    double BoxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
+                    boxOfficeEarningsTo.setText(
+                            formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
+                } catch (NumberFormatException e) {
+                    setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
+                }
         }
     }
 
@@ -846,9 +856,13 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     @Override
     public void focusLost(FocusEvent e) {
         // reset placeholders when focus is lost, only if current set of movies is not the source list
+        System.out.println("Movies is source list: " + moviesIsSourceList);
+
+        JTextField textField = (JTextField) e.getSource();
         if (!moviesIsSourceList) {
-            JTextField textField = (JTextField) e.getSource();
             resetPlaceholder(textField);
+        } else {
+            reformatBoxOfficeEarnings(textField);
         }
     }
 
