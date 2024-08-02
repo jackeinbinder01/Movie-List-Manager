@@ -129,7 +129,7 @@ public class BaseView extends JFrame implements IView {
      */
     @Override
     public void showAlertDialog(String title, String message) {
-        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
     }
 
 
