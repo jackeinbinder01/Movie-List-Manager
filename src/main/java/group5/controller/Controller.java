@@ -164,7 +164,12 @@ public class Controller implements IController, IFeature {
             model.addNewMBeans(filters, null);
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
+
+            // this filter range has to be set without any filters - this is a workaround to retrieve the full source list
+            model.clearFilter();
             view.getFilterPane().setMovies(recordList.stream(), true);
+            model.getRecords(filters);
+
         } else {
             // User table: apply filters only
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
