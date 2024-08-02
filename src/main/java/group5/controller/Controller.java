@@ -165,9 +165,10 @@ public class Controller implements IController, IFeature {
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
 
-            // this filter range has to be set without any filters - this is a workaround to retrieve the full source list
+            // this filter range has to be set without any filters
+            // this is a workaround to retrieve the full source list, and then restore the filters
             model.clearFilter();
-            view.getFilterPane().setMovies(recordList.stream(), true);
+            view.getFilterPane().setMovies(model.getRecords(), true);
             model.getRecords(filters);
 
         } else {
