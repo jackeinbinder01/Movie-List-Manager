@@ -857,6 +857,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     public void focusLost(FocusEvent e) {
         // reset placeholders when focus is lost, only if current set of movies is not the source list
         System.out.println("Movies is source list: " + moviesIsSourceList);
+
         JTextField textField = (JTextField) e.getSource();
         if (!moviesIsSourceList) {
             resetPlaceholder(textField);
