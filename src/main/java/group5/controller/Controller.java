@@ -100,7 +100,7 @@ public class Controller implements IController, IFeature {
         model.createNewWatchList(name);
         view.addUserTable(name);
         // Calls below are not necessary because table will be updated on tab change
-        int newListIdx = model.getUserListCount(); // the new list would be the last one
+        int newListIdx = model.getUserListCount() - 1; // the new list would be the last one
         view.setUserTableRecords(model.getRecords(newListIdx), newListIdx);
     }
 
@@ -161,7 +161,7 @@ public class Controller implements IController, IFeature {
         int currTabIdx = view.getActiveTab();
         List<MBeans> recordList;
         if (currTabIdx == 0) {
-            // Source table: fetch API + apply filters
+            // Source table: fetch API + apply filters + update filter ranges
             model.addNewMBeans(filters, null);
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));

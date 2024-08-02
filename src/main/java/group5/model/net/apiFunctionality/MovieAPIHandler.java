@@ -123,7 +123,7 @@ public class MovieAPIHandler {
      * @param conn the connection
      * @throws IOException
      */
-    private static void handleErrorResponse(HttpURLConnection conn) throws IOException {
+    public static void handleErrorResponse(HttpURLConnection conn) throws IOException {
         System.out.println("GET request failed. Response Code: " + conn.getResponseCode());
         BufferedReader errorReader = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         String errorLine;
