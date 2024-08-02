@@ -8,16 +8,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.*;
-import java.util.List;
 import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /** Contains and passes filters to controller for selected movie list */
 public class FilterPane extends JPanel implements ActionListener, FocusListener {
 
-    /** List of movies. */
-    private List<MBeans> movies = new ArrayList<>();
+    /** Set of movies. */
+    private Set<MBeans> movies = new HashSet<>();
+    private boolean moviesIsSourceList = true;
 
     // Panels
     /** Panel containing filters. */
@@ -271,23 +272,31 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /* FilterPane Setup Methods --------------------------------------------------------------------------------------*/
+
+    public void setMovies(Stream<MBeans> movies) {
+        setMovies(movies, false);
+    }
+
     /**
      * Sets the movies list of this FilterPane instance based on the MBeans in an input Stream.
      * Resets filter ranges and options based on MBeans in the new movies list.
      *
      * @param movies a Stream of movies to replace the current movies list
      */
-    public void setMovies(Stream<MBeans> movies) {
-        List<MBeans> moviesList = movies.toList();
-        if (!moviesList.isEmpty()) {
-            this.movies = moviesList;
-
+    public void setMovies(Stream<MBeans> movies, boolean isSourceList) {
+        Set<MBeans> moviesSet = movies.collect(Collectors.toSet());
+        if (!moviesSet.isEmpty()) {
+            this.movies = moviesSet;
             // reset filter ranges and clear filter options
             setRangeFilterRanges();
             resetComboBoxOptions();
-            refreshPlaceholders();
-        }
 
+            // if new movies set is not the source list, refresh range filer placeholders
+            if (!isSourceList) {
+                moviesIsSourceList = false;
+                refreshPlaceholders();
+            }
+        }
     }
 
     /**
@@ -830,9 +839,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     @Override
     public void focusLost(FocusEvent e) {
-        // reset placeholders when focus is lost
-        JTextField textField = (JTextField) e.getSource();
-        resetPlaceholder(textField);
+        // reset placeholders when focus is lost, only if current set of movies is not the source list
+        if (!moviesIsSourceList) {
+            JTextField textField = (JTextField) e.getSource();
+            resetPlaceholder(textField);
+        }
     }
 
     /**
