@@ -18,7 +18,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     /** Set of movies. */
     private Set<MBeans> movies = new HashSet<>();
-    private boolean moviesIsSourceList = true;
+    private boolean moviesIsSourceList = false;
 
     // Panels
     /** Panel containing filters. */
@@ -287,14 +287,17 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         Set<MBeans> moviesSet = movies.collect(Collectors.toSet());
         if (!moviesSet.isEmpty()) {
             this.movies = moviesSet;
-            // reset filter ranges and clear filter options
-            setRangeFilterRanges();
+            if (!moviesIsSourceList && isSourceList) {
+                moviesIsSourceList = true;
+                refreshPlaceholders("clear");
+            }
             resetComboBoxOptions();
-            refreshPlaceholders("clear");
+            // reset filter ranges and clear filter options
 
             // if new movies set is not the source list, refresh range filer placeholders
             if (!isSourceList) {
                 moviesIsSourceList = false;
+                setRangeFilterRanges();
                 refreshPlaceholders("update");
             }
         }
@@ -531,16 +534,16 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         String maxValueString = maxValue.isPresent() ? Integer.toString(maxValue.getAsInt()) : "No Max";
         String minValueString = minValue.isPresent() ? Integer.toString(minValue.getAsInt()) : "No Min";
 
-       String[] range = {minValueString, maxValueString};
+        String[] range = {minValueString, maxValueString};
 
-       // replace -1 with N/A if box office earning data is missing
-       for (int i = 0; i < range.length; i++) {
-           if (Integer.parseInt(range[i]) < 0) {
-               range[i] = "N/A";
-           }
-       }
+        // replace -1 with N/A if box office earning data is missing
+        for (int i = 0; i < range.length; i++) {
+            if (Integer.parseInt(range[i]) < 0) {
+                range[i] = "N/A";
+            }
+        }
 
-       return range;
+        return range;
     }
 
     /**
@@ -767,25 +770,31 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         Filters filter = getFilterByEnum(boxOfficeEarnings.getName());
         switch (filter) {
             case BOX_OFFICE_EARNINGS_FROM:
-                String processedBoxOfficeEarningsMin = boxOfficeEarningsFrom.getText()
-                        .replaceAll("[^0-9.]", "");
-                try {
-                    double BoxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
-                    boxOfficeEarningsFrom.setText(
-                            formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
-                } catch (NumberFormatException e) {
-                    setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
+                if (!boxOfficeEarnings.getText().isEmpty()) {
+                    String processedBoxOfficeEarningsMin = boxOfficeEarningsFrom.getText()
+                            .replaceAll("[^0-9.]", "");
+                    try {
+                        double BoxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
+                        boxOfficeEarningsFrom.setText(
+                                formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText())));
+                    } catch (NumberFormatException e) {
+                        setPlaceholder(boxOfficeEarningsFrom, boxOfficeRange[0]);
+                    }
                 }
+                break;
             case BOX_OFFICE_EARNINGS_TO:
-                String processedBoxOfficeEarningsMax = boxOfficeEarningsTo.getText()
-                        .replaceAll("[^0-9.]", "");
-                try {
-                    double BoxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
-                    boxOfficeEarningsTo.setText(
-                            formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
-                } catch (NumberFormatException e) {
-                    setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
+                if (!boxOfficeEarnings.getText().isEmpty()) {
+                    String processedBoxOfficeEarningsMax = boxOfficeEarningsTo.getText()
+                            .replaceAll("[^0-9.]", "");
+                    try {
+                        double BoxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
+                        boxOfficeEarningsTo.setText(
+                                formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText())));
+                    } catch (NumberFormatException e) {
+                        setPlaceholder(boxOfficeEarningsTo, boxOfficeRange[1]);
+                    }
                 }
+                break;
         }
     }
 
