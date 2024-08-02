@@ -1,7 +1,6 @@
 package group5.model.formatters;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.FileOutputStream;
 
 import com.fasterxml.jackson.core.type.TypeReference;

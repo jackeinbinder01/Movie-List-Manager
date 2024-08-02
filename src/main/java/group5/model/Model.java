@@ -364,12 +364,8 @@ public class Model implements IModel {
                 currentList.addAll(moviesToAdd);
                 System.out.println("Current list size after adding new MBeans: " + currentList.size());
                 this.sourceList = currentList;
-
-                try (OutputStream out = new FileOutputStream(DEFAULT_DATA)) {
-                    MBeansFormatter.writeMediasToFile(new ArrayList<>(currentList), out, Formats.JSON);
-                } catch (IOException e) {
-                    System.out.println("Error writing to file: " + e.getMessage());
-                }
+                // Update source file
+                this.saveSourceList();
             }
         } catch (Exception e) {
             System.out.println("Error updating source list: " + e.getMessage());

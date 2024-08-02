@@ -200,6 +200,10 @@ public class ListPaneV2 extends JPanel {
             @Override
             public void setValue(Object value) {
                 Integer runtime = (Integer) value;
+                if (runtime == null || runtime < 0) {
+                    setText("N/A");
+                    return;
+                }
                 int hours = runtime / 60;
                 int minutes = runtime % 60;
                 setText(String.format("%dh %dm", hours, minutes));
@@ -351,10 +355,12 @@ public class ListPaneV2 extends JPanel {
 
     private void localDeleteListHandler() {
         // Pop up a dialog to confirm deletion
-        System.out.println("[ListPaneV2] Delete list button clicked");
         int currWatchlistIdx = tabbedPane.getSelectedIndex() - 1;
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the watchlist \"" + currWatchlistIdx+ "\"?", "Warning", JOptionPane.YES_NO_OPTION);
-//        System.out.println("[ListPaneV2] Delete list dialog result: " + dialogResult);
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this watchlist?", "Warning", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            deleteListHandler.accept(currWatchlistIdx);
+            removeUserTable(currWatchlistIdx);
+        }
     }
 
 

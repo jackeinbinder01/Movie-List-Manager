@@ -42,35 +42,25 @@ public class Controller implements IController, IFeature {
         this.model = model;
         this.view = view;
 
-        DEV_InitModel();
         // bindFeatures accept an IFeature interface, which is the controller itself
         view.bindFeatures(this);
 
-        // setup source table records
-        view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
-
-        // no filters applied on initialization
-        view.getFilterPane().setMovies(model.getRecords(), true);
+        // source table is initialized in the constructor
+        // load user-defined lists
+        model.loadWatchList();
 
         // load user-defined list into model and view
         for (int i = 0; i < model.getUserListCount(); i++) {
             view.addUserTable(model.getUserListName(i));
             view.setUserTableRecords(model.getRecords(i), i);
         }
+
+        // setup source table records - only after all the user lists are loaded
+        // no filters applied on initialization
+        view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
+        view.getFilterPane().setMovies(model.getRecords(), true);
     }
 
-    /**
-     * Temporary method to initialize the model with sample data. For
-     * development purposes only.
-     */
-    private void DEV_InitModel() {
-        model.loadSourceData();
-        model.loadWatchList("./data/samples/watchlist.json");
-        model.loadWatchList("./data/samples/abc.json");
-        model.loadWatchList("./data/samples/avatar.json");
-        model.loadWatchList("./data/samples/lol.json");
-        model.loadWatchList("./data/samples/titanic_only.json");
-    }
 
     @Override
     public void deleteWatchlist(int userListIndex) {
@@ -78,10 +68,15 @@ public class Controller implements IController, IFeature {
         if (userListIndex < 0 || userListIndex >= model.getUserListCount()) {
             System.out.println("[Controller] Error deleting watchlist: index out of bounds");
         } else {
-            // model.deleteWatchList(userListIndex);
+            int deletedWatchlistIdx = model.deleteWatchList(userListIndex);
+            if (deletedWatchlistIdx < 0) {
+                view.showAlertDialog("Error", "Failed to delete watchlist");
+                return;
+            }
 
             // update source table because of new RecordUserListMatrix
             // view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
+            view.setActiveTab(0);
         }
     }
 
@@ -97,11 +92,15 @@ public class Controller implements IController, IFeature {
             System.out.println("[Controller] Error creating new watchlist: \"" + name + "\" already exists");
             return;
         }
-        model.createNewWatchList(name);
+
+        int newListIdx = model.createNewWatchList(name);
+        if (newListIdx < 0) {
+            view.showAlertDialog("Error", "Failed to create new watchlist");
+            return;
+        }
         view.addUserTable(name);
-        // Calls below are not necessary because table will be updated on tab change
-        int newListIdx = model.getUserListCount(); // the new list would be the last one
-        view.setUserTableRecords(model.getRecords(newListIdx), newListIdx);
+        // Calls below are not absolutely necessary because table will be updated on tab change
+        // view.setUserTableRecords(model.getRecords(newListIdx), newListIdx);
     }
 
     /**
@@ -161,11 +160,17 @@ public class Controller implements IController, IFeature {
         int currTabIdx = view.getActiveTab();
         List<MBeans> recordList;
         if (currTabIdx == 0) {
-            // Source table: fetch API + apply filters
+            // Source table: fetch API + apply filters + update filter ranges
             model.addNewMBeans(filters, null);
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
-            view.getFilterPane().setMovies(recordList.stream(), true);
+
+            // this filter range has to be set without any filters
+            // this is a workaround to retrieve the full source list, and then restore the filters
+            model.clearFilter();
+            view.getFilterPane().setMovies(model.getRecords(), true);
+            model.getRecords(filters);
+
         } else {
             // User table: apply filters only
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
@@ -350,21 +355,19 @@ public class Controller implements IController, IFeature {
         List<Triple<String, Operations, MovieData>> triples = Arrays.asList(
                 Triple.of(filterPane.getFilteredTitle(), Operations.CONTAINS, MovieData.TITLE),
                 Triple.of(filterPane.getFilteredGenre(), Operations.CONTAINS, MovieData.GENRE),
+                Triple.of(filterPane.getFilteredMpaRating(), Operations.EQUALS, MovieData.MPA),
                 Triple.of(filterPane.getFilteredReleasedMin(), Operations.GREATEROREQUAL, MovieData.RELEASED),
                 Triple.of(filterPane.getFilteredReleasedMax(), Operations.LESSOREQUAL, MovieData.RELEASED),
                 Triple.of(filterPane.getFilteredImdbRatingMin(), Operations.GREATEROREQUAL, MovieData.IMDB),
                 Triple.of(filterPane.getFilteredImdbRatingMax(), Operations.LESSOREQUAL, MovieData.IMDB),
+                Triple.of(filterPane.getFilteredBoxOfficeEarningsMin(), Operations.GREATEROREQUAL, MovieData.BOXOFFICE),
+                Triple.of(filterPane.getFilteredBoxOfficeEarningsMax(), Operations.LESSOREQUAL, MovieData.BOXOFFICE),
                 Triple.of(filterPane.getFilteredDirectorFilter(), Operations.CONTAINS, MovieData.DIRECTOR),
                 Triple.of(filterPane.getFilteredActorFilter(), Operations.CONTAINS, MovieData.ACTOR),
+                Triple.of(filterPane.getFilteredWriterFilter(), Operations.CONTAINS, MovieData.WRITER),
                 Triple.of(filterPane.getFilteredLanguageFilter(), Operations.CONTAINS, MovieData.LANGUAGE)
         );
-        // FIXME: MPA Rating is Broken in FilterOperation
-        // Triple.of(filterPane.getFilteredMpaRating(), Operations.EQUALS, MovieData.MPA),
-        // FIXME: Box Office Earnings is Missing from MovieData
-        // Triple.of(filterPane.getFilteredBoxOfficeEarningsMin(), Operations.GREATEROREQUAL, MovieData.BOXOFFICE),
-        // Triple.of(filterPane.getFilteredBoxOfficeEarningsMax(), Operations.LESSOREQUAL, MovieData.BOXOFFICE)
-        // FIXME: Writer is Missing from MovieData
-        // Triple.of(filterPane.getFilteredWriterFilter(), Operations.CONTAINS, MovieData.WRITER)
+
 
         for (Triple<String, Operations, MovieData> triple : triples) {
             if (!triple.getLeft().isEmpty()) {

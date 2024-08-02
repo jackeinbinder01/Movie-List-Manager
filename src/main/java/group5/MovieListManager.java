@@ -25,8 +25,6 @@ public class MovieListManager {
      * @param args command line arguments, ignored in this implementation
      */
     public static void main(String[] args) {
-        // TODO: do we need argument parsing at all?
-        // TODO: question: how are user lists stored locally?
         IModel model = new Model();
         IView view = new BaseView();
         IController controller = new Controller(model, view);
