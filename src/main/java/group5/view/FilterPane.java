@@ -272,7 +272,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /* FilterPane Setup Methods --------------------------------------------------------------------------------------*/
-
     public void setMovies(Stream<MBeans> movies) {
         setMovies(movies, false);
     }
