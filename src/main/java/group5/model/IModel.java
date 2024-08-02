@@ -16,6 +16,7 @@ public interface IModel {
      * String file path to default database location.
      */
     public static final String DEFAULT_DATA = "./data/source/source.json";  // Path to default movie DB here
+    public static final String DEFAULT_WATCHLIST = "./data/watchlist";  // Path to default movie DB here
 
     /**
      * Load the source data from the default location.
@@ -23,9 +24,18 @@ public interface IModel {
     void loadSourceData();
 
     /**
+     * Initialize  watch lists from a pre defind directory.
+     *
+     * @param filename The file to load the watch list from.
+     * @return the size of watchlists created
+     */
+    int loadWatchList();
+
+    /**
      * Load a watch list from a file.
      *
      * @param filename The file to load the watch list from.
+     * @return the id of the watch list
      */
     int loadWatchList(String filename);
 
@@ -33,6 +43,7 @@ public interface IModel {
      * Create new empty watch list.
      *
      * @param name The name of the new watch list.
+     * @return the id of the watch list
      */
     int createNewWatchList(String name);
 
@@ -112,7 +123,7 @@ public interface IModel {
      * Update local source list file to reflect the curent state in the
      * application.
      */
-    void updateSourceList();
+    void saveSourceList();
 
     /**
      * Update local source list file using the new beans added from API.

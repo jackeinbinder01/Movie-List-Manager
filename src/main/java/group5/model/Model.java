@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+
 import group5.model.Filter.FilterHandler;
 import group5.model.Filter.IFilterHandler;
 import group5.model.beans.MBeans;
@@ -82,6 +83,16 @@ public class Model implements IModel {
 
     }
 
+    @Override
+    public int loadWatchList() {
+        try (Stream<Path> paths = Files.walk(Paths.get("./data/test"))) {
+            List<Path> pathList = paths.collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("Error loading watchlist");
+        }
+        return this.getUserListCount();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -124,7 +135,7 @@ public class Model implements IModel {
 
         // Update source file if new items were added
         if (newItems) {
-            updateSourceList();
+            saveSourceList();
         }
 
         IMovieList watchList = new MovieList(name, mapped);
@@ -280,17 +291,17 @@ public class Model implements IModel {
     @Override
     public void updateWatched(MBeans media, boolean watched) {
         this.getMatchedObjectFromSource(media).setWatched(watched);
-        this.updateSourceList();
+        this.saveSourceList();
     }
 
     @Override
     public void updateUserRating(MBeans media, double rating) {
         this.getMatchedObjectFromSource(media).setMyRating(rating);
-        this.updateSourceList();
+        this.saveSourceList();
     }
 
     @Override
-    public void updateSourceList() {
+    public void saveSourceList() {
         try {
             OutputStream out = new FileOutputStream(DEFAULT_DATA);
             MBeansFormatter.writeMediasToFile(this.sourceList, out, Formats.JSON);
@@ -338,6 +349,11 @@ public class Model implements IModel {
             currentList.addAll(newMBeans);
             System.out.println("Current list size after adding new MBeans: " + currentList.size());
 
+
+            /**
+             * 1. this.sourceList = currentList
+             * 2. this.updateSourceList()
+             */
             // Write updated list to file
             try {
                 OutputStream out = new FileOutputStream(DEFAULT_DATA);
@@ -354,8 +370,7 @@ public class Model implements IModel {
     }
 
     @Override
-    public String getUserListName(int userListId
-    ) {
+    public String getUserListName(int userListId) {
         return this.watchLists.get(userListId).getListName();
     }
 
@@ -400,15 +415,17 @@ public class Model implements IModel {
                 .findFirst()
                 .orElse(null);
     }
-
     /**
      * Main method to test the model.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Model model = new Model();
-        int x = model.loadWatchList("./data/samples/source2.json");
-        System.out.println("Source: \n" + model.getRecords().collect(Collectors.toList()));
-        System.out.println("WatchList: \n" + model.getRecords(x).collect(Collectors.toList()));
+        //int watchList02 = model.loadWatchList("./data/test/platoon.json");
+        int x = model.loadWatchList();
+        for (int i = 0; i < x; i++) {
+            System.out.println("NAME: " + model.getUserListName(i));
+            System.out.println(model.getRecords(i));
+        }
     }
 
 }
