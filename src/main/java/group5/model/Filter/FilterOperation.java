@@ -14,7 +14,7 @@ public class FilterOperation {
             case RELEASED:
                 return filterInt(movie.getYear(), op, val);
             case MPA:
-                return filterDouble(movie.getMetascore(), op, val);
+                return filterString(movie.getRated(), op, val);
             case GENRE:
                 return filterList(movie.getGenre(), op, val);
             case RUNTIME:
@@ -31,6 +31,11 @@ public class FilterOperation {
                 return filterDouble(movie.getMyRating(), op, val);
             case HASWATCHED:
                 return filterBoolean(movie.getWatched(), op, val);
+            case WRITER:
+                return filterList(movie.getWriter(), op, val);
+            case BOXOFFICE:
+                return filterInt(movie.getBoxOffice(), op, val);
+
             default:
                 return true;
         }
