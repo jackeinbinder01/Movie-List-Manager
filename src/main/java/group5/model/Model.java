@@ -186,9 +186,19 @@ public class Model implements IModel {
     }
 
     @Override
+    public Stream<MBeans> getAllRecords() {
+        return this.sourceList.stream();
+    }
+
+    @Override
+    public Stream<MBeans> getAllRecords(int userListId) {
+        return this.watchLists.get(userListId).getMovieList();
+    }
+
+    @Override
     public Stream<MBeans> getRecords() {
         if (this.filter == null) {
-            return this.sourceList.stream();
+            return this.getAllRecords();
         }
         return filterHandler.filter(this.filter, this.sourceList.stream());
     }
@@ -196,7 +206,7 @@ public class Model implements IModel {
     @Override
     public Stream<MBeans> getRecords(int userListId) {
         if (this.filter == null) {
-            return this.watchLists.get(userListId).getMovieList();
+            return this.getAllRecords(userListId);
         }
         return filterHandler.filter(this.filter, this.watchLists.get(userListId).getMovieList());
     }
@@ -217,12 +227,12 @@ public class Model implements IModel {
     public void addNewMBeans(List<List<String>> filters, Stream<MBeans> movieStream) {
         Map<String, String> filterValues = extractFilterValues(filters);
         String title = filterValues.get("title");
-
         if (title == null || title.isEmpty()) {
             return;
         } else {
-            title.replace(" ", "+");
+            title = title.replace(" ", "+");
         }
+
         String year1 = filterValues.get("year1");
         String year2 = filterValues.get("year2");
 
