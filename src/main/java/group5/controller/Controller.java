@@ -50,7 +50,7 @@ public class Controller implements IController, IFeature {
         view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));
 
         // no filters applied on initialization
-        view.getFilterPane().setMovies(model.getRecords());
+        view.getFilterPane().setMovies(model.getRecords(), true);
 
         // load user-defined list into model and view
         for (int i = 0; i < model.getUserListCount(); i++) {
@@ -128,9 +128,7 @@ public class Controller implements IController, IFeature {
     @Override
     public void importListFromFile(String filepath) {
         System.out.println("[Controller] User requested to import watchlist from " + filepath);
-        // TODO: Add error handling for invalid file paths
         int newWatchlistIdx = model.loadWatchList(filepath);
-        System.out.println("[Controller] Watchlist import result: " + newWatchlistIdx);
         if (newWatchlistIdx < 0) {
             view.showAlertDialog("Error", "Failed to import watchlist from " + filepath);
             return;
@@ -147,6 +145,9 @@ public class Controller implements IController, IFeature {
     @Override
     public void handleTableSelection(MBeans record) {
         System.out.println("[Controller] showRecordDetails called");
+        if (record == null) {
+            return;
+        }
         view.setDetailsPaneEntry(record);
     }
 
@@ -157,8 +158,6 @@ public class Controller implements IController, IFeature {
     public void applyFilters() {
         view.clearTableSelection();
         List<List<String>> filters = getFilterOptions();
-        System.out.println("[Controller] applyFilters called with " + filters.size() + " filters");
-        System.out.println("[Controller] Filters: " + filters);
         int currTabIdx = view.getActiveTab();
         List<MBeans> recordList;
         if (currTabIdx == 0) {
@@ -166,7 +165,7 @@ public class Controller implements IController, IFeature {
             model.addNewMBeans(filters, null);
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
-            view.getFilterPane().setMovies(recordList.stream());
+            view.getFilterPane().setMovies(recordList.stream(), true);
         } else {
             // User table: apply filters only
             recordList = model.getRecords(currTabIdx - 1, filters).collect(Collectors.toList());
@@ -187,10 +186,11 @@ public class Controller implements IController, IFeature {
         List<MBeans> recordList = getRecordsForCurrentView().toList();
         if (currTabIdx == 0) {
             view.setSourceTableRecordsV2(recordList.stream(), getWatchlistNames(), getRecordUserListMatrixV2(recordList.stream()));
+            view.getFilterPane().setMovies(recordList.stream(), true);
         } else {
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
+            view.getFilterPane().setMovies(recordList.stream());
         }
-        view.getFilterPane().setMovies(recordList.stream());
     }
 
     /**
@@ -225,7 +225,7 @@ public class Controller implements IController, IFeature {
                 view.getFilterPane().resetFilterOptions();
                 view.getFilterPane().clearFilterOptions();
             }
-            view.getFilterPane().setMovies(model.getRecords(userListIndex));
+            view.getFilterPane().setMovies(model.getRecords(userListIndex), false);
         }
 
         view.setSourceTableRecordsV2(model.getRecords(), getWatchlistNames(), getRecordUserListMatrixV2(model.getRecords()));

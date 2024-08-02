@@ -9,21 +9,20 @@ import group5.view.IView;
 
 /**
  * Main driver for the program.
- * Supports both CLI and GUI modes based on input arguments.
  */
-public class MovieInfoApp {
+public class MovieListManager {
 
     /**
      * Private constructor to prevent instantiation.
      */
-    private MovieInfoApp() {
-        // empty
+    private MovieListManager() {
+
     }
 
     /**
      * Main entry point for the program.
      *
-     * @param args the command line arguments
+     * @param args command line arguments, ignored in this implementation
      */
     public static void main(String[] args) {
         // TODO: do we need argument parsing at all?
