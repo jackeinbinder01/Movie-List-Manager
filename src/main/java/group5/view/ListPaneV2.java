@@ -200,6 +200,10 @@ public class ListPaneV2 extends JPanel {
             @Override
             public void setValue(Object value) {
                 Integer runtime = (Integer) value;
+                if (runtime == null || runtime < 0) {
+                    setText("N/A");
+                    return;
+                }
                 int hours = runtime / 60;
                 int minutes = runtime % 60;
                 setText(String.format("%dh %dm", hours, minutes));
