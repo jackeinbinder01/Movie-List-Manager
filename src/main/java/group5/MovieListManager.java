@@ -11,12 +11,12 @@ import group5.view.IView;
  * Main driver for the program.
  * Supports both CLI and GUI modes based on input arguments.
  */
-public class MovieInfoApp {
+public class MovieListManager {
 
     /**
      * Private constructor to prevent instantiation.
      */
-    private MovieInfoApp() {
+    private MovieListManager() {
         // empty
     }
 
