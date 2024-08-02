@@ -576,6 +576,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         String currencyInMillions = new String(stringValue + "M");
 
         return currencyInMillions;
+
     }
 
     /**
