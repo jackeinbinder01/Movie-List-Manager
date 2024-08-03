@@ -17,7 +17,7 @@ classDiagram
         class IView
         class BaseView
         class FilterPane
-        class FilterPaneLabels
+        class FilterLabels
         class Filters
         class ListPane
         class DetailsPane
@@ -390,8 +390,112 @@ classDiagram
     }
     
     class FilterPane {
-        
+        - movies: Set~MBeans~
+        - moviesIsSourceList: boolean
+        - filterPanel: JPanel
+        - buttonPanel: JPanel
+        - titleFilter: JTextField
+        - genreFilter: JComboBox
+        - mpaRatingFilter: JComboBox
+        - directorFilter: JTextField
+        - actorFilter: JTextField
+        - writerFilter: JTextField
+        - languageFilter: JComboBox
+        - releasedFrom: JTextField
+        - releasedTo: JTextField
+        - imdbRatingFrom: JTextField
+        - imdbRatingTo: JTextField
+        - boxOfficeEarningsFrom: JTextField
+        - boxOfficeEarningsTo: JTextField
+        - textFilters: Set~JTextField~
+        - dropDownFilters: Set~JComboBox~String~~
+        - rangeFilterMap: Map~JTextField~, ~String~
+        - applyFiltersButton: JButton
+        - clearFiltersButton: JButton
+        - gbc: GridBagConstrains
+        - filterRow: int
+        + FilterPane(): String
+        + getFilteredTitle(): String
+        + getFilteredGenre(): String
+        + getFilteredMpaRating(): String
+        + getFilteredReleasedMin(): String
+        + getFilteredReleasedMax(): String
+        + getFilteredImdbRatingMin(): String
+        + getFilteredImdbRatingMax(): String
+        + getFilteredBoxOfficeEarningsMin(): String
+        + getFilteredBoxOfficeEarningsMax(): String
+        + getFilteredDirectorFilter(): String
+        + getFilteredActorFilter(): String
+        + getFilteredWriterFilter(): String
+        + getFilteredLanguageFilter(): String
+        + setMovies(Stream~MBeans~ movies): void
+        + setMovies(Stream~MBeans~ movies, boolean isSourceList): void
+        - setComponentNames(): void
+        - setRangeFilterRanges(): void
+        - updateGBC(Integer x, Integer y, Integer width, Integer weightx, Integer anchor, Integer fill): void
+        - addLabel(String filterTitle): void
+        - addFilter(String filterTitle, Object filter): void
+        + addRangeFilter(String filterTitle, JTextField filterFrom, JTextField filterTo): void
+        - setPlaceholder(JTextField textField, String value): void
+        - italicizeFont(Object object): void
+        - getDoubleFilterRange(ToDoubleFunction<MBeans> fieldFunction, JTextField from, JTextField to): void
+        - getIntFilterRange(ToIntFunction<MBeans> fieldFunction, JTextField from, JTextField to): void
+        - formatAsCurrency(String value, String minOrMax): String
+        - formatFromMillions(String value): String
+        - configureComboBox(JComboBox<String> comboBox): void
+        - clearFilterOptions(): void
+        - resetComboBoxOptions(): void
+        - resetTextFilters(): void
+        - resetFilterOptions(): void
+        - refreshPlaceholders(String updateOrClearPlaceholders): void
+        - resetPlaceholder(JTextField textField): void
+        - reformatBoxOfficeEarnings(JTextField boxOfficeEarnings): void
+        - getFilterByEnum(String filter): Filters
+        + actionPerformed(ActionEvent e): void
+        + focusGained(FocusEvent e): void
+        + focusLost(FocusEvent e): void
+        + bindFeatures(IFeature features): void
     }
+    
+    class Filters {
+        <<enumeration>>
+        + TITLE: Filters
+        + GENRE: Filters
+        + MPA_RATING: Filters
+        + RELEASED_FROM: Filters
+        + RELEASED_TO: Filters
+        + IMDB_RATING_FROM: Filters
+        + IMDB_RATING_TO: Filters
+        + BOX_OFFICE_EARNINGS_FROM: Filters
+        + BOX_OFFICE_EARNINGS_TO: Filters
+        + DIRECTOR: Filters
+        + ACTOR: Filters
+        + WRITER: Filters
+        + LANGUAGE: Filters
+        - filterName: String
+        + Filters(String filterName)
+        + getFilterName(): String
+    }
+    
+    class FilterLabels {
+        + TITLE
+        + GENRE
+        + MPA_RATING
+        + RELEASED
+        + IMDB_RATING
+        + BOX_OFFICE_EARNINGS
+        + DIRECTOR
+        + ACTOR
+        + WRITER
+        + LANGUAGE
+        + FROM
+        + TO
+        - filterLabel: String
+        + FilterLabels(String filterLabel)
+        + getFilterLabel(): String
+    }
+    
+    
     
     
     

@@ -59,15 +59,15 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     /** Set containing all text filters. */
     private Set<JTextField> textFilters = new HashSet<JTextField>();
     /** Set containing all dropdown filters. */
-    private Set<JComboBox<String>> dropdownFilters = new HashSet<JComboBox<String>>();
+    private Set<JComboBox<String>> dropDownFilters = new HashSet<JComboBox<String>>();
     /** Map containing all range filters and min/maxes. */
     private Map<JTextField, String> rangeFilterMap = new HashMap<>();
 
     // Buttons
     /** Apply filters button */
-    private JButton applyFilterButton = new JButton("Apply Filters");
+    private JButton applyFiltersButton = new JButton("Apply Filters");
     /** Clear filters button */
-    private JButton clearFilterButton = new JButton("Clear Filters");
+    private JButton clearFiltersButton = new JButton("Clear Filters");
 
     // GridBagConstraints & grid row int
     /** Class global GridBagConstraints. */
@@ -107,16 +107,16 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         addFilter(FilterLabels.LANGUAGE.getFilterLabel(), languageFilter);
 
         // add buttons
-        buttonPanel.add(applyFilterButton);
-        buttonPanel.add(clearFilterButton);
+        buttonPanel.add(applyFiltersButton);
+        buttonPanel.add(clearFiltersButton);
 
         // add action listeners
         titleFilter.addActionListener(this);
         directorFilter.addActionListener(this);
         actorFilter.addActionListener(this);
         writerFilter.addActionListener(this);
-        applyFilterButton.addActionListener(this);
-        clearFilterButton.addActionListener(this);
+        applyFiltersButton.addActionListener(this);
+        clearFiltersButton.addActionListener(this);
     }
 
     /* Getters -------------------------------------------------------------------------------------------------------*/
@@ -642,11 +642,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // deselect options in combobox
         comboBox.setSelectedIndex(-1);
         // add combobox to set of dropdown filters
-        dropdownFilters.add(comboBox);
+        dropDownFilters.add(comboBox);
     }
 
     public void clearFilterOptions() {
-        for (JComboBox filter : dropdownFilters) {
+        for (JComboBox filter : dropDownFilters) {
             filter.removeAllItems();
         }
         for (JTextField filter : textFilters) {
@@ -660,7 +660,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * Resets all JComboBox options in the FilterPane based on the FilterPane's movies list.
      */
     public void resetComboBoxOptions() {
-        for (JComboBox filter : dropdownFilters) {
+        for (JComboBox filter : dropDownFilters) {
             Object selectedItem = filter.getSelectedItem();
             filter.removeAllItems();
             configureComboBox(filter);
@@ -813,7 +813,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     public void actionPerformed(ActionEvent e) {
         // @Wing decide how you want apply/clear message sent to BaseView/controller and I can reconfigure
 
-        if (e.getSource() == applyFilterButton) {
+        if (e.getSource() == applyFiltersButton) {
             System.out.println("[FilterPane] - Filters applied");
             System.out.println("Title: " + getFilteredTitle());
             System.out.println("Genre: " + getFilteredGenre());
@@ -829,7 +829,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             System.out.println("Writer: " + getFilteredWriterFilter());
             System.out.println("Language: " + getFilteredLanguageFilter());
 
-        } else if (e.getSource() == clearFilterButton) {
+        } else if (e.getSource() == clearFiltersButton) {
             System.out.println("[FilterPane] - Filters cleared");
         }
     }
@@ -870,8 +870,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * @param features action tiggered by the FilterPane
      */
     public void bindFeatures(IFeature features) {
-        applyFilterButton.addActionListener(e -> features.applyFilters());
-        clearFilterButton.addActionListener(e -> features.clearFiltersAndReloadRecords());
+        applyFiltersButton.addActionListener(e -> features.applyFilters());
+        clearFiltersButton.addActionListener(e -> features.clearFiltersAndReloadRecords());
     }
 }
 
