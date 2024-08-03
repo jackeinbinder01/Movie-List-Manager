@@ -18,7 +18,7 @@ classDiagram
         class BaseView
         class FilterPane
         class FilterLabels
-        class Filters
+        class FiltersEnum
         class ListPane
         class DetailsPane
         class AppFont
@@ -111,7 +111,7 @@ classDiagram
     MBeansSerializer --|> BoxOfficeSerializer : contains
     
     FilterPane --|> FilterLabels: contains
-    FilterPane --|> Filters: contains
+    FilterPane --|> FiltersEnum: contains
     
     
     class MovieListManager { 
@@ -460,7 +460,7 @@ classDiagram
         + bindFeatures(IFeature features): void
     }
     
-    class Filters {
+    class FiltersEnum {
         <<enumeration>>
         + TITLE: Filters
         + GENRE: Filters
@@ -481,6 +481,7 @@ classDiagram
     }
     
     class FilterLabels {
+        <<enumeration>>
         + TITLE
         + GENRE
         + MPA_RATING
