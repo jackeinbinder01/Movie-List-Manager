@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import group5.view.ErrorMessage;
 import org.apache.commons.lang3.tuple.Triple;
 
 import group5.model.Filter.Operations;
@@ -70,7 +71,7 @@ public class Controller implements IController, IFeature {
         } else {
             int deletedWatchlistIdx = model.deleteWatchList(userListIndex);
             if (deletedWatchlistIdx < 0) {
-                view.showAlertDialog("Error", "Failed to delete watchlist");
+                view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), String.valueOf(ErrorMessage.DELETE_WATCHLIST));
                 return;
             }
 
@@ -95,7 +96,7 @@ public class Controller implements IController, IFeature {
 
         int newListIdx = model.createNewWatchList(name);
         if (newListIdx < 0) {
-            view.showAlertDialog("Error", "Failed to create new watchlist");
+            view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), String.valueOf(ErrorMessage.CREATE_WATCHLIST));
             return;
         }
         view.addUserTable(name);
@@ -129,7 +130,7 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] User requested to import watchlist from " + filepath);
         int newWatchlistIdx = model.loadWatchList(filepath);
         if (newWatchlistIdx < 0) {
-            view.showAlertDialog("Error", "Failed to import watchlist from " + filepath);
+            view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.CREATE_WATCHLIST.getErrorMessage(filepath));
             return;
         }
         view.addUserTable(model.getUserListName(newWatchlistIdx));
