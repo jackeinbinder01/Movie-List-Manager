@@ -351,9 +351,46 @@ classDiagram
     class MBeansLoader {
         - MBeansLoader()
         + loadMBeansFromAPI(String title, String year, String type): List~MBeans~$
-        + loadMediasFromJSON(String filename): Set~MBeans~
-        + loadMediasFromCSV(String filename): Set~MBeans~
-        + loadMediasFromFile(String filename, Formats format): Set~MBeans~
+        + loadMediasFromJSON(String filename): Set~MBeans~$
+        + loadMediasFromCSV(String filename): Set~MBeans~$
+        + loadMediasFromFile(String filename, Formats format): Set~MBeans~$
+    }
+    
+    class AppFont {
+        - AppFont()
+        + setAppFont(FontUIResource font): void$
+    }
+    
+    class DetailsPane {
+        - DEFAULT_WIDTH: int$
+        - DEFAULT_HEIGHT: int$
+        - DEFAULT_COLOR: Color$
+        - scrollPane: JScrollPane
+        - detailsPanel: JPanel
+        - mediaTitle: JTextPane
+        - mediaImage: JLabel
+        - mediaDetails: List~JTextArea~
+        - watchedBox: JcheckBox
+        - userRating: JTextField
+        - currentMedia: MBeans
+        + DetailsPane()
+        + initContent(): void
+        + addVerticalPadding(int padding): void
+        + addTitlePane(): void
+        + addImageLabel(): void
+        + addWatched(): void
+        + addDetailPane(String name): void
+        + addUserRating(): void
+        + reSize(): void
+        + scaleImage(String imgStr): ImageIcon
+        + getCurrentMedia(): MBeans
+        + refreshUserFields(): void
+        + setMedia(MBeans media): void
+        + bindFeatures(IFeature features): void
+    }
+    
+    class FilterPane {
+        
     }
     
     
