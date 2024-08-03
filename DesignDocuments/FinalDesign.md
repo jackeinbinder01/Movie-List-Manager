@@ -110,6 +110,9 @@ classDiagram
     MBeansSerializer --|> StringListSerializer : contains
     MBeansSerializer --|> BoxOfficeSerializer : contains
     
+    FilterPane --|> FilterLabels: contains
+    FilterPane --|> Filters: contains
+    
     
     class MovieListManager { 
         - MovieListManager()
