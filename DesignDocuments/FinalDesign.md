@@ -10,6 +10,7 @@ classDiagram
         class IMovieList
         class MovieData
         class MovieList
+        class MBeans
 
     }
 
@@ -64,10 +65,6 @@ classDiagram
         class FilterOperation
         class IFilterHandler
         class Operations
-    }
-
-    namespace Movies {
-        class MBeans
     }
 
     namespace Net {
