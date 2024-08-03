@@ -86,9 +86,15 @@ classDiagram
     Controller ..|> IController: implements
     Controller ..|> IFeature: implements
     MovieList ..|> IMovieList: implements
+    FilterHandler ..|> IFilterHandler: implements
     
     Model --> MovieData: uses
-    Model --> MovieList: uses
+    Model --> IMovieList: uses
+    Model --> IFilterHandler: uses
+    
+    FilterHandler --> Operations: uses
+    
+    
     
     Controller --> IModel: uses
     Controller --> IView: uses
