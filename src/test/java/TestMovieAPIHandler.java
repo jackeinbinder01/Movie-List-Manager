@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 
 import group5.model.beans.MBeans;
 import group5.model.net.apiFunctionality.MovieAPIHandler;
-import group5.model.net.apiFunctionality.apiBeans;
+import group5.model.net.apiFunctionality.APIBeans;
 
 public class TestMovieAPIHandler {
 
@@ -57,7 +57,7 @@ public class TestMovieAPIHandler {
     @Test
     public void testGetMovieListFromAPI() {
         String title = "Inception";
-        List<apiBeans> apiList = MovieAPIHandler.getMovieListFromAPI(title);
+        List<APIBeans> apiList = MovieAPIHandler.getMovieListFromAPI(title);
 
         Assertions.assertNotNull(apiList, "API list should not be null");
         Assertions.assertFalse(apiList.isEmpty(), "API list should not be empty");
@@ -67,7 +67,7 @@ public class TestMovieAPIHandler {
     @Test
     public void testGetMovieListFromAPIWithInvalidTitle() {
         String title = "InvalidMovieTitle";
-        List<apiBeans> apiList = MovieAPIHandler.getMovieListFromAPI(title);
+        List<APIBeans> apiList = MovieAPIHandler.getMovieListFromAPI(title);
 
         Assertions.assertNotNull(apiList, "API list should not be null");
         Assertions.assertTrue(apiList.isEmpty(), "API list should be empty for an invalid title");
@@ -95,7 +95,7 @@ public class TestMovieAPIHandler {
     public void testParseAPITitle() {
         // Mock InputStream for testing (use actual API response for real tests)
         InputStream inputStream = new ByteArrayInputStream("{\"Search\": [{\"Title\": \"Inception\", \"Year\": \"2010\", \"imdbID\": \"tt1375666\"}]}".getBytes());
-        List<apiBeans> apiList = MovieAPIHandler.parseAPITitle(inputStream);
+        List<APIBeans> apiList = MovieAPIHandler.parseAPITitle(inputStream);
 
         Assertions.assertNotNull(apiList, "API list should not be null");
         Assertions.assertFalse(apiList.isEmpty(), "API list should not be empty");

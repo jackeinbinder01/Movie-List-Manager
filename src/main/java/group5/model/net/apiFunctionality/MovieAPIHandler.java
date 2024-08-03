@@ -32,13 +32,13 @@ public class MovieAPIHandler {
      */
     public static List<MBeans> getMoreSourceBeans(String title, String yearRange) {
         List<MBeans> movieList = new ArrayList<>();
-        List<apiBeans> apiList = getMovieListFromAPI(title);
+        List<APIBeans> apiList = getMovieListFromAPI(title);
         if (apiList == null) {
             System.out.println("No movies found for the given title.");
             return null;
         }
 
-        for (apiBeans apiBean : apiList) {
+        for (APIBeans apiBean : apiList) {
             if (yearRange == null) {
                 movieList.add(getMovie(apiBean.getID()));
             } else if (yearRange.contains("-")) {
@@ -69,7 +69,7 @@ public class MovieAPIHandler {
      * @param title the title of a search
      * @return the list of apibeans containing the movies
      */
-    public static List<apiBeans> getMovieListFromAPI(String title) {
+    public static List<APIBeans> getMovieListFromAPI(String title) {
         try {
             URL url = new URL(API_ENDPOINT + "?apikey=" + API_KEY + "&s=" + title + "&type=movie" + "&r=json");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -137,21 +137,21 @@ public class MovieAPIHandler {
     }
 
     /**
-     * creates a list of apiBeans from the output of the api.
+     * creates a list of APIBeans from the output of the api.
      *
      * @param inputStream the output of the api.
      * @return the list of apibeans
      */
-    public static List<apiBeans> parseAPITitle(InputStream inputStream) {
+    public static List<APIBeans> parseAPITitle(InputStream inputStream) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             JsonNode root = mapper.readTree(inputStream);
             JsonNode searchResults = root.path("Search");
-            List<apiBeans> apiList = new ArrayList<>();
+            List<APIBeans> apiList = new ArrayList<>();
             if (searchResults.isArray()) {
                 for (JsonNode node : searchResults) {
-                    apiList.add(mapper.treeToValue(node, apiBeans.class));
+                    apiList.add(mapper.treeToValue(node, APIBeans.class));
                 }
             }
             return apiList;

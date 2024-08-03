@@ -654,8 +654,115 @@ classDiagram
         + getGenre(): List~String~
         + getDirector(): List~String~
         + getWriter(): List~String~
-        
-        
+        + getActors(): List~String~
+        + getPlot(): String
+        + getLanguage(): List~String~
+        + getCountry(): List~String~
+        + getAwards(): String
+        + getPoster(): String
+        + getMetascore(): int
+        + getImdbRating(): double
+        + getBoxOffice(): int
+        + getID(): String
+        + getWatched(): boolean
+        + getMyRating(): double
+        + setTitle(String title): void
+        + setYear(int year): void
+        + setType(String type): void
+        + setRated(String rated): void
+        + setReleased(LocalDate released): void
+        + setRuntime(int runtime): void
+        + setGenre(List~String~ genre): void
+        + setDirector(List~String~ director): void
+        + setWriter(List~String~ writer): void
+        + setActors(List~String~ actors): void
+        + setPlot(String plot): void
+        + setLanguage(List~String~ language): void
+        + setCountry(List~String~ country): void
+        + setAwards(String awards): void
+        + setPoster(String poster): void
+        + setMetascore(int metascore): void
+        + setImdbRating(double imdbRating): void
+        + setBoxOffice(int boxOffice)
+        + setID(String id): void: void
+        + setWatched(boolean watched): void
+        + setMyRating(double myRating): void
+        + toString(): String
+        + formatBoxOfficeCurrency(): String
+        + equals(Object o): boolean
+        + hashCode(): int
+        + formattedDate(): String
+    }
+    
+    class IFilterHandler {
+        <<interface>>
+        + filter(List<List<String>> filter, Stream<MBeans> beanStream): Stream~MBeans~
+    }
+    
+    class FilterHandler {
+        + FilterHandler()
+        + makeAndApplySingleFilter(List<MBeans> beans, List<String> filter): Stream~MBeans~$
+    }
+    
+    class FilterOperation {
+        + getFilter(MBeans movie, MovieData filterOn, Operations op, String val): boolean$
+        + filterList(List<String> strList, Operations op, String val): boolean$
+        + filterString(String field, Operations op, String val): boolean$
+        + filterInt(int field, Operations op, String val): boolean$
+        + filterDouble(double field, Operations op, String val): boolean$
+        + filterBoolean(boolean field, Operations op, String val): boolean$
+    }
+    
+    class Operations {
+        <<enumeration>>
+        EQUALS
+        CONTAINS
+        NOTEQUAL
+        GREATERTHAN
+        LESSTHAN
+        GREATEROREQUAL
+        LESSOREQUAL
+        - operator: String
+        + Operations(String value)
+        + getOperator(): String
+        + getOperatorFromStr(String str): Operations$
+    }
+    
+    class NetUtils {
+        - API_URL_FORMAT: String$
+        - NetUtils()
+        - getApiUrl(String title, String year, String type): String$
+        - getUrlContents(String urlStr): InputStream$
+        + getMediaDetails(String title, String year, String type): InputStream$
+    }
+    
+    class APIBeans {
+        - title: String
+        - year: int
+        - id: String
+        + APIBeans()
+        + APIBeans(String title, int year, String id)
+        + getTitle(): String
+        + getYear(): int
+        + getID(): String
+        + setTitle(String title): void
+        + setYear(int year): void
+        + setID(String id): void
+        + toString(): String
+        + equals(Object o): boolean
+        + hashCode(): int
+    }
+    
+    class MovieAPIHandler {
+        - API_ENDPOINT: String$
+        - API_KEY: String$
+        + MovieAPIHandler()
+        + getMoreSourceBeans(String title, String yearRange): List ~MBeans~$
+        + getMovieListFromAPI(String title): List~APIBeans~$
+        + getMovie(String imdbID): MBeans$
+        + handleErrorResponse(HttpURLConnection conn): void$
+        + parseAPITitle(InputStream inputStream): List~APIBeans~$
+        + parseMovieFromAPI(InputStream inputStream): MBeans$
     }
     
     

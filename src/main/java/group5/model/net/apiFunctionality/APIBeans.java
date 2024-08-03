@@ -18,7 +18,7 @@ import group5.model.formatters.MBeansSerializer;
  */
 @JsonPropertyOrder({"Title", "Year", "imdbID"})
 @JsonInclude(Include.ALWAYS)
-public class apiBeans implements Serializable {
+public class APIBeans implements Serializable {
 
     /**
      * Holds media title.
@@ -43,7 +43,7 @@ public class apiBeans implements Serializable {
     /**
      * Default/empty constructor.
      */
-    public apiBeans() {
+    public APIBeans() {
     }
 
     /**
@@ -53,7 +53,7 @@ public class apiBeans implements Serializable {
      * @param year
      * @param id
      */
-    public apiBeans(String title, int year, String id) {
+    public APIBeans(String title, int year, String id) {
         this.title = title;
         this.year = year;
         this.id = id;
@@ -138,10 +138,10 @@ public class apiBeans implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || !(o instanceof apiBeans)) {
+        if (o == null || !(o instanceof APIBeans)) {
             return false;
         }
-        apiBeans other = (apiBeans) o;
+        APIBeans other = (APIBeans) o;
         return this.getID().equals(other.getID());
     }
 
