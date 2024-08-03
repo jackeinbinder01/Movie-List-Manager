@@ -622,6 +622,42 @@ classDiagram
         + getUserListNames(): String[]
     }
     
+    class MBeans {
+        - title: String
+        - year: int
+        - type: String
+        - released: LocalDate
+        - runtime: int
+        - genre: List~String~
+        - director: List~String~
+        - writer: List~String~
+        - actors: List~String~
+        - plot: String
+        - language: List~String~
+        - country: List~String~
+        - awards: String
+        - poster: String
+        - metascore: int
+        - imdbRating: double
+        - boxOffice: int
+        - id: String
+        - watched: boolean
+        - myRating: double
+        + MBeans()
+        + MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, List<String> genre,List<String> director, List<String> writer, List<String> actors, String plot, List<String> language,List<String> country, String awards, String poster, int metascore, double imdbRating, int boxOffice, String id, boolean watched, double myRating)
+        + getTitle(): String
+        + getYear(): int
+        + getType(): String
+        + getRated(): String
+        + getReleased(): LocalDate
+        + getRuntime(): int
+        + getGenre(): List~String~
+        + getDirector(): List~String~
+        + getWriter(): List~String~
+        
+        
+    }
+    
     
     
     
