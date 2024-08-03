@@ -48,7 +48,7 @@ public interface IMovieList {
      * @param filename The name of the file to save the list to.
      * @param format The format to save the list in.
      */
-    void savemovie(String filename, Formats format);
+    void saveMovie(String filename, Formats format);
 
     /**
      * adds a media to the list.

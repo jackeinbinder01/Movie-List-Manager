@@ -68,7 +68,7 @@ public class MovieList implements IMovieList {
     }
 
     @Override
-    public void savemovie(String filename, Formats format) {
+    public void saveMovie(String filename, Formats format) {
         try {
             FileOutputStream saves = new FileOutputStream(filename);
             MBeansFormatter.writeMediasToFile(this.movieList, saves, format);

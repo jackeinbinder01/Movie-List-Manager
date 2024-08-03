@@ -112,8 +112,8 @@ public class TestMovieList {
         emptyList.addToList(matrix);
         sampleList.addToList(matrix);
 
-        emptyList.savemovie(temp1.toString(), Formats.JSON);
-        sampleList.savemovie(temp2.toString(), Formats.JSON);
+        emptyList.saveMovie(temp1.toString(), Formats.JSON);
+        sampleList.saveMovie(temp2.toString(), Formats.JSON);
 
         Set<MBeans> loaded1 = MBeansLoader.loadMediasFromFile(temp1.toString(), Formats.JSON);
         Set<MBeans> loaded2 = MBeansLoader.loadMediasFromFile(temp2.toString(), Formats.JSON);

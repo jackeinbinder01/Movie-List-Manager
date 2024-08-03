@@ -17,6 +17,8 @@ classDiagram
         class IView
         class BaseView
         class FilterPane
+        class FilterPaneLabels
+        class Filters
         class ListPane
         class DetailsPane
         class AppFont
@@ -24,8 +26,9 @@ classDiagram
 
     namespace CONTROLLER {
         class IController
-        class Controller
         class IFeature
+        class Controller
+        class ErrorMessage
     }
 
     namespace Formatters {
@@ -79,6 +82,8 @@ classDiagram
     BaseView --> DetailsPane: uses
     BaseView --> AppFont: uses
     
+    Controller --> ErrorMessage: uses
+    
     
     class MovieListManager { 
         - MovieListManager()
@@ -86,6 +91,7 @@ classDiagram
     }
     
     class IModel {
+        <<interface>>
         + DEFAULT_DATA: String$
         + loadSourceData(): void
         + loadWatchList(String filename): int
@@ -111,6 +117,7 @@ classDiagram
     }
     
     class IView {
+        <<interface>>
         + setDetailsPaneEntry(MBeans record): void
         + clearTableSelection(): void
         + setSourceTableRecords(Stream~MBeans~ records, String[] watchlistNames, boolean[][] recordWatchlistMatrix): void
@@ -124,10 +131,12 @@ classDiagram
     }
     
     class IController {
+        <<interface>>
         + go(): void
     }
     
     class IFeature {
+        <<interface>>
         + handleTableSelection(MBeans record): void
         + importListFromFile(String filepath): void
         + exportListToFile(String filepath): void
@@ -163,6 +172,42 @@ classDiagram
         + getMatchedObjectFromSource(MBeans media): MBeans
     }
     
+    class MovieData {
+        <<enumeration>>
+        + TITLE: MovieData
+        + NUMBER: MovieData
+        + GENRE: MovieData
+        + DIRECTOR: MovieData
+        + ACTOR: MovieData
+        + LANGUAGE: MovieData
+        + WRITER: MovieData
+        + MPA: MovieData
+        + IMDB: MovieData
+        + USER: MovieData
+        + RELEASED: MovieData
+        + RUNTIME: MovieData
+        + BOXOFFICE: MovieData
+        + HASWATCHED: MovieData
+        - columnTitle: String
+        + MovieData(String columnTitle)
+        + getColumnTitle(): String
+        + fromColumnName(String columnName): MovieData$
+        + fromString(String title): MovieData$
+    }
+    
+    class MovieList {
+        - movieList: Set~MBeans~
+        - name: String
+        + MovieList(String name, Set~MBeans~ movieList)
+        + getListName(): String
+        + getMovieList(): Stream~MBeans~
+        + clear(): void
+        + count(): int
+        + savemovie(String filename, Formats format): void
+        
+        
+    }
+    
     class Controller {
         + IModel
         + IView
@@ -172,6 +217,17 @@ classDiagram
         - getRecordUserListMatrix(Stream<MBeans> records): boolean[][]
         - getWatchlistNames(): String[]
         - getFilterOptions(): List~List~String~~
+    }
+    
+    class ErrorMessage {
+        <<enumeration>>
+        + ERROR: ErrorMessage
+        + DELETE_WATCHLIST: ErrorMessage
+        + CREATE_WATCHLIST: ErrorMessage
+        + IMPORT_WATCHLIST: ErrorMessage
+        - errorMessage: String
+        + ErrorMessage(String errorMessage)
+        + getErrorMessage(String filepath): String
     }
 
 ```
