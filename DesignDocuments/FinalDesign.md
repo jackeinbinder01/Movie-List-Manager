@@ -32,12 +32,24 @@ classDiagram
     }
 
     namespace Formatters {
-        class DomainXMLWrapper
+        class MovieXMLWrapper
         class Formats
         class MBeansDeserializer
         class MBeansSerializer
         class MBeansFormatter
         class MBeansLoader
+        class IntSerializer
+        class DoubleSerializer
+        class DateSerializer
+        class RuntimeSerializer
+        class StringListSerializer
+        class BoxOfficeSerializer
+        class IntDeserializer
+        class DoubleDeserializer
+        class DateDeserializer
+        class RuntimeDeserializer
+        class StringListDeserializer
+        class BoxOfficeDeserializer
     }
 
     namespace Filters {
@@ -83,6 +95,20 @@ classDiagram
     BaseView --> AppFont: uses
     
     Controller --> ErrorMessage: uses
+
+    MBeansDeserializer --|> IntDeserializer : contains
+    MBeansDeserializer --|> DoubleDeserializer : contains
+    MBeansDeserializer --|> DateDeserializer : contains
+    MBeansDeserializer --|> RuntimeDeserializer : contains
+    MBeansDeserializer --|> StringListDeserializer : contains
+    MBeansDeserializer --|> BoxOfficeDeserializer : contains
+
+    MBeansSerializer --|> IntSerializer : contains
+    MBeansSerializer --|> DoubleSerializer : contains
+    MBeansSerializer --|> DateSerializer : contains
+    MBeansSerializer --|> RuntimeSerializer : contains
+    MBeansSerializer --|> StringListSerializer : contains
+    MBeansSerializer --|> BoxOfficeSerializer : contains
     
     
     class MovieListManager { 
@@ -195,17 +221,22 @@ classDiagram
         + fromString(String title): MovieData$
     }
     
+    class IMovieList {
+        <<interface>>
+        + getListName(): String
+        + getMovieList(): Stream ~MBeans~
+        + clear(): void
+        + count(): int
+        + saveMovie(String filename, Formats format): void
+        + addToList(MBeans media): void
+        + removeFromList(MBeans media): void
+        + containsMedia(MBeans media): boolean
+    }
+    
     class MovieList {
         - movieList: Set~MBeans~
         - name: String
         + MovieList(String name, Set~MBeans~ movieList)
-        + getListName(): String
-        + getMovieList(): Stream~MBeans~
-        + clear(): void
-        + count(): int
-        + savemovie(String filename, Formats format): void
-        
-        
     }
     
     class Controller {
@@ -229,5 +260,97 @@ classDiagram
         + ErrorMessage(String errorMessage)
         + getErrorMessage(String filepath): String
     }
+    
+    class MovieXMLWrapper {
+        - movie: Collection~MBeans~
+        + MovieXMLWrapper(Collection~MBeans~ movies)
+    }
+    
+    class Formats {
+        <<enumeration>>
+        + JSON: Formats
+        + XML: Formats
+        + CSV: Formats
+        + PRETTY: Formats
+        + containsValues(String value): Formats$
+    }
+    
+    class MBeansDeserializer {
+        + IntDeserializer
+        + DoubleDeserializer
+        + DateDeserializer
+        + RuntimeDeserializer
+        + StringListDeserializer
+        + BoxOfficeDeserializer
+    }
+    
+    class IntDeserializer { 
+        + deserialize(JsonParser p, DeserializationContext ctxt): Integer
+    }
+    
+    class DoubleDeserializer {
+        + deserialize(JsonParser p, DeserializationContext ctxt): Double
+    }
+
+    class DateDeserializer {
+        + deserialize(JsonParser p, DeserializationContext ctxt): LocalDate
+    }
+
+    class RuntimeDeserializer {
+        + deserialize(JsonParser p, DeserializationContext ctxt): Integer
+    }
+
+    class StringListDeserializer {
+        + deserialize(JsonParser p, DeserializationContext ctxt): List~String~
+    }
+
+    class BoxOfficeDeserializer {
+        + deserialize(JsonParser p, DeserializationContext ctxt): Integer
+    }
+    
+    class MBeansSerializer {
+        + IntSerializer
+        + DoubleSerializer
+        + DateSerializer
+        + RuntimeSerializer
+        + StringListSerializer
+        + BoxOfficeSerializer
+    }
+    
+    class IntSerializer {
+        + serialize(Integer value, JsonGenerator gen, SerializerProvider serializers): void
+    }
+
+    class DoubleSerializer {
+        + serialize(Double value, JsonGenerator gen, SerializerProvider serializers): void
+    }
+
+    class DateSerializer {
+        + serialize(LocalDate date, JsonGenerator gen, SerializerProvider serializers): void
+    }
+
+    class RuntimeSerializer {
+        + serialize(Integer runtime, JsonGenerator gen, SerializerProvider serializers): void
+    }
+
+    class StringListSerializer {
+        + serialize(List~String~ genre, JsonGenerator gen, SerializerProvider serializers): void
+    }
+
+    class BoxOfficeSerializer {
+        + serialize(Integer boxOffice, JsonGenerator gen, SerializerProvider serializers): void
+    }
+    
+    class MBeansFormatter {
+        - MBeansFormatter()
+        - writeMediasToJSON(Collection~MBeans~ records, OutputStream out): void
+        - writeMediasToCSV(Collection~MBeans~ records, OutputStream out): void
+        - writeMediasToFile(Collection~MBeans~ records, OutputStream out, Formats format): void
+    }
+    
+    
+    
+    
+    
 
 ```
