@@ -20,6 +20,13 @@ classDiagram
         class FilterLabels
         class FiltersEnum
         class ListPane
+        class MovieTableModel
+        class MovieListSelectionHandler
+        class ButtonRenderer
+        class ButtonEditor
+        class TableMode
+        class TableColumn
+        class MovieTableModelRecord
         class DetailsPane
         class AppFont
     }
@@ -113,6 +120,13 @@ classDiagram
     FilterPane --|> FilterLabels: contains
     FilterPane --|> FiltersEnum: contains
     
+    ListPane --|> MovieTableModel: contains
+    ListPane --|> MovieListSelectionHandler: contains
+    ListPane --|> ButtonRenderer: contains
+    ListPane --|> ButtonEditor: contains
+    ListPane --|> TableMode: contains
+    ListPane --|> TableColumn: contains
+    ListPane --|> MovieTableModelRecord: contains
     
     class MovieListManager { 
         - MovieListManager()
@@ -203,20 +217,20 @@ classDiagram
     
     class MovieData {
         <<enumeration>>
-        + TITLE: MovieData
-        + NUMBER: MovieData
-        + GENRE: MovieData
-        + DIRECTOR: MovieData
-        + ACTOR: MovieData
-        + LANGUAGE: MovieData
-        + WRITER: MovieData
-        + MPA: MovieData
-        + IMDB: MovieData
-        + USER: MovieData
-        + RELEASED: MovieData
-        + RUNTIME: MovieData
-        + BOXOFFICE: MovieData
-        + HASWATCHED: MovieData
+         TITLE
+         NUMBER
+         GENRE
+         DIRECTOR
+         ACTOR
+         LANGUAGE
+         WRITER
+         MPA
+         IMDB
+         USER
+         RELEASED
+         RUNTIME
+         BOXOFFICE
+         HASWATCHED
         - columnTitle: String
         + MovieData(String columnTitle)
         + getColumnTitle(): String
@@ -255,10 +269,10 @@ classDiagram
     
     class ErrorMessage {
         <<enumeration>>
-        + ERROR: ErrorMessage
-        + DELETE_WATCHLIST: ErrorMessage
-        + CREATE_WATCHLIST: ErrorMessage
-        + IMPORT_WATCHLIST: ErrorMessage
+         ERROR
+         DELETE_WATCHLIST
+         CREATE_WATCHLIST
+         IMPORT_WATCHLIST
         - errorMessage: String
         + ErrorMessage(String errorMessage)
         + getErrorMessage(String filepath): String
@@ -271,10 +285,10 @@ classDiagram
     
     class Formats {
         <<enumeration>>
-        + JSON: Formats
-        + XML: Formats
-        + CSV: Formats
-        + PRETTY: Formats
+         JSON
+         XML
+         CSV
+         PRETTY
         + containsValues(String value): Formats$
     }
     
@@ -462,19 +476,19 @@ classDiagram
     
     class FiltersEnum {
         <<enumeration>>
-        + TITLE: Filters
-        + GENRE: Filters
-        + MPA_RATING: Filters
-        + RELEASED_FROM: Filters
-        + RELEASED_TO: Filters
-        + IMDB_RATING_FROM: Filters
-        + IMDB_RATING_TO: Filters
-        + BOX_OFFICE_EARNINGS_FROM: Filters
-        + BOX_OFFICE_EARNINGS_TO: Filters
-        + DIRECTOR: Filters
-        + ACTOR: Filters
-        + WRITER: Filters
-        + LANGUAGE: Filters
+         TITLE
+         GENRE
+         MPA_RATING
+         RELEASED_FROM
+         RELEASED_TO
+         IMDB_RATING_FROM
+         IMDB_RATING_TO
+         BOX_OFFICE_EARNINGS_FROM
+         BOX_OFFICE_EARNINGS_TO
+         DIRECTOR
+         ACTOR
+         WRITER
+         LANGUAGE
         - filterName: String
         + Filters(String filterName)
         + getFilterName(): String
@@ -482,23 +496,131 @@ classDiagram
     
     class FilterLabels {
         <<enumeration>>
-        + TITLE
-        + GENRE
-        + MPA_RATING
-        + RELEASED
-        + IMDB_RATING
-        + BOX_OFFICE_EARNINGS
-        + DIRECTOR
-        + ACTOR
-        + WRITER
-        + LANGUAGE
-        + FROM
-        + TO
+         TITLE
+         GENRE
+         MPA_RATING
+         RELEASED
+         IMDB_RATING
+         BOX_OFFICE_EARNINGS
+         DIRECTOR
+         ACTOR
+         WRITER
+         LANGUAGE
+         FROM
+         TO
         - filterLabel: String
         + FilterLabels(String filterLabel)
         + getFilterLabel(): String
     }
     
+    class ListPane {
+        - MAIN_TAB_NAME: String
+        - ADD_LIST_BUTTON_TEXT: String
+        - DELETE_LIST_BUTTON_TEXT: String
+        - EXPORT_LIST_BUTTON_TEXT: String
+        - MAIN_ACTION_BUTTON_TEXT: String
+        - WATCHLIST_ACTION_BUTTON_TEXT: String
+        - NEW_LIST_POPUP_TITLE: String
+        - NEW_LIST_POPUP_PROMPT: String
+        - NEW_LIST_ERROR_TITLE: String
+        - NEW_LIST_ERROR_PROMPT: String
+        + sourceTable: JTable
+        + importListButton: JButton
+        + deleteListButton: JButton
+        + exportListButton: JButton
+        + tabbedPane: JTabbedPane
+        + sourceTableModel: MovieTableModel
+        + tableSelectionHandler: Consumer~MBeans~
+        + removeFromListHandler: BiConsumer~MBeans, Integer~
+        + addToListHandler: BiConsumer~MBeans, Integer~
+        + changeWatchedStatusHandler: TriConsumer~MBeans, Boolean, String~
+        + createListHandler: Consumer~String~
+        + deleteListHandler: Consumer~Integer~
+        + tabChangeHandler: Consumer~Integer~
+        + importListHandler: Consumer~String~
+        + exportListHandler: Consumer~String~
+        + SORTING_ENABLED: Boolean
+        + SELECTION_PERMENANCE: Boolean
+        + watchlistModels: List<MovieTableModel>
+        + watchlistTables: List<JTable>
+        + ListPane()
+        + setActiveTab(int index): void
+        + getActiveTab(): int
+        + getActiveTable(): JTable
+        + getActiveTableModel(): MovieTableModel
+        + createTableTab(String name, TableMode tableMode): void
+        + removeUserTable(int userListId): void
+        + createSourceTableTab(): void
+        + createUserTableTab(String tableName): void
+        + localImportListHandler(): void
+        + localExportListHandler(): void
+        + setSourceTable(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix): void
+        + setUserTable(Stream<MBeans> recordStream, int watchlistIndex): void
+        + bindFeatures(IFeature features): void
+        + localTabChangeHandler(): void
+        + getCurrentTable(): JTable
+        + localDeleteListHandler(): void
+    }
+    
+    class MovieTableModel {
+        + MovieTableModel(TableMode tableMode)
+        + getRecordAt(int row): MBeans
+        + getTableMode(): TableMode
+        + setMovieTableModelRecords(List<MovieTableModelRecord> movieTableModelRecords): void
+        + getColumnCount(): int
+        + getRowCount(): int
+        + getColumnName(int col): String
+        + getValueAt(int row, int col): Object
+        + getColumnClass(int col): Class
+        + isCellEditable(int row, int col): boolean
+        + setValueAt(Object value, int row, int col): void
+    }
+    
+    class MovieListSelectionHandler {
+        + valueChanged(ListSelectionEvent e) void
+    }
+    
+    class ButtonRenderer {
+        + ButtonRenderer(TableMode tableMode)
+        + getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column): Component
+    }
+    
+    class ButtonEditor {
+        + ButtonEditor(TableMode tableMode)
+        + getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column): Component
+        + getCellEditorValue(): Object
+        + stopCellEditing(): boolean
+    }
+    
+    class TableMode {
+        <<enumeration>>
+        MAIN
+        WATCHLIST
+    }
+    
+    class TableColumn {
+        TITLE
+        YEAR
+        GENRE
+        RUNTIME
+        WATCHED
+        WATCHLIST
+        - name: String
+        + TableColumn(String name)
+        + getName(): String
+        + getIndex(): int
+    }
+    
+    class MovieTableModelRecord {
+        - record: MBeans
+        - userListIndeces: boolean[]
+        - userListNames: String[]
+        + MovieTableModelRecord(MBeans record, String[] userListNames, boolean[] userListIndices)
+        + MovieTableModelRecord(MBeans record)
+        + getRecord(): MBeans
+        + getUserListIndices(): boolean[]
+        + getUserListNames(): String[]
+    }
     
     
     
