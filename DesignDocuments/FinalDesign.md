@@ -348,6 +348,14 @@ classDiagram
         - writeMediasToFile(Collection~MBeans~ records, OutputStream out, Formats format): void
     }
     
+    class MBeansLoader {
+        - MBeansLoader()
+        + loadMBeansFromAPI(String title, String year, String type): List~MBeans~$
+        + loadMediasFromJSON(String filename): Set~MBeans~
+        + loadMediasFromCSV(String filename): Set~MBeans~
+        + loadMediasFromFile(String filename, Formats format): Set~MBeans~
+    }
+    
     
     
     
