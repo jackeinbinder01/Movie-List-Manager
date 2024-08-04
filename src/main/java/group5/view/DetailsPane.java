@@ -8,10 +8,12 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.FocusListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -39,7 +41,8 @@ import group5.model.formatters.MBeansLoader;
 /**
  * A JPanel class to display details of a media.
  */
-public class DetailsPane extends JPanel {
+
+public class DetailsPane extends JPanel implements FocusListener {
 
     /**
      * Default width.
@@ -139,6 +142,8 @@ public class DetailsPane extends JPanel {
         this.addDetailPane("IMDB");
         this.addDetailPane("Box Office");
         this.addUserRating();
+
+        this.userRating.addFocusListener(this);
 
         this.scrollPane.addComponentListener(new ComponentAdapter() {
             @Override
@@ -383,11 +388,12 @@ public class DetailsPane extends JPanel {
 
         this.mediaDetails.get(14).setText(media.formatBoxOfficeCurrency());
 
-        String myRating = Double.toString(media.getMyRating());
-        if (myRating.equals("-1.0")) {
-            myRating = "Enter your rating here";
+        Double myRating = media.getMyRating();
+        if (myRating < 0) {
+            this.userRating.setText("Enter your rating here (0 - 10)");
+        } else {
+            this.userRating.setText(Double.toString(myRating));
         }
-        this.userRating.setText(myRating);
 
         this.watchedBox.setSelected(media.getWatched());
         SwingUtilities.invokeLater(() -> {
@@ -415,12 +421,27 @@ public class DetailsPane extends JPanel {
         this.userRating.addActionListener(e -> {
             try {
                 double rating = Double.parseDouble(this.userRating.getText());
-                features.changeRating(this.currentMedia, rating);
-                this.userRating.setText(Double.toString(rating));
+                if (rating >= 0.0 && rating <= 10.0) {
+                    // Only allow changes in range
+                    features.changeRating(this.currentMedia, rating);
+                    this.userRating.setText(Double.toString(rating));
+                }
             } catch (NumberFormatException ex) {
                 System.out.println("Invalid rating format. Please enter a number.");
             }
         });
+    }
+
+    /**
+     * Invoked when a component gains the keyboard focus.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void focusGained(FocusEvent e) {
+        // clear text when focus is gained
+        JTextField textField = (JTextField) e.getSource();
+        textField.setText("");
     }
 
     /**
@@ -447,5 +468,15 @@ public class DetailsPane extends JPanel {
         detailsPane.setMedia(media);
         detailsPane.bindFeatures(null);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        Double myRating = this.currentMedia.getMyRating();
+        if (myRating < 0) {
+            this.userRating.setText("Enter your rating here (0 - 10)");
+        } else {
+            this.userRating.setText(Double.toString(myRating));
+        }
     }
 }
