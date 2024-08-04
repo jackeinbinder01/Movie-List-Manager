@@ -119,6 +119,12 @@ Removing movies in a movie list will remove corresponding options from respectiv
 
 ![Apply Filters](TestResources/FilterPane10.gif)
 
+- Test Navigating Movie Lists
+
+All filter selections clear when a new watchlist is selected
+
+![Apply Filters](TestResources/FilterPane11.gif)
+
 
 
 
