@@ -67,9 +67,31 @@
 
 - Test Apply Filters Button
 
-Clicking apply filters button filters the selected list in the center List Pane
+Clicking 'Apply Filters' button filters the selected list in the center List Pane
 
-![Test Apply Filters Button](TestResources/FilterPane1.gif)
+![Apply Filters](TestResources/FilterPane1.gif)
 
+- Test Clear Filters Button
+
+Clicking 'Clear Filters' removes selected options in the Filter Pane and unfilters the selected movie list in the List Pane
+
+![Apply Filters](TestResources/FilterPane2.gif)
+
+- Test Focus Lost
+
+All filters will maintain data when focus is lost and the 'All Movies' tab is selected
+
+![Apply Filters](TestResources/FilterPane3.gif)
+
+Range filters display the min and max range of respective fields when focus is lost and any tab except the 'All Movies'
+tab is selected. If the user enters new information, then when focus is lost the user entered data remains
+
+![Apply Filters](TestResources/FilterPane4.gif)
+
+Box Office Earnings filters format user entries in Millions of dollars, but allow for N/A to be entered
+
+![Apply Filters](TestResources/FilterPane5.gif)
+
+- Test Range Filters
 
 
