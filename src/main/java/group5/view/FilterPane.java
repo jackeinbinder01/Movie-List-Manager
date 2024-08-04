@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 public class FilterPane extends JPanel implements ActionListener, FocusListener {
 
     /** Default size. */
-    private int DEFAULT_WIDTH = 225;
-    private int DEFAULT_HEIGHT = 100;
+    private final int DEFAULT_WIDTH = 225;
+    private final int DEFAULT_HEIGHT = 100;
 
     /** Set of movies. */
     private Set<MBeans> movies = new HashSet<>();
