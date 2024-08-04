@@ -297,23 +297,23 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     private void setComponentNames() {
         // set filter names
-        titleFilter.setName(Filters.TITLE.getFilterName());
-        genreFilter.setName(Filters.GENRE.getFilterName());
-        mpaRatingFilter.setName(Filters.MPA_RATING.getFilterName());
+        titleFilter.setName(FiltersEnum.TITLE.getFilterName());
+        genreFilter.setName(FiltersEnum.GENRE.getFilterName());
+        mpaRatingFilter.setName(FiltersEnum.MPA_RATING.getFilterName());
 
         // set range filter names
-        releasedFrom.setName(Filters.RELEASED_FROM.getFilterName());
-        releasedTo.setName(Filters.RELEASED_TO.getFilterName());
-        imdbRatingFrom.setName(Filters.IMDB_RATING_FROM.getFilterName());
-        imdbRatingTo.setName(Filters.IMDB_RATING_TO.getFilterName());
-        boxOfficeEarningsFrom.setName(Filters.BOX_OFFICE_EARNINGS_FROM.getFilterName());
-        boxOfficeEarningsTo.setName(Filters.BOX_OFFICE_EARNINGS_TO.getFilterName());
+        releasedFrom.setName(FiltersEnum.RELEASED_FROM.getFilterName());
+        releasedTo.setName(FiltersEnum.RELEASED_TO.getFilterName());
+        imdbRatingFrom.setName(FiltersEnum.IMDB_RATING_FROM.getFilterName());
+        imdbRatingTo.setName(FiltersEnum.IMDB_RATING_TO.getFilterName());
+        boxOfficeEarningsFrom.setName(FiltersEnum.BOX_OFFICE_EARNINGS_FROM.getFilterName());
+        boxOfficeEarningsTo.setName(FiltersEnum.BOX_OFFICE_EARNINGS_TO.getFilterName());
 
         // set remaining filter names
-        directorFilter.setName(Filters.DIRECTOR.getFilterName());
-        actorFilter.setName(Filters.ACTOR.getFilterName());
-        writerFilter.setName(Filters.WRITER.getFilterName());
-        languageFilter.setName(Filters.LANGUAGE.getFilterName());
+        directorFilter.setName(FiltersEnum.DIRECTOR.getFilterName());
+        actorFilter.setName(FiltersEnum.ACTOR.getFilterName());
+        writerFilter.setName(FiltersEnum.WRITER.getFilterName());
+        languageFilter.setName(FiltersEnum.LANGUAGE.getFilterName());
     }
 
     /**
@@ -598,7 +598,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         Set<String> uniqueMpaRatings = new TreeSet<>();
         Set<String> uniqueLanguages = new TreeSet<>();
 
-        Filters filter = getFilterByEnum(comboBox.getName());
+        FiltersEnum filter = getFilterByEnum(comboBox.getName());
 
         switch (filter) {
             case GENRE:
@@ -709,7 +709,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * @param textField the JTextField to reset its placeholder
      */
     public void resetPlaceholder(JTextField textField) {
-        Filters filter = getFilterByEnum(textField.getName());
+        FiltersEnum filter = getFilterByEnum(textField.getName());
         switch (filter) {
             case RELEASED_FROM:
                 if (releasedFrom.getText().isEmpty()) {
@@ -755,7 +755,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     public void reformatBoxOfficeEarnings(JTextField boxOfficeEarnings) {
-        Filters filter = getFilterByEnum(boxOfficeEarnings.getName());
+        FiltersEnum filter = getFilterByEnum(boxOfficeEarnings.getName());
         switch (filter) {
             case BOX_OFFICE_EARNINGS_FROM:
                 if (!boxOfficeEarnings.getText().isEmpty()) {
@@ -787,13 +787,13 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /**
-     * Returns the Filters enum associated with a filter name passed as a String.
+     * Returns the FiltersEnum enum associated with a filter name passed as a String.
      *
      * @param filter the String name of a filter in the FilterPane
-     * @return the Filters enum associated with the String filter
+     * @return the FiltersEnum enum associated with the String filter
      */
-    private Filters getFilterByEnum(String filter) {
-        for (Filters filters : Filters.values()) {
+    private FiltersEnum getFilterByEnum(String filter) {
+        for (FiltersEnum filters : FiltersEnum.values()) {
             if (filters.getFilterName().equalsIgnoreCase(filter)) {
                 return filters;
             }
@@ -877,7 +877,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
 /* enums -------------------------------------------------------------------------------------------------------------*/
 /** Encapsulates the name of a FilterPane filter in an enum. */
-enum Filters {
+enum FiltersEnum {
 
     /** Filters Enums. */
     TITLE("titleFilter"), GENRE("genreFilter"), MPA_RATING("mparatingFilter"),
@@ -892,14 +892,14 @@ enum Filters {
     private final String filterName;
 
     /** Public constructor */
-    Filters(String filterName) {
+    FiltersEnum(String filterName) {
         this.filterName = filterName;
     }
 
     /**
-     * Returns the String, representing a filter name, associated with a Filters enum.
+     * Returns the String, representing a filter name, associated with a FiltersEnum enum.
      *
-     * @return String, representing a filter name, associated with a Filters enum
+     * @return String, representing a filter name, associated with a FiltersEnum enum
      */
     public String getFilterName() {
         return filterName;

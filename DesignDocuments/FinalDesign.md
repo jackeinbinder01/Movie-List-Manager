@@ -76,35 +76,27 @@ classDiagram
     namespace APP {
         class MovieListManager
     }
-    
-    MovieListManager --> IModel: uses
-    MovieListManager --> IView: uses
-    MovieListManager --> IController: uses
-    
-    Model ..|> IModel: implements
-    BaseView ..|> IView: implements
+
     Controller ..|> IController: implements
     Controller ..|> IFeature: implements
-    MovieList ..|> IMovieList: implements
-    FilterHandler ..|> IFilterHandler: implements
-    
-    Model --> MovieData: uses
-    Model --> IMovieList: uses
-    Model --> IFilterHandler: uses
-    
-    FilterHandler --> Operations: uses
-    
-    
-    
     Controller --> IModel: uses
     Controller --> IView: uses
-    
-    BaseView --> FilterPane: uses
-    BaseView --> ListPane: uses
-    BaseView --> DetailsPane: uses
-    BaseView --> AppFont: uses
-    
     Controller --> ErrorMessage: uses
+    Controller --> MBeans: uses
+    Controller --> FilterPane: uses
+    Controller --> Operations: uses
+    Controller --> MovieData: uses
+    
+    MBeans --> MBeansDeserializer: uses
+    MBeans --> MBeansSerializer: uses
+
+    FilterHandler ..|> IFilterHandler: implements
+    FilterHandler --> MBeans: uses
+    FilterHandler --> MovieData: uses
+    FilterHandler --> Operations: uses
+    FilterOperation --> MBeans: uses
+    FilterOperation --> MovieData: uses
+    FilterOperation --> Operations: uses
 
     MBeansDeserializer --|> IntDeserializer : contains
     MBeansDeserializer --|> DoubleDeserializer : contains
@@ -112,25 +104,70 @@ classDiagram
     MBeansDeserializer --|> RuntimeDeserializer : contains
     MBeansDeserializer --|> StringListDeserializer : contains
     MBeansDeserializer --|> BoxOfficeDeserializer : contains
-
     MBeansSerializer --|> IntSerializer : contains
     MBeansSerializer --|> DoubleSerializer : contains
     MBeansSerializer --|> DateSerializer : contains
     MBeansSerializer --|> RuntimeSerializer : contains
     MBeansSerializer --|> StringListSerializer : contains
     MBeansSerializer --|> BoxOfficeSerializer : contains
-    
-    FilterPane --|> FilterLabels: contains
-    FilterPane --|> FiltersEnum: contains
-    
-    ListPane --|> MovieTableModel: contains
-    ListPane --|> MovieListSelectionHandler: contains
-    ListPane --|> ButtonRenderer: contains
-    ListPane --|> ButtonEditor: contains
-    ListPane --|> TableMode: contains
-    ListPane --|> TableColumn: contains
-    ListPane --|> MovieTableModelRecord: contains
-    
+    MBeansFormatter --> MBeans: uses
+    MBeansLoader --> MBeans: uses
+    MBeansLoader --> Formats: uses
+    MovieXMLWrapper --> MBeans: uses
+
+    APIBeans --> MBeansDeserializer: uses
+    APIBeans --> MBeansSerializer: uses
+    MovieAPIHandler --> MBeans: uses
+    MovieAPIHandler --> APIBeans: uses
+
+    Model ..|> IModel: implements
+    Model --> MovieData: uses
+    Model --> IMovieList: uses
+    Model --> IFilterHandler: uses
+    Model --> MBeans: uses
+    Model --> MBeansLoader: uses
+    Model --> MovieAPIHandler: uses
+    Model --> Formats: uses
+    Model --> MBeansFormatter: uses
+    MovieList ..|> IMovieList: implements
+    MovieList --> MBeans: uses
+    MovieList --> MBeansFormatter: uses
+
+    BaseView ..|> IView: implements
+    BaseView --> AppFont: uses
+    BaseView --> IFeature: binds
+    BaseView --> MBeans: uses
+    BaseView --> FilterPane: contains
+    BaseView --> ListPane: contains
+    BaseView --> DetailsPane: contains
+    DetailsPane --> MBeans: uses
+    DetailsPane --> IFeature: binds
+    FilterPane --> MBeans: uses
+    FilterPane --> FiltersEnum: uses
+    FilterPane --> FilterLabels: uses
+    FilterPane --> IFeature: binds
+    ListPane --> MBeans: uses
+    ListPane --> IFeature: binds
+    ListPane --> MovieTableModel: uses
+    ListPane --> MovieTableModelRecord: uses
+    ListPane --> MovieListSelectionHandler: uses
+    ListPane --> ButtonRenderer: uses
+    ListPane --> ButtonEditor: uses
+    ListPane --> TableMode: uses
+    ListPane --> TableColumn: uses
+    MovieTableModel --> MBeans: uses
+    MovieTableModel --> TableMode: uses
+    MovieTableModel --> MovieTableModelRecord: uses
+    ButtonRenderer --> TableMode: uses
+    ButtonEditor --> MBeans: uses
+    ButtonEditor --> TableMode: uses
+    ButtonEditor --> MovieTableModelRecord: uses
+    MovieTableModelRecord --> MBeans: uses
+
+    MovieListManager --> IModel: uses
+    MovieListManager --> IView: uses
+    MovieListManager --> IController: uses
+
     class MovieListManager { 
         - MovieListManager()
         - main(String[] args): void$
@@ -708,6 +745,7 @@ classDiagram
     }
     
     class FilterOperation {
+        <<utility>>
         + getFilter(MBeans movie, MovieData filterOn, Operations op, String val): boolean$
         + filterList(List<String> strList, Operations op, String val): boolean$
         + filterString(String field, Operations op, String val): boolean$
@@ -732,6 +770,7 @@ classDiagram
     }
     
     class NetUtils {
+        <<utility>>
         - API_URL_FORMAT: String$
         - NetUtils()
         - getApiUrl(String title, String year, String type): String$
@@ -767,11 +806,4 @@ classDiagram
         + parseAPITitle(InputStream inputStream): List~APIBeans~$
         + parseMovieFromAPI(InputStream inputStream): MBeans$
     }
-    
-    
-    
-    
-    
-    
-
 ```
