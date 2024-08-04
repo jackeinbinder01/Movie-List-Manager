@@ -68,7 +68,6 @@ classDiagram
     }
 
     namespace Net {
-        class NetUtils
         class APIBeans
         class MovieAPIHandler
     }
@@ -767,15 +766,6 @@ classDiagram
         + Operations(String value)
         + getOperator(): String
         + getOperatorFromStr(String str): Operations$
-    }
-    
-    class NetUtils {
-        <<utility>>
-        - API_URL_FORMAT: String$
-        - NetUtils()
-        - getApiUrl(String title, String year, String type): String$
-        - getUrlContents(String urlStr): InputStream$
-        + getMediaDetails(String title, String year, String type): InputStream$
     }
     
     class APIBeans {
