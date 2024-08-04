@@ -57,3 +57,19 @@
 - Activate watched checkbox and MyRating box when records starts showing and can be interact with.
 - Upon resizing the window, no item or words got out of bound
 ---
+
+
+
+
+### Test Filter Pane
+
+---
+
+- Test Apply Filters Button
+
+Clicking apply filters button filters the selected list in the center List Pane
+
+![Test Apply Filters Button](TestResources/FilterPane1.gif)
+
+
+
