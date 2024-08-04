@@ -39,7 +39,7 @@ classDiagram
         class ErrorMessage
     }
 
-    namespace Formatters {
+    namespace FORMATTERS {
         class MovieXMLWrapper
         class Formats
         class MBeansDeserializer
@@ -60,14 +60,14 @@ classDiagram
         class BoxOfficeDeserializer
     }
 
-    namespace Filters {
+    namespace FILTERS {
         class FilterHandler
         class FilterOperation
         class IFilterHandler
         class Operations
     }
 
-    namespace Net {
+    namespace NET {
         class APIBeans
         class MovieAPIHandler
     }
@@ -332,6 +332,7 @@ classDiagram
     }
     
     class MBeansDeserializer {
+        <<utility>>
         + IntDeserializer
         + DoubleDeserializer
         + DateDeserializer
@@ -340,31 +341,38 @@ classDiagram
         + BoxOfficeDeserializer
     }
     
-    class IntDeserializer { 
+    class IntDeserializer {
+        <<utility>>
         + deserialize(JsonParser p, DeserializationContext ctxt): Integer
     }
     
     class DoubleDeserializer {
+        <<utility>>
         + deserialize(JsonParser p, DeserializationContext ctxt): Double
     }
 
     class DateDeserializer {
+        <<utility>>
         + deserialize(JsonParser p, DeserializationContext ctxt): LocalDate
     }
 
     class RuntimeDeserializer {
+        <<utility>>
         + deserialize(JsonParser p, DeserializationContext ctxt): Integer
     }
 
     class StringListDeserializer {
+        <<utility>>
         + deserialize(JsonParser p, DeserializationContext ctxt): List~String~
     }
 
     class BoxOfficeDeserializer {
+        <<utility>>
         + deserialize(JsonParser p, DeserializationContext ctxt): Integer
     }
     
     class MBeansSerializer {
+        <<utility>>
         + IntSerializer
         + DoubleSerializer
         + DateSerializer
@@ -374,26 +382,32 @@ classDiagram
     }
     
     class IntSerializer {
+        <<utility>>
         + serialize(Integer value, JsonGenerator gen, SerializerProvider serializers): void
     }
 
     class DoubleSerializer {
+        <<utility>>
         + serialize(Double value, JsonGenerator gen, SerializerProvider serializers): void
     }
 
     class DateSerializer {
+        <<utility>>
         + serialize(LocalDate date, JsonGenerator gen, SerializerProvider serializers): void
     }
 
     class RuntimeSerializer {
+        <<utility>>
         + serialize(Integer runtime, JsonGenerator gen, SerializerProvider serializers): void
     }
 
     class StringListSerializer {
+        <<utility>>
         + serialize(List~String~ genre, JsonGenerator gen, SerializerProvider serializers): void
     }
 
     class BoxOfficeSerializer {
+        <<utility>>
         + serialize(Integer boxOffice, JsonGenerator gen, SerializerProvider serializers): void
     }
     
