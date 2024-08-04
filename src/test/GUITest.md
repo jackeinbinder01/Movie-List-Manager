@@ -92,6 +92,33 @@ Box Office Earnings filters format user entries in Millions of dollars, but allo
 
 ![Apply Filters](TestResources/FilterPane5.gif)
 
+- Test Focus Gained
+
+Range filters clear when focus is gained
+
+![Apply Filters](TestResources/FilterPane6.gif)
+
 - Test Range Filters
+
+Range Filters update to reflect min/max values of the current list when other lists are selected, but are cleared when 
+the 'All Movies' or an empty movie list is selected.
+
+![Apply Filters](TestResources/FilterPane7.gif)
+
+Range Filters update to reflect min/max ranges when movies are removed from a list. Range filters will clear if all
+movies have been removed from a movie list
+
+![Apply Filters](TestResources/FilterPane8.gif)
+
+The Box Office Earnings range filters display N/A when box office data is not available for a movie
+
+![Apply Filters](TestResources/FilterPane9.gif)
+- Test Drop Down Filter Options
+
+Removing movies in a movie list will remove corresponding options from respective dropdown filters
+
+![Apply Filters](TestResources/FilterPane10.gif)
+
+
 
 
