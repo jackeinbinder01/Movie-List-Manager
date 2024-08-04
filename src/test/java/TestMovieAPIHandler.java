@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import group5.model.beans.MBeans;
-import group5.model.net.apiFunctionality.MovieAPIHandler;
-import group5.model.net.apiFunctionality.APIBeans;
+import group5.model.net.MovieAPIHandler;
+import group5.model.net.APIBeans;
 
 public class TestMovieAPIHandler {
 

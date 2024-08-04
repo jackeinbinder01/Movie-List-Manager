@@ -1,4 +1,4 @@
-package group5.model.net.apiFunctionality;
+package group5.model.net;
 
 import java.io.Serializable;
 

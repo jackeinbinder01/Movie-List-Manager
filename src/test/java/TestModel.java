@@ -6,30 +6,20 @@ import org.junit.jupiter.api.io.TempDir;
 
 
 import org.junit.jupiter.api.Test;
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
-import java.nio.file.Files;
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.net.URL;
-import java.time.format.DateTimeFormatter;
-import java.io.FileOutputStream;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import group5.model.beans.MBeans;
 import group5.model.IModel;
 import group5.model.Model;
-import group5.model.IMovieList;
-import group5.model.MovieList;
-import group5.model.Filter.IFilterHandler;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansLoader;
-import group5.model.net.apiFunctionality.MovieAPIHandler;
+import group5.model.net.MovieAPIHandler;
 
 public class TestModel {
 

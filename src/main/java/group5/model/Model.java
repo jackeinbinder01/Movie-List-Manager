@@ -26,7 +26,7 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
-import group5.model.net.apiFunctionality.MovieAPIHandler;
+import group5.model.net.MovieAPIHandler;
 
 public class Model implements IModel {
 

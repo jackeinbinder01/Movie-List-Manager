@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 
-import group5.model.net.apiFunctionality.MovieAPIHandler;
+import group5.model.net.MovieAPIHandler;
 
 public class MBeansLoader {
 
