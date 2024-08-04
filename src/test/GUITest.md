@@ -126,5 +126,18 @@ All filter selections clear when a new watchlist is selected
 ![Apply Filters](TestResources/FilterPane11.gif)
 
 
+### Test Details Pane
+
+Details Pane is blank at startup with a 'No Image Available' label in place of a movie poster. Once a movie in any list
+is clicked, that movies' details populate in the Details Pane
+
+![Apply Filters](TestResources/DetailsPane1.gif)
+
+User inputted fields (Watched checkbox and My Rating) are not editable when a movie is not selected, but become editable
+once a movie is selected. The Watched checkbox is greyed out until a movie is selected
+
+
+
+
 
 
