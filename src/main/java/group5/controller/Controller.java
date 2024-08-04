@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import group5.model.Filter.Operations;
+import group5.model.filter.Operations;
 import group5.model.IModel;
 import group5.model.MovieData;
 import group5.model.beans.MBeans;

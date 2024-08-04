@@ -1,4 +1,4 @@
-package group5.model.Filter;
+package group5.model.filter;
 
 import java.util.List;
 import java.util.stream.Collectors;

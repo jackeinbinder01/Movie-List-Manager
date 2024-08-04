@@ -1,4 +1,4 @@
-package group5.model.Filter;
+package group5.model.filter;
 
 public enum Operations {
     /**

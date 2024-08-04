@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import group5.model.Filter.FilterHandler;
-import group5.model.Filter.IFilterHandler;
+import group5.model.filter.FilterHandler;
+import group5.model.filter.IFilterHandler;
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;

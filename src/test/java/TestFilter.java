@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import group5.model.Filter.FilterHandler;
+import group5.model.filter.FilterHandler;
 import group5.model.beans.MBeans;
 
 public class TestFilter {
