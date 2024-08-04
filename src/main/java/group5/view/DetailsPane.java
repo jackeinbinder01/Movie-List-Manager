@@ -382,7 +382,13 @@ public class DetailsPane extends JPanel {
         }
 
         this.mediaDetails.get(14).setText(media.formatBoxOfficeCurrency());
-        this.userRating.setText(Double.toString(media.getMyRating()));
+
+        String myRating = Double.toString(media.getMyRating());
+        if (myRating.equals("-1.0")) {
+            myRating = "Enter your rating here";
+        }
+        this.userRating.setText(myRating);
+
         this.watchedBox.setSelected(media.getWatched());
         SwingUtilities.invokeLater(() -> {
             this.reSize();

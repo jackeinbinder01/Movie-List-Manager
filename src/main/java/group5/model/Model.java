@@ -304,10 +304,9 @@ public class Model implements IModel {
     @Override
     public void saveWatchList(String filename, int userListId) {
         // Get file extension
-        System.out.println(filename);
         String formatStr = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
-        System.out.println(formatStr);
-        Formats format = Formats.containsValues(formatStr.toUpperCase());
+        Formats format = Formats.containsValues(formatStr);
+        System.out.println(format);
         try {
             OutputStream out = new FileOutputStream(filename);
             MBeansFormatter.writeMediasToFile(this.watchLists.get(userListId).getMovieList().collect(Collectors.toSet()),
