@@ -599,7 +599,7 @@ public class MBeans implements java.io.Serializable {
         result += "imdbRating: " + imdbRating + "\n";
         result += "BoxOffice: " + formatBoxOfficeCurrency() + "\n";
         result += "Watched: " + watched + "\n";
-        result += "My Rating: " + myRating + "\n";
+        result += "My Rating: " + myRating;
         return result;
     }
 

@@ -12,6 +12,9 @@ public enum Formats {
      * @return the format if found, null otherwise
      */
     public static Formats containsValues(String value) {
+        if (value.equalsIgnoreCase("txt")) {
+            return Formats.PRETTY;
+        }
         for (Formats format : Formats.values()) {
             if (format.toString().equalsIgnoreCase(value)) {
                 return format;

@@ -82,16 +82,16 @@ public class MBeansLoader {
      */
     public static void main(String[] args) throws Exception {
         System.out.println("START");
-        Set<MBeans> bean = loadMediasFromFile("./data/test/empty.json", Formats.JSON);
+        Set<MBeans> bean = loadMediasFromFile("./data/test/sample.json", Formats.JSON);
+        Set<MBeans> empty = loadMediasFromFile("./data/test/empty.json", Formats.JSON);
         System.out.println(bean);
-        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("empty.json"), Formats.JSON);
-        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("empty.csv"), Formats.CSV);
-        //System.out.println(loadMBeansFromAPI("level+2","2008",""));
-        //Set<MBeans> records = loadMediasFromFile("data/samples/watchlist.json", Formats.JSON);
-        //MBeans empty = loadMediasFromFile("data/test/empty.json", Formats.JSON).iterator().next();
-        //System.out.println(empty);
-        //records.add(empty);
-        //MBeansFormatter.writeMediasToFile(records, new FileOutputStream("new_csv.csv"), Formats.CSV);
-        //MBeansFormatter.writeMediasToFile(records, new FileOutputStream("new_json.json"), Formats.JSON);
+        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("test.xml"), Formats.XML);
+        MBeansFormatter.writeMediasToFile(empty, new FileOutputStream("testE.xml"), Formats.XML);
+        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("test.json"), Formats.JSON);
+        MBeansFormatter.writeMediasToFile(empty, new FileOutputStream("testE.json"), Formats.JSON);
+        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("test.csv"), Formats.CSV);
+        MBeansFormatter.writeMediasToFile(empty, new FileOutputStream("testE.csv"), Formats.CSV);
+        MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("test.txt"), Formats.PRETTY);
+        MBeansFormatter.writeMediasToFile(empty, new FileOutputStream("testE.txt"), Formats.PRETTY);
     }
 }

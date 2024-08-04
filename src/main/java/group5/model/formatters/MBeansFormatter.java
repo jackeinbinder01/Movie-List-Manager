@@ -1,6 +1,7 @@
 package group5.model.formatters;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import group5.model.beans.MBeans;
 
@@ -25,53 +27,43 @@ public final class MBeansFormatter {
         // empty
     }
 
-//     /**
-//      * Pretty print the data in a human readable format.
-//      *
-//      * @param records the records to print
-//      * @param out the output stream to write to
-//      */
-//     private static void prettyPrint(Collection<DNRecord> records, OutputStream out) {
-//         PrintStream pout = new PrintStream(out); // so i can use println
-//         for (DNRecord record : records) {
-//             prettySingle(record, pout);
-//             pout.println();
-//         }
-//     }
+     /**
+      * Pretty print the data in a human readable format.
+      *
+      * @param records the records to print
+      * @param out the output stream to write to
+      */
+     private static void writeMediasToTXT(Collection<MBeans> records, OutputStream out) {
+         PrintStream pout = new PrintStream(out); // so i can use println
+         int i = 1;
+         for (MBeans record : records) {
+            String recordStr = record.toString();
+            recordStr = recordStr.replace("Title: ", "");
+            recordStr = recordStr.replace("-1.0", "N/A");
+            recordStr = recordStr.replace("-1", "N/A");
+            recordStr = recordStr.replace("\n", "\n    ");
+             pout.println(i + ". " + recordStr);
+             pout.println();
+             i++;
+         }
+     }
 
-//     /**
-//      * Pretty print a single record.
-//      *
-//      * Let this as an example, so you didn't have to worry about spacing.
-//      *
-//      * @param record the record to print
-//      * @param out the output stream to write to
-//      */
-//     private static void prettySingle(@Nonnull DNRecord record, @Nonnull PrintStream out) {
-//         out.println(record.hostname());
-//         out.println("             IP: " + record.ip());
-//         out.println("       Location: " + record.city() + ", " + record.region() + ", "
-//                 + record.country() + ", " + record.postal());
-//         out.println("    Coordinates: " + record.latitude() + ", " + record.longitude());
-
-//     }
-
-//     /**
-//      * Write the data as XML.
-//      *
-//      * @param records the records to write
-//      * @param out the output stream to write to
-//      */
-//     private static void writeXmlData(Collection<DNRecord> records, OutputStream out) {
-//         XmlMapper mapper = new XmlMapper();
-//         mapper.enable((SerializationFeature.INDENT_OUTPUT));
-//         DomainXmlWrapper domain = new DomainXmlWrapper(records);
-//         try {
-//             mapper.writeValue(out, domain);
-//         } catch (IOException e) {
-//             e.printStackTrace();
-//         }
-//     }
+     /**
+      * Write the data as XML.
+      *
+      * @param records the records to write
+      * @param out the output stream to write to
+      */
+     private static void writeMediasToXML(Collection<MBeans> records, OutputStream out) {
+         XmlMapper mapper = new XmlMapper();
+         mapper.enable((SerializationFeature.INDENT_OUTPUT));
+         MovieXMLWrapper domain = new MovieXMLWrapper(records);
+         try {
+             mapper.writeValue(out, domain);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+     }
 
 
     private static void writeMediasToJSON(Collection<MBeans> records, OutputStream out) {
@@ -110,6 +102,12 @@ public final class MBeansFormatter {
                 break;
             case CSV:
                 writeMediasToCSV(records, out);
+                break;
+            case PRETTY:
+                writeMediasToTXT(records, out);
+                break;
+            case XML:
+                writeMediasToXML(records, out);
                 break;
             default:
                 System.out.println("Invalid format");
