@@ -427,6 +427,7 @@ classDiagram
     }
     
     class AppFont {
+        <<utility>>
         - AppFont()
         + setAppFont(FontUIResource font): void$
     }
