@@ -461,6 +461,8 @@ classDiagram
     }
     
     class FilterPane {
+        - DEFAULT_WIDTH: int
+        - DEFAULT_HEIGHT: int
         - movies: Set~MBeans~
         - moviesIsSourceList: boolean
         - filterPanel: JPanel

@@ -133,8 +133,15 @@ is clicked, that movies' details populate in the Details Pane
 
 ![Apply Filters](TestResources/DetailsPane1.gif)
 
-User inputted fields (Watched checkbox and My Rating) are not editable when a movie is not selected, but become editable
-once a movie is selected. The Watched checkbox is greyed out until a movie is selected
+User inputted fields ('Watched' checkbox and 'My Rating') are not editable when a movie is not selected, but become editable
+once a movie is selected. The 'Watched' checkbox is greyed out until a movie is selected
+
+
+Changes to the 'Watched' and 'My Rating' fields are saved and remain even if the app is closed and restarted
+
+
+Text adjusts to accommodate window resizing
+
 
 
 

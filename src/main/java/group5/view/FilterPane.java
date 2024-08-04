@@ -16,6 +16,10 @@ import java.util.stream.Stream;
 /** Contains and passes filters to controller for selected movie list */
 public class FilterPane extends JPanel implements ActionListener, FocusListener {
 
+    /** Default size. */
+    private int DEFAULT_WIDTH = 225;
+    private int DEFAULT_HEIGHT = 100;
+
     /** Set of movies. */
     private Set<MBeans> movies = new HashSet<>();
     private boolean moviesIsSourceList = false;
@@ -79,6 +83,9 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     public FilterPane() {
         super(new BorderLayout());
 
+        // set component size
+        setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+
         // name components to enable switch statements
         setComponentNames();
 
@@ -87,7 +94,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         updateGBC(null, null, null, null, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
 
         // add border padding to button panel
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0,0,5,0));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0,4,5,4));
         // add panels
         add(filterPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -105,6 +112,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         addFilter(FilterLabels.ACTOR.getFilterLabel(), actorFilter);
         addFilter(FilterLabels.WRITER.getFilterLabel(), writerFilter);
         addFilter(FilterLabels.LANGUAGE.getFilterLabel(), languageFilter);
+
+        // add vertical scroll bar
+        JScrollPane scrollPane = new JScrollPane(filterPanel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(1, 0, 1, 0));
+        add(scrollPane);
 
         // add buttons
         buttonPanel.add(applyFiltersButton);
