@@ -182,9 +182,10 @@ public class Model implements IModel {
             return -1;
         }
         String name = this.getUserListName(userListId);
+        this.saveWatchList("./data/unused/" + name + ".json", userListId);
         this.watchLists.remove(userListId);
         File toDelete = new File(DEFAULT_WATCHLIST + "/" + name + ".json");
-        toDelete.renameTo(new File("./data/unused/" + name + ".json"));
+        toDelete.delete();
         return userListId;
     }
 
