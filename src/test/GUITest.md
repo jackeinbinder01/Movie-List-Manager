@@ -205,7 +205,7 @@ Tab changes display corresponding movie lists
 When a tab is clicked, the corresponding movie list will display unfiltered, meaning any existing filters will be
 reverted
 
-
+![Apply Filters](TestResources/ListPane6.gif)
 
 - Test Movie Lists
 
