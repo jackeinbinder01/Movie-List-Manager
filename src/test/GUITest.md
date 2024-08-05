@@ -228,6 +228,22 @@ the movie list tabs. Clicking the arrow increments/decrements through the tabs d
 
 - Test Import List
 
+Importing a movie list using the 'Import List' button only allows importing JSON or CSV files
+
+![Apply Filters](TestResources/ListPane20.gif)
+
+Test import from JSON file using the 'Import List' button
+
+![Apply Filters](TestResources/ListPane22.gif)
+
+Test import from CSV using the 'Import List' button
+
+![Apply Filters](TestResources/ListPane21.gif)
+
+Importing an invalid files triggers an error message
+
+![Apply Filters](TestResources/ListPane23.gif)
+
 - Test Export List
 
 Using the 'Export List' button, movie lists can only be exported in XML, JSON, CSV and TXT
@@ -236,16 +252,19 @@ Using the 'Export List' button, movie lists can only be exported in XML, JSON, C
 
 Exporting a watchlist in XML generates an XML file containing details of the movies in the that movie list
 
-
+![Apply Filters](TestResources/ListPane16.gif)
 
 Exporting a watchlist in JSON generates an JSON file containing details of the movies in the that movie list
 
-
+![Apply Filters](TestResources/ListPane17.gif)
 
 Exporting a watchlist in CSV generates an CSV file containing details of the movies in the that movie list
 
+![Apply Filters](TestResources/ListPane18.gif)
+
 Exporting a watchlist in TXT generates an TXT file containing details of the movies in the that movie list
 
+![Apply Filters](TestResources/ListPane19.gif)
 
 The 'All Movies' list cannot be exported using the 'Export List' button (button is greyed out)
 
