@@ -161,6 +161,56 @@ If user has entered information 'My Rating' fields reverts back to users input w
 
 ![Apply Filters](TestResources/DetailsPane6.gif)
 
+### Test List Pane
+
+- Test Basic Functionality
+
+Clicking on a movie in the List Pane will trigger the Details Pane to display information for that movie. The table row
+containing the clicked movie will also highlight
+
+![Apply Filters](TestResources/ListPane1.gif)
+
+Clicking the 'Watched' checkbox in the List Pane will check the corresponding checkbox in the Details Pane
+
+![Apply Filters](TestResources/ListPane2.gif)
+
+Clicking the header of any column (except for the 'Watchlist' column) will sort the table by the clicked column in
+ascending order, and if clicked again will sort the table by that column in descending order
+
+![Apply Filters](TestResources/ListPane3.gif)
+
+Clicking the 'Remove' button in the right-most column of a movie list will remove that movie from that movie list. This
+change will persist after the app is closed and reopened
+
+![Apply Filters](TestResources/ListPane4.gif)
+
+- Test 'All Movies' Source Tab
+
+Clicking the '+/-' in the right-most column triggers a popup enabling users to add or remove movies from/to a movie list
+If a movie is already in a movie list, then it will be checked in the popup menu. If a movie is not in a list, it will 
+be unchecked in the popup menu.
+
+Adding a movie to a movie list will make that movie appear in that list. Removing a movie from a movie list will make
+that movie disappear from that list
+
+When adding a movie, selecting 'Add To New Watchlist' will create a new tab with the user entered title of that
+movie list. The movie added to that list will appear in the new list
+
+- Test Navigating Movie Lists
+
+Tab changes display corresponding movie lists
+
+![Apply Filters](TestResources/ListPane5.gif)
+
+When a tab is clicked, the corresponding movie list will display unfiltered, meaning any existing filters will be
+reverted
+
+![Apply Filters](TestResources/ListPane6.gif)
+
+- Test Movie Lists
+
+
+
 
 
 
