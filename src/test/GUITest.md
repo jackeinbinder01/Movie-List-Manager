@@ -1,81 +1,17 @@
 ## GUI Testing
 
 ---
-### Filter Pane
-##### Expected Behavior:
-
-- Apply Filters button filters the selected tab in the List Pane
-- Clear Filters button removes filters from the List Pane, and removes text/options from Filter Pane fields
-  (except for range filters)
-- All filters maintain data when focus is lost
-- Range filters that are empty reset to their respective min/max value when focus is lost
-- Range filters clear when focus is gained
-- The Box Office Earnings range filter formats user entered data into millions of dollars when focus is lost
-- Range filters refresh to reflect max and min values when movies are removed from the selected list in the List Pane
-- All filter selections clear when a new tab is selected
-- When movies from the current tab in the List Pane are removed, their corresponding options are removed from dropdown
-  filters
-- Movies without Box Office Earnings data display N/A in the Box Office Earnings range filter
----
-
-### List Pane
-##### Main Table:
-- On Tab Change
-  - Filters in the Filter Pane will be cleared
-  - Table selection will be cleared
-  - Active tab will show all records, unfiltered
-  - Export List and Delete List buttons will be...
-    - Disabled in source list
-    - Enabled in user-defined lists
-- On Table Selection
-  - The selected row will be highlighted
-  - Details Pane will display the selected movie's details
-- On Filter Application
-  - Table selection will be cleared
-  - Filtered records will be correctly displayed
-  - Filter range will remain unchanged (respecting the full range of the current list, instead of the filtered range)
-
-##### List Management Features:
-- Create List (via adding to a new list in the dropdown dialogs)
-  - A new tab will be created with the user-defined list name
-  - The new list will contain the selected movie
-  - In the source tab, the dropdown dialog will show the new list as an option
-- Import List
-  - Opens a dialog to add the selected movie to a user-defined list
-  - The new tab will be created with the user-defined list name and correctly populated
-  - In the source tab, the dropdown dialog will show the new list as an option
-- Export List
-  - Opens a dialog to export the current list to a CSV file
-- Delete List
-  - Opens a dialog prompting the user to confirm deletion of the current list
-  - On confirmation, the list will be removed from the tabs, and the application to return to the main tab
-  - On cancellation, the dialog will close and no action will be performed
-
----
-
-### Details Pane
-##### Expected Behavior:
-
-- Watched checkbox and MyRating box greyed out/disabled when there's no record shown on details pane.
-- Greyed out watched checkbox and MyRating box should not be editable or interactable.
-- Activate watched checkbox and MyRating box when records starts showing and can be interact with.
-- Upon resizing the window, no item or words got out of bound
----
-
-
-
-
 ### Test Filter Pane
 
 ---
 
-- Test Apply Filters Button
+- Test Apply Filters
 
 Clicking 'Apply Filters' button filters the selected list in the center List Pane
 
 ![Apply Filters](TestResources/FilterPane1.gif)
 
-- Test Clear Filters Button
+- Test Clear Filters
 
 Clicking 'Clear Filters' removes selected options in the Filter Pane and unfilters the selected movie list in the List Pane
 
