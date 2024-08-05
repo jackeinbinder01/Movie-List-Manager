@@ -194,11 +194,21 @@ Clicking the '+/-' in the right-most column triggers a popup enabling users to a
 If a movie is already in a movie list, then it will be checked in the popup menu. If a movie is not in a list, it will 
 be unchecked in the popup menu.
 
+![Apply Filters](TestResources/ListPane7.gif)
+
 Adding a movie to a movie list will make that movie appear in that list. Removing a movie from a movie list will make
 that movie disappear from that list
 
+![Apply Filters](TestResources/ListPane8.gif)
+
 When adding a movie, selecting 'Add To New Watchlist' will create a new tab with the user entered title of that
 movie list. The movie added to that list will appear in the new list
+
+![Apply Filters](TestResources/ListPane9.gif)
+
+Upon startup movie lists are rearranged in alphabetical order (The 'All Movies' tab is always the first tab)
+
+![Apply Filters](TestResources/ListPane11.gif)
 
 - Test Navigating Movie Lists
 
@@ -211,7 +221,46 @@ reverted
 
 ![Apply Filters](TestResources/ListPane6.gif)
 
-- Test Movie Lists
+If there are more tabs than the current window can display, a navigation arrow appears in the upper right hand corner of
+the movie list tabs. Clicking the arrow increments/decrements through the tabs displayed in the tab bar
+
+![Apply Filters](TestResources/ListPane10.gif)
+
+- Test Import List
+
+- Test Export List
+
+Using the 'Export List' button, movie lists can only be exported in XML, JSON, CSV and TXT
+
+![Apply Filters](TestResources/ListPane15.gif)
+
+Exporting a watchlist in XML generates an XML file containing details of the movies in the that movie list
+
+![Apply Filters](TestResources/ListPane16.gif)
+
+Exporting a watchlist in JSON generates an JSON file containing details of the movies in the that movie list
+
+
+
+Exporting a watchlist in CSV generates an CSV file containing details of the movies in the that movie list
+
+Exporting a watchlist in TXT generates an TXT file containing details of the movies in the that movie list
+
+
+The 'All Movies' list cannot be exported using the 'Export List' button (button is greyed out)
+
+![Apply Filters](TestResources/ListPane13.gif)
+
+- Test Delete List
+
+Clicking the 'Delete List' button deletes the selected movie list if 'Yes' is clicked in the popup. If 'No' is
+clicked, the movie list is not deleted
+
+![Apply Filters](TestResources/ListPane12.gif)
+
+The 'All Movies' movie list cannot be deleted using the 'Delete List' button (button is greyed out)
+
+![Apply Filters](TestResources/ListPane14.gif)
 
 
 
