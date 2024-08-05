@@ -236,7 +236,7 @@ Using the 'Export List' button, movie lists can only be exported in XML, JSON, C
 
 Exporting a watchlist in XML generates an XML file containing details of the movies in the that movie list
 
-![Apply Filters](TestResources/ListPane16.gif)
+
 
 Exporting a watchlist in JSON generates an JSON file containing details of the movies in the that movie list
 
