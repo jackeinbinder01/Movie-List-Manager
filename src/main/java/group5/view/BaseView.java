@@ -13,7 +13,7 @@ import static java.awt.Font.PLAIN;
 public class BaseView extends JFrame implements IView {
     private final static String APP_TITLE = "Movie List Manager";
     private final static int DEFAULT_WIDTH = 1024;
-    private final static int DEFAULT_HEIGHT = 600;
+    private final static int DEFAULT_HEIGHT = 700;
     private final static int DEFAULT_FONT_SIZE = 10;
 
     FilterPane filterPane;

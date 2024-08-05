@@ -32,20 +32,24 @@
   - Details Pane will display the selected movie's details
 - On Filter Application
   - Table selection will be cleared
+  - Filtered records will be correctly displayed
+  - Filter range will remain unchanged (respecting the full range of the current list, instead of the filtered range)
 
 ##### List Management Features:
 - Create List (via adding to a new list in the dropdown dialogs)
   - A new tab will be created with the user-defined list name
   - The new list will contain the selected movie
+  - In the source tab, the dropdown dialog will show the new list as an option
 - Import List
   - Opens a dialog to add the selected movie to a user-defined list
+  - The new tab will be created with the user-defined list name and correctly populated
+  - In the source tab, the dropdown dialog will show the new list as an option
 - Export List
   - Opens a dialog to export the current list to a CSV file
 - Delete List
   - Opens a dialog prompting the user to confirm deletion of the current list
-  - On confirmation
-    - The list will be removed from the tabs
-  - On cancellation, do nothing
+  - On confirmation, the list will be removed from the tabs, and the application to return to the main tab
+  - On cancellation, the dialog will close and no action will be performed
 
 ---
 

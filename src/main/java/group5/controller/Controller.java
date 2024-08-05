@@ -94,8 +94,8 @@ public class Controller implements IController, IFeature {
      */
     @Override
     public void createWatchlist(String name) {
-        String existingLists[] = this.getWatchlistNames();
-        if (Arrays.stream(existingLists).anyMatch(list -> list.equals(name))) {
+        String[] existingLists = this.getWatchlistNames();
+        if (Arrays.asList(existingLists).contains(name)) {
             System.out.println("[Controller] Error creating new watchlist: \"" + name + "\" already exists");
             return;
         }
@@ -268,7 +268,7 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
         view.setSourceTableRecords(model.getRecords(), getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
-        view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
+        view.setUserTableRecords(model.getRecords(userListIndex), userListIndex); // This is not absolutely necessary
         // Since adding to a list is done from the source tab only, there's no need to update the filter pane
     }
 
