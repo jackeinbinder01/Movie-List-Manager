@@ -40,7 +40,7 @@ public class TestController {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         when(mockView.getFilterPane()).thenReturn(mockFilterPane);
         controller = new Controller(mockModel, mockView);
     }

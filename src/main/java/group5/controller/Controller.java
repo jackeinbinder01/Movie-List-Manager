@@ -181,7 +181,11 @@ public class Controller implements IController, IFeature {
         List<MBeans> recordList;
         if (currTabIdx == 0) {
             // Source table: fetch API + apply filters + update filter ranges
-            model.addNewMBeans(filters, null);
+            try {
+                model.addNewMBeans(filters, null);
+            } catch (Exception e) {
+                System.out.println("[Controller] Failed to fetch new records: Operating in offline mode");
+            }
             recordList = model.getRecords(filters).collect(Collectors.toList());
             view.setSourceTableRecords(recordList.stream(), getWatchlistNames(), getRecordUserListMatrix(recordList.stream()));
 
