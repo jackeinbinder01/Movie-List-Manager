@@ -19,7 +19,7 @@
   "BoxOffice" : "$85,892,546",
   "imdbID" : "tt0095016",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Crow",
   "Year" : 1994,
@@ -41,7 +41,7 @@
   "BoxOffice" : "$50,693,129",
   "imdbID" : "tt0109506",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Skin I Live In",
   "Year" : 2011,
@@ -63,7 +63,7 @@
   "BoxOffice" : "$3,185,812",
   "imdbID" : "tt1189073",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "East of Eden",
   "Year" : 1955,
@@ -85,7 +85,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0048028",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Blood Diamond",
   "Year" : 2006,
@@ -107,7 +107,7 @@
   "BoxOffice" : "$57,377,916",
   "imdbID" : "tt0450259",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "An Affair to Remember",
   "Year" : 1957,
@@ -129,7 +129,7 @@
   "BoxOffice" : "$3,850,000",
   "imdbID" : "tt0050105",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Out of Sight",
   "Year" : 1998,
@@ -151,7 +151,7 @@
   "BoxOffice" : "$37,562,568",
   "imdbID" : "tt0120780",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Horse Whisperer",
   "Year" : 1998,
@@ -173,7 +173,7 @@
   "BoxOffice" : "$75,383,563",
   "imdbID" : "tt0119314",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Frequency",
   "Year" : 2000,
@@ -195,7 +195,7 @@
   "BoxOffice" : "$45,010,278",
   "imdbID" : "tt0186151",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Priceless",
   "Year" : 2006,
@@ -217,7 +217,7 @@
   "BoxOffice" : "$2,165,188",
   "imdbID" : "tt0482088",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Fear and Loathing in Las Vegas",
   "Year" : 1998,
@@ -239,7 +239,7 @@
   "BoxOffice" : "$10,680,275",
   "imdbID" : "tt0120669",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A Walk Among the Tombstones",
   "Year" : 2014,
@@ -261,7 +261,7 @@
   "BoxOffice" : "$26,307,600",
   "imdbID" : "tt0365907",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Vera Drake",
   "Year" : 2004,
@@ -283,7 +283,7 @@
   "BoxOffice" : "$3,775,283",
   "imdbID" : "tt0383694",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Pirates of the Caribbean: Dead Man's Chest",
   "Year" : 2006,
@@ -305,7 +305,7 @@
   "BoxOffice" : "$423,315,812",
   "imdbID" : "tt0383574",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Enemy of the State",
   "Year" : 1998,
@@ -327,7 +327,7 @@
   "BoxOffice" : "$111,549,836",
   "imdbID" : "tt0120660",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Nightmare Before Christmas",
   "Year" : 1993,
@@ -349,7 +349,7 @@
   "BoxOffice" : "$87,620,624",
   "imdbID" : "tt0107688",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lilya 4-Ever",
   "Year" : 2002,
@@ -371,7 +371,7 @@
   "BoxOffice" : "$184,023",
   "imdbID" : "tt0300140",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A Clockwork Orange",
   "Year" : 1971,
@@ -393,7 +393,7 @@
   "BoxOffice" : "$26,617,553",
   "imdbID" : "tt0066921",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Captain Phillips",
   "Year" : 2013,
@@ -415,7 +415,7 @@
   "BoxOffice" : "$107,100,855",
   "imdbID" : "tt1535109",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Big Sleep",
   "Year" : 1946,
@@ -437,7 +437,7 @@
   "BoxOffice" : "$25,556",
   "imdbID" : "tt0038355",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Inside Man",
   "Year" : 2006,
@@ -459,7 +459,7 @@
   "BoxOffice" : "$88,513,495",
   "imdbID" : "tt0454848",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "To Have and Have Not",
   "Year" : 1944,
@@ -481,7 +481,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0037382",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Dark Knight Rises",
   "Year" : 2012,
@@ -503,7 +503,7 @@
   "BoxOffice" : "$448,149,584",
   "imdbID" : "tt1345836",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Aviator",
   "Year" : 2004,
@@ -525,7 +525,7 @@
   "BoxOffice" : "$102,610,330",
   "imdbID" : "tt0338751",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "What Lies Beneath",
   "Year" : 2000,
@@ -547,7 +547,7 @@
   "BoxOffice" : "$155,464,351",
   "imdbID" : "tt0161081",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "300",
   "Year" : 2006,
@@ -569,7 +569,7 @@
   "BoxOffice" : "$210,629,101",
   "imdbID" : "tt0416449",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Man Who Wasn't There",
   "Year" : 2001,
@@ -591,7 +591,7 @@
   "BoxOffice" : "$7,504,257",
   "imdbID" : "tt0243133",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Fear",
   "Year" : 1996,
@@ -613,7 +613,7 @@
   "BoxOffice" : "$20,831,000",
   "imdbID" : "tt0116287",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Fargo",
   "Year" : 1996,
@@ -635,7 +635,7 @@
   "BoxOffice" : "$24,611,975",
   "imdbID" : "tt0116282",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Match Point",
   "Year" : 2005,
@@ -657,7 +657,7 @@
   "BoxOffice" : "$23,151,529",
   "imdbID" : "tt0416320",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Alive",
   "Year" : 1993,
@@ -679,7 +679,7 @@
   "BoxOffice" : "$36,733,909",
   "imdbID" : "tt0106246",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Full Metal Jacket",
   "Year" : 1987,
@@ -701,7 +701,7 @@
   "BoxOffice" : "$46,357,676",
   "imdbID" : "tt0093058",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Departed",
   "Year" : 2006,
@@ -723,7 +723,7 @@
   "BoxOffice" : "$132,399,394",
   "imdbID" : "tt0407887",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Star Wars: Episode IV - A New Hope",
   "Year" : 1977,
@@ -745,7 +745,7 @@
   "BoxOffice" : "$460,998,507",
   "imdbID" : "tt0076759",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "One Flew Over the Cuckoo's Nest",
   "Year" : 1975,
@@ -767,7 +767,7 @@
   "BoxOffice" : "$108,981,275",
   "imdbID" : "tt0073486",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Spy Who Loved Me",
   "Year" : 1977,
@@ -789,7 +789,7 @@
   "BoxOffice" : "$46,838,673",
   "imdbID" : "tt0076752",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spirited Away",
   "Year" : 2001,
@@ -811,7 +811,7 @@
   "BoxOffice" : "$15,205,725",
   "imdbID" : "tt0245429",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Texas Chain Saw Massacre",
   "Year" : 1974,
@@ -833,7 +833,7 @@
   "BoxOffice" : "$30,859,000",
   "imdbID" : "tt0072271",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Love Actually",
   "Year" : 2003,
@@ -855,7 +855,7 @@
   "BoxOffice" : "$60,221,410",
   "imdbID" : "tt0314331",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Good Will Hunting",
   "Year" : 1997,
@@ -877,7 +877,7 @@
   "BoxOffice" : "$138,433,435",
   "imdbID" : "tt0119217",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sherlock Holmes",
   "Year" : 2009,
@@ -899,7 +899,7 @@
   "BoxOffice" : "$209,028,679",
   "imdbID" : "tt0988045",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Inside Out",
   "Year" : 2015,
@@ -921,7 +921,7 @@
   "BoxOffice" : "$356,921,711",
   "imdbID" : "tt2096673",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Non-Stop",
   "Year" : 2014,
@@ -943,7 +943,7 @@
   "BoxOffice" : "$92,168,600",
   "imdbID" : "tt2024469",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "What's Eating Gilbert Grape",
   "Year" : 1993,
@@ -965,7 +965,7 @@
   "BoxOffice" : "$10,032,765",
   "imdbID" : "tt0108550",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Kill Bill: Vol. 2",
   "Year" : 2004,
@@ -987,7 +987,7 @@
   "BoxOffice" : "$66,208,183",
   "imdbID" : "tt0378194",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Reader",
   "Year" : 2008,
@@ -1009,7 +1009,7 @@
   "BoxOffice" : "$34,194,407",
   "imdbID" : "tt0976051",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Avatar",
   "Year" : 2009,
@@ -1031,7 +1031,7 @@
   "BoxOffice" : "$785,221,649",
   "imdbID" : "tt0499549",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Pirates of the Caribbean: On Stranger Tides",
   "Year" : 2011,
@@ -1053,7 +1053,7 @@
   "BoxOffice" : "$241,071,802",
   "imdbID" : "tt1298650",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Green Mile",
   "Year" : 1999,
@@ -1075,7 +1075,7 @@
   "BoxOffice" : "$136,801,374",
   "imdbID" : "tt0120689",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Zodiac",
   "Year" : 2007,
@@ -1097,7 +1097,7 @@
   "BoxOffice" : "$33,080,084",
   "imdbID" : "tt0443706",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "When Harry Met Sally...",
   "Year" : 1989,
@@ -1119,7 +1119,7 @@
   "BoxOffice" : "$93,117,425",
   "imdbID" : "tt0098635",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lost in Translation",
   "Year" : 2003,
@@ -1141,7 +1141,7 @@
   "BoxOffice" : "$44,585,453",
   "imdbID" : "tt0335266",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Anything for Her",
   "Year" : 2008,
@@ -1163,7 +1163,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt1217637",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Zombieland",
   "Year" : 2009,
@@ -1185,7 +1185,7 @@
   "BoxOffice" : "$75,590,286",
   "imdbID" : "tt1156398",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Conjuring",
   "Year" : 2013,
@@ -1207,7 +1207,7 @@
   "BoxOffice" : "$137,446,368",
   "imdbID" : "tt1457767",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Batman Begins",
   "Year" : 2005,
@@ -1229,7 +1229,7 @@
   "BoxOffice" : "$206,863,479",
   "imdbID" : "tt0372784",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Planet Terror",
   "Year" : 2007,
@@ -1251,7 +1251,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt1077258",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Black Hawk Down",
   "Year" : 2001,
@@ -1273,7 +1273,7 @@
   "BoxOffice" : "$108,638,745",
   "imdbID" : "tt0265086",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Water for Elephants",
   "Year" : 2011,
@@ -1295,7 +1295,7 @@
   "BoxOffice" : "$58,709,717",
   "imdbID" : "tt1067583",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Cat on a Hot Tin Roof",
   "Year" : 1958,
@@ -1317,7 +1317,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0051459",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Marie-Jo et ses 2 amours",
   "Year" : 2002,
@@ -1339,7 +1339,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0293401",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Star Wars: Episode III - Revenge of the Sith",
   "Year" : 2005,
@@ -1361,7 +1361,7 @@
   "BoxOffice" : "$380,270,577",
   "imdbID" : "tt0121766",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sunshine",
   "Year" : 2007,
@@ -1383,7 +1383,7 @@
   "BoxOffice" : "$3,675,753",
   "imdbID" : "tt0448134",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Ed Wood",
   "Year" : 1994,
@@ -1405,7 +1405,7 @@
   "BoxOffice" : "$5,887,457",
   "imdbID" : "tt0109707",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Babel",
   "Year" : 2006,
@@ -1427,7 +1427,7 @@
   "BoxOffice" : "$34,302,837",
   "imdbID" : "tt0449467",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hobbit: The Battle of the Five Armies",
   "Year" : 2014,
@@ -1449,7 +1449,7 @@
   "BoxOffice" : "$255,138,261",
   "imdbID" : "tt2310332",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spider-Man 2",
   "Year" : 2004,
@@ -1471,7 +1471,7 @@
   "BoxOffice" : "$374,337,514",
   "imdbID" : "tt0316654",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "All the President's Men",
   "Year" : 1976,
@@ -1493,7 +1493,7 @@
   "BoxOffice" : "$70,600,000",
   "imdbID" : "tt0074119",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Gravity",
   "Year" : 2013,
@@ -1515,7 +1515,7 @@
   "BoxOffice" : "$274,092,705",
   "imdbID" : "tt1454468",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Taken",
   "Year" : 2008,
@@ -1537,7 +1537,7 @@
   "BoxOffice" : "$145,000,989",
   "imdbID" : "tt0936501",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Wrestler",
   "Year" : 2008,
@@ -1559,7 +1559,7 @@
   "BoxOffice" : "$26,238,243",
   "imdbID" : "tt1125849",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Memoirs of a Geisha",
   "Year" : 2005,
@@ -1581,7 +1581,7 @@
   "BoxOffice" : "$57,490,508",
   "imdbID" : "tt0397535",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Donnie Darko",
   "Year" : 2001,
@@ -1603,7 +1603,7 @@
   "BoxOffice" : "$1,478,493",
   "imdbID" : "tt0246578",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "In the Bedroom",
   "Year" : 2001,
@@ -1625,7 +1625,7 @@
   "BoxOffice" : "$35,930,604",
   "imdbID" : "tt0247425",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Bank Job",
   "Year" : 2008,
@@ -1647,7 +1647,7 @@
   "BoxOffice" : "$30,060,660",
   "imdbID" : "tt0200465",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Martyrs",
   "Year" : 2008,
@@ -1669,7 +1669,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt1029234",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Insider",
   "Year" : 1999,
@@ -1691,7 +1691,7 @@
   "BoxOffice" : "$29,089,912",
   "imdbID" : "tt0140352",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Crouching Tiger, Hidden Dragon",
   "Year" : 2000,
@@ -1713,7 +1713,7 @@
   "BoxOffice" : "$128,530,421",
   "imdbID" : "tt0190332",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Monsters",
   "Year" : 2010,
@@ -1735,7 +1735,7 @@
   "BoxOffice" : "$237,301",
   "imdbID" : "tt1470827",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Breakdown",
   "Year" : 1997,
@@ -1757,7 +1757,7 @@
   "BoxOffice" : "$50,159,144",
   "imdbID" : "tt0118771",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Back to the Future",
   "Year" : 1985,
@@ -1779,7 +1779,7 @@
   "BoxOffice" : "$214,077,472",
   "imdbID" : "tt0088763",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Good, the Bad and the Ugly",
   "Year" : 1966,
@@ -1801,7 +1801,7 @@
   "BoxOffice" : "$25,100,000",
   "imdbID" : "tt0060196",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Thin Red Line",
   "Year" : 1998,
@@ -1823,7 +1823,7 @@
   "BoxOffice" : "$36,400,491",
   "imdbID" : "tt0120863",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Casino Royale",
   "Year" : 2006,
@@ -1845,7 +1845,7 @@
   "BoxOffice" : "$167,445,960",
   "imdbID" : "tt0381061",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Die Hard 2",
   "Year" : 1990,
@@ -1867,7 +1867,7 @@
   "BoxOffice" : "$117,540,947",
   "imdbID" : "tt0099423",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Taxi Driver",
   "Year" : 1976,
@@ -1889,7 +1889,7 @@
   "BoxOffice" : "$28,262,574",
   "imdbID" : "tt0075314",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mission: Impossible - Rogue Nation",
   "Year" : 2015,
@@ -1911,7 +1911,7 @@
   "BoxOffice" : "$195,042,377",
   "imdbID" : "tt2381249",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "It's Complicated",
   "Year" : 2009,
@@ -1933,7 +1933,7 @@
   "BoxOffice" : "$112,735,375",
   "imdbID" : "tt1230414",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Darjeeling Limited",
   "Year" : 2007,
@@ -1955,7 +1955,7 @@
   "BoxOffice" : "$11,902,715",
   "imdbID" : "tt0838221",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Home Alone",
   "Year" : 1990,
@@ -1977,7 +1977,7 @@
   "BoxOffice" : "$285,761,243",
   "imdbID" : "tt0099785",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Virgin Suicides",
   "Year" : 1999,
@@ -1999,7 +1999,7 @@
   "BoxOffice" : "$4,906,229",
   "imdbID" : "tt0159097",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Lord of the Rings: The Fellowship of the Ring",
   "Year" : 2001,
@@ -2021,7 +2021,7 @@
   "BoxOffice" : "$319,372,078",
   "imdbID" : "tt0120737",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Interstellar",
   "Year" : 2014,
@@ -2043,7 +2043,7 @@
   "BoxOffice" : "$188,020,017",
   "imdbID" : "tt0816692",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lock, Stock and Two Smoking Barrels",
   "Year" : 1998,
@@ -2065,7 +2065,7 @@
   "BoxOffice" : "$3,753,929",
   "imdbID" : "tt0120735",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "8½",
   "Year" : 1963,
@@ -2087,7 +2087,7 @@
   "BoxOffice" : "$98,760",
   "imdbID" : "tt0056801",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Forrest Gump",
   "Year" : 1994,
@@ -2109,7 +2109,7 @@
   "BoxOffice" : "$330,455,270",
   "imdbID" : "tt0109830",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Scream",
   "Year" : 1996,
@@ -2131,7 +2131,7 @@
   "BoxOffice" : "$103,046,663",
   "imdbID" : "tt0117571",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Aliens",
   "Year" : 1986,
@@ -2153,7 +2153,7 @@
   "BoxOffice" : "$85,160,248",
   "imdbID" : "tt0090605",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "I'm So Excited!",
   "Year" : 2013,
@@ -2175,7 +2175,7 @@
   "BoxOffice" : "$1,368,119",
   "imdbID" : "tt2243389",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Reservoir Dogs",
   "Year" : 1992,
@@ -2197,7 +2197,7 @@
   "BoxOffice" : "$2,832,029",
   "imdbID" : "tt0105236",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hand That Rocks the Cradle",
   "Year" : 1992,
@@ -2219,7 +2219,7 @@
   "BoxOffice" : "$88,036,683",
   "imdbID" : "tt0104389",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A Fish Called Wanda",
   "Year" : 1988,
@@ -2241,7 +2241,7 @@
   "BoxOffice" : "$62,493,712",
   "imdbID" : "tt0095159",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Diamonds Are Forever",
   "Year" : 1971,
@@ -2263,7 +2263,7 @@
   "BoxOffice" : "$43,819,547",
   "imdbID" : "tt0066995",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Terminator 2: Judgment Day",
   "Year" : 1991,
@@ -2285,7 +2285,7 @@
   "BoxOffice" : "$205,881,154",
   "imdbID" : "tt0103064",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Walk the Line",
   "Year" : 2005,
@@ -2307,7 +2307,7 @@
   "BoxOffice" : "$119,519,402",
   "imdbID" : "tt0358273",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dirty Harry",
   "Year" : 1971,
@@ -2329,7 +2329,7 @@
   "BoxOffice" : "$35,988,495",
   "imdbID" : "tt0066999",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dawn of the Dead",
   "Year" : 1978,
@@ -2351,7 +2351,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0077402",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Indiana Jones and the Last Crusade",
   "Year" : 1989,
@@ -2373,7 +2373,7 @@
   "BoxOffice" : "$197,171,806",
   "imdbID" : "tt0097576",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Life Is Beautiful",
   "Year" : 1997,
@@ -2395,7 +2395,7 @@
   "BoxOffice" : "$57,563,264",
   "imdbID" : "tt0118799",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Bicycling with Molière",
   "Year" : 2013,
@@ -2417,7 +2417,7 @@
   "BoxOffice" : "$59,874",
   "imdbID" : "tt2207050",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Vertigo",
   "Year" : 1958,
@@ -2439,7 +2439,7 @@
   "BoxOffice" : "$7,705,225",
   "imdbID" : "tt0052357",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "12 Years a Slave",
   "Year" : 2013,
@@ -2461,7 +2461,7 @@
   "BoxOffice" : "$56,671,993",
   "imdbID" : "tt2024544",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Exam",
   "Year" : 2009,
@@ -2483,7 +2483,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt1258197",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "O Brother, Where Art Thou?",
   "Year" : 2000,
@@ -2505,7 +2505,7 @@
   "BoxOffice" : "$45,512,588",
   "imdbID" : "tt0190590",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Who's Afraid of Virginia Woolf?",
   "Year" : 1966,
@@ -2527,7 +2527,7 @@
   "BoxOffice" : "$28,000,000",
   "imdbID" : "tt0061184",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Memento",
   "Year" : 2000,
@@ -2549,7 +2549,7 @@
   "BoxOffice" : "$25,544,867",
   "imdbID" : "tt0209144",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Thelma & Louise",
   "Year" : 1991,
@@ -2571,7 +2571,7 @@
   "BoxOffice" : "$45,360,915",
   "imdbID" : "tt0103074",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mammoth",
   "Year" : 2009,
@@ -2593,7 +2593,7 @@
   "BoxOffice" : "$9,580",
   "imdbID" : "tt1038043",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Taken 2",
   "Year" : 2012,
@@ -2615,7 +2615,7 @@
   "BoxOffice" : "$139,854,287",
   "imdbID" : "tt1397280",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Modern Times",
   "Year" : 1936,
@@ -2637,7 +2637,7 @@
   "BoxOffice" : "$163,577",
   "imdbID" : "tt0027977",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "They Live",
   "Year" : 1988,
@@ -2659,7 +2659,7 @@
   "BoxOffice" : "$13,447,978",
   "imdbID" : "tt0096256",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Intouchables",
   "Year" : 2011,
@@ -2681,7 +2681,7 @@
   "BoxOffice" : "$10,198,820",
   "imdbID" : "tt1675434",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Total Recall",
   "Year" : 1990,
@@ -2703,7 +2703,7 @@
   "BoxOffice" : "$119,412,921",
   "imdbID" : "tt0100802",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Cliffhanger",
   "Year" : 1993,
@@ -2725,7 +2725,7 @@
   "BoxOffice" : "$84,049,211",
   "imdbID" : "tt0106582",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Das Boot",
   "Year" : 1981,
@@ -2747,7 +2747,7 @@
   "BoxOffice" : "$11,487,676",
   "imdbID" : "tt0082096",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Prometheus",
   "Year" : 2012,
@@ -2769,7 +2769,7 @@
   "BoxOffice" : "$126,477,084",
   "imdbID" : "tt1446714",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lucky Number Slevin",
   "Year" : 2006,
@@ -2791,7 +2791,7 @@
   "BoxOffice" : "$22,495,466",
   "imdbID" : "tt0425210",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Monster's Ball",
   "Year" : 2001,
@@ -2813,7 +2813,7 @@
   "BoxOffice" : "$31,273,922",
   "imdbID" : "tt0285742",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Jackie Brown",
   "Year" : 1997,
@@ -2835,7 +2835,7 @@
   "BoxOffice" : "$39,673,162",
   "imdbID" : "tt0119396",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Truman Show",
   "Year" : 1998,
@@ -2857,7 +2857,7 @@
   "BoxOffice" : "$125,618,201",
   "imdbID" : "tt0120382",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Usual Suspects",
   "Year" : 1995,
@@ -2879,7 +2879,7 @@
   "BoxOffice" : "$23,341,568",
   "imdbID" : "tt0114814",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lawrence of Arabia",
   "Year" : 1962,
@@ -2901,7 +2901,7 @@
   "BoxOffice" : "$45,306,425",
   "imdbID" : "tt0056172",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Orphanage",
   "Year" : 2007,
@@ -2923,7 +2923,7 @@
   "BoxOffice" : "$7,161,284",
   "imdbID" : "tt0464141",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Broken Flowers",
   "Year" : 2005,
@@ -2945,7 +2945,7 @@
   "BoxOffice" : "$13,744,960",
   "imdbID" : "tt0412019",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Godfather Part II",
   "Year" : 1974,
@@ -2967,7 +2967,7 @@
   "BoxOffice" : "$47,834,595",
   "imdbID" : "tt0071562",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "City Lights",
   "Year" : 1931,
@@ -2989,7 +2989,7 @@
   "BoxOffice" : "$19,181",
   "imdbID" : "tt0021749",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Shaun of the Dead",
   "Year" : 2004,
@@ -3011,7 +3011,7 @@
   "BoxOffice" : "$13,542,874",
   "imdbID" : "tt0365748",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dogville",
   "Year" : 2003,
@@ -3033,7 +3033,7 @@
   "BoxOffice" : "$1,535,286",
   "imdbID" : "tt0276919",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Black Swan",
   "Year" : 2010,
@@ -3055,7 +3055,7 @@
   "BoxOffice" : "$106,954,678",
   "imdbID" : "tt0947798",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Groundhog Day",
   "Year" : 1993,
@@ -3077,7 +3077,7 @@
   "BoxOffice" : "$71,107,962",
   "imdbID" : "tt0107048",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "John Wick",
   "Year" : 2014,
@@ -3099,7 +3099,7 @@
   "BoxOffice" : "$43,037,835",
   "imdbID" : "tt2911666",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Singin' in the Rain",
   "Year" : 1952,
@@ -3121,7 +3121,7 @@
   "BoxOffice" : "$1,884,537",
   "imdbID" : "tt0045152",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "No Country for Old Men",
   "Year" : 2007,
@@ -3143,7 +3143,7 @@
   "BoxOffice" : "$74,283,625",
   "imdbID" : "tt0477348",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Chinatown",
   "Year" : 1974,
@@ -3165,7 +3165,7 @@
   "BoxOffice" : "$29,200,000",
   "imdbID" : "tt0071315",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "13 Tzameti",
   "Year" : 2005,
@@ -3187,7 +3187,7 @@
   "BoxOffice" : "$121,390",
   "imdbID" : "tt0475169",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Strangers on a Train",
   "Year" : 1951,
@@ -3209,7 +3209,7 @@
   "BoxOffice" : "$26,597",
   "imdbID" : "tt0044079",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Abyss",
   "Year" : 1989,
@@ -3231,7 +3231,7 @@
   "BoxOffice" : "$54,981,151",
   "imdbID" : "tt0096754",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Road to Perdition",
   "Year" : 2002,
@@ -3253,7 +3253,7 @@
   "BoxOffice" : "$104,454,762",
   "imdbID" : "tt0257044",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Hard Candy",
   "Year" : 2005,
@@ -3275,7 +3275,7 @@
   "BoxOffice" : "$1,024,640",
   "imdbID" : "tt0424136",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Crash",
   "Year" : 2004,
@@ -3297,7 +3297,7 @@
   "BoxOffice" : "$54,580,300",
   "imdbID" : "tt0375679",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Casino",
   "Year" : 1995,
@@ -3319,7 +3319,7 @@
   "BoxOffice" : "$42,512,375",
   "imdbID" : "tt0112641",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Back to the Future Part II",
   "Year" : 1989,
@@ -3341,7 +3341,7 @@
   "BoxOffice" : "$119,000,002",
   "imdbID" : "tt0096874",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Bourne Ultimatum",
   "Year" : 2007,
@@ -3363,7 +3363,7 @@
   "BoxOffice" : "$227,471,070",
   "imdbID" : "tt0440963",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Nebraska",
   "Year" : 2013,
@@ -3385,7 +3385,7 @@
   "BoxOffice" : "$17,654,912",
   "imdbID" : "tt1821549",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Jurassic Park",
   "Year" : 1993,
@@ -3407,7 +3407,7 @@
   "BoxOffice" : "$407,185,075",
   "imdbID" : "tt0107290",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sin City: A Dame to Kill For",
   "Year" : 2014,
@@ -3429,7 +3429,7 @@
   "BoxOffice" : "$13,757,804",
   "imdbID" : "tt0458481",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Cool Hand Luke",
   "Year" : 1967,
@@ -3451,7 +3451,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0061512",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A Nightmare on Elm Street",
   "Year" : 1984,
@@ -3473,7 +3473,7 @@
   "BoxOffice" : "$25,624,448",
   "imdbID" : "tt0087800",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Monsters, Inc.",
   "Year" : 2001,
@@ -3495,7 +3495,7 @@
   "BoxOffice" : "$290,642,256",
   "imdbID" : "tt0198781",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Godzilla",
   "Year" : 2014,
@@ -3517,7 +3517,7 @@
   "BoxOffice" : "$200,676,069",
   "imdbID" : "tt0831387",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Stand by Me",
   "Year" : 1986,
@@ -3539,7 +3539,7 @@
   "BoxOffice" : "$52,287,414",
   "imdbID" : "tt0092005",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Game",
   "Year" : 1997,
@@ -3561,7 +3561,7 @@
   "BoxOffice" : "$48,323,648",
   "imdbID" : "tt0119174",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Born on the Fourth of July",
   "Year" : 1989,
@@ -3583,7 +3583,7 @@
   "BoxOffice" : "$70,001,698",
   "imdbID" : "tt0096969",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Lion King",
   "Year" : 1994,
@@ -3605,7 +3605,7 @@
   "BoxOffice" : "$424,704,319",
   "imdbID" : "tt0110357",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Trance",
   "Year" : 2013,
@@ -3627,7 +3627,7 @@
   "BoxOffice" : "$2,328,743",
   "imdbID" : "tt1924429",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Good Shepherd",
   "Year" : 2006,
@@ -3649,7 +3649,7 @@
   "BoxOffice" : "$59,952,835",
   "imdbID" : "tt0343737",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Leaving Las Vegas",
   "Year" : 1995,
@@ -3671,7 +3671,7 @@
   "BoxOffice" : "$32,029,928",
   "imdbID" : "tt0113627",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Midnight Run",
   "Year" : 1988,
@@ -3693,7 +3693,7 @@
   "BoxOffice" : "$38,413,606",
   "imdbID" : "tt0095631",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mad Max: Fury Road",
   "Year" : 2015,
@@ -3715,7 +3715,7 @@
   "BoxOffice" : "$154,280,290",
   "imdbID" : "tt1392190",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "All About My Mother",
   "Year" : 1999,
@@ -3737,7 +3737,7 @@
   "BoxOffice" : "$8,344,738",
   "imdbID" : "tt0185125",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Blade Runner",
   "Year" : 1982,
@@ -3759,7 +3759,7 @@
   "BoxOffice" : "$32,914,489",
   "imdbID" : "tt0083658",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "True Romance",
   "Year" : 1993,
@@ -3781,7 +3781,7 @@
   "BoxOffice" : "$12,281,551",
   "imdbID" : "tt0108399",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Snatch",
   "Year" : 2000,
@@ -3803,7 +3803,7 @@
   "BoxOffice" : "$30,328,156",
   "imdbID" : "tt0208092",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "District 9",
   "Year" : 2009,
@@ -3825,7 +3825,7 @@
   "BoxOffice" : "$115,646,235",
   "imdbID" : "tt1136608",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Exodus",
   "Year" : 1960,
@@ -3847,7 +3847,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0053804",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Incredible Shrinking Man",
   "Year" : 1957,
@@ -3869,7 +3869,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0050539",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Eat Pray Love",
   "Year" : 2010,
@@ -3891,7 +3891,7 @@
   "BoxOffice" : "$80,574,010",
   "imdbID" : "tt0879870",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The King's Speech",
   "Year" : 2010,
@@ -3913,7 +3913,7 @@
   "BoxOffice" : "$138,797,449",
   "imdbID" : "tt1504320",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Good Morning, Vietnam",
   "Year" : 1987,
@@ -3935,7 +3935,7 @@
   "BoxOffice" : "$123,922,370",
   "imdbID" : "tt0093105",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Traffic",
   "Year" : 2000,
@@ -3957,7 +3957,7 @@
   "BoxOffice" : "$124,115,725",
   "imdbID" : "tt0181865",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "High Fidelity",
   "Year" : 2000,
@@ -3979,7 +3979,7 @@
   "BoxOffice" : "$27,287,137",
   "imdbID" : "tt0146882",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Fracture",
   "Year" : 2007,
@@ -4001,7 +4001,7 @@
   "BoxOffice" : "$39,015,018",
   "imdbID" : "tt0488120",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Eternal Sunshine of the Spotless Mind",
   "Year" : 2004,
@@ -4023,7 +4023,7 @@
   "BoxOffice" : "$34,400,301",
   "imdbID" : "tt0338013",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Wonder Boys",
   "Year" : 2000,
@@ -4045,7 +4045,7 @@
   "BoxOffice" : "$19,393,557",
   "imdbID" : "tt0185014",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "2001: A Space Odyssey",
   "Year" : 1968,
@@ -4067,7 +4067,7 @@
   "BoxOffice" : "$60,481,243",
   "imdbID" : "tt0062622",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Tell No One",
   "Year" : 2006,
@@ -4089,7 +4089,7 @@
   "BoxOffice" : "$6,177,192",
   "imdbID" : "tt0362225",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Man on Fire",
   "Year" : 2004,
@@ -4111,7 +4111,7 @@
   "BoxOffice" : "$77,911,774",
   "imdbID" : "tt0328107",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Happiness",
   "Year" : 1998,
@@ -4133,7 +4133,7 @@
   "BoxOffice" : "$2,982,011",
   "imdbID" : "tt0147612",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Under the Tuscan Sun",
   "Year" : 2003,
@@ -4155,7 +4155,7 @@
   "BoxOffice" : "$43,610,723",
   "imdbID" : "tt0328589",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hobbit: An Unexpected Journey",
   "Year" : 2012,
@@ -4177,7 +4177,7 @@
   "BoxOffice" : "$303,030,651",
   "imdbID" : "tt0903624",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Exodus: Gods and Kings",
   "Year" : 2014,
@@ -4199,7 +4199,7 @@
   "BoxOffice" : "$65,014,513",
   "imdbID" : "tt1528100",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mamma Mia!",
   "Year" : 2008,
@@ -4221,7 +4221,7 @@
   "BoxOffice" : "$144,330,569",
   "imdbID" : "tt0795421",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Léon: The Professional",
   "Year" : 1994,
@@ -4243,7 +4243,7 @@
   "BoxOffice" : "$19,501,238",
   "imdbID" : "tt0110413",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Goldfinger",
   "Year" : 1964,
@@ -4265,7 +4265,7 @@
   "BoxOffice" : "$51,081,062",
   "imdbID" : "tt0058150",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Fifth Element",
   "Year" : 1997,
@@ -4287,7 +4287,7 @@
   "BoxOffice" : "$63,820,180",
   "imdbID" : "tt0119116",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Third Man",
   "Year" : 1949,
@@ -4309,7 +4309,7 @@
   "BoxOffice" : "$1,067,364",
   "imdbID" : "tt0041959",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Grump",
   "Year" : 2014,
@@ -4331,7 +4331,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt2480454",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Boys Don't Cry",
   "Year" : 1999,
@@ -4353,7 +4353,7 @@
   "BoxOffice" : "$11,540,607",
   "imdbID" : "tt0171804",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Notorious",
   "Year" : 1946,
@@ -4375,7 +4375,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0038787",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Last Action Hero",
   "Year" : 1993,
@@ -4397,7 +4397,7 @@
   "BoxOffice" : "$50,016,394",
   "imdbID" : "tt0107362",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "American History X",
   "Year" : 1998,
@@ -4419,7 +4419,7 @@
   "BoxOffice" : "$6,719,864",
   "imdbID" : "tt0120586",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Ben-Hur",
   "Year" : 1959,
@@ -4441,7 +4441,7 @@
   "BoxOffice" : "$74,432,704",
   "imdbID" : "tt0052618",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "About Schmidt",
   "Year" : 2002,
@@ -4463,7 +4463,7 @@
   "BoxOffice" : "$65,016,287",
   "imdbID" : "tt0257360",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Gangs of New York",
   "Year" : 2002,
@@ -4485,7 +4485,7 @@
   "BoxOffice" : "$77,812,000",
   "imdbID" : "tt0217505",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Unbreakable",
   "Year" : 2000,
@@ -4507,7 +4507,7 @@
   "BoxOffice" : "$95,011,339",
   "imdbID" : "tt0217869",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sin City",
   "Year" : 2005,
@@ -4529,7 +4529,7 @@
   "BoxOffice" : "$74,103,820",
   "imdbID" : "tt0401792",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Marathon Man",
   "Year" : 1976,
@@ -4551,7 +4551,7 @@
   "BoxOffice" : "$21,709,020",
   "imdbID" : "tt0074860",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "I Know What You Did Last Summer",
   "Year" : 1997,
@@ -4573,7 +4573,7 @@
   "BoxOffice" : "$72,586,134",
   "imdbID" : "tt0119345",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Session 9",
   "Year" : 2001,
@@ -4595,7 +4595,7 @@
   "BoxOffice" : "$378,176",
   "imdbID" : "tt0261983",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "My Fair Lady",
   "Year" : 1964,
@@ -4617,7 +4617,7 @@
   "BoxOffice" : "$72,560,711",
   "imdbID" : "tt0058385",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Amour",
   "Year" : 2012,
@@ -4639,7 +4639,7 @@
   "BoxOffice" : "$6,739,492",
   "imdbID" : "tt1602620",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Titanic",
   "Year" : 1997,
@@ -4661,7 +4661,7 @@
   "BoxOffice" : "$674,292,608",
   "imdbID" : "tt0120338",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "No Man's Land",
   "Year" : 2001,
@@ -4683,7 +4683,7 @@
   "BoxOffice" : "$1,012,153",
   "imdbID" : "tt0283509",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Silence of the Lambs",
   "Year" : 1991,
@@ -4705,7 +4705,7 @@
   "BoxOffice" : "$130,742,922",
   "imdbID" : "tt0102926",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Pledge",
   "Year" : 2001,
@@ -4727,7 +4727,7 @@
   "BoxOffice" : "$19,733,089",
   "imdbID" : "tt0237572",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Saw",
   "Year" : 2004,
@@ -4749,7 +4749,7 @@
   "BoxOffice" : "$56,000,369",
   "imdbID" : "tt0387564",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Untouchables",
   "Year" : 1987,
@@ -4771,7 +4771,7 @@
   "BoxOffice" : "$76,270,454",
   "imdbID" : "tt0094226",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lethal Weapon 2",
   "Year" : 1989,
@@ -4793,7 +4793,7 @@
   "BoxOffice" : "$147,253,986",
   "imdbID" : "tt0097733",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "City of God",
   "Year" : 2002,
@@ -4815,7 +4815,7 @@
   "BoxOffice" : "$7,564,459",
   "imdbID" : "tt0317248",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Bourne Identity",
   "Year" : 2002,
@@ -4837,7 +4837,7 @@
   "BoxOffice" : "$121,661,683",
   "imdbID" : "tt0258463",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Death Proof",
   "Year" : 2007,
@@ -4859,7 +4859,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt1028528",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Fatal Attraction",
   "Year" : 1987,
@@ -4881,7 +4881,7 @@
   "BoxOffice" : "$156,645,693",
   "imdbID" : "tt0093010",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Any Given Sunday",
   "Year" : 1999,
@@ -4903,7 +4903,7 @@
   "BoxOffice" : "$75,530,832",
   "imdbID" : "tt0146838",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Thing",
   "Year" : 1982,
@@ -4925,7 +4925,7 @@
   "BoxOffice" : "$19,857,465",
   "imdbID" : "tt0084787",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Raging Bull",
   "Year" : 1980,
@@ -4947,7 +4947,7 @@
   "BoxOffice" : "$23,383,987",
   "imdbID" : "tt0081398",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Last Detail",
   "Year" : 1973,
@@ -4969,7 +4969,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0070290",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Dark Knight",
   "Year" : 2008,
@@ -4991,7 +4991,7 @@
   "BoxOffice" : "$534,987,076",
   "imdbID" : "tt0468569",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Inception",
   "Year" : 2010,
@@ -5013,7 +5013,7 @@
   "BoxOffice" : "$292,587,330",
   "imdbID" : "tt1375666",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Rear Window",
   "Year" : 1954,
@@ -5035,7 +5035,7 @@
   "BoxOffice" : "$36,764,313",
   "imdbID" : "tt0047396",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Rosemary's Baby",
   "Year" : 1968,
@@ -5057,7 +5057,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0063522",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Beverly Hills Cop",
   "Year" : 1984,
@@ -5079,7 +5079,7 @@
   "BoxOffice" : "$234,760,478",
   "imdbID" : "tt0086960",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Philadelphia Story",
   "Year" : 1940,
@@ -5101,7 +5101,7 @@
   "BoxOffice" : "$404,524",
   "imdbID" : "tt0032904",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Skyfall",
   "Year" : 2012,
@@ -5123,7 +5123,7 @@
   "BoxOffice" : "$304,360,277",
   "imdbID" : "tt1074638",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Apartment",
   "Year" : 1960,
@@ -5145,7 +5145,7 @@
   "BoxOffice" : "$18,600,000",
   "imdbID" : "tt0053604",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Ice Age",
   "Year" : 2002,
@@ -5167,7 +5167,7 @@
   "BoxOffice" : "$176,387,405",
   "imdbID" : "tt0268380",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mission: Impossible",
   "Year" : 1996,
@@ -5189,7 +5189,7 @@
   "BoxOffice" : "$180,981,856",
   "imdbID" : "tt0117060",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dancer in the Dark",
   "Year" : 2000,
@@ -5211,7 +5211,7 @@
   "BoxOffice" : "$4,184,036",
   "imdbID" : "tt0168629",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Cube",
   "Year" : 1997,
@@ -5233,7 +5233,7 @@
   "BoxOffice" : "$501,818",
   "imdbID" : "tt0123755",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Exorcist",
   "Year" : 1973,
@@ -5255,7 +5255,7 @@
   "BoxOffice" : "$233,005,644",
   "imdbID" : "tt0070047",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Station Agent",
   "Year" : 2003,
@@ -5277,7 +5277,7 @@
   "BoxOffice" : "$5,739,376",
   "imdbID" : "tt0340377",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Thank You for Smoking",
   "Year" : 2005,
@@ -5299,7 +5299,7 @@
   "BoxOffice" : "$24,793,509",
   "imdbID" : "tt0427944",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Bridge on the River Kwai",
   "Year" : 1957,
@@ -5321,7 +5321,7 @@
   "BoxOffice" : "$27,200,000",
   "imdbID" : "tt0050212",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Treasure of the Sierra Madre",
   "Year" : 1948,
@@ -5343,7 +5343,7 @@
   "BoxOffice" : "$5,014,000",
   "imdbID" : "tt0040897",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Insidious",
   "Year" : 2010,
@@ -5365,7 +5365,7 @@
   "BoxOffice" : "$54,009,150",
   "imdbID" : "tt1591095",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dark Passage",
   "Year" : 1947,
@@ -5387,7 +5387,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0039302",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Artist",
   "Year" : 2011,
@@ -5409,7 +5409,7 @@
   "BoxOffice" : "$44,671,682",
   "imdbID" : "tt1655442",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "L.A. Confidential",
   "Year" : 1997,
@@ -5431,7 +5431,7 @@
   "BoxOffice" : "$64,616,940",
   "imdbID" : "tt0119488",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Hotel Rwanda",
   "Year" : 2004,
@@ -5453,7 +5453,7 @@
   "BoxOffice" : "$23,530,892",
   "imdbID" : "tt0395169",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Motorcycle Diaries",
   "Year" : 2004,
@@ -5475,7 +5475,7 @@
   "BoxOffice" : "$16,781,387",
   "imdbID" : "tt0318462",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Donnie Brasco",
   "Year" : 1997,
@@ -5497,7 +5497,7 @@
   "BoxOffice" : "$41,909,762",
   "imdbID" : "tt0119008",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Die Hard with a Vengeance",
   "Year" : 1995,
@@ -5519,7 +5519,7 @@
   "BoxOffice" : "$100,012,499",
   "imdbID" : "tt0112864",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "From Russia with Love",
   "Year" : 1963,
@@ -5541,7 +5541,7 @@
   "BoxOffice" : "$24,796,765",
   "imdbID" : "tt0057076",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Sixth Sense",
   "Year" : 1999,
@@ -5563,7 +5563,7 @@
   "BoxOffice" : "$293,506,292",
   "imdbID" : "tt0167404",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Frozen",
   "Year" : 2013,
@@ -5585,7 +5585,7 @@
   "BoxOffice" : "$400,953,009",
   "imdbID" : "tt2294629",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Closer",
   "Year" : 2004,
@@ -5607,7 +5607,7 @@
   "BoxOffice" : "$33,987,757",
   "imdbID" : "tt0376541",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Dirty Dozen",
   "Year" : 1967,
@@ -5629,7 +5629,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0061578",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Bourne Supremacy",
   "Year" : 2004,
@@ -5651,7 +5651,7 @@
   "BoxOffice" : "$176,241,941",
   "imdbID" : "tt0372183",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sleeping with the Enemy",
   "Year" : 1991,
@@ -5673,7 +5673,7 @@
   "BoxOffice" : "$101,599,005",
   "imdbID" : "tt0102945",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mystic River",
   "Year" : 2003,
@@ -5695,7 +5695,7 @@
   "BoxOffice" : "$90,135,191",
   "imdbID" : "tt0327056",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Downfall",
   "Year" : 2004,
@@ -5717,7 +5717,7 @@
   "BoxOffice" : "$5,509,040",
   "imdbID" : "tt0363163",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Hellboy",
   "Year" : 2004,
@@ -5739,7 +5739,7 @@
   "BoxOffice" : "$59,623,958",
   "imdbID" : "tt0167190",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Sea Inside",
   "Year" : 2004,
@@ -5761,7 +5761,7 @@
   "BoxOffice" : "$2,104,923",
   "imdbID" : "tt0369702",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Star Wars: Episode VII - The Force Awakens",
   "Year" : 2015,
@@ -5783,7 +5783,7 @@
   "BoxOffice" : "$936,662,225",
   "imdbID" : "tt2488496",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Papillon",
   "Year" : 1973,
@@ -5805,7 +5805,7 @@
   "BoxOffice" : "$53,267,000",
   "imdbID" : "tt0070511",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hangover",
   "Year" : 2009,
@@ -5827,7 +5827,7 @@
   "BoxOffice" : "$277,339,746",
   "imdbID" : "tt1119646",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "RoboCop",
   "Year" : 1987,
@@ -5849,7 +5849,7 @@
   "BoxOffice" : "$53,424,681",
   "imdbID" : "tt0093870",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Star Wars: Episode V - The Empire Strikes Back",
   "Year" : 1980,
@@ -5871,7 +5871,7 @@
   "BoxOffice" : "$292,753,960",
   "imdbID" : "tt0080684",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Despicable Me",
   "Year" : 2010,
@@ -5893,7 +5893,7 @@
   "BoxOffice" : "$251,683,815",
   "imdbID" : "tt1323594",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A Very Long Engagement",
   "Year" : 2004,
@@ -5915,7 +5915,7 @@
   "BoxOffice" : "$6,524,389",
   "imdbID" : "tt0344510",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "American Psycho",
   "Year" : 2000,
@@ -5937,7 +5937,7 @@
   "BoxOffice" : "$15,070,285",
   "imdbID" : "tt0144084",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Basic Instinct",
   "Year" : 1992,
@@ -5959,7 +5959,7 @@
   "BoxOffice" : "$117,727,224",
   "imdbID" : "tt0103772",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Man on the Moon",
   "Year" : 1999,
@@ -5981,7 +5981,7 @@
   "BoxOffice" : "$34,607,430",
   "imdbID" : "tt0125664",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Some Like It Hot",
   "Year" : 1959,
@@ -6003,7 +6003,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0053291",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Fight Club",
   "Year" : 1999,
@@ -6025,7 +6025,7 @@
   "BoxOffice" : "$37,030,102",
   "imdbID" : "tt0137523",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Girl with the Dragon Tattoo",
   "Year" : 2009,
@@ -6047,7 +6047,7 @@
   "BoxOffice" : "$10,095,170",
   "imdbID" : "tt1132620",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Tootsie",
   "Year" : 1982,
@@ -6069,7 +6069,7 @@
   "BoxOffice" : "$177,200,000",
   "imdbID" : "tt0084805",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lincoln",
   "Year" : 2012,
@@ -6091,7 +6091,7 @@
   "BoxOffice" : "$182,207,973",
   "imdbID" : "tt0443272",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Citizen Kane",
   "Year" : 1941,
@@ -6113,7 +6113,7 @@
   "BoxOffice" : "$1,627,530",
   "imdbID" : "tt0033467",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Blues Brothers",
   "Year" : 1980,
@@ -6135,7 +6135,7 @@
   "BoxOffice" : "$57,229,890",
   "imdbID" : "tt0080455",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "127 Hours",
   "Year" : 2010,
@@ -6157,7 +6157,7 @@
   "BoxOffice" : "$18,335,230",
   "imdbID" : "tt1542344",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Wizard of Oz",
   "Year" : 1939,
@@ -6179,7 +6179,7 @@
   "BoxOffice" : "$24,668,669",
   "imdbID" : "tt0032138",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Secret in Their Eyes",
   "Year" : 2009,
@@ -6201,7 +6201,7 @@
   "BoxOffice" : "$6,391,436",
   "imdbID" : "tt1305806",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Accused",
   "Year" : 1988,
@@ -6223,7 +6223,7 @@
   "BoxOffice" : "$32,078,318",
   "imdbID" : "tt0094608",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Pan's Labyrinth",
   "Year" : 2006,
@@ -6245,7 +6245,7 @@
   "BoxOffice" : "$37,646,380",
   "imdbID" : "tt0457430",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Experiment",
   "Year" : 2001,
@@ -6267,7 +6267,7 @@
   "BoxOffice" : "$144,634",
   "imdbID" : "tt0250258",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "X-Men: Days of Future Past",
   "Year" : 2014,
@@ -6289,7 +6289,7 @@
   "BoxOffice" : "$233,921,534",
   "imdbID" : "tt1877832",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Get Carter",
   "Year" : 1971,
@@ -6311,7 +6311,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0067128",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Valkyrie",
   "Year" : 2008,
@@ -6333,7 +6333,7 @@
   "BoxOffice" : "$83,077,833",
   "imdbID" : "tt0985699",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "I Am Legend",
   "Year" : 2007,
@@ -6355,7 +6355,7 @@
   "BoxOffice" : "$256,393,010",
   "imdbID" : "tt0480249",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Ocean's Eleven",
   "Year" : 2001,
@@ -6377,7 +6377,7 @@
   "BoxOffice" : "$183,417,150",
   "imdbID" : "tt0240772",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Shining",
   "Year" : 1980,
@@ -6399,7 +6399,7 @@
   "BoxOffice" : "$45,634,352",
   "imdbID" : "tt0081505",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "La Cage aux Folles",
   "Year" : 1978,
@@ -6421,7 +6421,7 @@
   "BoxOffice" : "$20,424,259",
   "imdbID" : "tt0077288",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Score",
   "Year" : 2001,
@@ -6443,7 +6443,7 @@
   "BoxOffice" : "$71,107,711",
   "imdbID" : "tt0227445",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Amazing Spider-Man",
   "Year" : 2012,
@@ -6465,7 +6465,7 @@
   "BoxOffice" : "$262,782,352",
   "imdbID" : "tt0948470",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Shawshank Redemption",
   "Year" : 1994,
@@ -6487,7 +6487,7 @@
   "BoxOffice" : "$28,767,189",
   "imdbID" : "tt0111161",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Billy Elliot",
   "Year" : 2000,
@@ -6509,7 +6509,7 @@
   "BoxOffice" : "$21,995,263",
   "imdbID" : "tt0249462",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Erin Brockovich",
   "Year" : 2000,
@@ -6531,7 +6531,7 @@
   "BoxOffice" : "$125,595,205",
   "imdbID" : "tt0195685",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spectre",
   "Year" : 2015,
@@ -6553,7 +6553,7 @@
   "BoxOffice" : "$200,074,609",
   "imdbID" : "tt2379713",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Misery",
   "Year" : 1990,
@@ -6575,7 +6575,7 @@
   "BoxOffice" : "$61,276,872",
   "imdbID" : "tt0100157",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Brokeback Mountain",
   "Year" : 2005,
@@ -6597,7 +6597,7 @@
   "BoxOffice" : "$83,043,761",
   "imdbID" : "tt0388795",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "High Tension",
   "Year" : 2003,
@@ -6619,7 +6619,7 @@
   "BoxOffice" : "$3,681,066",
   "imdbID" : "tt0338095",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Monty Python and the Holy Grail",
   "Year" : 1975,
@@ -6641,7 +6641,7 @@
   "BoxOffice" : "$2,562,392",
   "imdbID" : "tt0071853",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Children of Men",
   "Year" : 2006,
@@ -6663,7 +6663,7 @@
   "BoxOffice" : "$35,552,383",
   "imdbID" : "tt0206634",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Garden State",
   "Year" : 2004,
@@ -6685,7 +6685,7 @@
   "BoxOffice" : "$26,782,316",
   "imdbID" : "tt0333766",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Trainspotting",
   "Year" : 1996,
@@ -6707,7 +6707,7 @@
   "BoxOffice" : "$16,491,080",
   "imdbID" : "tt0117951",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Raiders of the Lost Ark",
   "Year" : 1981,
@@ -6729,7 +6729,7 @@
   "BoxOffice" : "$248,159,971",
   "imdbID" : "tt0082971",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Perfume: The Story of a Murderer",
   "Year" : 2006,
@@ -6751,7 +6751,7 @@
   "BoxOffice" : "$2,223,293",
   "imdbID" : "tt0396171",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Elephant Man",
   "Year" : 1980,
@@ -6773,7 +6773,7 @@
   "BoxOffice" : "$26,010,864",
   "imdbID" : "tt0080678",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Innocents",
   "Year" : 1961,
@@ -6795,7 +6795,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0055018",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Island",
   "Year" : 2005,
@@ -6817,7 +6817,7 @@
   "BoxOffice" : "$35,818,913",
   "imdbID" : "tt0399201",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "First Blood",
   "Year" : 1982,
@@ -6839,7 +6839,7 @@
   "BoxOffice" : "$47,212,904",
   "imdbID" : "tt0083944",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Moulin Rouge!",
   "Year" : 2001,
@@ -6861,7 +6861,7 @@
   "BoxOffice" : "$57,386,607",
   "imdbID" : "tt0203009",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Others",
   "Year" : 2001,
@@ -6883,7 +6883,7 @@
   "BoxOffice" : "$96,578,502",
   "imdbID" : "tt0230600",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Cape Fear",
   "Year" : 1991,
@@ -6905,7 +6905,7 @@
   "BoxOffice" : "$79,091,969",
   "imdbID" : "tt0101540",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "They Shoot Horses, Don't They?",
   "Year" : 1969,
@@ -6927,7 +6927,7 @@
   "BoxOffice" : "$12,600,000",
   "imdbID" : "tt0065088",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Maria Full of Grace",
   "Year" : 2004,
@@ -6949,7 +6949,7 @@
   "BoxOffice" : "$6,529,624",
   "imdbID" : "tt0390221",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "In the Mouth of Madness",
   "Year" : 1994,
@@ -6971,7 +6971,7 @@
   "BoxOffice" : "$8,924,549",
   "imdbID" : "tt0113409",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Transamerica",
   "Year" : 2005,
@@ -6993,7 +6993,7 @@
   "BoxOffice" : "$9,015,303",
   "imdbID" : "tt0407265",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Casablanca",
   "Year" : 1942,
@@ -7015,7 +7015,7 @@
   "BoxOffice" : "$4,219,709",
   "imdbID" : "tt0034583",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Amélie",
   "Year" : 2001,
@@ -7037,7 +7037,7 @@
   "BoxOffice" : "$33,712,444",
   "imdbID" : "tt0211915",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "V for Vendetta",
   "Year" : 2005,
@@ -7059,7 +7059,7 @@
   "BoxOffice" : "$70,511,035",
   "imdbID" : "tt0434409",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Changeling",
   "Year" : 2008,
@@ -7081,7 +7081,7 @@
   "BoxOffice" : "$35,739,802",
   "imdbID" : "tt0824747",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Schindler's List",
   "Year" : 1993,
@@ -7103,7 +7103,7 @@
   "BoxOffice" : "$96,898,818",
   "imdbID" : "tt0108052",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Heist",
   "Year" : 2001,
@@ -7125,7 +7125,7 @@
   "BoxOffice" : "$23,510,841",
   "imdbID" : "tt0252503",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hunger Games",
   "Year" : 2012,
@@ -7147,7 +7147,7 @@
   "BoxOffice" : "$408,010,692",
   "imdbID" : "tt1392170",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sideways",
   "Year" : 2004,
@@ -7169,7 +7169,7 @@
   "BoxOffice" : "$71,503,593",
   "imdbID" : "tt0375063",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sweeney Todd: The Demon Barber of Fleet Street",
   "Year" : 2007,
@@ -7191,7 +7191,7 @@
   "BoxOffice" : "$52,898,073",
   "imdbID" : "tt0408236",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Django Unchained",
   "Year" : 2012,
@@ -7213,7 +7213,7 @@
   "BoxOffice" : "$162,805,434",
   "imdbID" : "tt1853728",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Deliverance",
   "Year" : 1972,
@@ -7235,7 +7235,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0068473",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Duel",
   "Year" : 1971,
@@ -7257,7 +7257,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0067023",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mysterious Skin",
   "Year" : 2004,
@@ -7279,7 +7279,7 @@
   "BoxOffice" : "$713,240",
   "imdbID" : "tt0370986",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Minority Report",
   "Year" : 2002,
@@ -7301,7 +7301,7 @@
   "BoxOffice" : "$132,072,926",
   "imdbID" : "tt0181689",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Shutter Island",
   "Year" : 2010,
@@ -7323,7 +7323,7 @@
   "BoxOffice" : "$128,012,934",
   "imdbID" : "tt1130884",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "12 Monkeys",
   "Year" : 1995,
@@ -7345,7 +7345,7 @@
   "BoxOffice" : "$57,141,459",
   "imdbID" : "tt0114746",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Descent",
   "Year" : 2005,
@@ -7367,7 +7367,7 @@
   "BoxOffice" : "$26,024,456",
   "imdbID" : "tt0435625",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Lord of the Rings: The Return of the King",
   "Year" : 2003,
@@ -7389,7 +7389,7 @@
   "BoxOffice" : "$381,878,219",
   "imdbID" : "tt0167260",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lost Highway",
   "Year" : 1997,
@@ -7411,7 +7411,7 @@
   "BoxOffice" : "$3,726,792",
   "imdbID" : "tt0116922",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Prestige",
   "Year" : 2006,
@@ -7433,7 +7433,7 @@
   "BoxOffice" : "$53,089,891",
   "imdbID" : "tt0482571",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Lord of the Rings: The Two Towers",
   "Year" : 2002,
@@ -7455,7 +7455,7 @@
   "BoxOffice" : "$345,518,923",
   "imdbID" : "tt0167261",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Ghost Writer",
   "Year" : 2010,
@@ -7477,7 +7477,7 @@
   "BoxOffice" : "$15,541,549",
   "imdbID" : "tt1139328",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A History of Violence",
   "Year" : 2005,
@@ -7499,7 +7499,7 @@
   "BoxOffice" : "$31,504,633",
   "imdbID" : "tt0399146",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sinister",
   "Year" : 2012,
@@ -7521,7 +7521,7 @@
   "BoxOffice" : "$48,086,903",
   "imdbID" : "tt1922777",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Rain Man",
   "Year" : 1988,
@@ -7543,7 +7543,7 @@
   "BoxOffice" : "$172,825,435",
   "imdbID" : "tt0095953",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sabrina",
   "Year" : 1954,
@@ -7565,7 +7565,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0047437",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Predator",
   "Year" : 1987,
@@ -7587,7 +7587,7 @@
   "BoxOffice" : "$59,735,548",
   "imdbID" : "tt0093773",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Quiet American",
   "Year" : 2002,
@@ -7609,7 +7609,7 @@
   "BoxOffice" : "$12,988,801",
   "imdbID" : "tt0258068",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Face/Off",
   "Year" : 1997,
@@ -7631,7 +7631,7 @@
   "BoxOffice" : "$112,276,146",
   "imdbID" : "tt0119094",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "There Will Be Blood",
   "Year" : 2007,
@@ -7653,7 +7653,7 @@
   "BoxOffice" : "$40,222,514",
   "imdbID" : "tt0469494",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Bridges of Madison County",
   "Year" : 1995,
@@ -7675,7 +7675,7 @@
   "BoxOffice" : "$71,516,617",
   "imdbID" : "tt0112579",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Airplane!",
   "Year" : 1980,
@@ -7697,7 +7697,7 @@
   "BoxOffice" : "$83,453,539",
   "imdbID" : "tt0080339",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Chocolat",
   "Year" : 2000,
@@ -7719,7 +7719,7 @@
   "BoxOffice" : "$71,509,363",
   "imdbID" : "tt0241303",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Biutiful",
   "Year" : 2010,
@@ -7741,7 +7741,7 @@
   "BoxOffice" : "$5,101,237",
   "imdbID" : "tt1164999",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Braveheart",
   "Year" : 1995,
@@ -7763,7 +7763,7 @@
   "BoxOffice" : "$75,609,945",
   "imdbID" : "tt0112573",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Slumdog Millionaire",
   "Year" : 2008,
@@ -7785,7 +7785,7 @@
   "BoxOffice" : "$141,319,928",
   "imdbID" : "tt1010048",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "As Above, So Below",
   "Year" : 2014,
@@ -7807,7 +7807,7 @@
   "BoxOffice" : "$21,321,100",
   "imdbID" : "tt2870612",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lethal Weapon",
   "Year" : 1987,
@@ -7829,7 +7829,7 @@
   "BoxOffice" : "$65,207,127",
   "imdbID" : "tt0093409",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Metallica Through the Never",
   "Year" : 2013,
@@ -7851,7 +7851,7 @@
   "BoxOffice" : "$3,419,967",
   "imdbID" : "tt2172935",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hours",
   "Year" : 2002,
@@ -7873,7 +7873,7 @@
   "BoxOffice" : "$41,675,994",
   "imdbID" : "tt0274558",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dead Alive",
   "Year" : 1992,
@@ -7895,7 +7895,7 @@
   "BoxOffice" : "$242,623",
   "imdbID" : "tt0103873",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Corpse Bride",
   "Year" : 2005,
@@ -7917,7 +7917,7 @@
   "BoxOffice" : "$53,401,527",
   "imdbID" : "tt0121164",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Joy Ride",
   "Year" : 2001,
@@ -7939,7 +7939,7 @@
   "BoxOffice" : "$21,974,919",
   "imdbID" : "tt0206314",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sophie's Choice",
   "Year" : 1982,
@@ -7961,7 +7961,7 @@
   "BoxOffice" : "$30,036,000",
   "imdbID" : "tt0084707",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Talented Mr. Ripley",
   "Year" : 1999,
@@ -7983,7 +7983,7 @@
   "BoxOffice" : "$81,298,265",
   "imdbID" : "tt0134119",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Speed",
   "Year" : 1994,
@@ -8005,7 +8005,7 @@
   "BoxOffice" : "$121,248,145",
   "imdbID" : "tt0111257",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Lives of Others",
   "Year" : 2006,
@@ -8027,7 +8027,7 @@
   "BoxOffice" : "$11,286,112",
   "imdbID" : "tt0405094",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Together",
   "Year" : 2000,
@@ -8049,7 +8049,7 @@
   "BoxOffice" : "$1,034,829",
   "imdbID" : "tt0203166",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Great Escape",
   "Year" : 1963,
@@ -8071,7 +8071,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0057115",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Ratatouille",
   "Year" : 2007,
@@ -8093,7 +8093,7 @@
   "BoxOffice" : "$206,445,654",
   "imdbID" : "tt0382932",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "American Beauty",
   "Year" : 1999,
@@ -8115,7 +8115,7 @@
   "BoxOffice" : "$130,096,601",
   "imdbID" : "tt0169547",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "E.T. the Extra-Terrestrial",
   "Year" : 1982,
@@ -8137,7 +8137,7 @@
   "BoxOffice" : "$437,345,144",
   "imdbID" : "tt0083866",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Avanti!",
   "Year" : 1972,
@@ -8159,7 +8159,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0068240",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Watchmen",
   "Year" : 2009,
@@ -8181,7 +8181,7 @@
   "BoxOffice" : "$107,509,799",
   "imdbID" : "tt0409459",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Cider House Rules",
   "Year" : 1999,
@@ -8203,7 +8203,7 @@
   "BoxOffice" : "$57,545,092",
   "imdbID" : "tt0124315",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Iron Man",
   "Year" : 2008,
@@ -8225,7 +8225,7 @@
   "BoxOffice" : "$319,034,126",
   "imdbID" : "tt0371746",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Gran Torino",
   "Year" : 2008,
@@ -8247,7 +8247,7 @@
   "BoxOffice" : "$148,095,302",
   "imdbID" : "tt1205489",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Carlito's Way",
   "Year" : 1993,
@@ -8269,7 +8269,7 @@
   "BoxOffice" : "$36,948,322",
   "imdbID" : "tt0106519",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Finding Nemo",
   "Year" : 2003,
@@ -8291,7 +8291,7 @@
   "BoxOffice" : "$380,843,261",
   "imdbID" : "tt0266543",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Rio Bravo",
   "Year" : 1959,
@@ -8313,7 +8313,7 @@
   "BoxOffice" : "$12,535,000",
   "imdbID" : "tt0053221",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Shrek 2",
   "Year" : 2004,
@@ -8335,7 +8335,7 @@
   "BoxOffice" : "$444,854,717",
   "imdbID" : "tt0298148",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Cast Away",
   "Year" : 2000,
@@ -8357,7 +8357,7 @@
   "BoxOffice" : "$233,632,142",
   "imdbID" : "tt0162222",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Once Upon a Time in the West",
   "Year" : 1968,
@@ -8379,7 +8379,7 @@
   "BoxOffice" : "$5,321,508",
   "imdbID" : "tt0064116",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Blue Velvet",
   "Year" : 1986,
@@ -8401,7 +8401,7 @@
   "BoxOffice" : "$8,551,228",
   "imdbID" : "tt0090756",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Pianist",
   "Year" : 2002,
@@ -8423,7 +8423,7 @@
   "BoxOffice" : "$32,590,750",
   "imdbID" : "tt0253474",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Girl, Interrupted",
   "Year" : 1999,
@@ -8445,7 +8445,7 @@
   "BoxOffice" : "$28,912,646",
   "imdbID" : "tt0172493",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mrs. Doubtfire",
   "Year" : 1993,
@@ -8467,7 +8467,7 @@
   "BoxOffice" : "$219,195,243",
   "imdbID" : "tt0107614",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Gladiator",
   "Year" : 2000,
@@ -8489,7 +8489,7 @@
   "BoxOffice" : "$187,705,427",
   "imdbID" : "tt0172495",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Magnolia",
   "Year" : 1999,
@@ -8511,7 +8511,7 @@
   "BoxOffice" : "$22,455,976",
   "imdbID" : "tt0175880",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Million Dollar Baby",
   "Year" : 2004,
@@ -8533,7 +8533,7 @@
   "BoxOffice" : "$100,492,203",
   "imdbID" : "tt0405159",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Alien",
   "Year" : 1979,
@@ -8555,7 +8555,7 @@
   "BoxOffice" : "$84,206,106",
   "imdbID" : "tt0078748",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Deer Hunter",
   "Year" : 1978,
@@ -8577,7 +8577,7 @@
   "BoxOffice" : "$48,979,328",
   "imdbID" : "tt0077416",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Harry Brown",
   "Year" : 2009,
@@ -8599,7 +8599,7 @@
   "BoxOffice" : "$1,818,681",
   "imdbID" : "tt1289406",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Amores Perros",
   "Year" : 2000,
@@ -8621,7 +8621,7 @@
   "BoxOffice" : "$5,408,467",
   "imdbID" : "tt0245712",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dances with Wolves",
   "Year" : 1990,
@@ -8643,7 +8643,7 @@
   "BoxOffice" : "$184,208,848",
   "imdbID" : "tt0099348",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dead Poets Society",
   "Year" : 1989,
@@ -8665,7 +8665,7 @@
   "BoxOffice" : "$95,860,116",
   "imdbID" : "tt0097165",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The English Patient",
   "Year" : 1996,
@@ -8687,7 +8687,7 @@
   "BoxOffice" : "$78,676,425",
   "imdbID" : "tt0116209",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Bad Education",
   "Year" : 2004,
@@ -8709,7 +8709,7 @@
   "BoxOffice" : "$5,284,284",
   "imdbID" : "tt0275491",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Boogie Nights",
   "Year" : 1997,
@@ -8731,7 +8731,7 @@
   "BoxOffice" : "$26,416,349",
   "imdbID" : "tt0118749",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "As Good as It Gets",
   "Year" : 1997,
@@ -8753,7 +8753,7 @@
   "BoxOffice" : "$148,478,011",
   "imdbID" : "tt0119822",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A Beautiful Mind",
   "Year" : 2001,
@@ -8775,7 +8775,7 @@
   "BoxOffice" : "$170,742,341",
   "imdbID" : "tt0268978",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Halloween",
   "Year" : 1978,
@@ -8797,7 +8797,7 @@
   "BoxOffice" : "$47,160,000",
   "imdbID" : "tt0077651",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Caine Mutiny",
   "Year" : 1954,
@@ -8819,7 +8819,7 @@
   "BoxOffice" : "$21,750,000",
   "imdbID" : "tt0046816",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mad Max",
   "Year" : 1979,
@@ -8841,7 +8841,7 @@
   "BoxOffice" : "$8,750,000",
   "imdbID" : "tt0079501",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Final Destination",
   "Year" : 2000,
@@ -8863,7 +8863,7 @@
   "BoxOffice" : "$53,331,147",
   "imdbID" : "tt0195714",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Big Fish",
   "Year" : 2003,
@@ -8885,7 +8885,7 @@
   "BoxOffice" : "$66,809,693",
   "imdbID" : "tt0319061",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Dead Calm",
   "Year" : 1989,
@@ -8907,7 +8907,7 @@
   "BoxOffice" : "$7,825,009",
   "imdbID" : "tt0097162",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Saving Private Ryan",
   "Year" : 1998,
@@ -8929,7 +8929,7 @@
   "BoxOffice" : "$217,049,603",
   "imdbID" : "tt0120815",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Irreversible",
   "Year" : 2002,
@@ -8951,7 +8951,7 @@
   "BoxOffice" : "$803,491",
   "imdbID" : "tt0290673",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Salt",
   "Year" : 2010,
@@ -8973,7 +8973,7 @@
   "BoxOffice" : "$118,311,368",
   "imdbID" : "tt0944835",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Crazies",
   "Year" : 2010,
@@ -8995,7 +8995,7 @@
   "BoxOffice" : "$39,123,589",
   "imdbID" : "tt0455407",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Pulp Fiction",
   "Year" : 1994,
@@ -9017,7 +9017,7 @@
   "BoxOffice" : "$107,928,762",
   "imdbID" : "tt0110912",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Argo",
   "Year" : 2012,
@@ -9039,7 +9039,7 @@
   "BoxOffice" : "$136,025,503",
   "imdbID" : "tt1024648",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Deja Vu",
   "Year" : 2006,
@@ -9061,7 +9061,7 @@
   "BoxOffice" : "$64,038,616",
   "imdbID" : "tt0453467",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Rocky",
   "Year" : 1976,
@@ -9083,7 +9083,7 @@
   "BoxOffice" : "$117,235,147",
   "imdbID" : "tt0075148",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Godfather Part III",
   "Year" : 1990,
@@ -9105,7 +9105,7 @@
   "BoxOffice" : "$66,761,392",
   "imdbID" : "tt0099674",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Pirates of the Caribbean: At World's End",
   "Year" : 2007,
@@ -9127,7 +9127,7 @@
   "BoxOffice" : "$309,420,425",
   "imdbID" : "tt0449088",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "12 Angry Men",
   "Year" : 1957,
@@ -9149,7 +9149,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0050083",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Lord of War",
   "Year" : 2005,
@@ -9171,7 +9171,7 @@
   "BoxOffice" : "$24,149,632",
   "imdbID" : "tt0399295",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spartacus",
   "Year" : 1960,
@@ -9193,7 +9193,7 @@
   "BoxOffice" : "$1,830,650",
   "imdbID" : "tt0054331",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sleepers",
   "Year" : 1996,
@@ -9215,7 +9215,7 @@
   "BoxOffice" : "$53,315,285",
   "imdbID" : "tt0117665",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "GoldenEye",
   "Year" : 1995,
@@ -9237,7 +9237,7 @@
   "BoxOffice" : "$106,429,941",
   "imdbID" : "tt0113189",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "King Kong",
   "Year" : 2005,
@@ -9259,7 +9259,7 @@
   "BoxOffice" : "$218,080,025",
   "imdbID" : "tt0360717",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "North by Northwest",
   "Year" : 1959,
@@ -9281,7 +9281,7 @@
   "BoxOffice" : "$66,728",
   "imdbID" : "tt0053125",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Illusionist",
   "Year" : 2006,
@@ -9303,7 +9303,7 @@
   "BoxOffice" : "$39,868,642",
   "imdbID" : "tt0443543",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Psycho",
   "Year" : 1960,
@@ -9325,7 +9325,7 @@
   "BoxOffice" : "$32,000,000",
   "imdbID" : "tt0054215",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Imagine Me & You",
   "Year" : 2005,
@@ -9347,7 +9347,7 @@
   "BoxOffice" : "$672,243",
   "imdbID" : "tt0421994",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Looper",
   "Year" : 2012,
@@ -9369,7 +9369,7 @@
   "BoxOffice" : "$66,486,205",
   "imdbID" : "tt1276104",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Pirates of the Caribbean: The Curse of the Black Pearl",
   "Year" : 2003,
@@ -9391,7 +9391,7 @@
   "BoxOffice" : "$305,413,918",
   "imdbID" : "tt0325980",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Milk",
   "Year" : 2008,
@@ -9413,7 +9413,7 @@
   "BoxOffice" : "$31,841,299",
   "imdbID" : "tt1013753",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mulholland Drive",
   "Year" : 2001,
@@ -9435,7 +9435,7 @@
   "BoxOffice" : "$7,220,243",
   "imdbID" : "tt0166924",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Shrek",
   "Year" : 2001,
@@ -9457,7 +9457,7 @@
   "BoxOffice" : "$268,349,831",
   "imdbID" : "tt0126029",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Being John Malkovich",
   "Year" : 1999,
@@ -9479,7 +9479,7 @@
   "BoxOffice" : "$22,863,596",
   "imdbID" : "tt0120601",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Scent of a Woman",
   "Year" : 1992,
@@ -9501,7 +9501,7 @@
   "BoxOffice" : "$63,095,253",
   "imdbID" : "tt0105323",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Me, Myself & Irene",
   "Year" : 2000,
@@ -9523,7 +9523,7 @@
   "BoxOffice" : "$90,570,999",
   "imdbID" : "tt0183505",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Ghostbusters",
   "Year" : 1984,
@@ -9545,7 +9545,7 @@
   "BoxOffice" : "$243,578,797",
   "imdbID" : "tt0087332",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Chorus",
   "Year" : 2004,
@@ -9567,7 +9567,7 @@
   "BoxOffice" : "$3,635,164",
   "imdbID" : "tt0372824",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Scarface",
   "Year" : 1983,
@@ -9589,7 +9589,7 @@
   "BoxOffice" : "$45,967,303",
   "imdbID" : "tt0086250",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Army of Darkness",
   "Year" : 1992,
@@ -9611,7 +9611,7 @@
   "BoxOffice" : "$11,502,976",
   "imdbID" : "tt0106308",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Miami Vice",
   "Year" : 2006,
@@ -9633,7 +9633,7 @@
   "BoxOffice" : "$63,450,470",
   "imdbID" : "tt0430357",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The 100 Year-Old Man Who Climbed Out the Window and Disappeared",
   "Year" : 2013,
@@ -9655,7 +9655,7 @@
   "BoxOffice" : "$944,193",
   "imdbID" : "tt2113681",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Kill Bill: Vol. 1",
   "Year" : 2003,
@@ -9677,7 +9677,7 @@
   "BoxOffice" : "$70,099,045",
   "imdbID" : "tt0266697",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Carrie",
   "Year" : 1976,
@@ -9699,7 +9699,7 @@
   "BoxOffice" : "$33,800,000",
   "imdbID" : "tt0074285",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Jaws",
   "Year" : 1975,
@@ -9721,7 +9721,7 @@
   "BoxOffice" : "$266,567,580",
   "imdbID" : "tt0073195",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Goodfellas",
   "Year" : 1990,
@@ -9743,7 +9743,7 @@
   "BoxOffice" : "$46,909,721",
   "imdbID" : "tt0099685",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Requiem for a Dream",
   "Year" : 2000,
@@ -9765,7 +9765,7 @@
   "BoxOffice" : "$3,635,482",
   "imdbID" : "tt0180093",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "American Gangster",
   "Year" : 2007,
@@ -9787,7 +9787,7 @@
   "BoxOffice" : "$130,164,645",
   "imdbID" : "tt0765429",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Visitor",
   "Year" : 2007,
@@ -9809,7 +9809,7 @@
   "BoxOffice" : "$9,427,089",
   "imdbID" : "tt0857191",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "I Saw the Devil",
   "Year" : 2010,
@@ -9831,7 +9831,7 @@
   "BoxOffice" : "$129,210",
   "imdbID" : "tt1588170",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Birds",
   "Year" : 1963,
@@ -9853,7 +9853,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0056869",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A.I. Artificial Intelligence",
   "Year" : 2001,
@@ -9875,7 +9875,7 @@
   "BoxOffice" : "$78,616,689",
   "imdbID" : "tt0212720",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Prisoners",
   "Year" : 2013,
@@ -9897,7 +9897,7 @@
   "BoxOffice" : "$61,002,302",
   "imdbID" : "tt1392214",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spy Game",
   "Year" : 2001,
@@ -9919,7 +9919,7 @@
   "BoxOffice" : "$62,362,560",
   "imdbID" : "tt0266987",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Evil Dead",
   "Year" : 1981,
@@ -9941,7 +9941,7 @@
   "BoxOffice" : "$2,400,000",
   "imdbID" : "tt0083907",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Inglourious Basterds",
   "Year" : 2009,
@@ -9963,7 +9963,7 @@
   "BoxOffice" : "$120,540,719",
   "imdbID" : "tt0361748",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Sleepy Hollow",
   "Year" : 1999,
@@ -9985,7 +9985,7 @@
   "BoxOffice" : "$101,071,502",
   "imdbID" : "tt0162661",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Matrix",
   "Year" : 1999,
@@ -10007,7 +10007,7 @@
   "BoxOffice" : "$172,076,928",
   "imdbID" : "tt0133093",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "X-Men",
   "Year" : 2000,
@@ -10029,7 +10029,7 @@
   "BoxOffice" : "$157,299,718",
   "imdbID" : "tt0120903",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Kramer vs. Kramer",
   "Year" : 1979,
@@ -10051,7 +10051,7 @@
   "BoxOffice" : "$106,260,000",
   "imdbID" : "tt0079417",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Terminator",
   "Year" : 1984,
@@ -10073,7 +10073,7 @@
   "BoxOffice" : "$38,371,200",
   "imdbID" : "tt0088247",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Machinist",
   "Year" : 2004,
@@ -10095,7 +10095,7 @@
   "BoxOffice" : "$1,082,715",
   "imdbID" : "tt0361862",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Easy Rider",
   "Year" : 1969,
@@ -10117,7 +10117,7 @@
   "BoxOffice" : "$123,276",
   "imdbID" : "tt0064276",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Phone Booth",
   "Year" : 2002,
@@ -10139,7 +10139,7 @@
   "BoxOffice" : "$46,566,212",
   "imdbID" : "tt0183649",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Iron Sky",
   "Year" : 2012,
@@ -10161,7 +10161,7 @@
   "BoxOffice" : "$122,082",
   "imdbID" : "tt1034314",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Little Miss Sunshine",
   "Year" : 2006,
@@ -10183,7 +10183,7 @@
   "BoxOffice" : "$59,891,098",
   "imdbID" : "tt0449059",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Star Wars: Episode VI - Return of the Jedi",
   "Year" : 1983,
@@ -10205,7 +10205,7 @@
   "BoxOffice" : "$316,566,101",
   "imdbID" : "tt0086190",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hurt Locker",
   "Year" : 2008,
@@ -10227,7 +10227,7 @@
   "BoxOffice" : "$17,017,811",
   "imdbID" : "tt0887912",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "21 Grams",
   "Year" : 2003,
@@ -10249,7 +10249,7 @@
   "BoxOffice" : "$16,290,476",
   "imdbID" : "tt0315733",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hunger Games: Catching Fire",
   "Year" : 2013,
@@ -10271,7 +10271,7 @@
   "BoxOffice" : "$424,668,047",
   "imdbID" : "tt1951264",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Apocalypse Now",
   "Year" : 1979,
@@ -10293,7 +10293,7 @@
   "BoxOffice" : "$96,042,913",
   "imdbID" : "tt0078788",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Royal Tenenbaums",
   "Year" : 2001,
@@ -10315,7 +10315,7 @@
   "BoxOffice" : "$52,364,010",
   "imdbID" : "tt0265666",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Eastern Promises",
   "Year" : 2007,
@@ -10337,7 +10337,7 @@
   "BoxOffice" : "$17,266,000",
   "imdbID" : "tt0765443",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Evil Dead II",
   "Year" : 1987,
@@ -10359,7 +10359,7 @@
   "BoxOffice" : "$5,923,044",
   "imdbID" : "tt0092991",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Escape Plan",
   "Year" : 2013,
@@ -10381,7 +10381,7 @@
   "BoxOffice" : "$25,135,965",
   "imdbID" : "tt1211956",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Witness",
   "Year" : 1985,
@@ -10403,7 +10403,7 @@
   "BoxOffice" : "$68,706,993",
   "imdbID" : "tt0090329",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Fugitive",
   "Year" : 1993,
@@ -10425,7 +10425,7 @@
   "BoxOffice" : "$183,875,760",
   "imdbID" : "tt0106977",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Falling Down",
   "Year" : 1993,
@@ -10447,7 +10447,7 @@
   "BoxOffice" : "$40,903,593",
   "imdbID" : "tt0106856",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Sting",
   "Year" : 1973,
@@ -10469,7 +10469,7 @@
   "BoxOffice" : "$156,000,000",
   "imdbID" : "tt0070735",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Talk to Her",
   "Year" : 2002,
@@ -10491,7 +10491,7 @@
   "BoxOffice" : "$9,357,911",
   "imdbID" : "tt0287467",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Drive",
   "Year" : 2011,
@@ -10513,7 +10513,7 @@
   "BoxOffice" : "$35,061,555",
   "imdbID" : "tt0780504",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Life of Pi",
   "Year" : 2012,
@@ -10535,7 +10535,7 @@
   "BoxOffice" : "$124,987,023",
   "imdbID" : "tt0454876",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Zero Dark Thirty",
   "Year" : 2012,
@@ -10557,7 +10557,7 @@
   "BoxOffice" : "$95,720,716",
   "imdbID" : "tt1790885",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Mission: Impossible - Ghost Protocol",
   "Year" : 2011,
@@ -10579,7 +10579,7 @@
   "BoxOffice" : "$209,397,903",
   "imdbID" : "tt1229238",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Catch Me If You Can",
   "Year" : 2002,
@@ -10601,7 +10601,7 @@
   "BoxOffice" : "$164,615,351",
   "imdbID" : "tt0264464",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "WALL·E",
   "Year" : 2008,
@@ -10623,7 +10623,7 @@
   "BoxOffice" : "$223,808,164",
   "imdbID" : "tt0910970",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Social Network",
   "Year" : 2010,
@@ -10645,7 +10645,7 @@
   "BoxOffice" : "$96,962,694",
   "imdbID" : "tt1285016",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Hobbit: The Desolation of Smaug",
   "Year" : 2013,
@@ -10667,7 +10667,7 @@
   "BoxOffice" : "$258,387,334",
   "imdbID" : "tt1170358",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Big Lebowski",
   "Year" : 1998,
@@ -10689,7 +10689,7 @@
   "BoxOffice" : "$19,301,403",
   "imdbID" : "tt0118715",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Chicago",
   "Year" : 2002,
@@ -10711,7 +10711,7 @@
   "BoxOffice" : "$170,687,518",
   "imdbID" : "tt0299658",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Training Day",
   "Year" : 2001,
@@ -10733,7 +10733,7 @@
   "BoxOffice" : "$76,631,907",
   "imdbID" : "tt0139654",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Oblivion",
   "Year" : 2013,
@@ -10755,7 +10755,7 @@
   "BoxOffice" : "$89,107,235",
   "imdbID" : "tt1483013",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "JFK",
   "Year" : 1991,
@@ -10777,7 +10777,7 @@
   "BoxOffice" : "$70,405,498",
   "imdbID" : "tt0102138",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Piano",
   "Year" : 1993,
@@ -10799,7 +10799,7 @@
   "BoxOffice" : "$40,157,856",
   "imdbID" : "tt0107822",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Curious Case of Benjamin Button",
   "Year" : 2008,
@@ -10821,7 +10821,7 @@
   "BoxOffice" : "$127,509,326",
   "imdbID" : "tt0421715",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Last Tango in Paris",
   "Year" : 1972,
@@ -10843,7 +10843,7 @@
   "BoxOffice" : "$36,144,000",
   "imdbID" : "tt0070849",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Show Me Love",
   "Year" : 1998,
@@ -10865,7 +10865,7 @@
   "BoxOffice" : "$169,331",
   "imdbID" : "tt0150662",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Collateral",
   "Year" : 2004,
@@ -10887,7 +10887,7 @@
   "BoxOffice" : "$101,005,703",
   "imdbID" : "tt0369339",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Platoon",
   "Year" : 1986,
@@ -10909,7 +10909,7 @@
   "BoxOffice" : "$138,530,565",
   "imdbID" : "tt0091763",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Mechanic",
   "Year" : 2011,
@@ -10931,7 +10931,7 @@
   "BoxOffice" : "$29,121,498",
   "imdbID" : "tt0472399",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Godfather",
   "Year" : 1972,
@@ -10953,7 +10953,7 @@
   "BoxOffice" : "$136,381,073",
   "imdbID" : "tt0068646",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "A Single Man",
   "Year" : 2009,
@@ -10975,7 +10975,7 @@
   "BoxOffice" : "$9,176,000",
   "imdbID" : "tt1315981",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Gone with the Wind",
   "Year" : 1939,
@@ -10997,7 +10997,7 @@
   "BoxOffice" : "$200,882,193",
   "imdbID" : "tt0031381",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Edward Scissorhands",
   "Year" : 1990,
@@ -11019,7 +11019,7 @@
   "BoxOffice" : "$56,362,352",
   "imdbID" : "tt0099487",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Se7en",
   "Year" : 1995,
@@ -11041,7 +11041,7 @@
   "BoxOffice" : "$100,125,643",
   "imdbID" : "tt0114369",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Tinker Tailor Soldier Spy",
   "Year" : 2011,
@@ -11063,7 +11063,7 @@
   "BoxOffice" : "$24,149,393",
   "imdbID" : "tt1340800",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Heat",
   "Year" : 1995,
@@ -11085,7 +11085,7 @@
   "BoxOffice" : "$67,436,818",
   "imdbID" : "tt0113277",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Les Misérables",
   "Year" : 2012,
@@ -11107,7 +11107,7 @@
   "BoxOffice" : "$149,260,140",
   "imdbID" : "tt1707386",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Life of David Gale",
   "Year" : 2003,
@@ -11129,7 +11129,7 @@
   "BoxOffice" : "$19,955,598",
   "imdbID" : "tt0289992",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Insomnia",
   "Year" : 2002,
@@ -11151,5 +11151,5 @@
   "BoxOffice" : "$67,355,513",
   "imdbID" : "tt0278504",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 } ]

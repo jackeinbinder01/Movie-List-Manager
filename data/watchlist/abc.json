@@ -19,7 +19,7 @@
   "BoxOffice" : "$356,921,711",
   "imdbID" : "tt2096673",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spirited Away",
   "Year" : 2001,
@@ -41,5 +41,5 @@
   "BoxOffice" : "$15,205,725",
   "imdbID" : "tt0245429",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 } ]
