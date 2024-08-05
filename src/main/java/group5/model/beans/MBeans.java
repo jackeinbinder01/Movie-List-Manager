@@ -133,7 +133,7 @@ public class MBeans implements java.io.Serializable {
     private boolean watched = false;
 
     /** Holds personal rating of the media. */
-    @JsonProperty("My Rating")
+    @JsonProperty("My_Rating")
     private double myRating = -1.0;
 
 

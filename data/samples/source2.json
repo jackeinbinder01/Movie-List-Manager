@@ -19,7 +19,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt8469412",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Marnie Love",
   "Year" : 2005,
@@ -41,7 +41,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0479953",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Platoon",
   "Year" : 1986,
@@ -63,7 +63,7 @@
   "BoxOffice" : "$138,530,565",
   "imdbID" : "tt0091763",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Miserable Marnie & The Shut In",
   "Year" : 2013,
@@ -85,7 +85,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt3260090",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Marnie",
   "Year" : 2017,
@@ -107,7 +107,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt7477356",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spirited Away",
   "Year" : 2001,
@@ -129,7 +129,7 @@
   "BoxOffice" : "$15,205,725",
   "imdbID" : "tt0245429",
   "Watched" : true,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Alfred Hitchcock: Marnie (1964)",
   "Year" : 1964,
@@ -151,7 +151,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt12923238",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Inside Out",
   "Year" : 2015,
@@ -173,7 +173,7 @@
   "BoxOffice" : "$356,921,711",
   "imdbID" : "tt2096673",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Matrix",
   "Year" : 1999,
@@ -195,7 +195,7 @@
   "BoxOffice" : "$172,076,928",
   "imdbID" : "tt0133093",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Titanic",
   "Year" : 1997,
@@ -217,7 +217,7 @@
   "BoxOffice" : "$674,292,608",
   "imdbID" : "tt0120338",
   "Watched" : true,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Monsters",
   "Year" : 2010,
@@ -239,7 +239,7 @@
   "BoxOffice" : "$237,301",
   "imdbID" : "tt1470827",
   "Watched" : true,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Marnie",
   "Year" : 1964,
@@ -261,7 +261,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0058329",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Shrek 2",
   "Year" : 2004,
@@ -283,7 +283,7 @@
   "BoxOffice" : "$444,854,717",
   "imdbID" : "tt0298148",
   "Watched" : true,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "When Marnie Was There",
   "Year" : 2014,
@@ -305,7 +305,7 @@
   "BoxOffice" : "$561,085",
   "imdbID" : "tt3398268",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Avatar",
   "Year" : 2009,
@@ -327,7 +327,7 @@
   "BoxOffice" : "$785,221,649",
   "imdbID" : "tt0499549",
   "Watched" : true,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Shrek",
   "Year" : 2001,
@@ -349,7 +349,7 @@
   "BoxOffice" : "$268,349,831",
   "imdbID" : "tt0126029",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Exodus",
   "Year" : 1960,
@@ -371,7 +371,7 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0053804",
   "Watched" : true,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "John Wick",
   "Year" : 2014,
@@ -393,7 +393,7 @@
   "BoxOffice" : "$43,037,835",
   "imdbID" : "tt2911666",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "The Trouble with Marnie",
   "Year" : 2000,
@@ -415,5 +415,5 @@
   "BoxOffice" : "N/A",
   "imdbID" : "tt0278109",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 } ]

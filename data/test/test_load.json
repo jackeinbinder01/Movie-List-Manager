@@ -19,7 +19,7 @@
   "BoxOffice" : "$674,292,608",
   "imdbID" : "tt0120338",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 }, {
   "Title" : "Inside Out",
   "Year" : 2015,
@@ -41,5 +41,5 @@
   "BoxOffice" : "$356,921,711",
   "imdbID" : "tt2096673",
   "Watched" : false,
-  "My Rating" : -1.0
+  "My_Rating" : -1.0
 } ]
