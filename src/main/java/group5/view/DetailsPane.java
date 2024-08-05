@@ -42,7 +42,7 @@ import group5.model.formatters.MBeansLoader;
  * A JPanel class to display details of a media.
  */
 
-public class DetailsPane extends JPanel implements FocusListener {
+public class DetailsPane extends JPanel {
 
     /**
      * Default width.
@@ -143,7 +143,6 @@ public class DetailsPane extends JPanel implements FocusListener {
         this.addDetailPane("Box Office");
         this.addUserRating();
 
-        this.userRating.addFocusListener(this);
 
         this.scrollPane.addComponentListener(new ComponentAdapter() {
             @Override
@@ -323,7 +322,7 @@ public class DetailsPane extends JPanel implements FocusListener {
      */
     private void refreshUserFields() {
         if (currentMedia != null) {
-            this.userRating.setText(Double.toString(currentMedia.getMyRating()));
+            this.setUserRatingField();
             this.watchedBox.setSelected(currentMedia.getWatched());
         }
     }
@@ -334,6 +333,7 @@ public class DetailsPane extends JPanel implements FocusListener {
      * @param media the media to display.
      */
     public void setMedia(MBeans media) {
+        System.out.println(media);
         if (media == null) {
             return;
         }
@@ -388,12 +388,7 @@ public class DetailsPane extends JPanel implements FocusListener {
 
         this.mediaDetails.get(14).setText(media.formatBoxOfficeCurrency());
 
-        Double myRating = media.getMyRating();
-        if (myRating < 0) {
-            this.userRating.setText("Enter your rating here (0 - 10)");
-        } else {
-            this.userRating.setText(Double.toString(myRating));
-        }
+        this.setUserRatingField();
 
         this.watchedBox.setSelected(media.getWatched());
         SwingUtilities.invokeLater(() -> {
@@ -417,31 +412,54 @@ public class DetailsPane extends JPanel implements FocusListener {
             }
         });
 
-        // 1. Action Listener - do something when `enter` pressed
-        this.userRating.addActionListener(e -> {
-            try {
-                double rating = Double.parseDouble(this.userRating.getText());
-                if (rating >= 0.0 && rating <= 10.0) {
-                    // Only allow changes in range
-                    features.changeRating(this.currentMedia, rating);
-                    this.userRating.setText(Double.toString(rating));
+        // Focus Listener - clear text when focus is gained, update rating when focus is lost
+        this.userRating.addFocusListener(new FocusListener() {
+            /**
+             * Invoked when a component gains the keyboard focus.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void focusGained(FocusEvent e) {
+                // clear text when focus is gained
+                JTextField textField = (JTextField) e.getSource();
+                textField.setText("");
+            }
+
+            /**
+             * Reset the myRating text field when focus is lost.
+             * Also triggers update of the rating in the model.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    double rating = Double.parseDouble(userRating.getText());
+                    if (rating >= 0.0 && rating <= 10.0) {
+                        // Only allow changes in range
+                        features.changeRating(currentMedia, rating);
+                    }
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid rating format. Please enter a number.");
                 }
-            } catch (NumberFormatException ex) {
-                System.out.println("Invalid rating format. Please enter a number.");
+                setUserRatingField();
             }
         });
     }
 
     /**
-     * Invoked when a component gains the keyboard focus.
+     * Set the user rating field to the current rating.
      *
-     * @param e the event to be processed
+     * If rating value if -1(default), display "Enter your rating here (0 - 10)".
      */
-    @Override
-    public void focusGained(FocusEvent e) {
-        // clear text when focus is gained
-        JTextField textField = (JTextField) e.getSource();
-        textField.setText("");
+    private void setUserRatingField() {
+        Double myRating = this.currentMedia.getMyRating();
+        if (myRating == -1) {
+            this.userRating.setText("Enter your rating here (0 - 10)");
+        } else {
+            this.userRating.setText(Double.toString(myRating));
+        }
     }
 
     /**
@@ -468,15 +486,5 @@ public class DetailsPane extends JPanel implements FocusListener {
         detailsPane.setMedia(media);
         detailsPane.bindFeatures(null);
         frame.setVisible(true);
-    }
-
-    @Override
-    public void focusLost(FocusEvent e) {
-        Double myRating = this.currentMedia.getMyRating();
-        if (myRating < 0) {
-            this.userRating.setText("Enter your rating here (0 - 10)");
-        } else {
-            this.userRating.setText(Double.toString(myRating));
-        }
     }
 }
