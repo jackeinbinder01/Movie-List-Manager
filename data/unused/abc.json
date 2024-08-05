@@ -17,7 +17,9 @@
   "Metascore" : 94,
   "imdbRating" : 8.1,
   "BoxOffice" : "$356,921,711",
-  "imdbID" : "tt2096673"
+  "imdbID" : "tt2096673",
+  "Watched" : false,
+  "My_Rating" : -1.0
 }, {
   "Title" : "Spirited Away",
   "Year" : 2001,
@@ -37,5 +39,7 @@
   "Metascore" : 96,
   "imdbRating" : 8.6,
   "BoxOffice" : "$15,205,725",
-  "imdbID" : "tt0245429"
+  "imdbID" : "tt0245429",
+  "Watched" : false,
+  "My_Rating" : -1.0
 } ]

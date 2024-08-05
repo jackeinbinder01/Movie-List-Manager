@@ -4,7 +4,7 @@
   "Type" : "movie",
   "Rated" : "PG-13",
   "Released" : "18 Dec 2009",
-  "Runtime" : "163 min",
+  "Runtime" : "162 min",
   "Genre" : "Action, Adventure, Fantasy",
   "Director" : "James Cameron",
   "Writer" : "James Cameron",
@@ -17,5 +17,7 @@
   "Metascore" : 83,
   "imdbRating" : 7.9,
   "BoxOffice" : "$785,221,649",
-  "imdbID" : "tt0499549"
+  "imdbID" : "tt0499549",
+  "Watched" : false,
+  "My_Rating" : -1.0
 } ]
