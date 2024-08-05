@@ -16,7 +16,6 @@ import group5.view.FilterPane;
 import group5.view.DetailsPane;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 
 public class TestController {
@@ -96,9 +95,9 @@ public class TestController {
         when(mockView.getActiveTab()).thenReturn(0);
         when(mockModel.getRecords()).thenReturn(records.stream());
         reset(mockView);
-        controller.changeWatchedStatusV2(record, true, "DETAILSPANE");
+        controller.changeWatchedStatus(record, true, "DETAILSPANE");
         verify(mockModel).updateWatched(record, true);
-        verify(mockView, times(1)).setSourceTableRecordsV2(any(), any(), any());
+        verify(mockView, times(1)).setSourceTableRecords(any(), any(), any());
 
 
         // Active Tab: Watchlist Table
@@ -109,7 +108,7 @@ public class TestController {
         when(mockModel.getRecords(0)).thenReturn(records.stream());
         when(mockView.getDetailsPane()).thenReturn(mockDetailsPane);
         when(mockDetailsPane.getCurrentMedia()).thenReturn(record);
-        controller.changeWatchedStatusV2(record, false, "LISTPANE");
+        controller.changeWatchedStatus(record, false, "LISTPANE");
         verify(mockModel).updateWatched(record, false);
         verify(mockView, times(1)).setDetailsPaneEntry(record);
 
@@ -122,7 +121,7 @@ public class TestController {
         when(mockModel.getRecords(0)).thenReturn(records.stream());
         when(mockView.getDetailsPane()).thenReturn(mockDetailsPane);
         when(mockDetailsPane.getCurrentMedia()).thenReturn(record);
-        controller.changeWatchedStatusV2(record, true, "DETAILSPANE");
+        controller.changeWatchedStatus(record, true, "DETAILSPANE");
         verify(mockModel).updateWatched(record, true);
         verify(mockView, times(1)).setUserTableRecords(any(), eq(0));
 
@@ -135,7 +134,7 @@ public class TestController {
         when(mockModel.getRecords(0)).thenReturn(records.stream());
         when(mockView.getDetailsPane()).thenReturn(mockDetailsPane);
         when(mockDetailsPane.getCurrentMedia()).thenReturn(records.get(2));
-        controller.changeWatchedStatusV2(record, true, "LISTPANE");
+        controller.changeWatchedStatus(record, true, "LISTPANE");
         verify(mockModel).updateWatched(record, true);
         verify(mockView, never()).setDetailsPaneEntry(any());
 
@@ -155,7 +154,7 @@ public class TestController {
 
         verify(mockView).addUserTable("Watchlist 01");
         verify(mockView).setUserTableRecords(any(), eq(0));
-        verify(mockView).setSourceTableRecordsV2(any(), any(), any());
+        verify(mockView).setSourceTableRecords(any(), any(), any());
         verify(mockView).setActiveTab(1);
 
 

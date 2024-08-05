@@ -17,7 +17,7 @@ public class BaseView extends JFrame implements IView {
     private final static int DEFAULT_FONT_SIZE = 10;
 
     FilterPane filterPane;
-    ListPaneV2 listPane;
+    ListPane listPane;
     DetailsPane detailsPane;
 
     public BaseView() {
@@ -48,7 +48,7 @@ public class BaseView extends JFrame implements IView {
 
         // Creating the Functional Panes
         filterPane = new FilterPane();
-        listPane = new ListPaneV2();
+        listPane = new ListPane();
         detailsPane = new DetailsPane();
 
 
@@ -144,7 +144,7 @@ public class BaseView extends JFrame implements IView {
     }
 
     @Override
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
+    public void setSourceTableRecords(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
         System.out.println("[BaseView] setMainTableRecords");
         listPane.setSourceTable(records, userListNames, recordUserListMatrix);
     }

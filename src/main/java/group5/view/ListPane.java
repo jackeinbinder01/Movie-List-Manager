@@ -26,14 +26,14 @@ import java.util.stream.Stream;
 
 
 /**
- * ListPaneV2 is ....... TODO: add description
+ * ListPane is ....... TODO: add description
  * BorderLayout.CENTER = a JTabbedPane containing the various lists
  * BorderLayout.SOUTH = a JPanel toolbar containing with buttons
  * <p>
  * TabbedPane citation: https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
  */
 
-public class ListPaneV2 extends JPanel {
+public class ListPane extends JPanel {
 
     private final String MAIN_TAB_NAME = "All Movies";
     private final String ADD_LIST_BUTTON_TEXT = "Import List";
@@ -55,13 +55,11 @@ public class ListPaneV2 extends JPanel {
 
     MovieTableModel sourceTableModel;
 
-    // List<String> watchlistNames;
 
     Consumer<MBeans> tableSelectionHandler;
     BiConsumer<MBeans, Integer> removeFromListHandler;
     BiConsumer<MBeans, Integer> addToListHandler;
-    BiConsumer<MBeans, Boolean> changeWatchedStatusHandler;
-    TriConsumer<MBeans, Boolean, String> changeWatchedStatusHandlerV2;
+    TriConsumer<MBeans, Boolean, String> changeWatchedStatusHandler;
     Consumer<String> createListHandler;
     Consumer<Integer> deleteListHandler;
     Consumer<Integer> tabChangeHandler;
@@ -78,15 +76,15 @@ public class ListPaneV2 extends JPanel {
     List<MovieTableModel> watchlistModels;
     List<JTable> watchlistTables;
 
-    ListPaneV2() {
+    ListPane() {
         super();
 
         // Set layout for the list pane
         this.setLayout(new BorderLayout());
 
-
-        // Setting up the tabbed pane, and adding listener for tab change
+        // Setting up the tabbed pane + tabs to overflow horizontally
         tabbedPane = new JTabbedPane();
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         this.add(tabbedPane, BorderLayout.CENTER);
 
         // Create the main table
@@ -156,7 +154,7 @@ public class ListPaneV2 extends JPanel {
         if (tableMode == TableMode.MAIN) {
             // Error checking: there should only be one main table
             if (sourceTableModel != null || sourceTable != null || tabbedPane.getTabCount() > 0) {
-                throw new IllegalArgumentException("[ListPaneV2] Error: Main table is already constructed!");
+                throw new IllegalArgumentException("[ListPane] Error: Main table is already constructed!");
             }
         }
         targetModel = new MovieTableModel(tableMode);
@@ -169,19 +167,16 @@ public class ListPaneV2 extends JPanel {
             sorter.setSortable(TableColumn.WATCHLIST.getIndex(), false);
         }
 
-        // Setting the column widths
+        // Setting the max width for certain columns
         List<Pair<TableColumn, Integer>> columnMaxWidths = List.of(
-                // Pair.of(TableColumn.TITLE, 150),
                 Pair.of(TableColumn.YEAR, 50),
                 Pair.of(TableColumn.WATCHED, 75),
                 Pair.of(TableColumn.WATCHLIST, 100),
                 Pair.of(TableColumn.RUNTIME, 75)
         );
         for (Pair<TableColumn, Integer> pair : columnMaxWidths) {
-            // targetTable.getColumnModel().getColumn(pair.getLeft().getIndex()).setPreferredWidth(pair.getRight());
             targetTable.getColumnModel().getColumn(pair.getLeft().getIndex()).setMaxWidth(pair.getRight());
         }
-
 
         if (tableMode == TableMode.MAIN) {
             sourceTableModel = targetModel;
@@ -215,8 +210,8 @@ public class ListPaneV2 extends JPanel {
                 targetTable,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        tabbedPane.addTab(tabName, null, newScrollPane, tabName);
 
+        tabbedPane.addTab(tabName, null, newScrollPane, tabName);
     }
 
     public void removeUserTable(int userListId) {
@@ -235,8 +230,7 @@ public class ListPaneV2 extends JPanel {
     public void createUserTableTab(String tableName) {
         createTableTab(tableName, TableMode.WATCHLIST);
     }
-
-
+    
     private void localImportListHandler() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter fileFilters = new FileNameExtensionFilter(
@@ -273,7 +267,7 @@ public class ListPaneV2 extends JPanel {
     }
 
     public void setSourceTable(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix) {
-        System.out.println("[ListPaneV2] setMainTableRecords called");
+        System.out.println("[ListPane] setMainTableRecords called");
         List<MovieTableModelRecord> tmRecords = new ArrayList<>();
         List<MBeans> mBeansList = records.toList();
         for (int i = 0; i < mBeansList.size(); i++) {
@@ -317,7 +311,7 @@ public class ListPaneV2 extends JPanel {
      * @param features the features to bind
      */
     public void bindFeatures(IFeature features) {
-        System.out.println("[ListPaneV2] bindFeatures");
+        System.out.println("[ListPane] bindFeatures");
         importListButton.addActionListener(e -> localImportListHandler());
         importListHandler = features::importListFromFile;
         exportListHandler = features::exportListToFile;
@@ -325,8 +319,7 @@ public class ListPaneV2 extends JPanel {
         tableSelectionHandler = features::handleTableSelection;
         removeFromListHandler = features::removeFromWatchlist;
         addToListHandler = features::addToWatchlist;
-        // changeWatchedStatusHandler = features::changeWatchedStatus;
-        changeWatchedStatusHandlerV2 = features::changeWatchedStatusV2;
+        changeWatchedStatusHandler = features::changeWatchedStatus;
         tabChangeHandler = features::handleTabChange;
         tabbedPane.addChangeListener(e -> localTabChangeHandler());
         createListHandler = features::createWatchlist;
@@ -475,14 +468,14 @@ public class ListPaneV2 extends JPanel {
          * Changes in watched status are handled here.
          */
         public void setValueAt(Object value, int row, int col) {
-            // System.out.println("[ListPaneV2] setValueAt: " + value + " at row: " + row + " col: " + col);
+            // System.out.println("[ListPane] setValueAt: " + value + " at row: " + row + " col: " + col);
             // data[row][col] = value;
             if (col == TableColumn.WATCHED.getIndex()) {
                 MBeans record = this.getRecordAt(row);
-                System.out.println("[ListPaneV2] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
+                System.out.println("[ListPane] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
                 // calling the handler to update the Model
                 // changeWatchedStatusHandler.accept(record, !record.getWatched());
-                changeWatchedStatusHandlerV2.accept(record, !record.getWatched(), "listPane");
+                changeWatchedStatusHandler.accept(record, !record.getWatched(), "listPane");
             }
             // ideally, the Model has been updated at this point
             // since the MBeans in this model points to the same MBeans in the Model
@@ -660,12 +653,11 @@ public class ListPaneV2 extends JPanel {
                 }
             });
 
-//            button.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    //
-//                }
-//            });
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                }
+            });
         }
 
         @Override
@@ -676,8 +668,6 @@ public class ListPaneV2 extends JPanel {
                 record = movieTableModelRecord.getRecord();
             } else {
                 movieTableModelRecord = null;
-                System.out.println("[ButtonEditor] getTableCellEditorComponent: value is not MovieTableModelRecord");
-                // TODO: throw an exception
             }
             button.setText(label);
             isPushed = true;
@@ -701,29 +691,9 @@ public class ListPaneV2 extends JPanel {
     }
 
 
-    /**
-     * Main method to test the DetailsPane.
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(500, 600);
-//        ListPaneV2 listPaneV2 = new ListPaneV2();
-//        frame.add(listPaneV2);
-//
-//        String sampleDataPath = "data/samples/source.json";
-//        Set<MBeans> records = MBeansLoader.loadMediasFromFile(sampleDataPath, Formats.JSON);
-//        listPaneV2.setSourceTableRecords(records.stream());
-//
-//        listPaneV2.setVisible(true);
-//        frame.setVisible(true);
-    }
-
 
     /**
-     * Idea: What about AbstractMovieTableModel -> SourceTableModel and UserTableModel extends AbstractMovieTableModel
+     * Enum class for the table mode. This is used to differentiate between the main table and user-defined lists.
      */
     enum TableMode {
         MAIN,
@@ -731,8 +701,7 @@ public class ListPaneV2 extends JPanel {
     }
 
     /**
-     * Enum class for the columns in the table
-     * Column order and titles are defined and can be changed here
+     * Enum class for the columns in the table. This is used to define the column order and titles.
      */
     enum TableColumn {
         TITLE("Title"),
@@ -760,11 +729,8 @@ public class ListPaneV2 extends JPanel {
 
     /**
      * This contains all information needed to render a row in the table.
-     * The UserList fields are required for the sourceList to construct
+     * The two UserList fields are required for the sourceList to construct
      * the dropdown menu for watchlist management.
-     * Admittedly, this looks counter-intuitive for now.
-     * Makes use of composition pattern instead of inheritance with MBeans
-     * because we want to retain the original MBeans reference instead of copying and constructing new objects.
      */
     class MovieTableModelRecord {
         private MBeans record;

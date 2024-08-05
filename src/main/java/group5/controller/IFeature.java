@@ -5,14 +5,13 @@ import group5.model.beans.MBeans;
 public interface IFeature {
 
     /**
-     * Prompt the view to show the details of the selected entry
-     * Designed to be triggered by an action listener in the view upon table selection
+     * Prompt the view to show the details of the selected entry.
+     * Designed to be triggered by an action listener in the view upon table selection.
      */
     public void handleTableSelection(MBeans record);
 
     /**
-     * Adds a list of MBeans from a specified file.
-     * The file format and structure are assumed to be predefined and compatible with the application's requirements.
+     * Imports a user-defined watchlist from a specified file.
      *
      * @param filepath the path to the file containing the list of MBeans to be added.
      */
@@ -20,15 +19,13 @@ public interface IFeature {
 
     /**
      * Exports the current list of MBeans to a specified file.
-     * TODO: aad file format as parameter?
      *
      * @param filepath the path where the list of MBeans will be exported.
      */
     public void exportListToFile(String filepath);
 
     /**
-     * Removes a specific MBean from the user's watch list at a specified index.
-     * This method is intended for managing user-specific watch lists, allowing customization of tracked MBeans.
+     * Removes a specific record from a user's watch list.
      *
      * @param mbean         the MBean to be removed.
      * @param userListIndex the index in the user's watch list where the MBean is located.
@@ -36,8 +33,7 @@ public interface IFeature {
     public void removeFromWatchlist(MBeans mbean, int userListIndex);
 
     /**
-     * Adds a specific MBean to the user's watch list at a specified index.
-     * This allows users to track specific MBeans of interest and receive updates or notifications.
+     * Adds a specific record to a user's watch list.
      *
      * @param mbean         the MBean to be added to the watch list.
      * @param userListIndex the index in the user's watch list where the MBean should be added.
@@ -72,11 +68,10 @@ public interface IFeature {
      * @param record  the MBean whose watched status is to be changed.
      * @param watched the new watched status to be assigned to the MBean.
      */
-    public void changeWatchedStatusV2(MBeans record, boolean watched, String caller);
+    public void changeWatchedStatus(MBeans record, boolean watched, String caller);
 
     /**
-     * Applies filters to the list of MBeans.
-     * This method is intended to filter the displayed list of MBeans based on certain criteria, such as rating or watched status.
+     * Handles application of filters triggered by the user.
      */
     public void applyFilters();
 

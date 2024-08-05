@@ -18,7 +18,7 @@ public interface IView {
      */
     void clearTableSelection();
 
-    public void setSourceTableRecordsV2(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix);
+    public void setSourceTableRecords(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix);
 
     public void setUserTableRecords(Stream<MBeans> records, int userListId);
 

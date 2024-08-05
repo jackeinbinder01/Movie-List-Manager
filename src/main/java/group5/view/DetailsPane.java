@@ -408,7 +408,7 @@ public class DetailsPane extends JPanel {
         this.watchedBox.addActionListener(e -> {
             if (this.currentMedia != null) {
                 // features.changeWatchedStatus(this.currentMedia, this.watchedBox.isSelected());
-                features.changeWatchedStatusV2(this.currentMedia, this.watchedBox.isSelected(), "detailsPane");
+                features.changeWatchedStatus(this.currentMedia, this.watchedBox.isSelected(), "detailsPane");
             }
         });
 
