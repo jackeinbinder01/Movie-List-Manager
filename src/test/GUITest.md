@@ -128,6 +128,8 @@ All filter selections clear when a new watchlist is selected
 
 ### Test Details Pane
 
+- Test Basic Functionality
+
 Details Pane is blank at startup with a 'No Image Available' label in place of a movie poster. Once a movie in any list
 is clicked, that movies' details populate in the Details Pane
 
@@ -138,14 +140,26 @@ editable once a movie is selected. Similarly, the 'Watched' checkbox is greyed o
 
 ![Apply Filters](TestResources/DetailsPane2.gif)
 
+Checking the 'Watched' checkbox updates the corresponding box in the List Pane
+
+![Apply Filters](TestResources/DetailsPane4.gif)
+
 Changes to the 'Watched' and 'My Rating' fields are saved and remain even if the app is closed and restarted
 
+![Apply Filters](TestResources/DetailsPane3.gif)
 
-Text adjusts to accommodate window resizing
+- Test Focus Gained
 
+'My Rating' field clears when clicked
 
+![Apply Filters](TestResources/DetailsPane5.gif)
 
+- Test Focus Lost
 
+'My Rating' field reverts to 'Enter your rating here (0 - 10)' if user does not enter information.
+If user has entered information 'My Rating' fields reverts back to users input when focus is lost
+
+![Apply Filters](TestResources/DetailsPane6.gif)
 
 
 
