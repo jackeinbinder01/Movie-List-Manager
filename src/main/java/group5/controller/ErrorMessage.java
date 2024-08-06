@@ -5,7 +5,7 @@ public enum ErrorMessage {
     ERROR("Error"),
     DELETE_WATCHLIST("<html><body style='width: 200px'>" + "Failed to delete watchlist.</body></html>"),
     CREATE_WATCHLIST("<html><body style='width: 200px'>" + "Failed to create new watchlist.</body></html>"),
-    CREATE_SAME_NAME_WATCHLIST("<html><body style='width: 200px'>" + "Watchlist '%s' already exists. " +
+    NAME_CLASH("<html><body style='width: 200px'>" + "Watchlist '%s' already exists. " +
             "Please choose another name.</body></html>"),
     IMPORT_WATCHLIST("<html><body style='width: 200px'>" + "Failed to import watchlist from '%s'.</body></html>");
 
