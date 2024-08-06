@@ -51,8 +51,8 @@ For more detailed instructions on how to use the Movie List Manager, please refe
 
 ### Application Developers:
 
-- Jack Einbinder - https://github.com/jackeinbinder01
-- Pubordee Khaopaisarn - https://github.com/pkhao75
-- Tsz Wing Li - https://github.com/tszwinglitw
-- Sebastian Tommasi - https://github.com/Stommasi19
+- [Jack Einbinder](https://github.com/jackeinbinder01)
+- [Pubordee Khaopaisarn](https://github.com/pkhao75)
+- [Tsz Wing Li](https://github.com/tszwinglitw)
+- [Sebastian Tommasi](https://github.com/Stommasi19)
 ---
