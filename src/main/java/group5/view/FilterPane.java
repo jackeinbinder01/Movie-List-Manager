@@ -274,31 +274,44 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 
     /* FilterPane Setup Methods --------------------------------------------------------------------------------------*/
 
+    /**
+     * Sets the movies set of this FilterPane instance based on the MBeans in an input Stream.
+     * Defaults isSourceList to false, denoting that the stream passed does not represent the initial movie data source.
+     *
+     * @param movies a Stream of movies to replace the current movies set
+     */
     public void setMovies(Stream<MBeans> movies) {
         setMovies(movies, false);
     }
 
     /**
-     * Sets the movies list of this FilterPane instance based on the MBeans in an input Stream.
-     * Resets filter ranges and options based on MBeans in the new movies list.
+     * Sets the movies set of this FilterPane instance based on the MBeans in an input Stream.
+     * Resets filter ranges and options based on MBeans in the new movies set.
      *
-     * @param movies a Stream of movies to replace the current movies list
+     * @param movies a Stream of movies to replace the current movies set
+     * @param isSourceList boolean denoting if the list passed is the initial movie data source
      */
     public void setMovies(Stream<MBeans> movies, boolean isSourceList) {
         Set<MBeans> moviesSet = movies.collect(Collectors.toSet());
         if (!moviesSet.isEmpty()) {
+            // set movies set to the movies set collected from the input stream
             this.movies = moviesSet;
             if (!moviesIsSourceList && isSourceList) {
+                // stream passed represents the source list
                 moviesIsSourceList = true;
+                // clear placeholders
                 refreshPlaceholders("clear");
             }
+            // refresh options in dropdown filters
             resetComboBoxOptions();
-            // reset filter ranges and clear filter options
 
             // if new movies set is not the source list, refresh range filer placeholders
             if (!isSourceList) {
+                // stream passed does not represent the source list
                 moviesIsSourceList = false;
+                // refresh range filter min/max
                 setRangeFilterRanges();
+                // update range filter placeholders
                 refreshPlaceholders("update");
             }
         }
@@ -338,6 +351,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         getDoubleFilterRange(MBeans::getImdbRating, imdbRatingFrom, imdbRatingTo);
         getIntFilterRange(MBeans::getBoxOffice, boxOfficeEarningsFrom, boxOfficeEarningsTo);
 
+        // format box office earnings min/max in millions of dollars
         rangeFilterMap.put(boxOfficeEarningsFrom,
                 formatAsCurrency(rangeFilterMap.get(boxOfficeEarningsFrom), "min"));
         rangeFilterMap.put(boxOfficeEarningsTo,
@@ -439,7 +453,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         filterFrom.setColumns(6);
         filterFrom.addFocusListener(this);
         filterPanel.add(filterFrom, gbc);
-        // add filter to set of range filters
+        // add filter to map of range filters
         rangeFilterMap.put(filterFrom, "");
 
         // update gbc and add "To" label
@@ -456,7 +470,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         filterTo.addFocusListener(this);
         filterTo.setColumns(6);
         filterPanel.add(filterTo, gbc);
-        // add filter to set of range filters
+        // add filter to map of range filters
         rangeFilterMap.put(filterTo, "");
 
         // increment filter row
@@ -498,12 +512,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /**
-     * Find and returns the minimum and maximum values in a double returning getter from a
+     * Finds and maps the minimum and maximum values in a double returning getter from a
      * stream of the movies list.
      *
      * @param fieldFunction the double returning getter method
-     * @param from
-     * @param to
+     * @param from JTextField for range filter minimum
+     * @param to JTextField for range filter maximum
      */
     private void getDoubleFilterRange(ToDoubleFunction<MBeans> fieldFunction, JTextField from, JTextField to) {
         // find max/min
@@ -514,6 +528,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         String maxValueString = maxValue.isPresent() ? Double.toString(maxValue.getAsDouble()) : "No Max";
         String minValueString = minValue.isPresent() ? Double.toString(minValue.getAsDouble()) : "No Min";
 
+        // map min/max values to corresponding JTextFields
         rangeFilterMap.put(from, minValueString);
         rangeFilterMap.put(to, maxValueString);
     }
