@@ -140,7 +140,16 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] User requested to import watchlist from " + filepath);
         int newWatchlistIdx = model.loadWatchList(filepath);
         if (newWatchlistIdx < 0) {
-            view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.CREATE_WATCHLIST.getErrorMessage(filepath));
+            switch (newWatchlistIdx) {
+                case -1:
+                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.NAME_CLASH.getErrorMessage(filepath));
+                    break;
+                case -2:
+                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.IMPORT_WATCHLIST.getErrorMessage(filepath));
+                    break;
+                default:
+                    break;
+            }
             return;
         }
         view.addUserTable(model.getUserListName(newWatchlistIdx));
