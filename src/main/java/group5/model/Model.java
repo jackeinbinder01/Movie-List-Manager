@@ -123,16 +123,16 @@ public class Model implements IModel {
         String name = filename.substring(lastSeparator + 1, lastDot);
         for (IMovieList watchList : this.watchLists) {
             if (watchList.getListName().equals(name)) {
-                // Watchlist with exact name already exists.
+                // Return -1 if watchlist with exact name already exists.
                 return -1;
             }
         }
 
         Set<MBeans> externalList = MBeansLoader.loadMediasFromFile(filename, format);
 
-        // Check if the file was loaded successfully, if not return -1 and do not create a new watchlist
-        if (externalList == null) {
-            return -1;
+        // Return -2 if file failed to load or loaded an empty file
+        if (externalList == null || externalList.isEmpty()) {
+            return -2;
         }
 
         // Create a list of sourcelist references by mapping externalList to sourceList
@@ -167,6 +167,12 @@ public class Model implements IModel {
 
     @Override
     public int createNewWatchList(String name) {
+        for (IMovieList watchList : this.watchLists) {
+            if (watchList.getListName().equals(name)) {
+                // Return -1 if watchlist with exact name already exists.
+                return -1;
+            }
+        }
         IMovieList watchList = new MovieList(name);
         this.watchLists.add(watchList);
         int index = this.watchLists.size() - 1;
@@ -437,12 +443,13 @@ public class Model implements IModel {
      */
     public static void main(String[] args) throws IOException {
         Model model = new Model();
-        //int watchList02 = model.loadWatchList("./data/test/platoon.json");
-        int x = model.loadWatchList();
-        for (int i = 0; i < x; i++) {
-            System.out.println("NAME: " + model.getUserListName(i));
-            System.out.println(model.getRecords(i));
-        }
+        model.loadWatchList();
+        int watchList01 = model.loadWatchList("./bad.json");
+        int watchList02 = model.loadWatchList("./bad.csv");
+        int watchList03 = model.createNewWatchList("Movie List 4");
+        System.out.println("Watchlist 01: " + watchList01);
+        System.out.println("Watchlist 02: " + watchList02);
+        System.out.println("Watchlist 03: " + watchList03);
     }
 
 }

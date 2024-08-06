@@ -27,7 +27,7 @@ public interface IModel {
      * Initialize  watch lists from a pre defind directory.
      *
      * @param filename The file to load the watch list from.
-     * @return the size of watchlists created
+     * @return the size of watchlists created.
      */
     int loadWatchList();
 
@@ -35,7 +35,7 @@ public interface IModel {
      * Load a watch list from a file.
      *
      * @param filename The file to load the watch list from.
-     * @return the id of the watch list
+     * @return the id of the watch list, return negative value if fails.
      */
     int loadWatchList(String filename);
 
@@ -43,7 +43,7 @@ public interface IModel {
      * Create new empty watch list.
      *
      * @param name The name of the new watch list.
-     * @return the id of the watch list
+     * @return the id of the watch list, negative value if fails.
      */
     int createNewWatchList(String name);
 
