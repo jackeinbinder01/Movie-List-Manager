@@ -273,7 +273,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /* FilterPane Setup Methods --------------------------------------------------------------------------------------*/
-
     /**
      * Sets the movies set of this FilterPane instance based on the MBeans in an input Stream.
      * Defaults isSourceList to false, denoting that the stream passed does not represent the initial movie data source.
@@ -342,8 +341,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /**
-     * Sets the min and max of each filter range based on MBeans in the
-     * movies list.
+     * Sets the min and max of each range filter based on the MBeans in the movies set.
      */
     private void setRangeFilterRanges() {
         // set filter ranges
@@ -512,8 +510,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /**
-     * Finds and maps the minimum and maximum values in a double returning getter from a
-     * stream of the movies list.
+     * Finds and maps the minimum and maximum values in a double returning getter from a stream of the movies set.
      *
      * @param fieldFunction the double returning getter method
      * @param from JTextField for range filter minimum
@@ -534,12 +531,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /**
-     * Find and returns the minimum and maximum values in an int returning getter from a
-     * stream of the movies list.
-
+     * Finds and maps the minimum and maximum values in an int returning getter from a stream of the movies set.
+     *
      * @param fieldFunction the int returning getter method
-     * @param from
-     * @param to
+     * @param from JTextField for range filter minimum
+     * @param to JTextField for range filter maximum
      */
     private void getIntFilterRange(ToIntFunction<MBeans> fieldFunction, JTextField from, JTextField to) {
         // find max/min
@@ -566,7 +562,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      * Returns a string formatted as US currency (in millions of dollars) from a double parsable String.
      *
      * @param value a String representing a dollar value
-     * @param minOrMax
+     * @param minOrMax denotes if the dollar value passed is a range minimum or maximum for rounding purposes
      * @return a String containing the dollar value of the input param formatted as US currency in millions of dollars
      */
     private String formatAsCurrency(String value, String minOrMax) {
@@ -672,6 +668,9 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         dropDownFilters.add(comboBox);
     }
 
+    /**
+     * Purges filter text and drop down filter options for all filters in the FilterPane.
+     */
     public void clearFilterOptions() {
         for (JComboBox filter : dropDownFilters) {
             filter.removeAllItems();
@@ -683,18 +682,26 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             filter.setText("");
         }
     }
+
     /**
-     * Resets all JComboBox options in the FilterPane based on the FilterPane's movies list.
+     * Resets all JComboBox options in the FilterPane based on the FilterPane's movies set.
      */
     public void resetComboBoxOptions() {
         for (JComboBox filter : dropDownFilters) {
+            // store selected option in combo box
             Object selectedItem = filter.getSelectedItem();
+            // remove options from combo box
             filter.removeAllItems();
+            // reconfigure combobox
             configureComboBox(filter);
+            // select stored option in combo box
             filter.setSelectedItem(selectedItem);
         }
     }
 
+    /**
+     * Purges text in text filters set.
+     */
     public void resetTextFilters() {
         for (JTextField filter : textFilters) {
             filter.setText("");
@@ -715,8 +722,12 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Clears or updates placeholder text from range filters based on ranges in the FilterPane's movies set.
+     *
+     * @param updateOrClearPlaceholders String denoting if the method should clear or update placeholders
+     */
     public void refreshPlaceholders(String updateOrClearPlaceholders) {
-
         if (updateOrClearPlaceholders.equalsIgnoreCase("update")) {
             // update range filter placeholders to reflect new ranges
             for (JTextField filter : rangeFilterMap.keySet()) {
@@ -781,6 +792,11 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         }
     }
 
+    /**
+     * Reformats text in box office earnings range filter to dollars in millions.
+     *
+     * @param boxOfficeEarnings JTextField containing box office earnings minimum or maximum
+     */
     public void reformatBoxOfficeEarnings(JTextField boxOfficeEarnings) {
         FiltersEnum filter = getFilterByEnum(boxOfficeEarnings.getName());
         switch (filter) {
@@ -838,24 +854,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // @Wing decide how you want apply/clear message sent to BaseView/controller and I can reconfigure
-
         if (e.getSource() == applyFiltersButton) {
             System.out.println("[FilterPane] - Filters applied");
-            System.out.println("Title: " + getFilteredTitle());
-            System.out.println("Genre: " + getFilteredGenre());
-            System.out.println("Rating: " + getFilteredMpaRating());
-            System.out.println("Released From: " + getFilteredReleasedMin());
-            System.out.println("Released To: " + getFilteredReleasedMax());
-            System.out.println("IMDB From: " + getFilteredImdbRatingMin());
-            System.out.println("IMDB To: " + getFilteredImdbRatingMax());
-            System.out.println("Box Office From: " + getFilteredBoxOfficeEarningsMin());
-            System.out.println("Box Office To: " + getFilteredBoxOfficeEarningsMax());
-            System.out.println("Director: " + getFilteredDirectorFilter());
-            System.out.println("Actor: " + getFilteredActorFilter());
-            System.out.println("Writer: " + getFilteredWriterFilter());
-            System.out.println("Language: " + getFilteredLanguageFilter());
-
         } else if (e.getSource() == clearFiltersButton) {
             System.out.println("[FilterPane] - Filters cleared");
         }
@@ -881,8 +881,6 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     @Override
     public void focusLost(FocusEvent e) {
         // reset placeholders when focus is lost, only if current set of movies is not the source list
-        System.out.println("Movies is source list: " + moviesIsSourceList);
-
         JTextField textField = (JTextField) e.getSource();
         if (!moviesIsSourceList) {
             resetPlaceholder(textField);
@@ -892,7 +890,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     }
 
     /**
-     * Triggers actions outside of the FilterPane from event actions performed by FilterPane components.
+     * Triggers actions outside the FilterPane from event actions performed by FilterPane components.
      *
      * @param features action tiggered by the FilterPane
      */
@@ -906,7 +904,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
 /** Encapsulates the name of a FilterPane filter in an enum. */
 enum FiltersEnum {
 
-    /** Filters Enums. */
+    /** FiltersEnums. */
     TITLE("titleFilter"), GENRE("genreFilter"), MPA_RATING("mparatingFilter"),
     RELEASED_FROM("releasedFromFilter"), RELEASED_TO("releasedToFilter"),
     IMDB_RATING_FROM("imdbRatingFromFilter"), IMDB_RATING_TO("imdbRatingToFilter"),
