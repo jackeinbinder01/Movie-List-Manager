@@ -55,6 +55,20 @@ public class Model implements IModel {
      * Model class constructor.
      */
     public Model() {
+        // Initialize empty directory is not exist.
+        List<File> directories = List.of(new File("./data/source"),
+                                         new File("./data/watchlist"),
+                                         new File("./data/unused"));
+        for (File directory : directories) {
+            if (!directory.exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Directory created successfully");
+                } else {
+                    System.out.println("Failed to create directory");
+                }
+            }
+        }
+
         loadSourceData();
         this.watchLists = new ArrayList<>();
         this.filterHandler = new FilterHandler();
