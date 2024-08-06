@@ -1,5 +1,6 @@
 package group5.view;
 
+import group5.controller.ErrorMessage;
 import group5.controller.IFeature;
 import group5.model.beans.MBeans;
 import org.apache.commons.lang3.function.TriConsumer;
@@ -44,8 +45,6 @@ public class ListPane extends JPanel {
 
     private final String NEW_LIST_POPUP_TITLE = "New Watchlist";
     private final String NEW_LIST_POPUP_PROMPT = "Enter the name of the new watchlist:";
-    private final String NEW_LIST_ERROR_TITLE = "Error";
-    private final String NEW_LIST_ERROR_PROMPT = "Watchlist '%s' already exists. Please choose another name.";
 
     JTable sourceTable;
     JButton importListButton;
@@ -622,8 +621,8 @@ public class ListPane extends JPanel {
                                                 if (list.equals(newListName)) {
                                                     JOptionPane.showMessageDialog(
                                                             null,
-                                                            String.format(NEW_LIST_ERROR_PROMPT, newListName),
-                                                            NEW_LIST_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+                                                            ErrorMessage.NAME_CLASH.getErrorMessage(newListName),
+                                                            String.valueOf(ErrorMessage.ERROR), JOptionPane.ERROR_MESSAGE);
                                                     return;
                                                 }
                                             }
