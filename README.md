@@ -24,20 +24,28 @@ session to session
 
 ### Documentation:
 
-- Application Manual
-- UML Class Diagram
+- [Application Manual](https://github.com/Su24-CS5004-Online-Lionelle/final-project-group-5/blob/main/Manual/ApplicationManual.md)
+- [UML Class Diagram](https://github.com/Su24-CS5004-Online-Lionelle/final-project-group-5/blob/main/DesignDocuments/FinalDesign.md)
 ---
 
 ### Instructions: 
 
 #### To run this application from within an IDE
 
-- Clone this repo and run the driver class: *MovieListManager.java* located in the src folder
+- Clone this repo and run the driver class: [*MovieListManager.java*](https://github.com/Su24-CS5004-Online-Lionelle/final-project-group-5/blob/main/src/main/java/group5/MovieListManager.java) 
+located in the src folder
 
 #### To run this application from a terminal
 
-- Download the *MovieListManager* folder, navigate to this folder in your terminal and enter
-*java -jar MovieListManager.jar* into the terminal
+- Download the [*MovieListManager* folder](https://github.com/Su24-CS5004-Online-Lionelle/final-project-group-5/tree/main/MovieListManager), 
+navigate to this folder in your terminal and enter the command in the block below into the terminal
+
+```
+java -jar MovieListManager.jar
+```
+
+For more detailed instructions on how to use the Movie List Manager, please refer to the 
+[*Application Manual*](https://github.com/Su24-CS5004-Online-Lionelle/final-project-group-5/blob/main/Manual/ApplicationManual.md)
 
 ---
 
