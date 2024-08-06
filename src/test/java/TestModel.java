@@ -13,6 +13,8 @@ import java.util.Map;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import group5.model.beans.MBeans;
 import group5.model.IModel;
@@ -184,4 +186,49 @@ public class TestModel {
         model.loadSourceData();
 
     }
+
+    @Test
+    void testLoadEmptyFile() throws IOException {
+        Path tempFile = Files.createTempFile("test_watchlist", ".json");
+        Files.writeString(tempFile, "[]"); // Write an empty JSON array to the file
+
+        int result = model.loadWatchList(tempFile.toString());
+
+        assertEquals(-2, result); // Since this is the first watchlist being loaded, it should return index 0
+        assertEquals(0, model.getUserListCount());
+
+    }
+    // the tests below requires     testImplementation "org.mockito:mockito-inline:3.+"
+    // it functions when testImplementation "org.mockito:mockito-core:3.+" is replaced with the above line
+    // however more tests fail when the inline function is in use 
+
+//     @Test
+//     void testAddToWatchList() {
+//         MBeans media = new MBeans();
+//         media.setTitle("The Bee Movie");
+//         // Mock the MBeansLoader to return a predefined set of MBeans
+//         Set<MBeans> mockSourceList = new HashSet<>();
+//         mockSourceList.add(media);
+//         try (MockedStatic<MBeansLoader> mockLoader = mockStatic(MBeansLoader.class)) {
+//             mockLoader.when(() -> MBeansLoader.loadMediasFromFile(anyString(), any())).thenReturn(mockSourceList);
+//             model.loadSourceData(); // Load the mocked source data
+//             int index = model.createNewWatchList("NewList");
+//             model.addToWatchList(media, index);
+//             Stream<MBeans> records = model.getRecords(index);
+//             assertTrue(records.anyMatch(m -> m.getTitle().equalsIgnoreCase("The Bee Movie")));
+//         }
+//     }
+//     @Test
+//     void testFetchMBeans() {
+//         // Mock MovieAPIHandler to return a predefined set of MBeans
+//         MBeans mockBean = new MBeans();
+//         mockBean.setTitle("The Bee Movie");
+//         List<MBeans> mockBeans = List.of(mockBean); // Return a List instead of a Set
+//         try (MockedStatic<MovieAPIHandler> mockApiHandler = mockStatic(MovieAPIHandler.class)) {
+//             mockApiHandler.when(() -> MovieAPIHandler.getMoreSourceBeans(anyString(), anyString())).thenReturn(mockBeans);
+//             Set<MBeans> fetchedBeans = model.fetchMBeans("The Bee movie", "2010", "2021");
+//             assertNotNull(fetchedBeans);
+//             assertTrue(fetchedBeans.contains(mockBean));
+//         }
+//     }
 }

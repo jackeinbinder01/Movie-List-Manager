@@ -64,7 +64,7 @@ public class MBeansLoader {
             while (it.hasNext()) {
                 MBeans next = it.next();
                 if (next.getID() != null) {
-                    records.add(it.next());
+                    records.add(next);
                 } else {
                     return null;
                 }
@@ -111,5 +111,20 @@ public class MBeansLoader {
         MBeansFormatter.writeMediasToFile(empty, new FileOutputStream("testE.csv"), Formats.CSV);
         MBeansFormatter.writeMediasToFile(bean, new FileOutputStream("test.txt"), Formats.PRETTY);
         MBeansFormatter.writeMediasToFile(empty, new FileOutputStream("testE.txt"), Formats.PRETTY);*/
+        MBeans insideOut = new MBeans("Inside Out", 2015, "movie", "PG", null, 96, List.of("Animation", "Adventure", "Comedy"),
+                           List.of("Pete Docter", "Ronnie Del Carmen"), List.of("Pete Docter", "Ronnie Del Carmen", "Meg LeFauve"),
+                           List.of("Amy Poehler", "Bill Hader", "Lewis Black"),
+                           "After young Riley is uprooted from her Midwest life and moved to San Francisco,"
+                           + " her emotions - Joy, Fear, Anger, Disgust and Sadness - conflict on how "
+                           + "best to navigate a new city, house, and school.", List.of("English", "Portuguese", "Latvian"), List.of("United States"),
+                           "Won 1 Oscar. 99 wins & 118 nominations total", "", 94, 8.1, 356921711, "tt2096673", false, -1.0);
+        MBeans titanic = new MBeans("Titanic", 1997, "movie", "PG-13", null, 195, List.of("Drama", "Romance"),
+                           List.of("James Cameron"), List.of("James Cameron"), List.of("Leonardo DiCaprio", "Kate Winslet", "Billy Zane"),
+                           "A seventeen-year-old aristocrat falls in love with a kind but poor artist "
+                           + "aboard the luxurious, ill-fated R.M.S. Titanic.", List.of("English", "Swedish", "Italian", "French"), List.of("United States", "Mexico"),
+                           "Won 11 Oscars. 126 wins & 83 nominations total", "", 75, 7.9, 674292608, "tt0120338", false, -1.0);
+        MBeansFormatter.writeMediasToFile(Set.of(insideOut, titanic), new FileOutputStream("test.csv"), Formats.CSV);
+        
+        System.out.println(MBeansLoader.loadMediasFromFile("test.csv", Formats.CSV));
     }
 }

@@ -66,7 +66,7 @@ public class TestMBeansFormatter {
         Set<MBeans> loadedCSV = MBeansLoader.loadMediasFromFile(tempCSV.toString(), Formats.CSV);
         Set<MBeans> loadedJSON = MBeansLoader.loadMediasFromFile(tempJSON.toString(), Formats.JSON);
 
-        assertEquals(expectedCSV, actualCSV);
+        assertEquals(expectedCSV.replace(System.lineSeparator(), "\n"), actualCSV.replace(System.lineSeparator(), "\n"));
         assertEquals(expectedJSON, actualJSON);
         assertEquals(expectedSet, loadedCSV);
         assertEquals(expectedSet, loadedJSON);
