@@ -621,7 +621,7 @@ public class ListPane extends JPanel {
                                                 if (list.equals(newListName)) {
                                                     JOptionPane.showMessageDialog(
                                                             null,
-                                                            ErrorMessage.CREATE_SAME_NAME_WATCHLIST.getErrorMessage(newListName),
+                                                            ErrorMessage.NAME_CLASH.getErrorMessage(newListName),
                                                             String.valueOf(ErrorMessage.ERROR), JOptionPane.ERROR_MESSAGE);
                                                     return;
                                                 }
