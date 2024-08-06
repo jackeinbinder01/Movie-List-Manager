@@ -96,12 +96,4 @@ public class MovieList implements IMovieList {
     public boolean containsMedia(MBeans media) {
         return this.movieList.contains(media);
     }
-
-    /**
-     * main for testing.
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-    }
 }

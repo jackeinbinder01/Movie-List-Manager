@@ -2,7 +2,6 @@ package group5.model;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -451,19 +450,4 @@ public class Model implements IModel {
                 .findFirst()
                 .orElse(null);
     }
-
-    /**
-     * Main method to test the model.
-     */
-    public static void main(String[] args) throws IOException {
-        Model model = new Model();
-        model.loadWatchList();
-        int watchList01 = model.loadWatchList("./bad.json");
-        int watchList02 = model.loadWatchList("./bad.csv");
-        int watchList03 = model.createNewWatchList("Movie List 4");
-        System.out.println("Watchlist 01: " + watchList01);
-        System.out.println("Watchlist 02: " + watchList02);
-        System.out.println("Watchlist 03: " + watchList03);
-    }
-
 }

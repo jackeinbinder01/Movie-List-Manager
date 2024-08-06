@@ -21,7 +21,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,14 +28,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import group5.controller.IFeature;
 import group5.model.beans.MBeans;
-import group5.model.formatters.MBeansLoader;
 
 /**
  * A JPanel class to display details of a media.
@@ -460,31 +457,5 @@ public class DetailsPane extends JPanel {
         } else {
             this.userRating.setText(Double.toString(myRating));
         }
-    }
-
-    /**
-     * Main method to test the DetailsPane.
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 600);
-        DetailsPane detailsPane = new DetailsPane();
-        frame.add(detailsPane);
-        MBeans media = MBeansLoader.loadMBeansFromAPI("The Matrix", "", "").get(0);
-        //MBeans media = MBeansLoader.loadMediasFromFile("data/test/empty.json", Formats.JSON).iterator().next();
-        System.out.println(media);
-        System.out.println(media.getPoster());
-        System.out.println(media.getReleased());
-        detailsPane.setMedia(media);
-        detailsPane.bindFeatures(null);
-        frame.setVisible(true);
     }
 }
