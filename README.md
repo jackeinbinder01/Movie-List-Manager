@@ -12,7 +12,7 @@ With the Movie List Manager, users can:
 - Add or remove movies to/from any number of user created watchlists
 - View movie details for any selected movie in any watchlist including the source list
 - Record specific movies as 'Watched'
-- Record personal ratings (from 1.0 - 10.0) for the movies that they have watched
+- Record personal movie ratings (from 1.0 - 10.0)
 - Delete watchlists
 - Import watchlists from a file (JSON or CSV)
 - Export watchlists to a file (XML, JSON, CSV or TXT)
