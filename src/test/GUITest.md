@@ -11,6 +11,11 @@ Clicking 'Apply Filters' button filters the selected list in the center List Pan
 
 ![Apply Filters](TestResources/FilterPane1.gif)
 
+If a movie is not available in the initial data source in 'All Movies', searching for that movie by name will pull that
+movie from the __ API and add it to the offline source list
+
+
+
 - Test Clear Filters
 
 Clicking 'Clear Filters' removes selected options in the Filter Pane and unfilters the selected movie list in the List Pane
@@ -142,6 +147,12 @@ movie list. The movie added to that list will appear in the new list
 
 ![Apply Filters](TestResources/ListPane9.gif)
 
+Attempting to add a new watchlist (using the Add To New Watchlist functionality when adding a movie) with the same name
+as an existing watchlist will trigger a 'Failed to create new watchlist' error
+
+![Apply Filters](TestResources/ListPane24.gif)
+
+
 Upon startup movie lists are rearranged in alphabetical order (The 'All Movies' tab is always the first tab)
 
 ![Apply Filters](TestResources/ListPane11.gif)
@@ -176,9 +187,15 @@ Test import from CSV using the 'Import List' button
 
 ![Apply Filters](TestResources/ListPane21.gif)
 
-Importing an invalid files triggers an error message
+Importing an invalid files triggers a 'Failed to create new watchlist' error
 
 ![Apply Filters](TestResources/ListPane23.gif)
+
+Attempting to import a file with the same name as an existing watchlist triggers a 'Failed to create new watchlist' 
+error
+
+
+
 
 - Test Export List
 

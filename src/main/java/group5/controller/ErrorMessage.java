@@ -3,9 +3,11 @@ package group5.controller;
 public enum ErrorMessage {
 
     ERROR("Error"),
-    DELETE_WATCHLIST("Failed to delete watchlist"),
-    CREATE_WATCHLIST("Failed to create new watchlist"),
-    IMPORT_WATCHLIST("Failed to import watchlist from '%s'");
+    DELETE_WATCHLIST("<html><body style='width: 200px'>" + "Failed to delete watchlist.</body></html>"),
+    CREATE_WATCHLIST("<html><body style='width: 200px'>" + "Failed to create new watchlist.</body></html>"),
+    CREATE_SAME_NAME_WATCHLIST("<html><body style='width: 200px'>" + "Watchlist '%s' already exists. " +
+            "Please choose another name.</body></html>"),
+    IMPORT_WATCHLIST("<html><body style='width: 200px'>" + "Failed to import watchlist from '%s'.</body></html>");
 
     private final String errorMessage;
 
