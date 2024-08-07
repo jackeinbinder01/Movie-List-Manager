@@ -1,3 +1,5 @@
 # Resources
 
-Default location for resources, should you need them. 
+---
+
+This folder contains resources including images and a backup initial data source for the Movie List Manager application

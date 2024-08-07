@@ -38,7 +38,7 @@ located in the src folder
 #### To run this application from a terminal
 
 - Download the [*MovieListManager* folder](https://github.com/Su24-CS5004-Online-Lionelle/final-project-group-5/tree/main/MovieListManager), 
-navigate to this folder in your terminal and enter the command in the block below into the terminal
+navigate to this folder in the terminal and enter the command in the code block below
 
 ```
 java -jar MovieListManager.jar
