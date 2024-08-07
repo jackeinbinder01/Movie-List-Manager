@@ -31,7 +31,4 @@ public class MovieListManager {
         controller.go();
 
     }
-
-
-
 }
