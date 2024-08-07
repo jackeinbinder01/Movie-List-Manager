@@ -38,7 +38,6 @@ import group5.model.beans.MBeans;
 /**
  * A JPanel class to display details of a media.
  */
-
 public class DetailsPane extends JPanel {
 
     /**
@@ -289,7 +288,7 @@ public class DetailsPane extends JPanel {
     /**
      * Scale the image to fit the media image label.
      *
-     * @param imgUrl the URL of the image to scale.
+     * @param imgStr the String of the image to scale.
      * @return the scaled image.
      */
     private ImageIcon scaleImage(String imgStr) {

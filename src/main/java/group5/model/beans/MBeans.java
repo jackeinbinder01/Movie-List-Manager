@@ -382,8 +382,6 @@ public class MBeans implements java.io.Serializable {
         return myRating;
     }
 
-
-
     /**
      * Set the title.
      *
@@ -468,7 +466,7 @@ public class MBeans implements java.io.Serializable {
     /**
      * Set the actor(s).
      *
-     * @param actor the actor(s) to set
+     * @param actors the actor(s) to set
      */
     public void setActors(List<String> actors) {
         this.actors = actors;

@@ -9,7 +9,6 @@ public interface IController {
      */
     void go();
 
-
     // handleWatchedStatusOrRatingChange
 
 }

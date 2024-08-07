@@ -24,9 +24,8 @@ public interface IModel {
     void loadSourceData();
 
     /**
-     * Initialize  watch lists from a pre defind directory.
+     * Initialize  watch lists from a pre defined directory.
      *
-     * @param filename The file to load the watch list from.
      * @return the size of watchlists created.
      */
     int loadWatchList();
@@ -88,7 +87,7 @@ public interface IModel {
     /**
      * Get the source list, filter it and return as a stream.
      *
-     * @param filter The filter to apply to the source list.
+     * @param filters The filter to apply to the source list.
      * @return stream of MBeans representing the filtered source list.
      */
     Stream<MBeans> getRecords(List<List<String>> filters);

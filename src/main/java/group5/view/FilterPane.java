@@ -16,12 +16,14 @@ import java.util.stream.Stream;
 /** Contains and passes filters to controller for selected movie list */
 public class FilterPane extends JPanel implements ActionListener, FocusListener {
 
-    /** Default size. */
+    /** Default panel width. */
     private final int DEFAULT_WIDTH = 225;
+    /** Default panel height. */
     private final int DEFAULT_HEIGHT = 100;
 
     /** Set of movies. */
     private Set<MBeans> movies = new HashSet<>();
+    /** Boolean denoting if the current movies set is the source list. */
     private boolean moviesIsSourceList = false;
 
     // Panels

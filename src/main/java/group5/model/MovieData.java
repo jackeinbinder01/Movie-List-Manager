@@ -75,8 +75,8 @@ public enum MovieData {
      * Can use the enum name or the column name. Useful for filters and sorts as
      * they can use both.
      *
-     * @param name the name of the enum.
-     * @return the enum that matches the name.
+     * @param title the name of a column.
+     * @return the enum that matches the title.
      */
     public static MovieData fromString(String title) {
         for (MovieData col : MovieData.values()) {

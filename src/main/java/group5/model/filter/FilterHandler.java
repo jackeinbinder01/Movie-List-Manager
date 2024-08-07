@@ -11,8 +11,6 @@ public class FilterHandler implements IFilterHandler {
 
     /**
      * constructor for planner.
-     *
-     * @param movies
      */
     public FilterHandler() {
 
