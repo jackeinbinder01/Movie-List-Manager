@@ -132,7 +132,7 @@ change will persist after the app is closed and reopened
 
 - Test 'All Movies' Source Tab
 
-Clicking the '+/-' in the right-most column triggers a popup enabling users to add or remove movies from/to a watchlist
+Clicking the '+/-' in the right-most column triggers a popup enabling users to add or remove movies to/from a watchlist
 If a movie is already in a watchlist, then it will be checked in the popup menu. If a movie is not in a list, it will 
 be unchecked in the popup menu.
 
