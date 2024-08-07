@@ -103,7 +103,7 @@ Changes to the 'Watched' and 'My Rating' fields are saved and remain even if the
 - Test Focus Lost
 
 'My Rating' field reverts to 'Enter your rating here (0 - 10)' if user does not enter information.
-If user has entered information 'My Rating' fields reverts back to users input when focus is lost
+If user has entered information, when focus is lost the 'My Rating' field reverts back to the users input 
 
 ![Apply Filters](TestResources/DetailsPane6.gif)
 
