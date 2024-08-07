@@ -33,7 +33,8 @@ tab is selected. If the user enters new information, then when focus is lost the
 
 ![Apply Filters](TestResources/FilterPane4.gif)
 
-Box Office Earnings filters format user entries in Millions of dollars, but allow for N/A to be entered
+Box Office Earnings filters format user entries in millions of dollars, but allow for N/A to be entered (referring to
+a movie without box office earnings data)
 
 ![Apply Filters](TestResources/FilterPane5.gif)
 
