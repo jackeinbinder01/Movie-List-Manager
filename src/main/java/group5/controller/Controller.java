@@ -1,5 +1,7 @@
 package group5.controller;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -140,12 +142,14 @@ public class Controller implements IController, IFeature {
         System.out.println("[Controller] User requested to import watchlist from " + filepath);
         int newWatchlistIdx = model.loadWatchList(filepath);
         if (newWatchlistIdx < 0) {
+            Path path = Paths.get(filepath);
+            String fileName = path.getFileName().toString();
             switch (newWatchlistIdx) {
                 case -1:
-                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.NAME_CLASH.getErrorMessage(filepath));
+                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.NAME_CLASH.getErrorMessage(fileName));
                     break;
                 case -2:
-                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.IMPORT_WATCHLIST.getErrorMessage(filepath));
+                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.IMPORT_WATCHLIST.getErrorMessage(fileName));
                     break;
                 default:
                     break;
