@@ -134,7 +134,7 @@ change will persist after the app is closed and reopened
 
 Clicking the '+/-' in the right-most column triggers a popup enabling users to add or remove movies to/from a watchlist.
 If a movie is already in a watchlist, then it will be checked in the popup menu. If a movie is not in a list, it will 
-be unchecked in the popup menu.
+be unchecked in the popup menu
 
 ![Apply Filters](TestResources/ListPane7.gif)
 
