@@ -51,15 +51,15 @@ java -jar MovieListManager.jar
 side of the application window. To filter the selected list (in this case the 'All Movies' list), simply populate the 
 filters in the Filter Pane and click the 'Apply Filters' button on the bottom left of the Filter Pane
 
+![Searching for movies in the 'All Movies' source list](ManualResources/Manual1.gif)
+
 *NOTE: Users can continue to apply filters to the same filtered list after the 'Apply Filters' button has already been
 clicked*
-
-GIF
 
 - To clear filters from the Filter Pane, and revert the selected list back to its unfiltered state, click the
 'Clear Filters' button on the bottom right of the Filter Pane
 
-GIF
+![Searching for movies in the 'All Movies' source list](ManualResources/Manual2.gif)
 
 ---
 
@@ -70,7 +70,7 @@ GIF
 If that movie is available in the [OMDb movies API](https://www.omdbapi.com/), then that movie will be added to the 
 'All Movies' source list
 
-GIF
+![Searching for movies not available in the 'All Movies' source list and adding them to the 'All Movies' source list](ManualResources/Manual3.gif)
 
 *NOTE: Adding movies via the [OMDb movies API](https://www.omdbapi.com/) will add those movies to the source file 
 containing the 'All Movies' source list. This change will persist between sessions if the Movie List Manager is closed*
@@ -82,7 +82,7 @@ containing the 'All Movies' source list. This change will persist between sessio
 in the table on List Pane, in the middle of the application window. Upon clicking, that movies' details will appear in 
 the Details Pane on the right hand side of the application window
 
-GIF
+![Viewing movie details from the 'All Movies' tab and watchlist tabs](ManualResources/Manual4.gif)
 
 *NOTE: This process is the same for movies in the 'All Movies' source list and all other watchlists*
 
@@ -92,13 +92,13 @@ GIF
 - Users can record that they have watched a particular movie by clicking the checkbox in the 'Watched' column of the 
 table in the List Pane of the selected tab, in the row containing that particular movie
 
-GIF
+![Recording movies as 'Watched'](ManualResources/Manual5.gif)
 
 - Users can also record particular movies as watched via the Details Pane
 - First, click on the watched movie in either the 'All Movies' source list or another watchlist
 - Next, click on the 'Watched' checkbox underneath the movie poster in the Details Pane
 
-GIF
+![Recording movies as 'Watched'](ManualResources/Manual6.gif)
 
 *NOTE: Clicking the 'Watched' checkbox in either the List Pane or the Details Pane will save that 'Watched' data between
 sessions if the Movie List Manager is closed*
@@ -113,7 +113,7 @@ sessions if the Movie List Manager is closed*
 "Enter your rating here (1 - 10)"
 - Lastly, enter your user rating (from 1 - 10) and click out of the 'My Rating' text field
 
-GIF
+![Recording user movie ratings](ManualResources/Manual7.gif)
 
 *NOTE: User ratings are recorded in the Details Pane once the user rating is entered, **AND** the 'My Rating' field is 
 clicked out of (meaning any other application component is clicked)*
@@ -130,18 +130,15 @@ menu
 'OK' to create a new watchlist containing the selected movie. Click 'Cancel' to close the popup without creating a new 
 watchlist
 
-GIF
+![Creating new watchlists](ManualResources/Manual8.gif)
 
 - Users can also create new watchlists by loading watchlists from a file. Simply click the 'Import List' button at the 
 bottom left of the List Pane. A file chooser window will appear, where users can navigate to the wacthlist file that
 they wish to add
-
-GIF
-
 - Upon clicking the 'Open' button, a new watchlist will be created with the same name as the file name selected by the 
 user
 
-GIF
+![Creating new watchlists](ManualResources/Manual9.gif)
 
 *NOTE: Watchlist names must be unique. If a user attempts to create a new watchlist with the same name as an existing 
 watchlist, the application will trigger an error popup, and the new watchlist will not be created*
@@ -158,7 +155,7 @@ movie
 - A popup will appear containing the existing watchlists in the application. Clicking on an existing watchlist will add
 that movie to the clicked watchlist
 
-GIF
+![Adding and removing movies to/from watchlists](ManualResources/Manual10.gif)
 
 - To remove a movie from an existing watchlist, using the 'All Movies' source list, follow the same process detailed 
 above for adding a movie to an existing watchlist
@@ -166,13 +163,13 @@ above for adding a movie to an existing watchlist
 watchlists containing the selected movie. Clicking on a watchlist with a checkmark will remove the selected movie from
 that watchlist
 
-GIF
+![Adding and removing movies to/from watchlists](ManualResources/Manual11.gif)
 
 - Users can also remove movies from a watchlist by navigating to that watchlist in the List Pane and clicking the 
 'Remove' button in the 'Watchlist' column of the row containing the movie to be removed. Clicking this button will
 remove that movie from that watchlist
 
-GIF
+![Adding and removing movies to/from watchlists](ManualResources/Manual12.gif)
 
 *NOTE: If a movie is available in a watchlist, a checkmark will appear next to that watchlist when the '+/-' button is
 clicked in the row containing that movie. If a movie is removed from a watchlist, that checkmark will not appear if the 
@@ -185,21 +182,21 @@ same '+/-' button is clicked again*
 - Users can navigate through existing watchlists by clicking corresponding watchlist tabs above the table in the List
 Pane
 
-GIF
+![Navigating through watchlists](ManualResources/Manual13.gif)
 
 - If there are too many watchlist tabs to view each tab inside of the current application window, users can click on the 
 arrows at the top right of the List Pane to navigate through existing watchlists
 
-GIF
+![Navigating through watchlists](ManualResources/Manual14.gif)
 
 ---
 
 #### Sorting movies in watchlists
 
-- To sort movies in the selected tab in the List Pane, users can click on the column header corresponding to the field
+- To sort movies in a selected tab in the List Pane, users can click on the column header corresponding to the field
 that they wish to sort by
 
-GIF
+![Sorting movies in watchlists](ManualResources/Manual15.gif)
 
 *NOTE: clicking on a column header once will sort the movie list by that column ascending. Clicking on that same column
 header again will sort the movie list by that same column descending*
@@ -211,7 +208,7 @@ header again will sort the movie list by that same column descending*
 - Users can filter through movies in a selected watchlist using the same process detailed in the 'Searching for 
 movies in the 'All Movies' source list' section of this manual
 
-GIF
+![Filtering movies in watchlists](ManualResources/Manual16.gif)
 
 *NOTE: when a watchlist (not the 'All Movies' source list) is selected, the filter ranges (Year Released, IMDB Rating & 
 Box Office Earnings) will populate with placeholders detailing the min & max values of each field for all movies in that 
@@ -234,7 +231,8 @@ on the bottom right of the List Pane
 selected watchlist. Clicking the 'Yes' button in the popup will delete that watchlist. Clicking the 'No' button will
 close the popup window without deleting that watchlist
 
-GIF
+![Deleting watchlists](ManualResources/Manual17.gif)
+
 
 *NOTE: The 'All Movies' source list cannot be deleted*
 
@@ -253,7 +251,7 @@ in which they wish to save the exported watchlist, and to name the exported file
 - Clicking the 'Save' button in the file chooser will save that file to the users selected path
 - Clicking the 'Cancel' button will close the file chooser without exporting that watchlist
 
-GIF
+![Exporting watchlists to a file](ManualResources/Manual18.gif)
 
 *NOTE: Users can export files in XML, JSON, CSV or TXT file formats*
 
