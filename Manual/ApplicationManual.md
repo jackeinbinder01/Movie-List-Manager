@@ -250,5 +250,5 @@ table detailing the movies within each list, and buttons enabling users to impor
 - *Details Pane* - The panel, on the right hand side of the application window, containing details pertaining to the movie
 selected in the watchlist table in the List Pane, as well as fields where users can enter watched status and personal
 movie ratings
-- 
+
 ---
