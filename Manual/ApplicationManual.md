@@ -9,15 +9,19 @@ enable users to create and manage movie watchlists
 
 With the Movie List Manager, users can:
 
-View, filter, sort and select movies from a source list
-Add or remove movies to/from any number of user created watchlists
-View movie details for any selected movie in any watchlist including the source list
-Record specific movies as 'Watched'
-Record personal movie ratings (from 1.0 - 10.0)
-Delete watchlists
-Import watchlists from a file (JSON or CSV)
-Export watchlists to a file (XML, JSON, CSV or TXT)
-All changes made to watchlists, including the 'All Movies' source list, are automatically saved, and persist from session to session
+- View, filter, sort and select movies from a source list
+- Add or remove movies to/from any number of user created watchlists
+- View movie details for any selected movie in any watchlist including the source list
+- Record specific movies as 'Watched'
+- Record personal movie ratings (from 1.0 - 10.0)
+- Delete watchlists
+- Import watchlists from a file (JSON or CSV)
+- Export watchlists to a file (XML, JSON, CSV or TXT)
+- All changes made to watchlists, including the 'All Movies' source list, are automatically saved, and persist from 
+session to session
+
+#### *For definitions pertaining to the components of this application, please refer to the Glossary at the bottom of this manual*
+
 ---
 
 ### How to Run This Application:
@@ -205,12 +209,46 @@ the selected list*
 
 #### Deleting watchlists
 
+- Users can delete a watchlist by selecting a watchlist in the List Pane and clicking the 'Delete List' button
+on the bottom right of the List Pane
+- Upon clicking the 'Delete List' button, a popup window will appear confirming that the user wants to delete the
+selected watchlist. Clicking the 'Yes' button in the popup will delete that watchlist. Clicking the 'No' button will
+closer the popup window without deleting that watchlist
+
+GIF
+
+*NOTE: The 'All Movies' source list cannot be deleted*
+
+*NOTE: Watchlist deletions are saved between sessions. Meaning a deleted watchlist will **NOT** reappear if the 
+application is closed and relaunched*
+
+*NOTE: Removing all of the movies from an existing watchlist will **NOT** delete that watchlist*
+
 #### Exporting watchlists to a file
 
+- Users can export watchlists to a file using the 'Export List' button at the bottom of the List Pane
+- Upon clicking the 'Export List' button, a file chooser will appear allowing users to navigate to the folder in which
+they wish to save the exported watchlist, and to name the exported file
+- Clicking the 'Save' button in the file chooser will save that file to the users selected path
+- Clicking the 'Cancel' button will close the file chooser without exporting that watchlist
+
+GIF
+
+*NOTE: Users can export files in XML, JSON, CSV or TXT file formats*
+
+*NOTE: Only files exported in JSON and CSV formats can be reimported into the Movie List Manager*
 
 ---
 
 ### Glossary
 
-
+- *Movie List Manager* - This application detailed in this manual
+- [*OMDb movies API*](https://www.omdbapi.com/) - The API from which the data in this application is sourced
+- *Filter Pane* - The panel, on the left hand side of the application window, containing filter fields and filter buttons
+- *List Pane* - The panel, in the center of the application window, containing a source movie list, movie watchlists, a 
+table detailing the movies within each list, and buttons enabling users to import, export and delete watchlists
+- *Details Pane* - The panel, on the right hand side of the application window, containing details pertaining to the movie
+selected in the watchlist table in the List Pane, as well as fields where users can enter watched status and personal
+movie ratings
+- 
 ---
