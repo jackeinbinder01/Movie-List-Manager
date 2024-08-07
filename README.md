@@ -4,7 +4,7 @@
 
 ### Application Description:
 
-The Movie List Manager is a Java Swing app, powered by the OMDb movies API (https://www.omdbapi.com/), intended to
+The Movie List Manager is a Java Swing app, powered by the [OMDb movies API](https://www.omdbapi.com/), intended to
 enable users to create and manage movie watchlists
 
 With the Movie List Manager, users can:

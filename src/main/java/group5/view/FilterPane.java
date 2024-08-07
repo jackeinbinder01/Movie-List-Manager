@@ -936,8 +936,8 @@ enum FilterLabels {
 
     /** FilterLabels Enums. */
     TITLE("Title:"), GENRE("Genre:"), MPA_RATING("MPA Rating:"),
-    RELEASED("Released:"), IMDB_RATING("IMDB Rating:"), BOX_OFFICE_EARNINGS("Box Office Earnings: ($ millions)"),
-    DIRECTOR("Director:"), ACTOR("Actor:"), WRITER("Writer:"), LANGUAGE("Language:"), FROM("From:"), TO("To:");
+    RELEASED("Year Released:"), IMDB_RATING("IMDB Rating:"), BOX_OFFICE_EARNINGS("Box Office Earnings: ($ millions)"),
+    DIRECTOR("Director:"), ACTOR("Actor:"), WRITER("Writer:"), LANGUAGE("Language:"), FROM("From: "), TO("To: ");
 
     /** String representing the text in a JLabel above a FilterPane filter. */
     private final String filterLabel;
