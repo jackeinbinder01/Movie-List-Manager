@@ -12,9 +12,9 @@ Clicking 'Apply Filters' button filters the selected list in the center List Pan
 ![Apply Filters](TestResources/FilterPane1.gif)
 
 If a movie is not available in the initial data source in 'All Movies', searching for that movie by name will pull that
-movie from the __ API and add it to the offline source list
+movie from the OMDb movies API (https://www.omdbapi.com/) and add it to the offline source list
 
-
+![Apply Filters](TestResources/FilterPane12.gif)
 
 - Test Clear Filters
 
@@ -194,7 +194,7 @@ Importing an invalid files triggers a 'Failed to create new watchlist' error
 Attempting to import a file with the same name as an existing watchlist triggers a 'Failed to create new watchlist' 
 error
 
-
+![Apply Filters](TestResources/ListPane24.gif)
 
 
 - Test Export List
@@ -233,9 +233,3 @@ clicked, the movie list is not deleted
 The 'All Movies' movie list cannot be deleted using the 'Delete List' button (button is greyed out)
 
 ![Apply Filters](TestResources/ListPane14.gif)
-
-
-
-
-
-
