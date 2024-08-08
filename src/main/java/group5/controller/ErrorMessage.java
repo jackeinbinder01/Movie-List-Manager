@@ -1,11 +1,13 @@
 package group5.controller;
 
 /**
- * Enum containing error messages
+ * Enum containing error messages.
  */
 public enum ErrorMessage {
 
-    /** ErrorMessage Enums. */
+    /**
+     * ErrorMessage Enums.
+     */
     ERROR("Error"),
     DELETE_WATCHLIST("<html><body style='width: 200px'>" + "Failed to delete watchlist.</body></html>"),
     CREATE_WATCHLIST("<html><body style='width: 200px'>" + "Failed to create new watchlist.</body></html>"),
@@ -13,12 +15,16 @@ public enum ErrorMessage {
             + "Please choose another name.</body></html>"),
     IMPORT_WATCHLIST("<html><body style='width: 200px'>" + "Failed to import watchlist from '%s'.</body></html>");
 
-    /** String containing the content of an ErrorMessage. */
+    /**
+     * String containing the content of an ErrorMessage.
+     */
     private final String errorMessage;
 
-    /** Public constructor.
+    /**
+     * Public constructor.
      *
-     * @param errorMessage the error message associated with the ErrorMessage enum
+     * @param errorMessage the error message associated with the ErrorMessage
+     * enum
      */
     ErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
@@ -35,4 +41,3 @@ public enum ErrorMessage {
     }
 
 }
-
