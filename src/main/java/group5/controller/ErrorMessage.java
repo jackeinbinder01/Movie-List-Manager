@@ -19,7 +19,7 @@ public enum ErrorMessage {
     /** Public constructor.
      *
      * @param errorMessage the error message associated with the ErrorMessage enum
-     * */
+     */
     ErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
