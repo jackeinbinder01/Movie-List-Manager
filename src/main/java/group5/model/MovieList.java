@@ -12,7 +12,7 @@ import group5.model.formatters.MBeansFormatter;
 
 public class MovieList implements IMovieList {
 
-    /** set of board movie. */
+    /** set of movies. */
     private Set<MBeans> movieList;
 
     /** Name of this watch list */

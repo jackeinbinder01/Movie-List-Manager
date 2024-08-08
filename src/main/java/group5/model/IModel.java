@@ -12,11 +12,14 @@ import group5.model.beans.MBeans;
  */
 public interface IModel {
 
-    /**
-     * String file path to default database location.
-     */
+    /** String file path to default database location. */
     public static final String DEFAULT_DATA = "./data/source/source.json";  // Path to default movie DB here
-    public static final String DEFAULT_WATCHLIST = "./data/watchlist";  // Path to default movie DB here
+
+    /** String file path to default watchlist location. */
+    public static final String DEFAULT_WATCHLIST = "./data/watchlist";  // Path to watchlist movie DB here
+
+    /** String file path to default unused location. */
+    public static final String DEFAULT_UNUSED = "./data/unused";  // Path to deleted movie DB here
 
     /**
      * Load the source data from the default location.
