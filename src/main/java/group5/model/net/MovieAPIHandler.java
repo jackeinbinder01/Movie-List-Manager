@@ -27,12 +27,6 @@ public class MovieAPIHandler {
     private static final String API_KEY = "b253e842";
 
     /**
-     * empty constructor.
-     */
-    public MovieAPIHandler() {
-    }
-
-    /**
      * gets a list of MBeans to add.
      *
      * @param title the title of a movie

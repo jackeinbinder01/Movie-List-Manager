@@ -5,7 +5,7 @@ import java.util.List;
 import group5.model.MovieData;
 import group5.model.beans.MBeans;
 
-public class FilterOperation {
+class FilterOperation {
 
     /**
      * a switch to manage how movies get filtered on a catagory.
