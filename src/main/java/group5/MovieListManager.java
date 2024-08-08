@@ -10,7 +10,7 @@ import group5.view.IView;
 /**
  * Main driver for the program.
  */
-public class MovieListManager {
+public final class MovieListManager {
 
     /**
      * Private constructor to prevent instantiation.
@@ -29,6 +29,5 @@ public class MovieListManager {
         IView view = new BaseView();
         IController controller = new Controller(model, view);
         controller.go();
-
     }
 }
