@@ -17,8 +17,7 @@ public class FilterHandler implements IFilterHandler {
     }
 
     /**
-     * a filter on movies sorted by an input ascending if bool is true
-     * descending. if false.
+     * a filter on movies sorted by an input
      *
      * @return a sorted stream of the movies.
      */

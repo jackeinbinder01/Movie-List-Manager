@@ -7,6 +7,15 @@ import group5.model.beans.MBeans;
 
 public class FilterOperation {
 
+    /**
+     * a switch to manage how movies get filtered on a catagory.
+     *
+     * @param movie
+     * @param filterOn
+     * @param op
+     * @param val
+     * @return bool
+     */
     public static boolean getFilter(MBeans movie, MovieData filterOn, Operations op, String val) {
         switch (filterOn) {
             case TITLE:
@@ -41,6 +50,14 @@ public class FilterOperation {
         }
     }
 
+    /**
+     * the filter operation for any cat with a a list.
+     *
+     * @param strList
+     * @param op
+     * @param val
+     * @return bool
+     */
     private static boolean filterList(List<String> strList, Operations op, String val) {
         boolean returnBool = false;
         for (int index = 0; index < strList.size(); index++) {
@@ -63,6 +80,14 @@ public class FilterOperation {
         return returnBool;
     }
 
+    /**
+     * the filter operation for any cat with type string.
+     *
+     * @param field
+     * @param op
+     * @param val
+     * @return bool
+     */
     private static boolean filterString(String field, Operations op, String val) {
         switch (op) {
             case EQUALS:
@@ -74,6 +99,14 @@ public class FilterOperation {
         }
     }
 
+    /**
+     * a filter operation for the catagpries with a intiger.
+     *
+     * @param field
+     * @param op
+     * @param val
+     * @return bool
+     */
     private static boolean filterInt(int field, Operations op, String val) {
         int intVal;
         try {
@@ -98,6 +131,14 @@ public class FilterOperation {
         }
     }
 
+    /**
+     * a filter operation for the catagories with a double.
+     *
+     * @param field
+     * @param op
+     * @param val
+     * @return bool
+     */
     private static boolean filterDouble(double field, Operations op, String val) {
         double doubleVal;
         try {
@@ -122,6 +163,14 @@ public class FilterOperation {
         }
     }
 
+    /**
+     * a filter operation for catagories with a double.
+     *
+     * @param field
+     * @param op
+     * @param val
+     * @return bool
+     */
     private static boolean filterBoolean(boolean field, Operations op, String val) {
         boolean boolVal = Boolean.parseBoolean(val);
         switch (op) {
