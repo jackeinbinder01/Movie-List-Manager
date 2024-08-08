@@ -5,7 +5,13 @@ import java.util.List;
 import group5.model.MovieData;
 import group5.model.beans.MBeans;
 
-class FilterOperation {
+public final class FilterOperation {
+
+    /**
+     * a private empty constructor.
+     */
+    private FilterOperation() {
+    }
 
     /**
      * a switch to manage how movies get filtered on a catagory.

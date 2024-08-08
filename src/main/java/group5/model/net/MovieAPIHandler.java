@@ -15,7 +15,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import group5.model.beans.MBeans;
 
-public class MovieAPIHandler {
+public final class MovieAPIHandler {
+
+    /**
+     * private empty constructor.
+     */
+    private MovieAPIHandler() {
+    }
 
     /**
      * the first section of the api.
