@@ -193,9 +193,9 @@ public class BaseView extends JFrame implements IView {
      * Implemented to pass the stream of records to the source table in the list pane.
      */
     @Override
-    public void setSourceTableRecords(Stream<MBeans> records, String[] userListNames, boolean[][] recordUserListMatrix) {
+    public void setSourceTableRecords(Stream<MBeans> records, String[] listNames, boolean[][] recordUserListMatrix) {
         System.out.println("[BaseView] setMainTableRecords");
-        listPane.setSourceTable(records, userListNames, recordUserListMatrix);
+        listPane.setSourceTable(records, listNames, recordUserListMatrix);
     }
 
     /**
