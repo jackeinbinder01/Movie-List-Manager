@@ -4,30 +4,72 @@ package group5.model;
  * Enum to represent the columns in the movie data.
  */
 public enum MovieData {
-    /**
+    /*
      * Enum for working through filtration of list.
      */
-    TITLE("objectname"),
-    NUMBER("listnumber"),
-    GENRE("type"),
-    DIRECTOR("whodirectedit"),
-    ACTOR("actorsList"),
-    LANGUAGE("languageList"),
-    WRITER("writer"),
     /**
+     * the title.
+     */
+    TITLE("objectname"),
+    /**
+     * the list number.
+     */
+    NUMBER("listnumber"),
+    /**
+     * the genre of a movie.
+     */
+    GENRE("type"),
+    /**
+     * the director(s).
+     */
+    DIRECTOR("whodirectedit"),
+    /**
+     * the actor(s).
+     */
+    ACTOR("actorsList"),
+    /**
+     * the language(s) available.
+     */
+    LANGUAGE("languageList"),
+    /**
+     * the writer(s).
+     */
+    WRITER("writer"),
+    /*
      * Enums that are based on double values in the csv file.
      */
-    MPA("ratingtype"),
-    IMDB("ratingtype"),
-    USER("ratingtype"),
     /**
+     * the mpa rating.
+     */
+    MPA("ratingtype"),
+    /**
+     * the imdb rating.
+     */
+    IMDB("ratingtype"),
+    /**
+     * the users rating.
+     */
+    USER("ratingtype"),
+    /*
      * Enums based on whole int values in the csv file.
      */
-    RELEASED("yearreleased"),
-    RUNTIME("howlong"),
-    BOXOFFICE("boxoffice"),
     /**
+     * the year relaeased.
+     */
+    RELEASED("yearreleased"),
+    /**
+     * the length in minutes.
+     */
+    RUNTIME("howlong"),
+    /**
+     * the money earned.
+     */
+    BOXOFFICE("boxoffice"),
+    /*
      * Enums based on bool.
+     */
+    /**
+     * if the user watched the movie.
      */
     HASWATCHED("hasuserwatched");
 

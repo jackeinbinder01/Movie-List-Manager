@@ -17,9 +17,18 @@ import group5.model.beans.MBeans;
 
 public class MovieAPIHandler {
 
+    /**
+     * the first section of the api.
+     */
     private static final String API_ENDPOINT = "http://www.omdbapi.com/";
+    /**
+     * the api key.
+     */
     private static final String API_KEY = "b253e842";
 
+    /**
+     * empty constructor.
+     */
     public MovieAPIHandler() {
     }
 
@@ -64,7 +73,7 @@ public class MovieAPIHandler {
     }
 
     /**
-     * gets the api beans from a title search
+     * gets the api beans from a title search.
      *
      * @param title the title of a search
      * @return the list of apibeans containing the movies
@@ -162,7 +171,7 @@ public class MovieAPIHandler {
     }
 
     /**
-     * creates an MBeans from the output of the getmovie
+     * creates an MBeans from the output of the getmovie.
      *
      * @param inputStream the output of the get movie api call
      * @return an MBeans
