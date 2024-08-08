@@ -113,6 +113,7 @@ public final class MBeansFormatter {
      *
      * @param records the records to write
      * @param out the output stream to write to
+     * @param format the format to write the records in
      */
     public static void writeMediasToFile(Collection<MBeans> records, OutputStream out, Formats format) {
         switch (format) {

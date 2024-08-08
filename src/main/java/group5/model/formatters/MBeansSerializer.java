@@ -27,7 +27,7 @@ public class MBeansSerializer {
          */
         @Override
         public void serialize(Integer value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            if ( value == -1 ) {
+            if (value == -1) {
                 gen.writeString("N/A");
             } else {
                 gen.writeNumber(value);
@@ -46,7 +46,7 @@ public class MBeansSerializer {
          */
         @Override
         public void serialize(Double value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            if ( value == -1.0 ) {
+            if (value == -1.0) {
                 gen.writeString("N/A");
             } else {
                 gen.writeNumber(value);
@@ -106,7 +106,8 @@ public class MBeansSerializer {
          * Use `,` as separator between values.
          */
         @Override
-        public void serialize(List<String> genre, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        public void serialize(List<String> genre, JsonGenerator gen,
+                                                  SerializerProvider serializers) throws IOException {
             gen.writeString(String.join(", ", genre));
         }
     }

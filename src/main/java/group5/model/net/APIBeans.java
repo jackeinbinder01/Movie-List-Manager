@@ -35,7 +35,7 @@ public class APIBeans implements Serializable {
     private int year;
 
     /**
-     * Holds IMDb ID
+     * Holds IMDb ID.
      */
     @JsonProperty("imdbID")
     private String id;

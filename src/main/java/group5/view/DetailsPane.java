@@ -399,6 +399,8 @@ public class DetailsPane extends JPanel {
 
     /**
      * Add listeners to the watched check box and save rating button.
+     *
+     * @param features the features to bind to the details pane.
      */
     public void bindFeatures(IFeature features) {
         this.watchedBox.addActionListener(e -> {

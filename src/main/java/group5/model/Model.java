@@ -56,8 +56,8 @@ public class Model implements IModel {
     public Model() {
         // Initialize empty directory is not exist.
         List<File> directories = List.of(new File("./data/source"),
-                                         new File("./data/watchlist"),
-                                         new File("./data/unused"));
+                                         new File(DEFAULT_WATCHLIST),
+                                         new File(DEFAULT_UNUSED));
         for (File directory : directories) {
             if (!directory.exists()) {
                 if (directory.mkdirs()) {
@@ -201,7 +201,7 @@ public class Model implements IModel {
             return -1;
         }
         String name = this.getUserListName(userListId);
-        this.saveWatchList("./data/unused/" + name + ".json", userListId);
+        this.saveWatchList(DEFAULT_UNUSED + "/" + name + ".json", userListId);
         this.watchLists.remove(userListId);
         File toDelete = new File(DEFAULT_WATCHLIST + "/" + name + ".json");
         toDelete.delete();
@@ -329,8 +329,10 @@ public class Model implements IModel {
         System.out.println(format);
         try {
             OutputStream out = new FileOutputStream(filename);
-            MBeansFormatter.writeMediasToFile(this.watchLists.get(userListId).getMovieList().collect(Collectors.toSet()),
-                    out, format);
+            MBeansFormatter.writeMediasToFile(this.watchLists.get(userListId)
+                                                             .getMovieList()
+                                                             .collect(Collectors.toSet()),
+                                              out, format);
             out.close();
         } catch (Exception e) {
             System.out.println("Error writing to file");

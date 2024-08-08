@@ -235,6 +235,7 @@ public class Controller implements IController, IFeature {
 
     /**
      * {@inheritDoc}
+     * <br>
      * Implemented to call the view to display the user interface.
      */
     @Override
@@ -246,9 +247,8 @@ public class Controller implements IController, IFeature {
     /**
      * {@inheritDoc}
      * <br>
-     * @param record the MBean to be removed from the watchlist.
-     * @param userListIndex the index in the user's watchlist where the MBean
-     *                      should be removed.
+     * Implemented to prompt the model to remove the record from the specific watch
+     * and then refresh the table records in the view.
      */
     public void removeFromWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
@@ -275,11 +275,10 @@ public class Controller implements IController, IFeature {
     }
 
     /**
-     * Add a record to the user's watch list.
-     *
-     * @param record        the MBean to be added to the watch list.
-     * @param userListIndex the index in the user's watch list where the MBean
-     *                      should be added.
+     * {@inheritDoc}
+     * <br>
+     * Implemented to prompt the model to add the record from the specific watch
+     * and then refresh the table records in the view.
      */
     public void addToWatchlist(MBeans record, int userListIndex) {
         System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
@@ -290,31 +289,21 @@ public class Controller implements IController, IFeature {
     }
 
     /**
-     * A private method to get the records for the active tab for convenience.
-     *
-     * @return a stream of MBeans
-     */
-    private Stream<MBeans> getRecordsForActiveTab() {
-        int currentTab = view.getActiveTab();
-        if (currentTab == 0) {
-            return model.getRecords();
-        } else {
-            return model.getRecords(currentTab - 1);
-        }
-    }
-
-    /**
-     * Changes the rating of a specific MBean. No view updates are triggered
-     * since the rating is not displayed in the table.
-     *
-     * @param record the MBean whose rating is to be changed.
-     * @param rating the new rating to be assigned to the MBean.
+     * {@inheritDoc}
+     * <br>
+     * Implemented to call the model to update user rating for the specified record.
      */
     public void changeRating(MBeans record, double rating) {
         System.out.println("[Controller] Changing rating for " + record.getTitle() + " to " + rating);
         model.updateUserRating(record, rating);
     }
 
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Handles watched status changes for a record and updates the view
+     * accordingly depending on the caller of the change.
+     */
     public void changeWatchedStatus(MBeans record, boolean watched, String caller) {
         model.updateWatched(record, watched);
         if (caller.equalsIgnoreCase("detailsPane")) {   // If caller is detailsPane, update the listPane
@@ -337,10 +326,32 @@ public class Controller implements IController, IFeature {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <br>
+     * Resets the filter fields in the view.
+     * Clears the filters and refresh records via the clearFiltersAndReloadRecords function.
+     */
     public void handleTabChange(int tabIndex) {
         System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter pane range");
         view.clearTableSelection(); // this is to prevent inactive tabs from having selections
         clearFiltersAndReloadRecords();
+    }
+
+
+
+    /**
+     * A private method to retrieve the records for the active tab for convenience.
+     *
+     * @return a stream of MBeans
+     */
+    private Stream<MBeans> getRecordsForActiveTab() {
+        int currentTab = view.getActiveTab();
+        if (currentTab == 0) {
+            return model.getRecords();
+        } else {
+            return model.getRecords(currentTab - 1);
+        }
     }
 
     /**
@@ -376,7 +387,7 @@ public class Controller implements IController, IFeature {
     }
 
     /**
-     * Get the current filter options from the FilterPane.
+     * Compiles the current filter options from the FilterPane.
      * <p>
      * Note that the current filter fields is only an indicator of the current values in the filter fields.
      * The latest user-committed filter options are kept in the model.

@@ -17,7 +17,7 @@ import java.util.HashSet;
 /**
  * Class to load file data into MBeans objects.
  */
-public class MBeansLoader {
+public final class MBeansLoader {
 
     /**
      * Private constructor to prevent instantiation.

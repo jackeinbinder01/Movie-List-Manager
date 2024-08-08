@@ -1,14 +1,12 @@
 package group5.controller;
 
 
-// or public interface Features
+/**
+ * Interface for the Controller
+ */
 public interface IController {
-
     /**
      * Main entry point for the controller.
      */
     void go();
-
-    // handleWatchedStatusOrRatingChange
-
 }

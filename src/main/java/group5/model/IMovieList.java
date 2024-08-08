@@ -6,9 +6,7 @@ import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 
 /**
- * Values are unique / no duplicates (based on Boardmovie.equals/equality) It
- * will return values in Case Insensitive ascending order of movies for that
- * returns a list of Movies.
+ * Data class to store collections of MBeans.
  */
 public interface IMovieList {
 
@@ -59,6 +57,8 @@ public interface IMovieList {
 
     /**
      * removes a given movie from the list.
+     *
+     * @param media the media to remove from watchlist.
      */
     void removeFromList(MBeans media);
 

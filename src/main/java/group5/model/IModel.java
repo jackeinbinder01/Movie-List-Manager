@@ -12,11 +12,14 @@ import group5.model.beans.MBeans;
  */
 public interface IModel {
 
-    /**
-     * String file path to default database location.
-     */
-    public static final String DEFAULT_DATA = "./data/source/source.json";  // Path to default movie DB here
-    public static final String DEFAULT_WATCHLIST = "./data/watchlist";  // Path to default movie DB here
+    /** String file path to default database location. */
+    String DEFAULT_DATA = "./data/source/source.json";  // Path to default movie DB here
+
+    /** String file path to default watchlist location. */
+    String DEFAULT_WATCHLIST = "./data/watchlist";  // Path to watchlist movie DB here
+
+    /** String file path to default unused location. */
+    String DEFAULT_UNUSED = "./data/unused";  // Path to deleted movie DB here
 
     /**
      * Load the source data from the default location.
@@ -157,6 +160,7 @@ public interface IModel {
     /**
      * Get the name of watch list.
      *
+     * @param userListId The identifier of the watch list to get the name of.
      * @return the name of watch list
      */
     String getUserListName(int userListId);
@@ -177,7 +181,7 @@ public interface IModel {
     int[] getUserListIndicesForRecord(MBeans record);
 
     /**
-     * Clear the current filter
+     * Clear the current filter.
      */
     void clearFilter();
 
@@ -203,7 +207,7 @@ public interface IModel {
      * @param title
      * @param year1
      * @param year2
-     * @return
+     * @return set of MBeans objects
      */
     Set<MBeans> fetchMBeans(String title, String year1, String year2);
 }
