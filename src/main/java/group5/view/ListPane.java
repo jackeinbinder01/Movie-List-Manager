@@ -27,54 +27,171 @@ import java.util.stream.Stream;
 
 
 /**
- * ListPane is ....... TODO: add description
- * BorderLayout.CENTER = a JTabbedPane containing the various lists
- * BorderLayout.SOUTH = a JPanel toolbar containing with buttons
- * <p>
+ * A panel displaying tabbed tables for viewing and managing lists of records.
+ * Includes a toolbar at the bottom for performing various list management operations.
+ * <br>
  * TabbedPane citation: https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
  */
 
 public class ListPane extends JPanel {
-
+    /**
+     * The name of the main tab in the tabbed pane.
+     */
     private final String MAIN_TAB_NAME = "All Movies";
+
+    /**
+     * The text to display on the add list button.
+     */
     private final String ADD_LIST_BUTTON_TEXT = "Import List";
+
+    /**
+     * The text to display on the delete list button.
+     */
     private final String DELETE_LIST_BUTTON_TEXT = "Delete List";
+
+    /**
+     * The text to display on the export list button.
+     */
     private final String EXPORT_LIST_BUTTON_TEXT = "Export List";
+
+    /**
+     * The text to display on the main action button (toggle watched status).
+     */
     private final String MAIN_ACTION_BUTTON_TEXT = "+/-";
+
+    /**
+     * The text to display on the watchlist action button (remove from list).
+     */
     private final String WATCHLIST_ACTION_BUTTON_TEXT = "Remove";
 
+    /**
+     * The title of the popup dialog for creating a new watchlist.
+     */
     private final String NEW_LIST_POPUP_TITLE = "New Watchlist";
+
+    /**
+     * The prompt displayed in the popup dialog for creating a new watchlist.
+     */
     private final String NEW_LIST_POPUP_PROMPT = "Enter the name of the new watchlist:";
 
-    JTable sourceTable;
-    JButton importListButton;
-    JButton deleteListButton;
-    JButton exportListButton;
-    JTabbedPane tabbedPane;
-
-    MovieTableModel sourceTableModel;
 
 
-    Consumer<MBeans> tableSelectionHandler;
-    BiConsumer<MBeans, Integer> removeFromListHandler;
-    BiConsumer<MBeans, Integer> addToListHandler;
-    TriConsumer<MBeans, Boolean, String> changeWatchedStatusHandler;
-    Consumer<String> createListHandler;
-    Consumer<Integer> deleteListHandler;
-    Consumer<Integer> tabChangeHandler;
-    Consumer<String> importListHandler;
-    Consumer<String> exportListHandler;
-
-    Boolean SORTING_ENABLED = true;
-    Boolean SELECTION_PERMENANCE = true;
     /**
-     * List of movie models for user-defined lists
-     * Each user-defined list will have its own model
-     * Each tab will own a table with its own model
+     * The JTable component displaying the source data.
      */
-    List<MovieTableModel> watchlistModels;
-    List<JTable> watchlistTables;
+    private JTable sourceTable;
 
+    /**
+     * The JButton component for importing a list.
+     */
+    private JButton importListButton;
+
+    /**
+     * The JButton component for deleting a list.
+     */
+    private JButton deleteListButton;
+
+    /**
+     * The JButton component for exporting a list.
+     */
+    private JButton exportListButton;
+
+    /**
+     * The JTabbedPane component containing the tabs.
+     */
+    private JTabbedPane tabbedPane;
+
+
+    /**
+     * The MovieTableModel instance managing the source table data.
+     */
+    private MovieTableModel sourceTableModel;
+
+
+    /**
+     * A consumer function handling selection changes in the source table.
+     */
+    private Consumer<MBeans> tableSelectionHandler;
+
+    /**
+     * A bi-consumer function handling removal of a movie from a watchlist.
+     *
+     * @param movie The MBeans object representing the movie to remove.
+     * @param listId The ID of the watchlist containing the movie.
+     */
+    private BiConsumer<MBeans, Integer> removeFromListHandler;
+
+    /**
+     * A bi-consumer function handling addition of a movie to a watchlist.
+     *
+     * @param movie The MBeans object representing the movie to add.
+     * @param listId The ID of the watchlist to which the movie is added.
+     */
+    private BiConsumer<MBeans, Integer> addToListHandler;
+
+    /**
+     * A tri-consumer function handling changes in watched status for a movie.
+     *
+     * @param movie The MBeans object representing the movie whose watched status is changing.
+     * @param newWatchedStatus Whether the movie should be marked as watched (true) or not watched (false).
+     * @param listId The ID of the watchlist containing the movie.
+     */
+    private TriConsumer<MBeans, Boolean, String> changeWatchedStatusHandler;
+
+    /**
+     * A consumer function handling creation of a new watchlist.
+     *
+     * @param newListName The name of the new watchlist to create.
+     */
+    private Consumer<String> createListHandler;
+
+    /**
+     * A consumer function handling deletion of a list (watchlist).
+     *
+     * @param listId The ID of the list to delete.
+     */
+    private Consumer<Integer> deleteListHandler;
+
+    /**
+     * A consumer function handling tab changes in the tabbed pane.
+     *
+     * @param newTabIndex The index of the new active tab.
+     */
+    private Consumer<Integer> tabChangeHandler;
+
+    /**
+     * A consumer function handling importation of a list (watchlist).
+     *
+     * @param newListName The name of the new watchlist to import.
+     */
+    private Consumer<String> importListHandler;
+
+    /**
+     * A consumer function handling exportation of a list (watchlist).
+     *
+     * @param listId The ID of the list to export.
+     */
+    private Consumer<String> exportListHandler;
+
+    /**
+     * Boolean switch to enable sorting in the tables.
+     */
+    private Boolean SORTING_ENABLED = true;
+
+    /**
+     * List of Movie Table Models for the user-defined watchlists.
+     * Each table will own its own table data model.
+     */
+    private List<MovieTableModel> watchlistModels;
+
+    /**
+     * List of JTables for the user-defined watchlists.
+     */
+    private List<JTable> watchlistTables;
+
+    /**
+     * Constructor for the ListPane class.
+     */
     ListPane() {
         super();
 
@@ -125,7 +242,10 @@ public class ListPane extends JPanel {
         return tabbedPane.getSelectedIndex();
     }
 
-
+    /**
+     * Returns the active JTable according to the active tab.
+     * @return the active JTable object
+     */
     private JTable getActiveTable() {
         int currentTab = tabbedPane.getSelectedIndex();
         if (currentTab == 0) {
@@ -135,6 +255,10 @@ public class ListPane extends JPanel {
         }
     }
 
+    /**
+     * Returns the active MovieTableModel according to the active tab.
+     * @return the active MovieTableModel object
+     */
     private MovieTableModel getActiveTableModel() {
         int currentTab = tabbedPane.getSelectedIndex();
         if (currentTab == 0) {
@@ -144,7 +268,13 @@ public class ListPane extends JPanel {
         }
     }
 
-
+    /**
+     * Creates a new tab in the tabbed pane with the specified name and mode.
+     * Constructs the associated tables and table models for the new tab.
+     *
+     * @param name the name of the tab
+     * @param tableMode the mode of the tab (main or user-defined list)
+     */
     private void createTableTab(String name, TableMode tableMode) {
         MovieTableModel targetModel;
         JTable targetTable;
@@ -213,6 +343,11 @@ public class ListPane extends JPanel {
         tabbedPane.addTab(tabName, null, newScrollPane, tabName);
     }
 
+    /**
+     * Removes a user-defined table from the tabbed pane.
+     *
+     * @param userListId the index of the table to remove
+     */
     public void removeUserTable(int userListId) {
         if (tabbedPane.getTabCount() - 2 < userListId) {
             throw new IllegalArgumentException("User-defined list index out of bounds");
@@ -222,14 +357,25 @@ public class ListPane extends JPanel {
         watchlistTables.remove(userListId);
     }
 
+    /**
+     * Creates a new source table tab.
+     */
     private void createSourceTableTab() {
         createTableTab(MAIN_TAB_NAME, TableMode.MAIN);
     }
 
+    /**
+     * Creates a new user-defined table tab with the specified name.
+     *
+     * @param tableName the name of the table
+     */
     public void createUserTableTab(String tableName) {
         createTableTab(tableName, TableMode.WATCHLIST);
     }
-    
+
+    /**
+     * Handles importing a list from a file.
+     */
     private void localImportListHandler() {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter fileFilters = new FileNameExtensionFilter(
@@ -244,6 +390,9 @@ public class ListPane extends JPanel {
         }
     }
 
+    /**
+     * Handles exporting a list to a file.
+     */
     private void localExportListHandler() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -265,6 +414,13 @@ public class ListPane extends JPanel {
         }
     }
 
+    /**
+     * Sets the source data for the main table.
+     *
+     * @param records the stream of MBeans objects
+     * @param watchlistNames the array of user-defined list names
+     * @param recordWatchlistMatrix the 2D boolean matrix representing the relationship between MBeans and user-defined lists
+     */
     public void setSourceTable(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix) {
         System.out.println("[ListPane] setMainTableRecords called");
         List<MovieTableModelRecord> tmRecords = new ArrayList<>();
@@ -274,20 +430,23 @@ public class ListPane extends JPanel {
         }
         int selectedRow = sourceTable.getSelectedRow();
         sourceTableModel.setMovieTableModelRecords(tmRecords);
-        if (SELECTION_PERMENANCE) {
-            if (selectedRow >= 0 && selectedRow < sourceTable.getRowCount() && tabbedPane.getSelectedIndex() == 0
-                && sourceTable.getRowCount() > 0) {
-                sourceTable.setRowSelectionInterval(selectedRow, selectedRow);
-            }
+        if (selectedRow >= 0 && selectedRow < sourceTable.getRowCount() && tabbedPane.getSelectedIndex() == 0
+            && sourceTable.getRowCount() > 0) {
+            sourceTable.setRowSelectionInterval(selectedRow, selectedRow);
         }
     }
 
-
-    public void setUserTable(Stream<MBeans> recordStream, int watchlistIndex) {
+    /**
+     * Sets the data for a user-defined watchlist.
+     *
+     * @param records the stream of MBeans objects to display in the table
+     * @param watchlistIndex the index of the user-defined list
+     */
+    public void setUserTable(Stream<MBeans> records, int watchlistIndex) {
         if (tabbedPane.getTabCount() - 2 < watchlistIndex) {
             throw new IllegalArgumentException("User-defined list index out of bounds");
         }
-        List<MBeans> mBeansList = recordStream.toList();
+        List<MBeans> mBeansList = records.toList();
         MovieTableModel targetUserListModel = watchlistModels.get(watchlistIndex);
         List<MovieTableModelRecord> tmRecords = new ArrayList<>();
         for (MBeans record : mBeansList) {
@@ -295,12 +454,10 @@ public class ListPane extends JPanel {
         }
         int selectedRow = watchlistTables.get(watchlistIndex).getSelectedRow();
         targetUserListModel.setMovieTableModelRecords(tmRecords);
-        if (SELECTION_PERMENANCE) {
-            if (selectedRow >= 0 && selectedRow < watchlistTables.get(watchlistIndex).getRowCount() &&
-                    watchlistTables.get(watchlistIndex).getRowCount() > 0
-                && tabbedPane.getSelectedIndex() == watchlistIndex + 1) {
-                watchlistTables.get(watchlistIndex).setRowSelectionInterval(selectedRow, selectedRow);
-            }
+        if (selectedRow >= 0 && selectedRow < watchlistTables.get(watchlistIndex).getRowCount() &&
+                watchlistTables.get(watchlistIndex).getRowCount() > 0
+            && tabbedPane.getSelectedIndex() == watchlistIndex + 1) {
+            watchlistTables.get(watchlistIndex).setRowSelectionInterval(selectedRow, selectedRow);
         }
     }
 
@@ -339,6 +496,7 @@ public class ListPane extends JPanel {
 
     /**
      * Returns the current table in the tabbed pane
+     *
      * @return current JTable in view
      */
     public JTable getCurrentTable() {
@@ -692,7 +850,8 @@ public class ListPane extends JPanel {
 
 
     /**
-     * Enum class for the table mode. This is used to differentiate between the main table and user-defined lists.
+     * Enum class for the table mode.
+     * This is used to differentiate between the main table and user-defined lists.
      */
     enum TableMode {
         MAIN,
@@ -700,7 +859,7 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * Enum class for the columns in the table. This is used to define the column order and titles.
+     * Enum class for the columns in the table. Defines the column order and titles.
      */
     enum TableColumn {
         TITLE("Title"),
@@ -732,6 +891,7 @@ public class ListPane extends JPanel {
      * the dropdown menu for watchlist management.
      */
     class MovieTableModelRecord {
+
         private MBeans record;
         private boolean[] userListIndices = null;
         private String[] userListNames = null;
@@ -741,6 +901,7 @@ public class ListPane extends JPanel {
             this.userListNames = userListNames;
             this.userListIndices = userListIndices;
         }
+
 
         public MovieTableModelRecord(MBeans record) {
             this.record = record;

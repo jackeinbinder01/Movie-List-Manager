@@ -2,6 +2,9 @@ package group5.controller;
 
 import group5.model.beans.MBeans;
 
+/**
+ * Interface for the feature set and event handlers for the application
+ */
 public interface IFeature {
 
     /**
@@ -79,8 +82,7 @@ public interface IFeature {
      * Clears all applied filters and refreshes the views.
      */
     public void clearFiltersAndReloadRecords();
-
-
+    
     /**
      * Handles the change of the active tab in the view.
      *
