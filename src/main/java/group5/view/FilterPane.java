@@ -13,7 +13,7 @@ import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/** Contains and passes filters to controller for selected movie list */
+/** Contains and passes filters to controller for selected movie list. */
 public class FilterPane extends JPanel implements ActionListener, FocusListener {
 
     /** Default panel width. */
@@ -70,15 +70,15 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
     private Map<JTextField, String> rangeFilterMap = new HashMap<>();
 
     // Buttons
-    /** Apply filters button */
+    /** Apply filters button. */
     private JButton applyFiltersButton = new JButton("Apply Filters");
-    /** Clear filters button */
+    /** Clear filters button. */
     private JButton clearFiltersButton = new JButton("Clear Filters");
 
     // GridBagConstraints & grid row int
     /** Class global GridBagConstraints. */
     private GridBagConstraints gbc = new GridBagConstraints();
-    /** Filter row to place filters descending using gbc.gridy */
+    /** Filter row to place filters descending using gbc.gridy. */
     private int filterRow = 0;
 
     /** Public constructor. */
@@ -96,7 +96,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         updateGBC(null, null, null, null, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
 
         // add border padding to button panel
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0,4,5,4));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 4, 5, 4));
         // add panels
         add(filterPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -212,8 +212,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
      */
     public String getFilteredBoxOfficeEarningsMin() {
         try {
-            return boxOfficeEarningsFrom.getText().equalsIgnoreCase("N/A") ?
-                    boxOfficeEarningsFrom.getText() : formatFromMillions(boxOfficeEarningsFrom.getText());
+            return boxOfficeEarningsFrom.getText().equalsIgnoreCase("N/A")
+                    ? boxOfficeEarningsFrom.getText() : formatFromMillions(boxOfficeEarningsFrom.getText());
         } catch (NumberFormatException e) {
             return "";
         }
@@ -408,7 +408,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         // configure combo boxes
         if (filter instanceof JComboBox) {
             configureComboBox((JComboBox<String>) filter);
-        } else if (filter instanceof JTextField){
+        } else if (filter instanceof JTextField) {
             textFilters.add((JTextField) filter);
         }
 
@@ -774,7 +774,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             case BOX_OFFICE_EARNINGS_FROM:
                 if (boxOfficeEarningsFrom.getText().isEmpty() || boxOfficeEarningsFrom.getText().startsWith("-")) {
                     boxOfficeEarningsFrom.setText(rangeFilterMap.get(boxOfficeEarningsFrom));
-                } else if (boxOfficeEarningsFrom.getText().equalsIgnoreCase("N/A")){
+                } else if (boxOfficeEarningsFrom.getText().equalsIgnoreCase("N/A")) {
                     boxOfficeEarningsFrom.setText("N/A");
                 } else {
                     reformatBoxOfficeEarnings(boxOfficeEarningsFrom);
@@ -783,7 +783,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
             case BOX_OFFICE_EARNINGS_TO:
                 if (boxOfficeEarningsTo.getText().isEmpty() || boxOfficeEarningsTo.getText().startsWith("-")) {
                     boxOfficeEarningsTo.setText(rangeFilterMap.get(boxOfficeEarningsTo));
-                } else if (boxOfficeEarningsTo.getText().equalsIgnoreCase("N/A")){
+                } else if (boxOfficeEarningsTo.getText().equalsIgnoreCase("N/A")) {
                     boxOfficeEarningsTo.setText("N/A");
                 } else {
                     reformatBoxOfficeEarnings(boxOfficeEarningsTo);
@@ -807,7 +807,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                     String processedBoxOfficeEarningsMin = boxOfficeEarningsFrom.getText()
                             .replaceAll("[^0-9.]", "");
                     try {
-                        double BoxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
+                        double boxOfficeEarningsMinDouble = Double.parseDouble(processedBoxOfficeEarningsMin);
                         boxOfficeEarningsFrom.setText(
                                 formatAsCurrency(formatFromMillions(boxOfficeEarningsFrom.getText()), "min"));
                     } catch (NumberFormatException e) {
@@ -820,7 +820,7 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                     String processedBoxOfficeEarningsMax = boxOfficeEarningsTo.getText()
                             .replaceAll("[^0-9.]", "");
                     try {
-                        double BoxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
+                        double boxOfficeEarningsMaxDouble = Double.parseDouble(processedBoxOfficeEarningsMax);
                         boxOfficeEarningsTo.setText(
                                 formatAsCurrency(formatFromMillions(boxOfficeEarningsTo.getText()), "max"));
                     } catch (NumberFormatException e) {
@@ -828,6 +828,8 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
                     }
                 }
                 break;
+            default:
+                System.out.println("Invalid text field passed");
         }
     }
 
@@ -918,7 +920,10 @@ enum FiltersEnum {
     /** String representing the name of a FilterPane filter. */
     private final String filterName;
 
-    /** Public constructor */
+    /** Public constructor.
+     *
+     * @param filterName the filter name associated with the FiltersEnum
+     */
     FiltersEnum(String filterName) {
         this.filterName = filterName;
     }
@@ -944,7 +949,10 @@ enum FilterLabels {
     /** String representing the text in a JLabel above a FilterPane filter. */
     private final String filterLabel;
 
-    /** Public constructor */
+    /** Public constructor.
+     *
+     * @param filterLabel the filter label associated with the FilterLabels enum
+     */
     FilterLabels(String filterLabel) {
         this.filterLabel = filterLabel;
     }
