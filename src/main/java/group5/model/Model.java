@@ -329,8 +329,10 @@ public class Model implements IModel {
         System.out.println(format);
         try {
             OutputStream out = new FileOutputStream(filename);
-            MBeansFormatter.writeMediasToFile(this.watchLists.get(userListId).getMovieList().collect(Collectors.toSet()),
-                    out, format);
+            MBeansFormatter.writeMediasToFile(this.watchLists.get(userListId)
+                                                             .getMovieList()
+                                                             .collect(Collectors.toSet()),
+                                              out, format);
             out.close();
         } catch (Exception e) {
             System.out.println("Error writing to file");

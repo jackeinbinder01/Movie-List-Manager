@@ -15,7 +15,7 @@ public class MovieList implements IMovieList {
     /** set of movies. */
     private Set<MBeans> movieList;
 
-    /** Name of this watch list */
+    /** Name of this watch list. */
     private String name;
 
 

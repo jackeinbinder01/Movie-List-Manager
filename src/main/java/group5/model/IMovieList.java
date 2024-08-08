@@ -57,6 +57,8 @@ public interface IMovieList {
 
     /**
      * removes a given movie from the list.
+     *
+     * @param media the media to remove from watchlist.
      */
     void removeFromList(MBeans media);
 

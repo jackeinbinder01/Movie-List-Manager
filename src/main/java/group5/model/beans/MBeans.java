@@ -124,7 +124,7 @@ public class MBeans implements java.io.Serializable {
     @JsonSerialize(using = MBeansSerializer.BoxOfficeSerializer.class)
     private int boxOffice;
 
-    /** Holds imdb ID */
+    /** Holds imdb ID. */
     @JsonProperty("imdbID")
     private String id;
 
@@ -138,9 +138,9 @@ public class MBeans implements java.io.Serializable {
 
 
     /** Default/empty constructor. */
-    public MBeans() {}
+    public MBeans() { }
 
-    /** Constructor that includes all the values
+    /** Constructor that includes all the values.
      *
      * @param title
      * @param year
@@ -164,10 +164,10 @@ public class MBeans implements java.io.Serializable {
      * @param watched
      * @param myRating
      */
-    public MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, List<String> genre,
-            List<String> director, List<String> writer, List<String> actors, String plot, List<String> language,
-            List<String> country, String awards, String poster, int metascore, double imdbRating, int boxOffice,
-            String id, boolean watched, double myRating) {
+    public MBeans(String title, int year, String type, String rated, LocalDate released, int runtime,
+                  List<String> genre, List<String> director, List<String> writer, List<String> actors, String plot,
+                  List<String> language, List<String> country, String awards, String poster, int metascore,
+                  double imdbRating, int boxOffice, String id, boolean watched, double myRating) {
         this.title = title;
         this.year = year;
         this.type = type;
@@ -605,6 +605,8 @@ public class MBeans implements java.io.Serializable {
      * Returns a string currency representation of the BoxOffice.
      *
      * Append $ to the BoxOffice value and add `,`.
+     *
+     * @return a string currency representation of the BoxOffice
      */
     public String formatBoxOfficeCurrency() {
         if (this.boxOffice == -1) {
