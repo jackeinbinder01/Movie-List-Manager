@@ -25,11 +25,11 @@ public class Controller implements IController, IFeature {
     /**
      * The model object representing the movie database.
      */
-    IModel model;
+    private IModel model;
     /**
      * The view object representing the user interface.
      */
-    IView view;
+    private IView view;
 
     /**
      * Constructor for the controller.
@@ -58,7 +58,8 @@ public class Controller implements IController, IFeature {
 
         // setup source table records - only after all the user lists are loaded
         // no filters applied on initialization
-        view.setSourceTableRecords(model.getRecords(), getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
+        view.setSourceTableRecords(model.getRecords(),
+                getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
         view.getFilterPane().setMovies(model.getRecords(), true);
     }
 
@@ -83,7 +84,8 @@ public class Controller implements IController, IFeature {
             // update source table because of new RecordUserListMatrix
             // (not necessary because the table will be updated on tab change in current implementation,
             // kept for safety in case of future changes)
-            view.setSourceTableRecords(model.getRecords(), getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
+            view.setSourceTableRecords(model.getRecords(),
+                    getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
             view.setActiveTab(0);
         }
     }
@@ -146,10 +148,12 @@ public class Controller implements IController, IFeature {
             String fileName = path.getFileName().toString();
             switch (newWatchlistIdx) {
                 case -1:
-                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.NAME_CLASH.getErrorMessage(fileName));
+                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR),
+                            ErrorMessage.NAME_CLASH.getErrorMessage(fileName));
                     break;
                 case -2:
-                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR), ErrorMessage.IMPORT_WATCHLIST.getErrorMessage(fileName));
+                    view.showAlertDialog(String.valueOf(ErrorMessage.ERROR),
+                            ErrorMessage.IMPORT_WATCHLIST.getErrorMessage(fileName));
                     break;
                 default:
                     break;
@@ -160,7 +164,8 @@ public class Controller implements IController, IFeature {
         // Set records for the new table (this call isn't necessary because the table will be updated on tab change)
         view.setUserTableRecords(model.getRecords(newWatchlistIdx), newWatchlistIdx);
         // Update the source table because of new RecordUserListMatrix
-        view.setSourceTableRecords(model.getRecords(), getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
+        view.setSourceTableRecords(model.getRecords(),
+                getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
         view.setActiveTab(newWatchlistIdx + 1);
 
     }
@@ -200,7 +205,8 @@ public class Controller implements IController, IFeature {
                 System.out.println("[Controller] Failed to fetch new records: Operating in offline mode");
             }
             recordList = model.getRecords(filters).collect(Collectors.toList());
-            view.setSourceTableRecords(recordList.stream(), getWatchlistNames(), getRecordUserListMatrix(recordList.stream()));
+            view.setSourceTableRecords(recordList.stream(),
+                    getWatchlistNames(), getRecordUserListMatrix(recordList.stream()));
 
             // this filter range has to be set without any filters
             view.getFilterPane().setMovies(model.getAllRecords(), true);
@@ -225,7 +231,8 @@ public class Controller implements IController, IFeature {
         int currTabIdx = view.getActiveTab();
         List<MBeans> recordList = getRecordsForActiveTab().toList();
         if (currTabIdx == 0) {
-            view.setSourceTableRecords(recordList.stream(), getWatchlistNames(), getRecordUserListMatrix(recordList.stream()));
+            view.setSourceTableRecords(recordList.stream(),
+                    getWatchlistNames(), getRecordUserListMatrix(recordList.stream()));
             view.getFilterPane().setMovies(recordList.stream(), true);
         } else {
             view.setUserTableRecords(recordList.stream(), currTabIdx - 1);
@@ -251,7 +258,6 @@ public class Controller implements IController, IFeature {
      * and then refresh the table records in the view.
      */
     public void removeFromWatchlist(MBeans record, int userListIndex) {
-        System.out.println("[Controller] removeFromWatchList called to remove " + record.getTitle() + " from user list index " + userListIndex);
         if (view.getActiveTab() > 0) {
             // only clears selection if the current tab is the affected watchlist
             view.clearTableSelection();
@@ -270,7 +276,8 @@ public class Controller implements IController, IFeature {
             view.getFilterPane().setMovies(model.getAllRecords(userListIndex), false);
         }
 
-        view.setSourceTableRecords(model.getRecords(), getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
+        view.setSourceTableRecords(model.getRecords(),
+                getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
         view.setUserTableRecords(model.getRecords(userListIndex), userListIndex);
     }
 
@@ -281,9 +288,9 @@ public class Controller implements IController, IFeature {
      * and then refresh the table records in the view.
      */
     public void addToWatchlist(MBeans record, int userListIndex) {
-        System.out.println("[Controller] addToWatchList called to add " + record.getTitle() + " to user list index " + userListIndex);
         model.addToWatchList(record, userListIndex);
-        view.setSourceTableRecords(model.getRecords(), getWatchlistNames(), getRecordUserListMatrix(model.getRecords()));
+        view.setSourceTableRecords(model.getRecords(), getWatchlistNames(),
+                getRecordUserListMatrix(model.getRecords()));
         view.setUserTableRecords(model.getRecords(userListIndex), userListIndex); // This is not absolutely necessary
         // Since adding to a list is done from the source tab only, there's no need to update the filter pane
     }
@@ -333,7 +340,7 @@ public class Controller implements IController, IFeature {
      * Clears the filters and refresh records via the clearFiltersAndReloadRecords function.
      */
     public void handleTabChange(int tabIndex) {
-        System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter pane range");
+        System.out.println("[Controller] Handling event: tab changed to " + tabIndex + " and updating filter range");
         view.clearTableSelection(); // this is to prevent inactive tabs from having selections
         clearFiltersAndReloadRecords();
     }
@@ -358,6 +365,7 @@ public class Controller implements IController, IFeature {
      * Private helper method to retrieve a boolean matrix representing the user
      * lists for each record.
      *
+     * @param records a stream of MBeans records
      * @return a 2D boolean array where each row represents a record and each
      * column represents a user list
      */
@@ -416,7 +424,9 @@ public class Controller implements IController, IFeature {
 
         for (Triple<String, Operations, MovieData> triple : triples) {
             if (!triple.getLeft().isEmpty()) {
-                filters.add(Arrays.asList(triple.getRight().name(), triple.getMiddle().getOperator(), triple.getLeft()));
+                filters.add(Arrays.asList(triple.getRight().name(),
+                        triple.getMiddle().getOperator(),
+                        triple.getLeft()));
             }
         }
         return filters;

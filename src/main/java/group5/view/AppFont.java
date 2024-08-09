@@ -3,8 +3,8 @@ package group5.view;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 
-/** Helper class to set uniform font for all View components in a JFrame */
-public class AppFont {
+/** Helper class to set uniform font for all View components in a JFrame. */
+public final class AppFont {
 
     /** Private constructor to prevent instantiation. */
     private AppFont() {

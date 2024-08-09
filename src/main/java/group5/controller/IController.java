@@ -2,7 +2,7 @@ package group5.controller;
 
 
 /**
- * Interface for the Controller
+ * Interface for the Controller.
  */
 public interface IController {
     /**

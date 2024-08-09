@@ -15,7 +15,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import group5.model.beans.MBeans;
 
-public class MovieAPIHandler {
+public final class MovieAPIHandler {
+
+    /**
+     * private empty constructor.
+     */
+    private MovieAPIHandler() {
+    }
 
     /**
      * the first section of the api.
@@ -25,12 +31,6 @@ public class MovieAPIHandler {
      * the api key.
      */
     private static final String API_KEY = "b253e842";
-
-    /**
-     * empty constructor.
-     */
-    public MovieAPIHandler() {
-    }
 
     /**
      * gets a list of MBeans to add.

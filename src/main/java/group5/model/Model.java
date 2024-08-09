@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import group5.model.beans.MBeans;
 import group5.model.filter.FilterHandler;
 import group5.model.filter.IFilterHandler;
-import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
@@ -56,8 +56,8 @@ public class Model implements IModel {
     public Model() {
         // Initialize empty directory is not exist.
         List<File> directories = List.of(new File("./data/source"),
-                                         new File(DEFAULT_WATCHLIST),
-                                         new File(DEFAULT_UNUSED));
+                new File(DEFAULT_WATCHLIST),
+                new File(DEFAULT_UNUSED));
         for (File directory : directories) {
             if (!directory.exists()) {
                 if (directory.mkdirs()) {
@@ -98,7 +98,8 @@ public class Model implements IModel {
     /**
      * {@inheritDoc}
      *
-     * Walk through a DEFAULT_WATCHLIST directory and find every.json file to load.
+     * Walk through a DEFAULT_WATCHLIST directory and find every.json file to
+     * load.
      */
     @Override
     public int loadWatchList() {
@@ -330,9 +331,9 @@ public class Model implements IModel {
         try {
             OutputStream out = new FileOutputStream(filename);
             MBeansFormatter.writeMediasToFile(this.watchLists.get(userListId)
-                                                             .getMovieList()
-                                                             .collect(Collectors.toSet()),
-                                              out, format);
+                    .getMovieList()
+                    .collect(Collectors.toSet()),
+                    out, format);
             out.close();
         } catch (Exception e) {
             System.out.println("Error writing to file");

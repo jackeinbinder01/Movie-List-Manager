@@ -17,7 +17,7 @@ public class FilterHandler implements IFilterHandler {
     }
 
     /**
-     * a filter on movies sorted by an input
+     * a filter on movies sorted by an input.
      *
      * @return a sorted stream of the movies.
      */

@@ -75,7 +75,6 @@ public class ListPane extends JPanel {
     private final String NEW_LIST_POPUP_PROMPT = "Enter the name of the new watchlist:";
 
 
-
     /**
      * The JTable component displaying the source data.
      */
@@ -227,7 +226,8 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * Switches the active tab to the specified index
+     * Switches the active tab to the specified index.
+     *
      * @param index the index of the tab to switch to
      */
     public void setActiveTab(int index) {
@@ -235,7 +235,8 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * Returns the index of the active tab
+     * Returns the index of the active tab.
+     *
      * @return the index of the active tab
      */
     public int getActiveTab() {
@@ -244,6 +245,7 @@ public class ListPane extends JPanel {
 
     /**
      * Returns the active JTable according to the active tab.
+     *
      * @return the active JTable object
      */
     private JTable getActiveTable() {
@@ -257,6 +259,7 @@ public class ListPane extends JPanel {
 
     /**
      * Returns the active MovieTableModel according to the active tab.
+     *
      * @return the active MovieTableModel object
      */
     private MovieTableModel getActiveTableModel() {
@@ -272,7 +275,7 @@ public class ListPane extends JPanel {
      * Creates a new tab in the tabbed pane with the specified name and mode.
      * Constructs the associated tables and table models for the new tab.
      *
-     * @param name the name of the tab
+     * @param name      the name of the tab
      * @param tableMode the mode of the tab (main or user-defined list)
      */
     private void createTableTab(String name, TableMode tableMode) {
@@ -344,7 +347,7 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * Removes a user-defined table from the tabbed pane.
+     * Removes a user-defined table from the tabbed pane, and deletes the associated JTable and data model.
      *
      * @param userListId the index of the table to remove
      */
@@ -417,9 +420,9 @@ public class ListPane extends JPanel {
     /**
      * Sets the source data for the main table.
      *
-     * @param records the stream of MBeans objects
-     * @param watchlistNames the array of user-defined list names
-     * @param recordWatchlistMatrix the 2D boolean matrix representing the relationship between MBeans and user-defined lists
+     * @param records               the stream of MBeans objects
+     * @param watchlistNames        the array of user-defined list names
+     * @param recordWatchlistMatrix 2d boolean matrix indicating which records belong to each watchlist
      */
     public void setSourceTable(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix) {
         System.out.println("[ListPane] setMainTableRecords called");
@@ -431,7 +434,7 @@ public class ListPane extends JPanel {
         int selectedRow = sourceTable.getSelectedRow();
         sourceTableModel.setMovieTableModelRecords(tmRecords);
         if (selectedRow >= 0 && selectedRow < sourceTable.getRowCount() && tabbedPane.getSelectedIndex() == 0
-            && sourceTable.getRowCount() > 0) {
+                && sourceTable.getRowCount() > 0) {
             sourceTable.setRowSelectionInterval(selectedRow, selectedRow);
         }
     }
@@ -439,7 +442,7 @@ public class ListPane extends JPanel {
     /**
      * Sets the data for a user-defined watchlist.
      *
-     * @param records the stream of MBeans objects to display in the table
+     * @param records        the stream of MBeans objects to display in the table
      * @param watchlistIndex the index of the user-defined list
      */
     public void setUserTable(Stream<MBeans> records, int watchlistIndex) {
@@ -454,9 +457,9 @@ public class ListPane extends JPanel {
         }
         int selectedRow = watchlistTables.get(watchlistIndex).getSelectedRow();
         targetUserListModel.setMovieTableModelRecords(tmRecords);
-        if (selectedRow >= 0 && selectedRow < watchlistTables.get(watchlistIndex).getRowCount() &&
-                watchlistTables.get(watchlistIndex).getRowCount() > 0
-            && tabbedPane.getSelectedIndex() == watchlistIndex + 1) {
+        if (selectedRow >= 0 && selectedRow < watchlistTables.get(watchlistIndex).getRowCount()
+                && watchlistTables.get(watchlistIndex).getRowCount() > 0
+                && tabbedPane.getSelectedIndex() == watchlistIndex + 1) {
             watchlistTables.get(watchlistIndex).setRowSelectionInterval(selectedRow, selectedRow);
         }
     }
@@ -484,8 +487,8 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * A local handler for tab change event
-     * before passing the event to the controller.
+     * A local handler for tab change event before passing the event to the controller.
+     * Enables and disables the delete and export button accordingly.
      */
     private void localTabChangeHandler() {
         deleteListButton.setEnabled(!(tabbedPane.getSelectedIndex() == 0));
@@ -495,7 +498,7 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * Returns the current table in the tabbed pane
+     * Returns the current table in the tabbed pane.
      *
      * @return current JTable in view
      */
@@ -503,26 +506,48 @@ public class ListPane extends JPanel {
         return (JTable) ((JScrollPane) tabbedPane.getSelectedComponent()).getViewport().getView();
     }
 
+    /**
+     * A local handler for list deletion that prompts the user for confirmation.
+     * Passes the deletion request to the controller and remove the associated user tab and table if confirmed.
+     */
     private void localDeleteListHandler() {
         // Pop up a dialog to confirm deletion
         int currWatchlistIdx = tabbedPane.getSelectedIndex() - 1;
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this watchlist?", "Warning", JOptionPane.YES_NO_OPTION);
+        int dialogResult = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this watchlist?", "Warning", JOptionPane.YES_NO_OPTION);
         if (dialogResult == JOptionPane.YES_OPTION) {
             deleteListHandler.accept(currWatchlistIdx);
             removeUserTable(currWatchlistIdx);
         }
     }
 
-
+    /**
+     * This class acts as the data model behind the JTables.
+     * Implemented to bridge between the MovieTableModelRecord objects and TableModel interface.
+     */
     class MovieTableModel extends AbstractTableModel {
+        /**
+         * Column names for the table.
+         */
         private String[] columnNames = Arrays.stream(TableColumn.values())
                 .map(TableColumn::getName)
                 .toArray(String[]::new);
 
-        private List<MBeans> records;
+        /**
+         * The main MovieTableModelRecord list for the table data model.
+         */
         private List<MovieTableModelRecord> movieTableModelRecords;
+
+        /**
+         * Specifies if this table model belongs to the source list or a user watchlist.
+         */
         private TableMode tableMode;
 
+        /**
+         * Constructor for the table.
+         *
+         * @param tableMode
+         */
         MovieTableModel(TableMode tableMode) {
             this.tableMode = tableMode;
         }
@@ -540,19 +565,39 @@ public class ListPane extends JPanel {
             return movieTableModelRecords.get(row).getRecord();
         }
 
+        /**
+         * Retrieves the mode of the table.
+         *
+         * @return the table mode
+         */
         public TableMode getTableMode() {
             return tableMode;
         }
 
+        /**
+         * Sets the MovieTableModelRecord for the table model.
+         *
+         * @param movieTableModelRecords
+         */
         public void setMovieTableModelRecords(List<MovieTableModelRecord> movieTableModelRecords) {
             this.movieTableModelRecords = movieTableModelRecords;
             fireTableDataChanged();
         }
 
+        /**
+         * Returns the number of columns in the table.
+         *
+         * @return the number of columns
+         */
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        /**
+         * Returns the number of rows in the table.
+         *
+         * @return the number of rows
+         */
         public int getRowCount() {
             if (movieTableModelRecords == null) {
                 return 0;
@@ -560,10 +605,23 @@ public class ListPane extends JPanel {
             return movieTableModelRecords.size();
         }
 
+        /**
+         * Returns the name of the column at the specified index.
+         *
+         * @param col the column being queried
+         * @return the name of the column
+         */
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        /**
+         * Returns the value at the specified row and column.
+         *
+         * @param row the row being queried
+         * @param col the column being queried
+         * @return the value at the specified row and column
+         */
         public Object getValueAt(int row, int col) {
             MovieTableModelRecord movieTableModelRecord = movieTableModelRecords.get(row);
             MBeans record = movieTableModelRecord.getRecord();
@@ -629,7 +687,6 @@ public class ListPane extends JPanel {
             // data[row][col] = value;
             if (col == TableColumn.WATCHED.getIndex()) {
                 MBeans record = this.getRecordAt(row);
-                System.out.println("[ListPane] Setting watched status of " + record.getTitle() + " to " + !record.getWatched());
                 // calling the handler to update the Model
                 // changeWatchedStatusHandler.accept(record, !record.getWatched());
                 changeWatchedStatusHandler.accept(record, !record.getWatched(), "listPane");
@@ -644,7 +701,7 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * MovieListSelectionHandler is a custom ListSelectionListener for handling table selection events
+     * MovieListSelectionHandler is a custom ListSelectionListener for handling table selection events.
      */
     class MovieListSelectionHandler implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
@@ -664,19 +721,30 @@ public class ListPane extends JPanel {
     }
 
     /**
-     * ButtonRenderer is a custom TableCellRenderer for rendering a JButton in a JTable
-     * This button is only for appearance and does not have any action listener and function
+     * ButtonRenderer is a custom TableCellRenderer for rendering a JButton in a JTable.
+     * This button is only for appearance and does not have any action listener and function.
      */
     class ButtonRenderer extends JButton implements TableCellRenderer {
+        /**
+         * The mode of the table which determines the button's behavior.
+         */
         private TableMode tableMode;
 
-        public ButtonRenderer(TableMode tableMode) {
+        /**
+         * Constructs a ButtonRenderer with the specified table mode.
+         *
+         * @param tableMode the mode of the table which determines the button's behavior
+         */
+        ButtonRenderer(TableMode tableMode) {
             this.tableMode = tableMode;
             setOpaque(true);
             setFocusPainted(false);
             setBorderPainted(false);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
@@ -694,17 +762,46 @@ public class ListPane extends JPanel {
         }
     }
 
+    /**
+     * ButtonEditor is a custom TableCellEditor for rendering and deploying the JButton in a JTable.
+     * This button is for user interaction and has an action listener and function.
+     * Implements a workaround to fit a JButton into a cell.
+     */
     class ButtonEditor extends DefaultCellEditor {
+        /**
+         * The JButton component used for editing.
+         */
+        private JButton button;
 
-        protected JButton button;
+        /**
+         * The label text for the JButton.
+         */
         private String label;
+
+        /**
+         * The record associated with the current row.
+         */
         private MBeans record;
+
+        /**
+         * Flag indicating if the button is currently pushed.
+         */
         private boolean isPushed;
+
+        /**
+         * The mode of the table which determines the button's behavior.
+         */
         private TableMode tableMode;
+
+        /**
+         * The model record for the current row in the movie table.
+         */
         private MovieTableModelRecord movieTableModelRecord;
 
+        /**
+         * The icon used to indicate a tick (checked) state.
+         */
         private static Icon tickIcon;
-
         static {
             // Create an ImageIcon from the PNG file
             ImageIcon imageIcon = new ImageIcon(ButtonEditor.class.getClassLoader().getResource("tick.png"));
@@ -715,8 +812,12 @@ public class ListPane extends JPanel {
             tickIcon = new ImageIcon(scaledImage); // Transform it back to an ImageIcon
         }
 
-
-        public ButtonEditor(TableMode tableMode) {
+        /**
+         * Constructs a ButtonEditor with the specified table mode.
+         *
+         * @param tableMode the mode of the table which determines the button's behavior
+         */
+        ButtonEditor(TableMode tableMode) {
             // This is a workaround, since DefaultCellEditor only accepts JCheckBox, JComboBox or JTextField
             // The JCheckBox is unused and hidden
             super(new JCheckBox());
@@ -742,7 +843,6 @@ public class ListPane extends JPanel {
                     // for source list: after the menu is rendered
                     switch (tableMode) {
                         case MAIN:
-                            System.out.println("[ButtonEditor] Adding/removing record \"" + record.getTitle() + "\"" + " to/from watchlist");
                             JPopupMenu editMenu = new JPopupMenu("Edit");
 
                             String[] userListNames = movieTableModelRecord.getUserListNames();
@@ -771,7 +871,8 @@ public class ListPane extends JPanel {
                                     System.out.println("Create new list clicked");
                                     createNewListItem.setSelected(false);
                                     // create a pop-up dialog to get the name of the new list
-                                    String newListName = JOptionPane.showInputDialog(null, NEW_LIST_POPUP_PROMPT, NEW_LIST_POPUP_TITLE, JOptionPane.QUESTION_MESSAGE);
+                                    String newListName = JOptionPane.showInputDialog(null,
+                                            NEW_LIST_POPUP_PROMPT, NEW_LIST_POPUP_TITLE, JOptionPane.QUESTION_MESSAGE);
                                     if (newListName != null) {
                                         System.out.println("New list name: " + newListName);
                                         if (newListName.length() > 0) {
@@ -780,7 +881,8 @@ public class ListPane extends JPanel {
                                                     JOptionPane.showMessageDialog(
                                                             null,
                                                             ErrorMessage.NAME_CLASH.getErrorMessage(newListName),
-                                                            String.valueOf(ErrorMessage.ERROR), JOptionPane.ERROR_MESSAGE);
+                                                            String.valueOf(ErrorMessage.ERROR),
+                                                            JOptionPane.ERROR_MESSAGE);
                                                     return;
                                                 }
                                             }
@@ -817,6 +919,16 @@ public class ListPane extends JPanel {
             });
         }
 
+        /**
+         * Returns the component used for editing.
+         *
+         * @param table the JTable that is asking the editor to edit; can be null
+         * @param value the value of the cell to be edited
+         * @param isSelected true if the cell is to be rendered with highlighting
+         * @param row the row of the cell being edited
+         * @param column the column of the cell being edited
+         * @return the component used for editing
+         */
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                                                      boolean isSelected, int row, int column) {
@@ -831,22 +943,29 @@ public class ListPane extends JPanel {
             return button;
         }
 
+        /**
+         * Returns the value contained in the editor.
+         *
+         * @return the value contained in the editor
+         */
         @Override
         public Object getCellEditorValue() {
-            if (isPushed) {
-                // System.out.println("[getCellEditorValue] " + record.getTitle() + " clicked");
-            }
-            isPushed = false;
+            isPushed = false; // Workaround
             return label;
         }
 
+
+        /**
+         * Stops editing and returns true to indicate that editing has stopped.
+         *
+         * @return true if editing was stopped successfully
+         */
         @Override
         public boolean stopCellEditing() {
-            isPushed = false;
+            isPushed = false;  // Workaround
             return super.stopCellEditing();
         }
     }
-
 
 
     /**
@@ -854,7 +973,13 @@ public class ListPane extends JPanel {
      * This is used to differentiate between the main table and user-defined lists.
      */
     enum TableMode {
+        /**
+         * The main table containing all movies.
+         */
         MAIN,
+        /**
+         * A user-defined watchlist.
+         */
         WATCHLIST
     }
 
@@ -862,59 +987,136 @@ public class ListPane extends JPanel {
      * Enum class for the columns in the table. Defines the column order and titles.
      */
     enum TableColumn {
+        /**
+         * Column representing the title of a movie.
+         */
         TITLE("Title"),
+
+        /**
+         * Column representing the year a movie was released.
+         */
         YEAR("Year"),
+
+        /**
+         * Column representing the genre of a movie.
+         */
         GENRE("Genre"),
+
+        /**
+         * Column representing the runtime of a movie.
+         */
         RUNTIME("Runtime"),
+
+        /**
+         * Column representing whether the movie has been watched.
+         */
         WATCHED("Watched"),
+
+        /**
+         * Column representing whether the movie is in the watchlist.
+         */
         WATCHLIST("Watchlist");
 
+        /**
+         * The name of the column.
+         */
         private final String name;
 
-
+        /**
+         * Constructs a TableColumn with the specified name.
+         *
+         * @param name the name of the column
+         */
         TableColumn(String name) {
             this.name = name;
         }
 
+        /**
+         * Returns the name of the column.
+         *
+         * @return the name of the column
+         */
         public String getName() {
             return name;
         }
 
+        /**
+         * Returns the index of the column.
+         *
+         * @return the index of the column
+         */
         public int getIndex() {
             return this.ordinal();
         }
     }
 
     /**
-     * This contains all information needed to render a row in the table.
-     * The two UserList fields are required for the sourceList to construct
-     * the dropdown menu for watchlist management.
+     * Represents a record in the movie table model, containing all necessary
+     * information to render a row in the table. This includes the record data and
+     * user list details needed to construct a dropdown menu for watchlist management.
      */
     class MovieTableModelRecord {
-
+        /**
+         * The associated main movie record.
+         */
         private MBeans record;
+        /**
+         * The indices indicating whether the movie is in the corresponding user lists.
+         */
         private boolean[] userListIndices = null;
+        /**
+         * The names of the user watchlists.
+         */
         private String[] userListNames = null;
 
-        public MovieTableModelRecord(MBeans record, String[] userListNames, boolean[] userListIndices) {
+        /**
+         * Constructs a MovieTableModelRecord with the specified record data, user list names,
+         * and user list indices.
+         * This is designed for the source table which requires extra metadata for the watchlist dropdown menu.
+         *
+         * @param record          the record data for the movie
+         * @param userListNames   the names of the user lists
+         * @param userListIndices the indices indicating whether the movie is in the corresponding user lists
+         */
+        MovieTableModelRecord(MBeans record, String[] userListNames, boolean[] userListIndices) {
             this.record = record;
             this.userListNames = userListNames;
             this.userListIndices = userListIndices;
         }
 
-
-        public MovieTableModelRecord(MBeans record) {
+        /**
+         * Constructs a MovieTableModelRecord with the specified record data.
+         * This is designed for the user-defined watchlist tables which do not require extra metadata.
+         *
+         * @param record the record data for the movie
+         */
+        MovieTableModelRecord(MBeans record) {
             this.record = record;
         }
 
+        /**
+         * Returns the record data for the movie.
+         *
+         * @return the record data for the movie
+         */
         public MBeans getRecord() {
             return record;
         }
 
+        /**
+         * Returns the indices indicating whether the movie is in the corresponding user lists.
+         *
+         * @return the indices indicating the presence of the movie in the user lists
+         */
         public boolean[] getUserListIndices() {
             return userListIndices;
         }
 
+        /**
+         * Returns the names of the user lists.
+         *
+         * @return the names of the user lists
+         */
         public String[] getUserListNames() {
             return userListNames;
         }

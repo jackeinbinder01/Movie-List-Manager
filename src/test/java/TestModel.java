@@ -1,9 +1,9 @@
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
-
 
 import org.junit.jupiter.api.Test;
 
@@ -136,8 +136,8 @@ public class TestModel {
     public void testExtractFilter() {
         List<List<String>> filters01 = List.of(List.of("title", "~", "platoon"), List.of("released", "==", "2000"), List.of("released", "=", "2005"));
         List<List<String>> filters02 = List.of(List.of("title", "~", "holmes"), List.of("released", "==", "1800"),
-                                               List.of("genre", "=", "action"), List.of("director", "=", "me"),
-                                               List.of("actor", "=", "you"), List.of("released", "=", "2024"));
+                List.of("genre", "=", "action"), List.of("director", "=", "me"),
+                List.of("actor", "=", "you"), List.of("released", "=", "2024"));
 
         Map<String, String> mapFilter01 = model.extractFilterValues(filters01);
         Map<String, String> mapFilter02 = model.extractFilterValues(filters02);
