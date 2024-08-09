@@ -19,22 +19,22 @@ public class BaseView extends JFrame implements IView {
     /**
      * Default application title.
      */
-    private final static String APP_TITLE = "Movie List Manager";
+    private static final String APP_TITLE = "Movie List Manager";
 
     /**
      * The default width of the window in pixels.
      */
-    private final static int DEFAULT_WIDTH = 1024;
+    private static final int DEFAULT_WIDTH = 1024;
 
     /**
      * The default height of the window in pixels.
      */
-    private final static int DEFAULT_HEIGHT = 700;
+    private static final int DEFAULT_HEIGHT = 700;
 
     /**
      * The default font size used in the UI.
      */
-    private final static int DEFAULT_FONT_SIZE = 10;
+    private static final int DEFAULT_FONT_SIZE = 10;
 
     /**
      * The filter pane, responsible for providing movie filtering options.
