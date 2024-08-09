@@ -18,5 +18,4 @@ public interface IFilterHandler {
      * @return A stream of board movies that match the filter.
      */
     Stream<MBeans> filter(List<List<String>> filter, Stream<MBeans> beanStream);
-
 }

@@ -215,6 +215,4 @@ public class BaseView extends JFrame implements IView {
     public DetailsPane getDetailsPane() {
         return detailsPane;
     }
-
-
 }

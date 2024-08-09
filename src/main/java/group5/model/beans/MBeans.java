@@ -1,6 +1,5 @@
 package group5.model.beans;
 
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;

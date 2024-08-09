@@ -69,5 +69,4 @@ public interface IMovieList {
      * @return true if exist, false otherwise.
      */
     boolean containsMedia(MBeans media);
-
 }

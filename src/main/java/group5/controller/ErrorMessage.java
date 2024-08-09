@@ -39,5 +39,4 @@ public enum ErrorMessage {
     public String getErrorMessage(String fileName) {
         return String.format(errorMessage, fileName);
     }
-
 }

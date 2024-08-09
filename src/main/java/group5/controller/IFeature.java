@@ -95,5 +95,4 @@ public interface IFeature {
      * @param tabIndex the index of the new active tab
      */
     void handleTabChange(int tabIndex);
-
 }

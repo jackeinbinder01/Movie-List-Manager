@@ -25,7 +25,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-
 /**
  * A panel displaying tabbed tables for viewing and managing lists of records.
  * Includes a toolbar at the bottom for performing various list management operations.
@@ -220,7 +219,6 @@ public class ListPane extends JPanel {
 
         // Add button panel to the bottom of the list panel
         this.add(bottomButtonPanel, BorderLayout.SOUTH);
-
     }
 
     /**
@@ -1119,8 +1117,4 @@ public class ListPane extends JPanel {
             return userListNames;
         }
     }
-
-
 }
-
-
