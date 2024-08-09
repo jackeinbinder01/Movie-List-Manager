@@ -10,6 +10,8 @@ public interface IFeature {
     /**
      * Prompt the view to show the details of the selected entry. Designed to be
      * triggered by an action listener in the view upon table selection.
+     *
+     * @param record the user selected movie record.
      */
     void handleTableSelection(MBeans record);
 
@@ -73,6 +75,7 @@ public interface IFeature {
      *
      * @param record the MBean whose watched status is to be changed.
      * @param watched the new watched status to be assigned to the MBean.
+     * @param caller the view component triggering this method call.
      */
     void changeWatchedStatus(MBeans record, boolean watched, String caller);
 
