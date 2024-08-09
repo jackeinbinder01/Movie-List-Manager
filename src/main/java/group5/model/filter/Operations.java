@@ -1,5 +1,8 @@
 package group5.model.filter;
 
+/**
+ * the enum for the operations for FilterOperations.
+ */
 public enum Operations {
     /**
      * the equals operator.

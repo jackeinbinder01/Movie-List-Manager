@@ -1,28 +1,35 @@
 package group5.model;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
-import java.io.FileOutputStream;
 
 import group5.model.beans.MBeans;
 import group5.model.formatters.Formats;
 import group5.model.formatters.MBeansFormatter;
 
+/**
+ * the logic of handling the list of MBeans in the program.
+ */
 public class MovieList implements IMovieList {
 
-    /** set of movies. */
+    /**
+     * set of movies.
+     */
     private Set<MBeans> movieList;
 
-    /** Name of this watch list. */
+    /**
+     * Name of this watch list.
+     */
     private String name;
-
 
     /**
      * Default Constructor for the movieList.
      *
      * Create empty list.
+     *
      * @param name name of the list
      */
     public MovieList(String name) {
@@ -36,6 +43,7 @@ public class MovieList implements IMovieList {
      * Constructor for the movieList.
      *
      * Create from loading a list of movies.
+     *
      * @param name name of the list
      * @param movieList list of movies
      */
@@ -55,7 +63,6 @@ public class MovieList implements IMovieList {
     public Stream<MBeans> getMovieList() {
         return this.movieList.stream();
     }
-
 
     @Override
     public void clear() {

@@ -5,6 +5,9 @@ import java.util.List;
 import group5.model.MovieData;
 import group5.model.beans.MBeans;
 
+/**
+ * the filter operations for the program.
+ */
 public final class FilterOperation {
 
     /**

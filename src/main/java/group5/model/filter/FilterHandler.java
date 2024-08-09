@@ -7,6 +7,9 @@ import java.util.stream.Stream;
 import group5.model.MovieData;
 import group5.model.beans.MBeans;
 
+/**
+ * the filter logic for the program.
+ */
 public class FilterHandler implements IFilterHandler {
 
     /**
