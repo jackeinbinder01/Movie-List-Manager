@@ -35,6 +35,7 @@ public interface IView {
      * Update records for a user watchlist.
      *
      * @param records The stream of MBeans records in the list.
+     * @param userListId The ID of the table containing the list.
      */
     void setUserTableRecords(Stream<MBeans> records, int userListId);
 
