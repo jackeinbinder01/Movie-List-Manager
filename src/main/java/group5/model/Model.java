@@ -27,6 +27,10 @@ import group5.model.formatters.MBeansFormatter;
 import group5.model.formatters.MBeansLoader;
 import group5.model.net.MovieAPIHandler;
 
+/**
+ * Model class that implements IModel interface. This class is responsible for
+ * communicating with controller and pass commands to the other model classes.
+ */
 public class Model implements IModel {
 
     /**
