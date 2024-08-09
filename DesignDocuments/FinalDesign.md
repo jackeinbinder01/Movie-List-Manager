@@ -10,8 +10,6 @@ classDiagram
         class IMovieList
         class MovieData
         class MovieList
-        class MBeans
-
     }
 
     namespace VIEW {
@@ -38,6 +36,10 @@ classDiagram
         class Controller
         class ErrorMessage
     }
+    
+    namespace BEANS {
+        class MBeans
+    }
 
     namespace FORMATTERS {
         class MovieXMLWrapper
@@ -60,7 +62,7 @@ classDiagram
         class BoxOfficeDeserializer
     }
 
-    namespace FILTERS {
+    namespace FILTER {
         class FilterHandler
         class FilterOperation
         class IFilterHandler
@@ -110,6 +112,7 @@ classDiagram
     MBeansSerializer --|> StringListSerializer : contains
     MBeansSerializer --|> BoxOfficeSerializer : contains
     MBeansFormatter --> MBeans: uses
+    MBeansFormatter --> Formats: uses
     MBeansLoader --> MBeans: uses
     MBeansLoader --> Formats: uses
     MovieXMLWrapper --> MBeans: uses
@@ -156,6 +159,7 @@ classDiagram
     ListPane --> TableColumn: uses
     MovieTableModel --> MBeans: uses
     MovieTableModel --> TableMode: uses
+    MovieTableModel --> TableColumn: uses
     MovieTableModel --> MovieTableModelRecord: uses
     ButtonRenderer --> TableMode: uses
     ButtonEditor --> MBeans: uses
@@ -174,15 +178,21 @@ classDiagram
     
     class IModel {
         <<interface>>
-        + DEFAULT_DATA: String$
+        + DEFAULT_DATA: String
+        + DEFAULT_WATCHLIST: String
+        + DEFAULT_UNUSED: String
         + loadSourceData(): void
+        + loadWatchList(): int
         + loadWatchList(String filename): int
         + createNewWatchList(String name): int
+        + deleteWatchList(int userListId): int
+        + getAllRecords(): Stream~MBeans~
+        + getAllRecords(int userListId): Stream~MBeans~
         + getRecords(): Stream~MBeans~
         + getRecords(int userListId): Stream~MBeans~
         + getRecords(List~List~String~~ filters): Stream~MBeans~
         + getRecords(int userListId, List~List~String~~ filters): Stream~MBeans~
-        + saveWatchList(String filename, int userListId/*, UserListIdentifier userListId*/): void
+        + saveWatchList(String filename, int userListId): void
         + addToWatchList(MBeans media, int userListId): void
         + removeFromWatchList(MBeans media, int userListId): void
         + updateWatched(MBeans media, boolean watched): void
@@ -193,9 +203,9 @@ classDiagram
         + getUserListCount(): int
         + getUserListIndicesForRecord(MBeans record): int[]
         + clearFilter(): void
-        + addNewMBeans(List~List~String~~ filters, Stream<MBeans> movieStream): void
-        + extractFilterValues(List~List~String~~ filters): Map<String, String>
-        + fetchMBeans(String title, String year1, String year2): Set~<MBeans~
+        + addNewMBeans(List~List~String~~ filters, Stream~MBeans~ movieStream): void
+        + extractFilterValues(List~List~String~~ filters): Map~String, String~
+        + fetchMBeans(String title, String year1, String year2): Set~MBeans~
     }
     
     class IView {
@@ -209,7 +219,9 @@ classDiagram
         + getFilterPane(): FilterPane
         + getDetailsPane(): DetailsPane
         + display(): void
-        + getCurrentTab(): int
+        + getActiveTab(): int
+        + setActiveTab(int tabIdx): void
+        + showAlertDialog(String title, String message): void
     }
     
     class IController {
@@ -235,8 +247,9 @@ classDiagram
     
     class BaseView {
         - APP_TITLE: String$
-        - DEFAULT_WIDTH: int
-        - DEFAULT_HEIGHT: int
+        - DEFAULT_WIDTH: int$
+        - DEFAULT_HEIGHT: int$
+        - DEFAULT_FONT_SIZE: int$
         + FilterPane
         + ListPane
         + DetailsPane
@@ -249,7 +262,6 @@ classDiagram
         - filterHandler: IFilterHandler
         - filter: List~List~String~~
         + Model()
-        + addNewMBeansToSource(Set~MBeans~ newMBeans): void
         + setFilter(List~List~String~~ filter): void
         + getMatchedObjectFromSource(MBeans media): MBeans
     }
@@ -292,6 +304,7 @@ classDiagram
     class MovieList {
         - movieList: Set~MBeans~
         - name: String
+        + MovieList(String name)
         + MovieList(String name, Set~MBeans~ movieList)
     }
     
@@ -299,9 +312,8 @@ classDiagram
         + IModel
         + IView
         + Controller(IModel model, IView view)
-        - DEV_InitModel(): void
-        - getRecordsForCurrentView(): Stream~MBeans~
-        - getRecordUserListMatrix(Stream<MBeans> records): boolean[][]
+        - getRecordsForActiveTab(): Stream~MBeans~
+        - getRecordUserListMatrix(Stream~MBeans~ records): boolean[][]
         - getWatchlistNames(): String[]
         - getFilterOptions(): List~List~String~~
     }
@@ -311,10 +323,11 @@ classDiagram
          ERROR
          DELETE_WATCHLIST
          CREATE_WATCHLIST
+        NAME_CLASH
          IMPORT_WATCHLIST
         - errorMessage: String
         + ErrorMessage(String errorMessage)
-        + getErrorMessage(String filepath): String
+        + getErrorMessage(String fileName): String
     }
     
     class MovieXMLWrapper {
@@ -413,14 +426,15 @@ classDiagram
     
     class MBeansFormatter {
         - MBeansFormatter()
-        - writeMediasToJSON(Collection~MBeans~ records, OutputStream out): void
-        - writeMediasToCSV(Collection~MBeans~ records, OutputStream out): void
-        - writeMediasToFile(Collection~MBeans~ records, OutputStream out, Formats format): void
+        - writeMediasToTXT(Collection~MBeans~records, OutputStream out): void$
+        - writeMediasToXML(Collection~MBeans~ records, OutputStream out): void$
+        - writeMediasToJSON(Collection~MBeans~ records, OutputStream out): void$
+        - writeMediasToCSV(Collection~MBeans~ records, OutputStream out): void$
+        - writeMediasToFile(Collection~MBeans~ records, OutputStream out, Formats format): void$
     }
     
     class MBeansLoader {
         - MBeansLoader()
-        + loadMBeansFromAPI(String title, String year, String type): List~MBeans~$
         + loadMediasFromJSON(String filename): Set~MBeans~$
         + loadMediasFromCSV(String filename): Set~MBeans~$
         + loadMediasFromFile(String filename, Formats format): Set~MBeans~$
@@ -445,19 +459,20 @@ classDiagram
         - userRating: JTextField
         - currentMedia: MBeans
         + DetailsPane()
-        + initContent(): void
-        + addVerticalPadding(int padding): void
-        + addTitlePane(): void
-        + addImageLabel(): void
-        + addWatched(): void
-        + addDetailPane(String name): void
-        + addUserRating(): void
-        + reSize(): void
-        + scaleImage(String imgStr): ImageIcon
-        + getCurrentMedia(): MBeans
-        + refreshUserFields(): void
+        - initContent(): void
+        - addVerticalPadding(int padding): void
+        - addTitlePane(): void
+        - addImageLabel(): void
+        - addWatched(): void
+        - addDetailPane(String name): void
+        - addUserRating(): void
+        - reSize(): void
+        - scaleImage(String imgStr): ImageIcon
+        - getCurrentMedia(): MBeans
+        - refreshUserFields(): void
         + setMedia(MBeans media): void
         + bindFeatures(IFeature features): void
+        - setUserRatingField(): void
     }
     
     class FilterPane {
@@ -511,11 +526,11 @@ classDiagram
         + addRangeFilter(String filterTitle, JTextField filterFrom, JTextField filterTo): void
         - setPlaceholder(JTextField textField, String value): void
         - italicizeFont(Object object): void
-        - getDoubleFilterRange(ToDoubleFunction<MBeans> fieldFunction, JTextField from, JTextField to): void
-        - getIntFilterRange(ToIntFunction<MBeans> fieldFunction, JTextField from, JTextField to): void
+        - getDoubleFilterRange(ToDoubleFunction~MBeans~ fieldFunction, JTextField from, JTextField to): void
+        - getIntFilterRange(ToIntFunction~MBeans~ fieldFunction, JTextField from, JTextField to): void
         - formatAsCurrency(String value, String minOrMax): String
         - formatFromMillions(String value): String
-        - configureComboBox(JComboBox<String> comboBox): void
+        - configureComboBox(JComboBox~String~ comboBox): void
         - clearFilterOptions(): void
         - resetComboBoxOptions(): void
         - resetTextFilters(): void
@@ -578,8 +593,6 @@ classDiagram
         - WATCHLIST_ACTION_BUTTON_TEXT: String
         - NEW_LIST_POPUP_TITLE: String
         - NEW_LIST_POPUP_PROMPT: String
-        - NEW_LIST_ERROR_TITLE: String
-        - NEW_LIST_ERROR_PROMPT: String
         + sourceTable: JTable
         + importListButton: JButton
         + deleteListButton: JButton
@@ -596,9 +609,8 @@ classDiagram
         + importListHandler: Consumer~String~
         + exportListHandler: Consumer~String~
         + SORTING_ENABLED: Boolean
-        + SELECTION_PERMENANCE: Boolean
-        + watchlistModels: List<MovieTableModel>
-        + watchlistTables: List<JTable>
+        + watchlistModels: List~MovieTableModel~
+        + watchlistTables: List~JTable~
         + ListPane()
         + setActiveTab(int index): void
         + getActiveTab(): int
@@ -610,8 +622,8 @@ classDiagram
         + createUserTableTab(String tableName): void
         + localImportListHandler(): void
         + localExportListHandler(): void
-        + setSourceTable(Stream<MBeans> records, String[] watchlistNames, boolean[][] recordWatchlistMatrix): void
-        + setUserTable(Stream<MBeans> recordStream, int watchlistIndex): void
+        + setSourceTable(Stream~MBeans~ records, String[] watchlistNames, boolean[][] recordWatchlistMatrix): void
+        + setUserTable(Stream~MBeans~ recordStream, int watchlistIndex): void
         + bindFeatures(IFeature features): void
         + localTabChangeHandler(): void
         + getCurrentTable(): JTable
@@ -619,10 +631,13 @@ classDiagram
     }
     
     class MovieTableModel {
+        - columnNames: String[]
+        - movieTableModelRecords: List~MovieTableModelRecord~
+        - tableMode: TableMode
         + MovieTableModel(TableMode tableMode)
         + getRecordAt(int row): MBeans
         + getTableMode(): TableMode
-        + setMovieTableModelRecords(List<MovieTableModelRecord> movieTableModelRecords): void
+        + setMovieTableModelRecords(List~MovieTableModelRecord~ movieTableModelRecords): void
         + getColumnCount(): int
         + getRowCount(): int
         + getColumnName(int col): String
@@ -637,11 +652,19 @@ classDiagram
     }
     
     class ButtonRenderer {
+        - tableMode: TableMode
         + ButtonRenderer(TableMode tableMode)
         + getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column): Component
     }
     
     class ButtonEditor {
+        - button: JButton
+        - label: String
+        - record: MBeans
+        - isPushed: boolean
+        - tableMode: TableMode
+        - movieTableModelRecord: MovieTableModelRecord
+        - tickIcon: Icon$
         + ButtonEditor(TableMode tableMode)
         + getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column): Component
         + getCellEditorValue(): Object
@@ -682,6 +705,7 @@ classDiagram
         - title: String
         - year: int
         - type: String
+        - rated: String
         - released: LocalDate
         - runtime: int
         - genre: List~String~
@@ -700,7 +724,7 @@ classDiagram
         - watched: boolean
         - myRating: double
         + MBeans()
-        + MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, List<String> genre,List<String> director, List<String> writer, List<String> actors, String plot, List<String> language,List<String> country, String awards, String poster, int metascore, double imdbRating, int boxOffice, String id, boolean watched, double myRating)
+        + MBeans(String title, int year, String type, String rated, LocalDate released, int runtime, List~String~ genre,List~String~ director, List~String~ writer, List~String~ actors, String plot, List~String~ language,List~String~ country, String awards, String poster, int metascore, double imdbRating, int boxOffice, String id, boolean watched, double myRating)
         + getTitle(): String
         + getYear(): int
         + getType(): String
@@ -752,18 +776,19 @@ classDiagram
     
     class IFilterHandler {
         <<interface>>
-        + filter(List<List<String>> filter, Stream<MBeans> beanStream): Stream~MBeans~
+        + filter(List~List~String~~ filter, Stream~MBeans~ beanStream): Stream~MBeans~
     }
     
     class FilterHandler {
         + FilterHandler()
-        + makeAndApplySingleFilter(List<MBeans> beans, List<String> filter): Stream~MBeans~$
+        + makeAndApplySingleFilter(List~MBeans~ beans, List~String~ filter): Stream~MBeans~$
     }
     
     class FilterOperation {
         <<utility>>
+        - FilterOperation()
         + getFilter(MBeans movie, MovieData filterOn, Operations op, String val): boolean$
-        + filterList(List<String> strList, Operations op, String val): boolean$
+        + filterList(List~String~ strList, Operations op, String val): boolean$
         + filterString(String field, Operations op, String val): boolean$
         + filterInt(int field, Operations op, String val): boolean$
         + filterDouble(double field, Operations op, String val): boolean$

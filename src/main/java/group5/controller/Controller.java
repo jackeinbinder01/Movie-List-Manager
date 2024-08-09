@@ -345,8 +345,6 @@ public class Controller implements IController, IFeature {
         clearFiltersAndReloadRecords();
     }
 
-
-
     /**
      * A private method to retrieve the records for the active tab for convenience.
      *
@@ -431,5 +429,4 @@ public class Controller implements IController, IFeature {
         }
         return filters;
     }
-
 }

@@ -902,67 +902,69 @@ public class FilterPane extends JPanel implements ActionListener, FocusListener 
         applyFiltersButton.addActionListener(e -> features.applyFilters());
         clearFiltersButton.addActionListener(e -> features.clearFiltersAndReloadRecords());
     }
+
+    /* enums -------------------------------------------------------------------------------------------------------------*/
+    /** Encapsulates the name of a FilterPane filter in an enum. */
+    enum FiltersEnum {
+
+        /** FiltersEnums. */
+        TITLE("titleFilter"), GENRE("genreFilter"), MPA_RATING("mparatingFilter"),
+        RELEASED_FROM("releasedFromFilter"), RELEASED_TO("releasedToFilter"),
+        IMDB_RATING_FROM("imdbRatingFromFilter"), IMDB_RATING_TO("imdbRatingToFilter"),
+        BOX_OFFICE_EARNINGS_FROM("boxOfficeEarningsFromFilter"),
+        BOX_OFFICE_EARNINGS_TO("boxOfficeEarningsToFilter"),
+        DIRECTOR("directorFilter"), ACTOR("actorFilter"),
+        WRITER("writerFilter"), LANGUAGE("languageFilter");
+
+        /** String representing the name of a FilterPane filter. */
+        private final String filterName;
+
+        /** Public constructor.
+         *
+         * @param filterName the filter name associated with the FiltersEnum
+         */
+        FiltersEnum(String filterName) {
+            this.filterName = filterName;
+        }
+
+        /**
+         * Returns the String, representing a filter name, associated with a FiltersEnum enum.
+         *
+         * @return String, representing a filter name, associated with a FiltersEnum enum
+         */
+        public String getFilterName() {
+            return filterName;
+        }
+    }
+
+    /** Encapsulates the text in a JLabel, representing a FilterPane filter title, in an enum. */
+    enum FilterLabels {
+
+        /** FilterLabels Enums. */
+        TITLE("Title:"), GENRE("Genre:"), MPA_RATING("MPA Rating:"),
+        RELEASED("Year Released:"), IMDB_RATING("IMDB Rating:"), BOX_OFFICE_EARNINGS("Box Office Earnings: ($ millions)"),
+        DIRECTOR("Director:"), ACTOR("Actor:"), WRITER("Writer:"), LANGUAGE("Language:"), FROM("From: "), TO("To: ");
+
+        /** String representing the text in a JLabel above a FilterPane filter. */
+        private final String filterLabel;
+
+        /** Public constructor.
+         *
+         * @param filterLabel the filter label associated with the FilterLabels enum
+         */
+        FilterLabels(String filterLabel) {
+            this.filterLabel = filterLabel;
+        }
+
+        /**
+         * Returns the String, representing a filter title, associated with a FilterLabels enum.
+         *
+         * @return String, representing a filter title, associated with a FilterLabels enum
+         */
+        public String getFilterLabel() {
+            return filterLabel;
+        }
+    }
 }
 
-/* enums -------------------------------------------------------------------------------------------------------------*/
-/** Encapsulates the name of a FilterPane filter in an enum. */
-enum FiltersEnum {
 
-    /** FiltersEnums. */
-    TITLE("titleFilter"), GENRE("genreFilter"), MPA_RATING("mparatingFilter"),
-    RELEASED_FROM("releasedFromFilter"), RELEASED_TO("releasedToFilter"),
-    IMDB_RATING_FROM("imdbRatingFromFilter"), IMDB_RATING_TO("imdbRatingToFilter"),
-    BOX_OFFICE_EARNINGS_FROM("boxOfficeEarningsFromFilter"),
-    BOX_OFFICE_EARNINGS_TO("boxOfficeEarningsToFilter"),
-    DIRECTOR("directorFilter"), ACTOR("actorFilter"),
-    WRITER("writerFilter"), LANGUAGE("languageFilter");
-
-    /** String representing the name of a FilterPane filter. */
-    private final String filterName;
-
-    /** Public constructor.
-     *
-     * @param filterName the filter name associated with the FiltersEnum
-     */
-    FiltersEnum(String filterName) {
-        this.filterName = filterName;
-    }
-
-    /**
-     * Returns the String, representing a filter name, associated with a FiltersEnum enum.
-     *
-     * @return String, representing a filter name, associated with a FiltersEnum enum
-     */
-    public String getFilterName() {
-        return filterName;
-    }
-}
-
-/** Encapsulates the text in a JLabel, representing a FilterPane filter title, in an enum. */
-enum FilterLabels {
-
-    /** FilterLabels Enums. */
-    TITLE("Title:"), GENRE("Genre:"), MPA_RATING("MPA Rating:"),
-    RELEASED("Year Released:"), IMDB_RATING("IMDB Rating:"), BOX_OFFICE_EARNINGS("Box Office Earnings: ($ millions)"),
-    DIRECTOR("Director:"), ACTOR("Actor:"), WRITER("Writer:"), LANGUAGE("Language:"), FROM("From: "), TO("To: ");
-
-    /** String representing the text in a JLabel above a FilterPane filter. */
-    private final String filterLabel;
-
-    /** Public constructor.
-     *
-     * @param filterLabel the filter label associated with the FilterLabels enum
-     */
-    FilterLabels(String filterLabel) {
-        this.filterLabel = filterLabel;
-    }
-
-    /**
-     * Returns the String, representing a filter title, associated with a FilterLabels enum.
-     *
-     * @return String, representing a filter title, associated with a FilterLabels enum
-     */
-    public String getFilterLabel() {
-        return filterLabel;
-    }
-}

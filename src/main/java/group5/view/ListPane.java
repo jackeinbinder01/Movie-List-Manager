@@ -32,7 +32,6 @@ import java.util.stream.Stream;
  * <br>
  * TabbedPane citation: https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
  */
-
 public class ListPane extends JPanel {
     /**
      * The name of the main tab in the tabbed pane.
@@ -73,7 +72,6 @@ public class ListPane extends JPanel {
      * The prompt displayed in the popup dialog for creating a new watchlist.
      */
     private final String NEW_LIST_POPUP_PROMPT = "Enter the name of the new watchlist:";
-
 
     /**
      * The JTable component displaying the source data.

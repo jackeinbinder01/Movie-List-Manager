@@ -110,7 +110,7 @@ public interface IModel {
      * @param filename string of file path to save the watch list to.
      * @param userListId The identifer of the watch list to save.
      */
-    void saveWatchList(String filename, int userListId/*, UserListIdentifier userListId*/);
+    void saveWatchList(String filename, int userListId);
 
     /**
      * Add a media to the watch list.
