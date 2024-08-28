@@ -1,4 +1,4 @@
-# CS 5004 Final Project - Group 5: Movie List Manager
+# CS 5004 Final Project - Movie List Manager
 
 ---
 
