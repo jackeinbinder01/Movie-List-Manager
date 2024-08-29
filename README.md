@@ -1,4 +1,4 @@
-# CS 5004 (Object - Oriented Design) Final Project - Movie List Manager
+# Movie List Manager
 
 ---
 
